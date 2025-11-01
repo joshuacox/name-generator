@@ -14,6 +14,16 @@ To use this repository, follow these steps:
 
 The script will output a randomly generated name in the format "adjective-noun". You can run the script multiple times to generate different names.
 
+```
+./name-generator.sh
+```
+
+Or specify 
+
+```
+NOUN_FILE=nouns/greek_gods.txt ./name-generator.sh
+```
+
 ## Customization
 
 To add your own nouns and adjectives, create text files in the `nouns` and `adjectives` directories. Each file should contain one word per line.

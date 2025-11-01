@@ -12,7 +12,7 @@ def main():
     adjective_folder = os.path.join(here, 'adjectives')
 
     # Find and select a random noun file
-    nouns = [f for f in os.listdir(noun_folder) if f.endswith('.txt')]
+    nouns = [f for f in os.listdir(noun_folder) if f.endswith('.list')]
     if not nouns:
         print("No noun files found.")
         return
@@ -21,7 +21,7 @@ def main():
     noun_path = os.path.join(noun_folder, noun_file)
 
     # Find and select a random adjective file
-    adjectives = [f for f in os.listdir(adjective_folder) if f.endswith('.txt')]
+    adjectives = [f for f in os.listdir(adjective_folder) if f.endswith('.list')]
     if not adjectives:
         print("No adjective files found.")
         return
