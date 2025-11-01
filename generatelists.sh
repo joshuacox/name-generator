@@ -4,6 +4,7 @@ cut -f2 -d, data/nounlist.csv > alternative-nouns/long.list
 cut -f2 -d, data/Adjectives.csv \
   |tr -d '\r' \
   |sed 's/^\s*\(\S*\)/\1/' \
+  |sed 's/\s*$//' \
   |grep -v '^Word$' \
   |grep -v '^a$' \
   > alternative-adjectives/long.list
