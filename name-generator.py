@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# This was converted from the shell by llama3.2
 import os
 import random
 
