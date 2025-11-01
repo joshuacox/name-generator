@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eux
+# long noun list
 cut -f2 -d, data/nounlist.csv > alternative-nouns/long.list
+# long adj list
 cut -f2 -d, data/Adjectives.csv \
   |tr -d '\r' \
   |sed 's/^\s*\(\S*\)/\1/' \
@@ -8,7 +10,13 @@ cut -f2 -d, data/Adjectives.csv \
   |grep -v '^Word$' \
   |grep -v '^a$' \
   > alternative-adjectives/long.list
+# greek gods
 cut -f1 -d, data/greek_gods.csv > alternative-nouns/greek_gods.list
-cut -f2 -d, data/presidents.csv|grep -v '^name$'|sed 's/.*\s\(\S*\)/\1/'|sort|uniq > alternative-nouns/us_presidents.list
-cat alternative-nouns/*.list > nouns/full.list
-cat alternative-adjectives/*.list > adjectives/full.list
+# presidents
+cut -f2 -d, data/presidents.csv \
+  |grep -v '^name$'|sed 's/.*\s\(\S*\)/\1/' \
+  |sort|uniq \
+  > alternative-nouns/us_presidents.list
+# congolmerate
+cat alternative-nouns/*.list      |sort|uniq > nouns/full.list
+cat alternative-adjectives/*.list |sort|uniq > adjectives/full.list

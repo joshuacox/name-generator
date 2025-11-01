@@ -21,17 +21,18 @@ The script will output a randomly generated name in the format "adjective-noun".
 Or specify 
 
 ```
-NOUN_FILE=nouns/greek_gods.txt ./name-generator.sh
+NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
+NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
 ## Customization
 
-To add your own nouns and adjectives, create text files in the `nouns` and `adjectives` directories. Each file should contain one word per line.
+To add your own nouns and adjectives, create text files in the `alternative-nouns` and `alternative-adjectives` directories. Each file should contain one word per line.
 
 ## Requirements
 
-* Python 3.x
-* A Unix-like operating system (tested on Linux and macOS)
+* Python 3.x (if you use the name-generatory.py script)
+* A Unix-like operating system (tested on Linux)
 
 ## Troubleshooting
 
