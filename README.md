@@ -1,46 +1,36 @@
 # Name Generator
 
-This repository contains scripts and data for generating names. It supports generating names from English adjectives and nouns, as well as names inspired by Greek gods.
+This repository contains a simple name generator script that combines random nouns and adjectives to create unique names.
 
-## Files
+## Getting Started
 
+To use this repository, follow these steps:
 
-*   `name-generator.py`:  A Python script that generates names based on the provided data files.
-
-*   `name-generator.bash`: A Bash script that generates names.
-
-*   `name-generator.sh`: Another Bash script that generates names.
-
-*   `name-generator.zsh`: A Zsh script that generates names.
-
-*   `adjectives/english-adjectives.txt`: A text file containing a list of English adjectives.
-
-*   `nouns/english-nouns.txt`: A text file containing a list of English nouns.
-
-*   `nouns/greek_gods.txt`: A text file containing a list of Greek god names.
-
-*   `.python-version`: Specifies the Python version used by the Python script.
-
-*   `LICENSE`: The license for this repository.
+1. Clone the repository to your local machine using Git: `git clone https://github.com/your-username/name-generator.git`
+2. Navigate to the cloned repository: `cd name-generator`
+3. Run the script using Python: `python name-generator.py`
 
 ## Usage
 
-### Python
+The script will output a randomly generated name in the format "adjective-noun". You can run the script multiple times to generate different names.
 
-1.  Make sure you have Python installed.  Check your version with `python --version`. The required version is specified in `.python-version`.
+## Customization
 
-2.  Run the script with `python name-generator.py <name>`.  The `<name>` argument is optional and will be used as a seed for the name generation. If no name is provided, a
-random seed will be used.
+To add your own nouns and adjectives, create text files in the `nouns` and `adjectives` directories. Each file should contain one word per line.
 
-### Bash/Zsh
+## Requirements
 
-1.  Run the script with `./name-generator.bash` or `./name-generator.zsh`.  These scripts will generate a name and print it to the console.
+* Python 3.x
+* A Unix-like operating system (tested on Linux and macOS)
 
-## Data Files
+## Troubleshooting
 
-The `adjectives` and `nouns` directories contain text files with lists of words.  You can modify these files to customize the names that are generated. Each line in the text
-file represents a single word.
+If you encounter any issues, check the following:
 
-## License
+* Make sure you have Python installed on your system.
+* Ensure that the `nouns` and `adjectives` directories are in the same directory as the script.
+* Check that the text files in the `nouns` and `adjectives` directories are formatted correctly (one word per line).
 
-This project is licensed under the terms of the LICENSE file.
+## Contributing
+
+If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
