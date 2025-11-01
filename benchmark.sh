@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export counto=1000
+export counto=250
 set -eux
 hyperfine \
   --warmup 5 \
@@ -7,7 +7,11 @@ hyperfine \
   './name-generator.sh' \
   './name-generator.bash' \
   './name-generator.zsh' \
+  './name-generator.js' \
+  './name-generator-sync.js' \
   './name-generator.py'
+
+# WIP
   # 'export counto={counto} ./name-generator.sh' \
   # 'export counto={counto} ./name-generator.bash' \
   # 'export counto={counto} ./name-generator.zsh' \
