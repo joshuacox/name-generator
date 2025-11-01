@@ -6,3 +6,6 @@ eldersScrollsNames.csv - https://www.kaggle.com/datasets/shubhampatel231/elder-s
 ../alternative-nouns/animal-names.list - https://www.kaggle.com/datasets/pybear/animalsnames
 data/greek_gods.csv - https://www.kaggle.com/datasets/katrinaalaimo/list-of-greek-gods-and-goddesses
 presidents.csv - https://pages.uoregon.edu/dwilkins/data/presidents.csv
+emoji-test.txt - https://www.kaggle.com/datasets/eliasdabbas/emoji-data-descriptions-codepoints
+DrugNames.txt - https://www.kaggle.com/datasets/felipematsuoka/drug-names
+dogNames2.csv - https://www.kaggle.com/datasets/new-york-city/nyc-dog-names
