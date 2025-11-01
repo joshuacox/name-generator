@@ -1,0 +1,48 @@
+ #!/usr/bin/env bash
+#: "${MODEL:=ollama_chat/qwen2.5-coder:32b-base-fp16}"
+#: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
+: "${MODEL:=ollama_chat/llama4:scout}"
+#: ${MODEL:=ollama_chat/gemma3:27b-it-fp16}
+
+
+TMP=$(mktemp -d)
+FILES=$(find -iname '*.sh'|tr '\n' ' ') 
+FILES+=$(find -iname '*.bash'|tr '\n' ' ') 
+FILES+=$(find -iname '*.py'|tr '\n' ' ') 
+FILES+=$(find -iname '*.zsh'|tr '\n' ' ') 
+FILES+=$(find -iname '*.txt'|tr '\n' ' ') 
+FILES+=$(find -iname '*.js'|tr '\n' ' ') 
+FILES+=$(find -iname '*.json'|tr '\n' ' ') 
+FILES+=$(find -iname '*.md'|tr '\n' ' ') 
+FILES+=$(find -iname '*.mdx'|tr '\n' ' ') 
+#FILES+=$(find -iname '*.tsx'|tr '\n' ' ') 
+#echo $FILES |tr ' ' '\n' |sort
+#echo $FILES |tr ' ' '\n' |sort > $TMP/test2
+#diff $TMP/test1 $TMP/test2
+#echo $FILES
+#FILES=$(find . -iname '*.js' -o -iname '*.md' -o -iname '*.mdx' -o -iname '*.json' |tr '\n' ' ') 
+#echo $FILES |tr ' ' '\n' |sort > $TMP/test1
+
+
+if [[ $# -eq 0 ]]; then
+  aider --model $MODEL $FILES
+elif [[ $# -eq 1 ]]; then
+  aider --model $MODEL $FILES -m "$@"
+elif [[ $# -gt 1 ]]; then
+  echo "wrong number of arguments $#"
+  echo "useage:"
+  echo "repl: $0"
+  echo "message: $0 'message to AI'"
+  exit 1
+fi
+
+# some exaxmples of previous commands that led to this script
+# aider --model ollama_chat/gemma3:27b-it-fp16 -m 'create a nextjs blog in this directory'
+# aider --model ollama_chat/gemma3:27b-it-fp16 -m 'convert this blog to use mdx'
+# aider --model ollama_chat/gemma3:27b-it-fp16 -m 'write a README.md file that explains how to use this nextjs app'
+# aider --model ollama_chat/gemma3:27b-it-fp16 posts/first-post.md 'convert first-post.md to first-post.mdx'
+# aider --model ollama_chat/gemma3:27b-it-fp16 posts/first-post.md -m 'convert first-post.md to first-post.mdx'
+# aider --model ollama_chat/qwen2.5-coder:32b-base-fp16 -m 'create a nextjs blog in this directory'
+# aider --model ollama_chat/gemma3:27b-it-fp16 posts/first-post.md posts/first-post.mdx -m 'convert first-post.md to first-post.mdx'
+# aider --model ollama_chat/gemma3:27b-it-fp16 posts/first-post.mdx -m 'show off some example features of mdx in the posts/first-post.mdx file'
+# aider --model ollama_chat/gemma3:27b-it-fp16 $(find -iname '*.js'|tr '\n' ' ') posts/first-post.mdx -m 'show off some example features of mdx over markdown in the posts/first-post.mdx file'
