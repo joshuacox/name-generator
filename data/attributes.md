@@ -5,3 +5,4 @@ eldersScrollsNames.csv - https://www.kaggle.com/datasets/shubhampatel231/elder-s
 ../alternative-nouns/english-names.list - https://www.kaggle.com/datasets/shyamgupta196/names-in-different-languages
 ../alternative-nouns/animal-names.list - https://www.kaggle.com/datasets/pybear/animalsnames
 data/greek_gods.csv - https://www.kaggle.com/datasets/katrinaalaimo/list-of-greek-gods-and-goddesses
+presidents.csv - https://pages.uoregon.edu/dwilkins/data/presidents.csv

@@ -1,0 +1,46 @@
+order,name,height(cm),party,weight(pounds),age_elected,handed
+1,George Washington,189,Federalist,175,57,right
+2,John Adams,170,Federalist,150,61,right
+3,Thomas Jefferson,189,Democratic-Republican,174,57,right
+4,James Madison,163,Democratic-Republican,100,57,right
+5,James Monroe,183,Democratic-Republican,189,57,right
+6,John Quincy Adams,171,Democratic-Republican,175,57,right
+7,Andrew Jackson,185,Democrat,140,61,right
+8,Martin Van Buren,168,Democrat,164,54,right
+9,William Henry Harrison,173,Whig,162,62,right
+10,John Tyler,183,Whig,160,51,right
+11,James K. Polk,173,Democrat,174,49,right
+12,Zachary Taylor,173,Whig,170,64,right
+13,Millard Fillmore,175,Whig,174,50,right
+14,Franklin Pierce,178,Democrat,144,48,right
+15,James Buchanan,183,Democrat,198,65,right
+16,Abraham Lincoln,193,Republican,180,56,right
+17,Andrew Johnson,178,National Union,174,56,right
+18,Ulysses S. Grant,173,Republican,156,46,right
+19,Rutherford B. Hayes,174,Republican,175,54,right
+20,James A. Garfield,183,Republican,184,51,left
+21,Chester A. Arthur,183,Republican,224,51,right
+23,Benjamin Harrison,168,Republican,160,55,right
+24,Grover Cleveland,180,Democrat,260,55,right
+25,William McKinley,170,Republican,199,54,right
+26,Theodore Roosevelt,178,Republican,210,42,right
+27,William Howard Taft,182,Republican,340,51,right
+28,Woodrow Wilson,180,Democrat,170,56,right
+29,Warren G. Harding,183,Republican,173,55,right
+30,Calvin Coolidge,178,Republican,148,51,right
+31,Herbert Hoover,182,Republican,187,54,left
+32,Franklin D. Roosevelt,188,Democrat,188,51,right
+33,Harry S. Truman,175,Democrat,167,60,left
+34,Dwight D. Eisenhower,179,Republican,171,62,right
+35,John F. Kennedy,183,Democrat,173,43,right
+36,Lyndon B. Johnson,193,Democrat,200,55,right
+37,Richard Nixon,182,Republican,175,56,right
+38,Gerald Ford,183,Republican,190,61,left
+39,Jimmy Carter,177,Democrat,160,52,right
+40,Ronald Reagan,185,Republican,185,69,left
+41,George H. W. Bush,188,Republican,196,64,right
+42,Bill Clinton,188,Democrat,223,46,left
+43,George W. Bush,182,Republican,191,54,left
+44,Barack Obama,185,Democrat,180,47,left
+45,Donald Trump,188,Republican,239,70,right
+46,Joe Biden,183,Democrat,178,78,right
