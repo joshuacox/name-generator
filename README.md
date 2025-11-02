@@ -25,6 +25,12 @@ NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/tast
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
+#### benchmarks
+
+`./benchark.sh`
+
+The rust implementation was able to achieve 2 million results with at max 3 duplicates max in under 35 seconds
+
 ## Language Deathmatch!!!
 
 what language is fastest? I have sh, bash, zsh, c, python, javascript, and rust now in this project:
@@ -40,13 +46,6 @@ export counto=10000000 && time /home/thoth/.cargo/target/debug/name-generator |s
 sort  72.52s user 9.85s system 73% cpu 1:51.85 total
 uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
 ```
-
-
-#### benchmarks
-
-`./benchark.sh`
-
-The rust implementation was able to achieve 2 million results with at max 3 duplicates max in under 35 seconds
 
 ## Customization
 
