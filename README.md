@@ -1,6 +1,7 @@
 # Name Generator
 
-This repository contains a simple name generator script that combines random nouns and adjectives to create unique names.
+This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. 
+		"agnesi",
 
 e.g.
 
@@ -36,7 +37,7 @@ NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/tast
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
-#### benchmarks
+# benchmarks
 
 `./benchark.sh`
 
@@ -94,3 +95,4 @@ If you'd like to contribute to this project, please fork the repository and subm
 
 worse-bunghole
 inappropriate-middleman
+sordid-pronoun
