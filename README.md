@@ -2,6 +2,17 @@
 
 This repository contains a simple name generator script that combines random nouns and adjectives to create unique names.
 
+e.g.
+
+```
+counto=5 NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
+tangy-apheliotes
+rancid-styx
+delicious-dysis
+sweet-proioxis
+rotten-hedone
+```
+
 ## Getting Started
 
 To use this repository, follow these steps:
