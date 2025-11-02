@@ -4,16 +4,22 @@ export counto=${counto}
 set -eux
 runnr () {
   hyperfine \
-    --warmup 5 \
-    --runs 20 \
+    --warmup 2 \
+    --runs 5 \
     './name-generator' \
     './name-generator.sh' \
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.js' \
+    "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
     './name-generator.py'
 }
+
+main () {
+export counto=3
+runnr
+exit 0
 export counto=12
 runnr
 export counto=25
@@ -26,8 +32,13 @@ export counto=250
 runnr
 export counto=500
 runnr
-export counto=100
+export counto=1000
 runnr
+}
+
+time main
+
+exit 0
 
 # WIP
   # 'export counto={counto} ./name-generator.sh' \

@@ -1,0 +1,12 @@
+[package]
+name = "name-generator"
+version = "0.1.0"
+edition = "2024"
+authors = ["Josh Cox <josh@webhosting.coop>"]
+description = "Port of a shell‑script that prints random adjective‑noun strings."
+
+[dependencies]
+walkdir = "2.5"
+rand = "0.8.5"
+termsize = "0.1.9"
+anyhow = "1.0"
