@@ -25,6 +25,16 @@ NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/tast
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
+## Language Deathmatch!!!
+
+what language is fastest? I have sh, bash, zsh, c, python, javascript, and rust now in this project:
+https://github.com/joshuacox/name-generator
+TLDR at low counts C dominates, but rust and python quickly take over at higher counts and rust is king at very large iterations
+
+#### benchmarks
+
+`./benchark.sh`
+
 ## Customization
 
 To add your own nouns and adjectives, create text files in the `alternative-nouns` and `alternative-adjectives` directories. Each file should contain one word per line.
