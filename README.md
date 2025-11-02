@@ -35,6 +35,8 @@ TLDR at low counts C dominates, but rust and python quickly take over at higher 
 
 `./benchark.sh`
 
+The rust implementation was able to achieve 2 million results with at max 3 duplicates max in under 35 seconds
+
 ## Customization
 
 To add your own nouns and adjectives, create text files in the `alternative-nouns` and `alternative-adjectives` directories. Each file should contain one word per line.
