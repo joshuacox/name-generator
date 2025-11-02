@@ -19,7 +19,6 @@ runnr () {
 main () {
 export counto=3
 runnr
-exit 0
 export counto=12
 runnr
 export counto=25
