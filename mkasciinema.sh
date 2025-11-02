@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-asciinema rec --command "./benchmark.sh" benchmakr.cast
+time asciinema rec --command "./benchmark.sh" benchmakr.cast
