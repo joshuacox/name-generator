@@ -31,6 +31,17 @@ what language is fastest? I have sh, bash, zsh, c, python, javascript, and rust 
 https://github.com/joshuacox/name-generator
 TLDR at low counts C dominates, but rust and python quickly take over at higher counts and rust is king at very large iterations
 
+also created 9,530,416 unique names out of 10 million in under two minutes:
+
+```
+export counto=10000000 && time /home/thoth/.cargo/target/debug/name-generator |sort|uniq -c|wc -l  
+9530416
+/home/thoth/.cargo/target/debug/name-generator  30.70s user 11.94s system 56% cpu 1:15.45 total
+sort  72.52s user 9.85s system 73% cpu 1:51.85 total
+uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
+```
+
+
 #### benchmarks
 
 `./benchark.sh`
