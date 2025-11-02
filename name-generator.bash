@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This is largely the same as the shell script 
 HERE=$(pwd)
 : "${counto:=$(tput lines)}"
 : "${NOUN_FOLDER:=${HERE}/nouns}"

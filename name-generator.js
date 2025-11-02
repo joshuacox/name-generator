@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// This was converted from the shell by llama4:scout
+// This was originally converted from the shell by llama4:scout
 const fs = require('fs').promises;
 const path = require('path');
 

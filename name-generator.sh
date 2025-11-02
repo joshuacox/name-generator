@@ -1,4 +1,5 @@
 #!/bin/sh
+# original shell by Josh Cox
 HERE=$(pwd)
 : "${counto:=$(tput lines)}"
 : "${NOUN_FOLDER:=${HERE}/nouns}"
@@ -24,5 +25,6 @@ while [[ ${countzero} -lt ${counto} ]]; do
   this_name=$(printf "%s-%s" "${this_adjective}" "${this_noun}")
   debugger
   echo ${this_name}
-  countzero=$((countzero+1))
+  #countzero=$((countzero+1))
+  ((countzero++))
 done

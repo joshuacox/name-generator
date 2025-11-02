@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# This was converted from the shell by llama4:scout
+# This was originally converted from the shell by llama4:scout
 import os
 import random
 import shutil

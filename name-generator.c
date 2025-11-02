@@ -1,4 +1,5 @@
 /*
+ * original conversion from shell by gpt-oss:12b
  * random_name.c
  *
  *  A C rewrite of the (broken) shell script that printed
