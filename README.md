@@ -49,7 +49,18 @@ uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
 
 ## Customization
 
+Originally I was going to just throw files in the noun and adjective directories, however, this lead to heavier 'weights' for the lines in the smaller files, so I am concatenating into a single files at this point.
+
+However, if you were to place files in the noun or adjectives directories they would be randomly picked from for the adjective and noun files.
+
 To add your own nouns and adjectives, create text files in the `alternative-nouns` and `alternative-adjectives` directories. Each file should contain one word per line.
+
+And then utilize them by specifying the env vars NOUN_FILE and ADJ_FILE i.e.:
+
+```
+NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
+NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
+```
 
 ## Requirements
 
@@ -71,3 +82,4 @@ If you'd like to contribute to this project, please fork the repository and subm
 ## Funniest generations
 
 worse-bunghole
+inappropriate-middleman
