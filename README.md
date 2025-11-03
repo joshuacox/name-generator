@@ -145,14 +145,92 @@ sort  72.52s user 9.85s system 73% cpu 1:51.85 total
 uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
 ```
 
-  ./name-generator_go ran
-    2.00 ± 0.42 times faster than /home/thoth/.cargo/target/debug/name-generator
-   14.81 ± 2.55 times faster than java NameGenerator
-   22.62 ± 3.79 times faster than ./name-generator.py
-   62.57 ± 9.40 times faster than ./name-generator
-  119.47 ± 17.69 times faster than ./name-generator.js
-  196.42 ± 27.82 times faster than ./name-generator-sync.js
-  199.37 ± 28.14 times faster than ./name-generator.zsh
-  217.17 ± 31.60 times faster than ./name-generator.sh
-  217.32 ± 31.51 times faster than ./name-generator.bash
+It is intersting to note that at `export counto=2` the c implementation is fastest, then go, rust, the shell implementations, javascript, then java, and lastly python
 
+```
+  ./name-generator ran
+    1.23 ± 0.38 times faster than ./name-generator_go
+    1.97 ± 0.73 times faster than /home/thoth/.cargo/target/debug/name-generator
+    3.84 ± 1.03 times faster than ./name-generator.zsh
+    3.84 ± 1.02 times faster than ./name-generator.sh
+    3.94 ± 1.04 times faster than ./name-generator.bash
+    9.48 ± 3.13 times faster than ./name-generator.js
+   10.42 ± 3.49 times faster than ./name-generator-sync.js
+   14.58 ± 3.99 times faster than java NameGenerator
+   25.12 ± 6.79 times faster than ./name-generator.py
+```
+
+But at a counto of 12 go and rust surpass the C, the shells hanging in the middle of the pack, Java passes javascript
+
+```
+  ./name-generator_go ran
+    1.61 ± 0.48 times faster than /home/thoth/.cargo/target/debug/name-generator
+    3.28 ± 0.90 times faster than ./name-generator
+    9.48 ± 1.85 times faster than ./name-generator.zsh
+   10.82 ± 2.54 times faster than ./name-generator.bash
+   10.86 ± 2.40 times faster than ./name-generator.sh
+   11.63 ± 2.44 times faster than java NameGenerator
+   13.68 ± 3.15 times faster than ./name-generator.js
+   16.84 ± 3.30 times faster than ./name-generator-sync.js
+   19.22 ± 3.80 times faster than ./name-generator.py
+```
+
+At a counto of 25 java and asynchronous javascript charge ahead of the shells, and python begins to gather steam, with synchronous javascript dead last
+
+```
+  ./name-generator_go ran
+    1.74 ± 0.42 times faster than /home/thoth/.cargo/target/debug/name-generator
+    5.85 ± 0.72 times faster than ./name-generator
+   12.30 ± 2.17 times faster than java NameGenerator
+   19.45 ± 2.48 times faster than ./name-generator.js
+   20.63 ± 2.66 times faster than ./name-generator.zsh
+   21.01 ± 3.30 times faster than ./name-generator.py
+   21.74 ± 2.41 times faster than ./name-generator.bash
+   21.76 ± 2.36 times faster than ./name-generator.sh
+   29.58 ± 3.43 times faster than ./name-generator-sync.js
+```
+
+At a counto of 50 python overtakes javascript and zsh
+
+```
+  ./name-generator_go ran
+    1.67 ± 0.48 times faster than /home/thoth/.cargo/target/debug/name-generator
+   11.43 ± 2.45 times faster than ./name-generator
+   11.96 ± 2.92 times faster than java NameGenerator
+   21.74 ± 4.84 times faster than ./name-generator.py
+   28.09 ± 6.11 times faster than ./name-generator.js
+   38.01 ± 7.95 times faster than ./name-generator.zsh
+   40.90 ± 8.50 times faster than ./name-generator.bash
+   41.64 ± 8.71 times faster than ./name-generator.sh
+   47.86 ± 10.91 times faster than ./name-generator-sync.js
+```
+
+At a counto of 100 java and python overtake the C
+
+```
+  ./name-generator_go ran
+    1.73 ± 0.54 times faster than /home/thoth/.cargo/target/debug/name-generator
+   13.64 ± 1.39 times faster than java NameGenerator
+   21.70 ± 1.70 times faster than ./name-generator.py
+   25.97 ± 1.98 times faster than ./name-generator
+   53.89 ± 3.55 times faster than ./name-generator.js
+   79.16 ± 4.51 times faster than ./name-generator.zsh
+   81.36 ± 4.77 times faster than ./name-generator.sh
+   83.00 ± 5.39 times faster than ./name-generator.bash
+   83.13 ± 5.15 times faster than ./name-generator-sync.js
+```
+
+At a counto of 250 the synchronous javascript pulls ahead of the shells
+
+```
+  ./name-generator_go ran
+    1.73 ± 0.65 times faster than /home/thoth/.cargo/target/debug/name-generator
+   15.11 ± 4.05 times faster than java NameGenerator
+   23.15 ± 6.14 times faster than ./name-generator.py
+   66.67 ± 18.06 times faster than ./name-generator
+  124.18 ± 33.03 times faster than ./name-generator.js
+  206.49 ± 54.98 times faster than ./name-generator-sync.js
+  208.77 ± 55.23 times faster than ./name-generator.zsh
+  223.60 ± 59.11 times faster than ./name-generator.bash
+  226.21 ± 59.86 times faster than ./name-generator.sh
+```

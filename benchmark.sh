@@ -19,14 +19,12 @@ runnr () {
 }
 
 main () {
-export counto=250
+export counto=2
 runnr
-exit 0
 export counto=12
 runnr
 export counto=25
 runnr
-exit 0
 export counto=50
 runnr
 export counto=100
