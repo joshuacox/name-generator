@@ -1,3 +1,5 @@
+.PHONY: test all
+
 all: name-generator ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
 
 name-generator:
@@ -15,3 +17,6 @@ name-generator_go:
 
 NameGenerator.class:
 	javac NameGenerator.java
+
+test:
+	./test/bats/bin/bats test/test.bats
