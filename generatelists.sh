@@ -34,5 +34,11 @@ cut -f1 -d, data/dogNames2.csv \
 # cat DrugNames.txt|sort|uniq|tr ' ' '-'|tr '/' '-'
 
 # congolmerate
-cat alternative-nouns/*.list      |sort|uniq > nouns/full.list
-cat alternative-adjectives/*.list |sort|uniq > adjectives/full.list
+cat alternative-nouns/*.list \
+  |tr '[:upper:]' '[:lower:]' \
+  |sort|uniq \
+  >nouns/full.list 
+cat alternative-adjectives/*.list \
+  |tr '[:upper:]' '[:lower:]' \
+  |sort|uniq \
+  > adjectives/full.list
