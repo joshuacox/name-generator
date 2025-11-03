@@ -8,6 +8,14 @@
   result="$(export counto=100; ./name-generator|wc -l)"
   [ "$result" -eq 100 ]
 }
+@test "test NameGenerator at 10" {
+  result="$(export counto=10; java NameGenerator|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test NameGenerator at 100" {
+  result="$(export counto=100; java NameGenerator|wc -l)"
+  [ "$result" -eq 100 ]
+}
 @test "test name-generator_go at 10" {
   result="$(export counto=10; ./name-generator_go|wc -l)"
   [ "$result" -eq 10 ]

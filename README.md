@@ -39,28 +39,6 @@ NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/tast
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
-# benchmarks
-
-`./benchark.sh`
-
-The rust implementation was able to achieve 2 million results with at max 3 duplicates max in under 35 seconds
-
-## Language Deathmatch!!!
-
-what language is fastest? I have sh, bash, zsh, c, python, javascript, and rust now in this project:
-https://github.com/joshuacox/name-generator
-TLDR at low counts C dominates, but rust and python quickly take over at higher counts and rust is king at very large iterations
-
-also created 9,530,416 unique names out of 10 million in under two minutes:
-
-```
-export counto=10000000 && time /home/thoth/.cargo/target/debug/name-generator |sort|uniq -c|wc -l  
-9530416
-/home/thoth/.cargo/target/debug/name-generator  30.70s user 11.94s system 56% cpu 1:15.45 total
-sort  72.52s user 9.85s system 73% cpu 1:51.85 total
-uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
-```
-
 ## Customization
 
 Originally I was going to just throw files in the noun and adjective directories, however, this lead to heavier 'weights' for the lines in the smaller files, so I am concatenating into a single files at this point.
@@ -120,9 +98,12 @@ holistic-zisoux
 
 `./test.bats`
 
+󰰸 ❯ ./test.bats   
 test.bats
  ✓ test name-generator at 10
  ✓ test name-generator at 100
+ ✓ test NameGenerator at 10
+ ✓ test NameGenerator at 100
  ✓ test name-generator_go at 10
  ✓ test name-generator_go at 100
  ✓ test name-generator.sh at 10
@@ -140,5 +121,38 @@ test.bats
  ✓ test /home/thoth/.cargo/target/debug/name-generator at 10
  ✓ test /home/thoth/.cargo/target/debug/name-generator at 100
 
-18 tests, 0 failures
+20 tests, 0 failures
+
+# benchmarks
+
+`./benchark.sh`
+
+The rust implementation was able to achieve 2 million results with at max 3 duplicates max in under 35 seconds
+
+## Language Deathmatch!!!
+
+what language is fastest? I have sh, bash, zsh, c, python, javascript, and rust now in this project:
+https://github.com/joshuacox/name-generator
+TLDR at low counts C dominates, but rust and python quickly take over at higher counts and rust is king at very large iterations
+
+also created 9,530,416 unique names out of 10 million in under two minutes:
+
+```
+export counto=10000000 && time /home/thoth/.cargo/target/debug/name-generator |sort|uniq -c|wc -l  
+9530416
+/home/thoth/.cargo/target/debug/name-generator  30.70s user 11.94s system 56% cpu 1:15.45 total
+sort  72.52s user 9.85s system 73% cpu 1:51.85 total
+uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
+```
+
+  ./name-generator_go ran
+    2.00 ± 0.42 times faster than /home/thoth/.cargo/target/debug/name-generator
+   14.81 ± 2.55 times faster than java NameGenerator
+   22.62 ± 3.79 times faster than ./name-generator.py
+   62.57 ± 9.40 times faster than ./name-generator
+  119.47 ± 17.69 times faster than ./name-generator.js
+  196.42 ± 27.82 times faster than ./name-generator-sync.js
+  199.37 ± 28.14 times faster than ./name-generator.zsh
+  217.17 ± 31.60 times faster than ./name-generator.sh
+  217.32 ± 31.51 times faster than ./name-generator.bash
 

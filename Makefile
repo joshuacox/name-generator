@@ -1,4 +1,4 @@
-all: name-generator ${HOME}/.cargo/target/debug/name-generator
+all: name-generator ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
 
 name-generator:
 	gcc name-generator.c -o name-generator
@@ -12,3 +12,6 @@ clean:
 
 name-generator_go:
 	go build -o name-generator_go name-generator.go
+
+NameGenerator.class:
+	javac NameGenerator.java

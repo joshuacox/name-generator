@@ -12,13 +12,14 @@ runnr () {
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.js' \
+    'java NameGenerator' \
     "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
     './name-generator.py'
 }
 
 main () {
-export counto=300
+export counto=250
 runnr
 exit 0
 export counto=12

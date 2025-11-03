@@ -1,0 +1,140 @@
+// original conversion by gpt-oss:120b
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.*;
+
+public class NameGenerator {
+
+    // -----------------------------------------------------------------------
+    // Configuration – values are taken from the environment, otherwise a default
+    // -----------------------------------------------------------------------
+    private static final Path HERE = Paths.get("").toAbsolutePath();
+
+    private static final int COUNT_O = getCountO();                     // number of lines to emit
+    private static final Path NOUN_FOLDER = getPathEnv("NOUN_FOLDER", HERE.resolve("nouns"));
+    private static final Path ADJ_FOLDER  = getPathEnv("ADJ_FOLDER",  HERE.resolve("adjectives"));
+    private static final boolean DEBUG = "true".equalsIgnoreCase(System.getenv("DEBUG"));
+
+    // -----------------------------------------------------------------------
+    // Main entry point
+    // -----------------------------------------------------------------------
+    public static void main(String[] args) {
+        try {
+            // 1️⃣ Pick a random file from each folder
+            Path nounFile = pickRandomFile(NOUN_FOLDER);
+            Path adjFile  = pickRandomFile(ADJ_FOLDER);
+
+            // 2️⃣ Load the whole content of the files (so we can pick a random line fast)
+            List<String> nouns = readAllLines(nounFile);
+            List<String> adjs  = readAllLines(adjFile);
+
+            // 3️⃣ Produce the output
+            Random rnd = new Random();
+            for (int i = 0; i < COUNT_O; i++) {
+                String noun = nouns.get(rnd.nextInt(nouns.size())).toLowerCase(Locale.ROOT);
+                String adj  = adjs.get(rnd.nextInt(adjs.size()));
+
+                String name = String.format("%s-%s", adj, noun);
+                debugPrint(i, nounFile, adjFile, noun, adj, name);
+                System.out.println(name);
+            }
+        } catch (IOException e) {
+            System.err.println("❌  I/O error: " + e.getMessage());
+            System.exit(1);
+        } catch (IllegalStateException e) {
+            System.err.println("❌  Configuration error: " + e.getMessage());
+            System.exit(2);
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // Helper methods
+    // -----------------------------------------------------------------------
+
+    /** Returns the number of lines the original script would have printed.
+     *  It tries to ask the terminal for its height (via the JNA‑based
+     *  `stty size` command).  If that fails, it falls back to the value of the
+     *  environment variable `counto` or finally to a safe default of 24. */
+    private static int getCountO() {
+        // 1️⃣ Try to get the terminal height using `tput lines` (the same command
+        //    the shell script uses).  If we cannot run it, ignore the exception.
+
+        // 2️⃣ Check a user‑supplied env‑var (the script never used it, but it can be handy)
+        String env = System.getenv("counto");
+        if (env != null) {
+            try {
+                return Integer.parseInt(env);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        try {
+            Process p = new ProcessBuilder("tput", "lines")
+                    .redirectError(ProcessBuilder.Redirect.DISCARD)
+                    .start();
+            try (Scanner sc = new Scanner(p.getInputStream())) {
+                if (sc.hasNextInt()) {
+                    return sc.nextInt();
+                }
+            }
+            p.waitFor();
+        } catch (Exception ignored) {
+        }
+
+        // 3️⃣ Default
+        return 24;
+    }
+
+    /** Returns the value of an environment variable interpreted as a {@link Path},
+     *  or the supplied default if the variable is not set or empty. */
+    private static Path getPathEnv(String varName, Path defaultPath) {
+        String val = System.getenv(varName);
+        return (val == null || val.isBlank()) ? defaultPath : Paths.get(val).toAbsolutePath();
+    }
+
+    /** Picks a random regular file (not a directory) from the given folder.
+     *  Throws {@link IllegalStateException} if the folder does not exist or
+     *  contains no regular files. */
+    private static Path pickRandomFile(Path folder) throws IOException {
+        try (Stream<Path> stream = Files.list(folder)) {
+            List<Path> files = stream
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+
+            if (files.isEmpty()) {
+                throw new IllegalStateException("Folder " + folder + " does not contain any regular files");
+            }
+            return files.get(new Random().nextInt(files.size()));
+        }
+    }
+
+    /** Reads *all* lines from a file using UTF‑8.  Empty lines are kept – the
+     *  original shell script would have treated them as valid candidates as well. */
+    private static List<String> readAllLines(Path file) throws IOException {
+        return Files.readAllLines(file);
+    }
+
+    /** Prints the same diagnostic information that the original `debugger`
+     *  function printed, but only when `DEBUG=true`. */
+    private static void debugPrint(int iteration,
+                                   Path nounFile,
+                                   Path adjFile,
+                                   String noun,
+                                   String adj,
+                                   String combined) {
+        if (!DEBUG) {
+            return;
+        }
+        System.err.println("=== DEBUG ITERATION " + iteration + " ===");
+        System.err.println("adjective   = " + adj);
+        System.err.println("noun        = " + noun);
+        System.err.println("combined    = " + combined);
+        System.err.println("ADJ_FILE    = " + adjFile);
+        System.err.println("ADJ_FOLDER  = " + ADJ_FOLDER);
+        System.err.println("NOUN_FILE   = " + nounFile);
+        System.err.println("NOUN_FOLDER = " + NOUN_FOLDER);
+        System.err.println("countzero   = " + iteration);
+        System.err.println("counto      = " + COUNT_O);
+        System.err.println();
+    }
+}
