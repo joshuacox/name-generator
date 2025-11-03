@@ -1,6 +1,6 @@
 # Name Generator
 
-Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have sh, bash, zsh, c, python, javascript, and rust, PRs welcome for more!
+Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have sh, bash, zsh, c, python, javascript, golang, and rust, PRs welcome for more!
 
 This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. 
 		"agnesi",
@@ -115,4 +115,30 @@ gasping-rennie
 resentful-antibody
 holistic-zisoux
 
+
+# Testing
+
+`./test.bats`
+
+test.bats
+ ✓ test name-generator at 10
+ ✓ test name-generator at 100
+ ✓ test name-generator_go at 10
+ ✓ test name-generator_go at 100
+ ✓ test name-generator.sh at 10
+ ✓ test name-generator.sh at 100
+ ✓ test name-generator.bash at 10
+ ✓ test name-generator.bash at 100
+ ✓ test name-generator.zsh at 10
+ ✓ test name-generator.zsh at 100
+ ✓ test name-generator.py at 10
+ ✓ test name-generator.py at 100
+ ✓ test name-generator.js at 10
+ ✓ test name-generator.js at 100
+ ✓ test name-generator-sync.js at 10
+ ✓ test name-generator-sync.js at 100
+ ✓ test /home/thoth/.cargo/target/debug/name-generator at 10
+ ✓ test /home/thoth/.cargo/target/debug/name-generator at 100
+
+18 tests, 0 failures
 
