@@ -9,3 +9,6 @@ ${HOME}/.cargo/target/debug/name-generator:
 clean:
 	rm -v name-generator 
 	rm -v ${HOME}/.cargo/target/debug/name-generator
+
+name-generator_go:
+	go build -o name-generator_go name-generator.go

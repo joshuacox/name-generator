@@ -7,6 +7,7 @@ runnr () {
     --warmup 2 \
     --runs 5 \
     './name-generator' \
+    './name-generator_go' \
     './name-generator.sh' \
     './name-generator.bash' \
     './name-generator.zsh' \
@@ -17,12 +18,14 @@ runnr () {
 }
 
 main () {
-export counto=3
+export counto=300
 runnr
+exit 0
 export counto=12
 runnr
 export counto=25
 runnr
+exit 0
 export counto=50
 runnr
 export counto=100
