@@ -21,6 +21,7 @@ runnr () {
 main () {
 export counto=2
 runnr
+exit 0
 export counto=12
 runnr
 export counto=25
