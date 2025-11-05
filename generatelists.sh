@@ -35,10 +35,12 @@ cut -f1 -d, data/dogNames2.csv \
 
 # congolmerate
 cat alternative-nouns/*.list \
+  |grep -v ';' \
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
   >nouns/full.list 
 cat alternative-adjectives/*.list \
+  |grep -v ';' \
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
   > adjectives/full.list
