@@ -157,7 +157,7 @@ sort  72.52s user 9.85s system 73% cpu 1:51.85 total
 uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
 ```
 
-[![asciicast](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA.png)](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA)
+[![asciicast](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA.svg)](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA)
 
 It is intersting to note that at `export counto=2` the c implementation is fastest, then go, rust, the shell implementations, javascript, then java, and lastly python
 
