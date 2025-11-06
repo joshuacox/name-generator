@@ -93,6 +93,24 @@ setup() {
   result="$(export counto=33433; $HOME/.cargo/target/debug/name-generator|wc -l)"
   [ "$result" -eq 33433 ]
 }
+@test "test name-generator.rb at 10" {
+  result="$(export counto=10; ./name-generator.rb|wc -l)"
+  echo $result
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.rb at 83" {
+  result="$(export counto=83; ./name-generator.rb|wc -l)"
+  [ "$result" -eq 83 ]
+}
+@test "test name-generator_haskell.hs at 10" {
+  result="$(export counto=10; cabal run|wc -l)"
+  echo $result
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_haskell.hs at 83" {
+  result="$(export counto=83; cabal run|wc -l)"
+  [ "$result" -eq 83 ]
+}
 @test "test sh test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
@@ -105,6 +123,13 @@ setup() {
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
   result=$(./name-generator.bash | tail -n1)
+  assert_equal "$result" "test-test"
+}
+@test "test ruby test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  result=$(./name-generator.rb | tail -n1)
   assert_equal "$result" "test-test"
 }
 @test "test zsh test/test" {

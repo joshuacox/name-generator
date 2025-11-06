@@ -2,7 +2,7 @@
 : ${counto:=12}
 export counto=${counto}
 set -eux
-runnr () {
+bench_runnr () {
   hyperfine \
     --warmup 2 \
     --runs 5 \
@@ -12,30 +12,16 @@ runnr () {
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.js' \
+    './name-generator.rb' \
     'java NameGenerator' \
+    'cabal run' \
     "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
     './name-generator.py'
 }
 
 main () {
-export counto=2
-runnr
-exit 0
-export counto=12
-runnr
-export counto=25
-runnr
-export counto=50
-runnr
-export counto=100
-runnr
-export counto=250
-runnr
-export counto=500
-runnr
-export counto=1000
-runnr
+bench_runnr
 }
 
 time main

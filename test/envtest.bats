@@ -19,6 +19,13 @@ setup() {
   result=$(./name-generator | tail -n1)
   assert_equal "$result" "test-test"
 }
+@test "test haskell test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  result=$(cabal run | tail -n1)
+  assert_equal "$result" "test-test"
+}
 @test "test sh test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
