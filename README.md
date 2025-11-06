@@ -157,6 +157,8 @@ sort  72.52s user 9.85s system 73% cpu 1:51.85 total
 uniq -c  2.84s user 0.32s system 2% cpu 1:51.85 total
 ```
 
+[![asciicast](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA.png)](https://asciinema.org/a/dRhBeZltkuInh3eF0pOREJACA)
+
 It is intersting to note that at `export counto=2` the c implementation is fastest, then go, rust, the shell implementations, javascript, then java, and lastly python
 
 ```
@@ -246,3 +248,5 @@ At a counto of 250 the synchronous javascript pulls ahead of the shells
   223.60 ± 59.11 times faster than ./name-generator.bash
   226.21 ± 59.86 times faster than ./name-generator.sh
 ```
+
+
