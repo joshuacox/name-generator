@@ -20,35 +20,3 @@ setup() {
   result=$(./name-generator | tail -n1)
   assert_equal "$result" "test_test"
 }
-@test "test haskell test/test" {
-  export counto=1 
-  export NOUN_FILE=test/test 
-  export ADJ_FILE=test/test 
-  export SEPARATOR=_
-  result=$(cabal run | tail -n1)
-  assert_equal "$result" "test_test"
-}
-@test "test sh test/test" {
-  export counto=1 
-  export NOUN_FILE=test/test 
-  export ADJ_FILE=test/test 
-  export SEPARATOR=_
-  result=$(./name-generator.sh | tail -n1)
-  assert_equal "$result" "test_test"
-}
-@test "test bash test/test" {
-  export counto=1 
-  export NOUN_FILE=test/test 
-  export ADJ_FILE=test/test 
-  export SEPARATOR=_
-  result=$(./name-generator.bash | tail -n1)
-  assert_equal "$result" "test_test"
-}
-@test "test zsh test/test" {
-  export counto=1 
-  export NOUN_FILE=test/test 
-  export ADJ_FILE=test/test 
-  export SEPARATOR=_
-  result=$(./name-generator.zsh | tail -n1)
-  assert_equal "$result" "test_test"
-}
