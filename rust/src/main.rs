@@ -76,9 +76,9 @@ fn maybe_debug(
 }
 
 fn main() -> Result<()> {
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     // 1. Resolve configuration (environment variables, defaults, cwd)
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     let cwd = env::current_dir().context("Unable to get current working directory")?;
 
     // `counto` – how many names we will emit.  The shell script used `tput lines`.
@@ -88,6 +88,10 @@ fn main() -> Result<()> {
         .and_then(|s| s.parse().ok())
         .unwrap_or_else(terminal_rows);
 
+    // Separator (default "-")
+    let separator = env::var("SEPARATOR").unwrap_or_else(|_| "-".to_string());
+
+    // Resolve folders (allow overrides)
     let noun_folder = PathBuf::from(env_or_default(
         "NOUN_FOLDER",
         cwd.join("nouns").to_string_lossy(),
@@ -97,22 +101,30 @@ fn main() -> Result<()> {
         cwd.join("adjectives").to_string_lossy(),
     ));
 
-    // -------------------------------------------------------------------------
-    // 2. Pick random files inside the two folders (mimics the original `shuf …`)
-    // -------------------------------------------------------------------------
-    let noun_file = pick_random_file(&noun_folder)
-        .with_context(|| format!("Could not pick a noun file from {}", noun_folder.display()))?;
-    let adj_file = pick_random_file(&adj_folder)
-        .with_context(|| format!("Could not pick an adjective file from {}", adj_folder.display()))?;
+    // -------------------------------------------------
+    // 2. Resolve files: use env vars if set, otherwise pick random file
+    // -------------------------------------------------
+    let noun_file = if let Ok(p) = env::var("NOUN_FILE") {
+        PathBuf::from(p)
+    } else {
+        pick_random_file(&noun_folder)
+            .with_context(|| format!("Could not pick a noun file from {}", noun_folder.display()))?
+    };
+    let adj_file = if let Ok(p) = env::var("ADJ_FILE") {
+        PathBuf::from(p)
+    } else {
+        pick_random_file(&adj_folder)
+            .with_context(|| format!("Could not pick an adjective file from {}", adj_folder.display()))?
+    };
 
     // Resolve to absolute paths (like `realpath` in the shell script)
     let noun_file = noun_file.canonicalize()?;
     let adj_file = adj_file.canonicalize()?;
 
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     // 3. Load the whole files into memory – cheap for the tiny word‑lists we
     //    expect, and lets us pick a random line with O(1) work.
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     let noun_lines = read_lines(&noun_file)?;
     let adj_lines = read_lines(&adj_file)?;
 
@@ -125,9 +137,9 @@ fn main() -> Result<()> {
         anyhow::bail!("Adjective file {} is empty", adj_file.display());
     }
 
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     // 4. Main loop – emit `counto` names
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------
     let debug = env::var("DEBUG")
         .map(|v| v.eq_ignore_ascii_case("true"))
         .unwrap_or(false);
@@ -155,8 +167,8 @@ fn main() -> Result<()> {
             counto,
         );
 
-        // The final name: “adjective‑noun”
-        println!("{}-{}", adjective, noun);
+        // The final name: “adjective<separator>noun”
+        println!("{}{}{}", adjective, separator, noun);
     }
 
     Ok(())
