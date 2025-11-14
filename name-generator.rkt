@@ -1,9 +1,9 @@
 #lang racket
 
-;; --------------------------------------------------------
+;; ------------------------------------------------
 ;; Name Generator – Racket implementation
 ;; Behaves like the original shell script `name-generator.sh`.
-;; --------------------------------------------------------
+;; ------------------------------------------------
 
 (require racket/file
          racket/list
@@ -53,7 +53,8 @@
     (fprintf (current-error-port) "  ~a > ~a\n" countzero counto)))
 
 ;; ---------- Configuration ----------
-(define HERE (current-directory-path))
+;; Use the current working directory as the base path.
+(define HERE (current-directory))
 
 ;; Separator (default "-")
 (define SEPARATOR (or (env-var "SEPARATOR") "-"))
