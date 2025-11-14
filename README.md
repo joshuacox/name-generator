@@ -7,7 +7,8 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. golang
 1. haskell
 1. java
-1. javascript
+1. javascript async
+1. javascript sync
 1. perl
 1. python
 1. rust
