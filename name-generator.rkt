@@ -30,6 +30,11 @@
   (with-handlers ([exn:fail? (λ (_) #f)])
     (string->number (string-trim s))))
 
+;; Helper to get a maybe‑number from an environment variable.
+(define (maybe-number-from-env var)
+  (let ([v (env-var var)])
+    (and v (string->maybe-number v))))
+
 ;; Pick a random element from a non‑empty list.
 (define (random-choice lst)
   (list-ref lst (random (length lst))))
@@ -61,7 +66,7 @@
 
 ;; Count of lines to emit (default: tput lines or 24)
 (define COUNTO
-  (or (string->maybe-number (env-var "counto"))
+  (or (maybe-number-from-env "counto")
       (let* ([tput-output (with-handlers ([exn:fail? (λ (_) #f)])
                             (with-output-to-string
                               (λ () (system* "tput" "lines"))))])
