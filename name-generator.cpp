@@ -96,6 +96,25 @@ std::size_t terminalLines() {
     return 24;
 }
 
+/* Resolve a file path from an environment variable, falling back to a random file in a folder */
+fs::path resolveFile(const std::string& envVar,
+                     const fs::path& folder,
+                     std::mt19937& rng) {
+    std::string envPath = getEnv(envVar, "");
+    if (!envPath.empty()) {
+        fs::path p = fs::absolute(envPath);
+        if (!fs::exists(p) || !fs::is_regular_file(p)) {
+            std::cerr << "Error: environment variable " << envVar
+                      << " points to a non‑regular file: " << p << "\n";
+            std::exit(1);
+        }
+        return p;
+    }
+    // No env var – pick a random file from the folder
+    std::vector<fs::path> files = collectFiles(folder);
+    return randomChoice(files, rng);
+}
+
 int main() {
     // Seed RNG
     std::random_device rd;
@@ -119,11 +138,9 @@ int main() {
     const fs::path nounFolder = fs::path(getEnv("NOUN_FOLDER", (here / "nouns").string()));
     const fs::path adjFolder  = fs::path(getEnv("ADJ_FOLDER",  (here / "adjectives").string()));
 
-    // Pick random files from each folder (recursively)
-    const std::vector<fs::path> nounFiles = collectFiles(nounFolder);
-    const std::vector<fs::path> adjFiles  = collectFiles(adjFolder);
-    const fs::path nounFile = randomChoice(nounFiles, rng);
-    const fs::path adjFile  = randomChoice(adjFiles, rng);
+    // Resolve the actual files, respecting NOUN_FILE / ADJ_FILE env vars
+    const fs::path nounFile = resolveFile("NOUN_FILE", nounFolder, rng);
+    const fs::path adjFile  = resolveFile("ADJ_FILE",  adjFolder,  rng);
 
     // Load all lines from the selected files
     const std::vector<std::string> nounLines = readLines(nounFile);
