@@ -1,5 +1,9 @@
 # Name Generator
 
+This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. This project differs in that I am attempting have much larger adjective and noun lists generating more variation.
+
+## Why
+
 Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have 
 
 1. bash
@@ -18,19 +22,6 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 
 PRs welcome for more!
 
-This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. 
-		"agnesi",
-
-e.g.
-
-```
-counto=5 NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
-tangy-apheliotes
-rancid-styx
-delicious-dysis
-sweet-proioxis
-rotten-hedone
-```
 
 ## Getting Started
 
@@ -48,11 +39,24 @@ The script will output a randomly generated name in the format "adjective-noun".
 ./name-generator.sh
 ```
 
-Or specify 
+Or specify NOUN_FILE and ADJ_FILE:
 
 ```
 NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
+```
+
+specify a count:
+
+e.g.
+
+```
+counto=5 NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/taste.list ./name-generator.sh
+tangy-apheliotes
+rancid-styx
+delicious-dysis
+sweet-proioxis
+rotten-hedone
 ```
 
 ## Customization
