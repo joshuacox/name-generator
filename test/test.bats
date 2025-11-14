@@ -215,3 +215,11 @@ setup() {
   result=$(cabal run | tail -n1)
   assert_equal "$result" "test_test"
 }
+@test "test c test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  export SEPARATOR=_
+  result=$(./name-generator | tail -n1)
+  assert_equal "$result" "test_test"
+}
