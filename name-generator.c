@@ -13,7 +13,7 @@
  *      ./random_name -d         # debug mode (prints internal state)
  *
  *  The program expects two sub‑directories in the directory where it is
- *  started:
+ *  started (unless overridden by environment variables):
  *
  *      nouns/      – any number of regular files, each containing one noun
  *                    per line.
@@ -21,8 +21,9 @@
  *      adjectives/ – any number of regular files, each containing one
  *                    adjective per line.
  *
- *  It selects one random file from each directory, then picks a random
- *  line from those files on every iteration.
+ *  It selects one random file from each directory (or uses the files
+ *  specified by NOUN_FILE / ADJ_FILE), then picks a random line from those
+ *  files on every iteration.
  *
  *  If a directory is empty, or a file cannot be opened, the program prints
  *  an error message and exits with a non‑zero status.
@@ -42,10 +43,11 @@
 #include <time.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <stdarg.h>
 
-/* -------------------------------------------------------------------- *
+/* -------------------------------------------------------------------------- *
  * Helper structures & prototypes
- * -------------------------------------------------------------------- */
+ * -------------------------------------------------------------------------- */
 typedef struct {
     char **entries;   /* array of strdup‑ed paths */
     size_t  count;    /* number of entries */
@@ -58,15 +60,16 @@ static char *pick_random_line(const char *filepath);
 static void   to_lowercase(char *s);
 static int    terminal_lines(void);
 static void   debug_print(const char *msg, ...);
+static const char *env_or_default(const char *var, const char *def);
 
-/* -------------------------------------------------------------------- *
+/* -------------------------------------------------------------------------- *
  * Global flag set by the command‑line option "--debug"
- * -------------------------------------------------------------------- */
+ * -------------------------------------------------------------------------- */
 static bool g_debug = false;
 
-/* -------------------------------------------------------------------- *
+/* -------------------------------------------------------------------------- *
  * Main
- * -------------------------------------------------------------------- */
+ * -------------------------------------------------------------------------- */
 int main(int argc, char *argv[])
 {
     /* ---------- 1. command line parsing (only -d/--debug) ---------- */
@@ -91,59 +94,91 @@ int main(int argc, char *argv[])
     debug_print("HERE = %s\n", cwd);
 
     /* ---------- 4. terminal height (counto) ---------- */
-
-    char *env_var_str;
+    const char *env_counto = getenv("counto");
     int counto;
-    const char *env_var_name = "counto"; // Replace with your environment variable name
-
-    // 1. Get the environment variable string
-    env_var_str = getenv(env_var_name);
-
-    if (env_var_str != NULL) {
-        // 2. Convert the string to an integer
-        counto = atoi(env_var_str);
-        //printf("Environment variable '%s' value (as int): %d\n", env_var_name, counto);
+    if (env_counto && *env_counto) {
+        counto = atoi(env_counto);
+        if (counto <= 0) {
+            debug_print("Invalid counto value \"%s\", falling back to terminal size\n", env_counto);
+            counto = terminal_lines();
+        }
     } else {
-        //printf("Environment variable '%s' not found or is empty.\n", env_var_name);
-        debug_print("terminal lines (counto) = %d\n", counto);
         counto = terminal_lines();
     }
+    debug_print("terminal lines (counto) = %d\n", counto);
 
-    /* ---------- 5. build paths for the two sub‑directories ---------- */
+    /* ---------- 5. Resolve configuration from environment ---------- */
+    const char *sep = env_or_default("SEPARATOR", "-");
+    const char *noun_folder_env = getenv("NOUN_FOLDER");
+    const char *adj_folder_env  = getenv("ADJ_FOLDER");
+    const char *noun_file_env   = getenv("NOUN_FILE");
+    const char *adj_file_env    = getenv("ADJ_FILE");
+
     char noun_dir[PATH_MAX];
     char adj_dir[PATH_MAX];
-    snprintf(noun_dir, sizeof(noun_dir), "%s/nouns", cwd);
-    snprintf(adj_dir,  sizeof(adj_dir), "%s/adjectives", cwd);
+    if (noun_folder_env && *noun_folder_env)
+        snprintf(noun_dir, sizeof(noun_dir), "%s", noun_folder_env);
+    else
+        snprintf(noun_dir, sizeof(noun_dir), "%s/nouns", cwd);
+
+    if (adj_folder_env && *adj_folder_env)
+        snprintf(adj_dir, sizeof(adj_dir), "%s", adj_folder_env);
+    else
+        snprintf(adj_dir, sizeof(adj_dir), "%s/adjectives", cwd);
+
+    debug_print("SEPARATOR = \"%s\"\n", sep);
     debug_print("NOUN_FOLDER = %s\n", noun_dir);
     debug_print("ADJ_FOLDER  = %s\n", adj_dir);
+    debug_print("NOUN_FILE   = %s\n", noun_file_env ? noun_file_env : "(none)");
+    debug_print("ADJ_FILE    = %s\n", adj_file_env ? adj_file_env : "(none)");
 
-    /* ---------- 6. read the list of files in each directory ---------- */
-    strvec_t noun_files = list_regular_files(noun_dir);
-    strvec_t adj_files  = list_regular_files(adj_dir);
+    /* ---------- 6. Determine which noun and adjective files to use ---------- */
+    char *noun_file_path = NULL;
+    char *adj_file_path  = NULL;
 
-    if (noun_files.count == 0) {
-        fprintf(stderr, "Error: no regular files found in \"%s\"\n", noun_dir);
+    if (noun_file_env && *noun_file_env) {
+        noun_file_path = strdup(noun_file_env);
+        if (!noun_file_path) {
+            perror("strdup");
+            return EXIT_FAILURE;
+        }
+    } else {
+        strvec_t noun_files = list_regular_files(noun_dir);
+        if (noun_files.count == 0) {
+            fprintf(stderr, "Error: no regular files found in \"%s\"\n", noun_dir);
+            strvec_free(&noun_files);
+            return EXIT_FAILURE;
+        }
+        noun_file_path = pick_random_entry(&noun_files);
         strvec_free(&noun_files);
-        strvec_free(&adj_files);
-        return EXIT_FAILURE;
-    }
-    if (adj_files.count == 0) {
-        fprintf(stderr, "Error: no regular files found in \"%s\"\n", adj_dir);
-        strvec_free(&noun_files);
-        strvec_free(&adj_files);
-        return EXIT_FAILURE;
     }
 
-    /* ---------- 7. pick ONE random file from each directory ---------- */
-    char *noun_file_path = pick_random_entry(&noun_files);
-    char *adj_file_path  = pick_random_entry(&adj_files);
+    if (adj_file_env && *adj_file_env) {
+        adj_file_path = strdup(adj_file_env);
+        if (!adj_file_path) {
+            perror("strdup");
+            free(noun_file_path);
+            return EXIT_FAILURE;
+        }
+    } else {
+        strvec_t adj_files = list_regular_files(adj_dir);
+        if (adj_files.count == 0) {
+            fprintf(stderr, "Error: no regular files found in \"%s\"\n", adj_dir);
+            free(noun_file_path);
+            strvec_free(&adj_files);
+            return EXIT_FAILURE;
+        }
+        adj_file_path = pick_random_entry(&adj_files);
+        strvec_free(&adj_files);
+    }
+
     debug_print("selected NOUN_FILE = %s\n", noun_file_path);
     debug_print("selected ADJ_FILE  = %s\n", adj_file_path);
 
-    /* ---------- 8. main loop: produce counto adjective‑noun pairs ---------- */
+    /* ---------- 7. main loop: produce counto adjective‑noun pairs ---------- */
     for (int i = 0; i < counto; ++i) {
-        char *noun   = pick_random_line(noun_file_path);
-        char *adj    = pick_random_line(adj_file_path);
+        char *noun = pick_random_line(noun_file_path);
+        char *adj  = pick_random_line(adj_file_path);
         if (!noun || !adj) {   /* very unlikely, but guard against it */
             free(noun);
             free(adj);
@@ -152,8 +187,8 @@ int main(int argc, char *argv[])
 
         to_lowercase(noun);    /* the original script forced the noun to lower case */
 
-        /* Build "adjective-noun" */
-        size_t out_len = strlen(adj) + 1 + strlen(noun) + 1;
+        /* Build "adjective<sep>noun" */
+        size_t out_len = strlen(adj) + strlen(sep) + strlen(noun) + 1;
         char *out = malloc(out_len);
         if (!out) {
             perror("malloc");
@@ -161,7 +196,7 @@ int main(int argc, char *argv[])
             free(adj);
             break;
         }
-        snprintf(out, out_len, "%s-%s", adj, noun);
+        snprintf(out, out_len, "%s%s%s", adj, sep, noun);
 
         /* Print the result (and optionally the debug information) */
         printf("%s\n", out);
@@ -175,18 +210,16 @@ int main(int argc, char *argv[])
         free(out);
     }
 
-    /* ---------- 9. clean up ---------- */
+    /* ---------- 8. clean up ---------- */
     free(noun_file_path);
     free(adj_file_path);
-    strvec_free(&noun_files);
-    strvec_free(&adj_files);
 
     return EXIT_SUCCESS;
 }
 
-/* -------------------------------------------------------------------- *
+/* -------------------------------------------------------------------------- *
  * Helper functions
- * -------------------------------------------------------------------- */
+ * -------------------------------------------------------------------------- */
 
 /* Free a strvec_t */
 static void strvec_free(strvec_t *v)
@@ -236,7 +269,6 @@ static strvec_t list_regular_files(const char *dirpath)
                 perror("strdup");
                 continue;
             }
-            /* grow the array */
             char **tmp = realloc(vec.entries, (vec.count + 1) * sizeof(char *));
             if (!tmp) {
                 perror("realloc");
@@ -328,13 +360,11 @@ static int terminal_lines(void)
 {
     struct winsize ws;
     if (isatty(STDOUT_FILENO) && ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == 0)
-        //printf("This terminal window is %d rows by %d columns\n", ws.ws_row, ws.ws_col);
         return (ws.ws_row > 0) ? ws.ws_row : 24;
     return 24;   /* fallback */
 }
 
 /* Simple wrapper around printf that only prints when debug mode is on */
-#include <stdarg.h>
 static void debug_print(const char *msg, ...)
 {
     if (!g_debug)
@@ -345,5 +375,9 @@ static void debug_print(const char *msg, ...)
     va_end(ap);
 }
 
-
-
+/* Return the value of an environment variable, or a default if not set or empty */
+static const char *env_or_default(const char *var, const char *def)
+{
+    const char *val = getenv(var);
+    return (val && *val) ? val : def;
+}
