@@ -5,9 +5,9 @@
 
 use v6;
 
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Helper routines
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 sub pick-random-file(Str $folder --> Str) {
     my @files = dir($folder).grep({ .f });
     die "No regular files found in folder '$folder'" unless @files;
@@ -18,9 +18,9 @@ sub read-lines(Str $file --> Array) {
     return $file.IO.lines.map({ .chomp }).Array;
 }
 
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Configuration (environment variables with defaults)
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 my $here        = $*CWD.Str;
 my $separator   = %*ENV<SEPARATOR> // '-';
 my $noun-folder = %*ENV<NOUN_FOLDER> // "$here/nouns";
@@ -40,9 +40,9 @@ my $counto = %*ENV<counto> // do {
     $tput && $tput ~~ /^\d+$/ ?? $tput.Int !! 24;
 };
 
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Main loop
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 my $debug = %*ENV<DEBUG> // '';
 for ^$counto -> $i {
     my $noun = @noun-lines.pick.lc;          # lower‑case noun
@@ -50,14 +50,14 @@ for ^$counto -> $i {
 
     # Debug output (mirrors the shell script's debugger function)
     if $debug eq 'true' {
-        say STDERR "DEBUG:";
-        say STDERR "  adjective : $adj";
-        say STDERR "  noun      : $noun";
-        say STDERR "  ADJ_FILE  : $adj-file";
-        say STDERR "  ADJ_FOLDER: $adj-folder";
-        say STDERR "  NOUN_FILE : $noun-file";
-        say STDERR "  NOUN_FOLDER: $noun-folder";
-        say STDERR "  countzero > counto";
+        $*ERR.say("DEBUG:");
+        $*ERR.say("  adjective : $adj");
+        $*ERR.say("  noun      : $noun");
+        $*ERR.say("  ADJ_FILE  : $adj-file");
+        $*ERR.say("  ADJ_FOLDER: $adj-folder");
+        $*ERR.say("  NOUN_FILE : $noun-file");
+        $*ERR.say("  NOUN_FOLDER: $noun-folder");
+        $*ERR.say("  countzero > counto");
     }
 
     # Emit the generated name
