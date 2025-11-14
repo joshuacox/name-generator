@@ -27,3 +27,4 @@ while [[ ${countzero} -lt ${counto} ]]; do
   printf "%s%s%s\n" "${this_adjective}" "${SEPARATOR}" "${this_noun}"
   ((countzero++))
 done
+exit 0

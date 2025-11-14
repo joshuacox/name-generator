@@ -20,10 +20,10 @@ debugger () {
   fi
 }
 countzero=0
-while [[ ${countzero} -lt ${counto} ]]; do
+while [ ${countzero} -lt ${counto} ]; do
   this_noun=$(shuf -n 1 ${NOUN_FILE}| tr '[:upper:]' '[:lower:]')
   this_adjective=$(shuf -n 1 ${ADJ_FILE})
   debugger
   printf "%s%s%s\n" "${this_adjective}" "${SEPARATOR}" "${this_noun}"
-  ((countzero++))
+  countzero=`expr $countzero + 1`
 done

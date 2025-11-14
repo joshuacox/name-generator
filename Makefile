@@ -4,6 +4,7 @@ all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generato
 
 clean:
 	-@rm -v name-generator 
+	-@rm -v name-generator_cpp
 	-@rm -v ${HOME}/.cargo/target/debug/name-generator
 	-@rm -v NameGenerator.class
 	-@rm -v name-generator_go
