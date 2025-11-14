@@ -161,3 +161,10 @@ setup() {
   result=$(./name-generator_go)
   assert_equal "$result" "test-test"
 }
+@test "test java test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  result=$(java NameGenerator)
+  assert_equal "$result" "test-test"
+}
