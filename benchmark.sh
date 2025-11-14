@@ -16,6 +16,7 @@ bench_runnr () {
     './name-generator.js' \
     './name-generator.pl' \
     './name-generator.rb' \
+    './name-generator.raku' \
     'java NameGenerator' \
     'cabal run' \
     "$HOME/.cargo/target/debug/name-generator" \

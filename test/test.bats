@@ -29,6 +29,18 @@ setup() {
   result=$(./name-generator_go)
   assert_equal "$result" "test_test"
 }
+@test "test name-generator.raku at 10" {
+  result="$(counto=10 ./name-generator.raku|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.raku at 73" {
+  result="$(counto=73 ./name-generator.raku|wc -l)"
+  [ "$result" -eq 73 ]
+}
+@test "test raku test/test" {
+  result=$(./name-generator.raku)
+  assert_equal "$result" "test_test"
+}
 @test "test name-generator.pl at 10" {
   result="$(counto=10 ./name-generator.pl|wc -l)"
   [ "$result" -eq 10 ]
