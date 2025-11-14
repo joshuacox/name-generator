@@ -1,6 +1,6 @@
 .PHONY: all test testx
 
-all: name-generator ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
+all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
 
 clean:
 	-@rm -v name-generator 
@@ -10,6 +10,9 @@ clean:
 
 name-generator:
 	gcc name-generator.c -o name-generator
+
+name-generator_cpp:
+	g++ name-generator.cpp -o name-generator_cpp
 
 ${HOME}/.cargo/target/debug/name-generator:
 	$(MAKE) -C rust all
