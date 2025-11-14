@@ -191,3 +191,19 @@ setup() {
   result=$(./name-generator.js)
   assert_equal "$result" "test_test"
 }
+@test "test py test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  export SEPARATOR=_
+  result=$(./name-generator.py)
+  assert_equal "$result" "test_test"
+}
+@test "test rust test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  export SEPARATOR=_
+  result=$($HOME/.cargo/target/debug/name-generator)
+  assert_equal "$result" "test_test"
+}
