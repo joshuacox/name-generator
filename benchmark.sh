@@ -8,6 +8,7 @@ bench_runnr () {
     --runs 5 \
     -shell=none \
     './name-generator' \
+    './name-generator_cpp' \
     './name-generator_go' \
     './name-generator.sh' \
     './name-generator.bash' \

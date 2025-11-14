@@ -180,7 +180,7 @@ setup() {
   result="$(counto=10 ./name-generator_cpp|wc -l)"
   [ "$result" -eq 10 ]
 }
-@test "test name-generator_cpp at 44" {
+@test "test name-generator_cpp at 48" {
   result="$(counto=48 ./name-generator_cpp|wc -l)"
   [ "$result" -eq 48 ]
 }
