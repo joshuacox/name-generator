@@ -3,7 +3,7 @@
 #: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
 #: "${MODEL:=ollama_chat/llama4:scout}"
 #: ${MODEL:=ollama_chat/gemma3:27b-it-fp16}
-: ${MODEL:=gpt-oss:120b}
+: ${MODEL:=ollama_chat/gpt-oss:120b}
 
 
 TMP=$(mktemp -d)
@@ -25,6 +25,7 @@ TMP=$(mktemp -d)
 #echoo $FILES |tr ' ' '\n' |sort > $TMP/test1
 FILES="./README.md\n"
 FILES+=$(find . -iname 'name-generator.*'|tr '\n' ' ') 
+FILES="NameGenerator.java"
 
 
 if [[ $# -eq 0 ]]; then
