@@ -11,7 +11,7 @@
 %%     DEBUG       – if set to "true", prints debugging information.
 %%-----------------------------------------------------------------
 -module(name_generator).
--export([main/0]).
+-export([main/0, name_generator/0]).
 
 -include_lib("kernel/include/file.hrl").
 
@@ -35,6 +35,11 @@ main() ->
 
     generate_names(CountO, Separator, NounLines, AdjLines, Debug,
                    NounFile, AdjFile, NounFolder, AdjFolder).
+
+%% Provide a function named after the module for compatibility with
+%% `erl -noshell -s name_generator name_generator` style invocations.
+name_generator() ->
+    main().
 
 %%===================================================================
 %% Helpers
