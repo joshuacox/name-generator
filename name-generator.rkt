@@ -1,9 +1,9 @@
 #lang racket
 
-;; ------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Name Generator – Racket implementation
 ;; Behaves like the original shell script `name-generator.sh`.
-;; ------------------------------------------------------------
+;; --------------------------------------------------------
 
 (require racket/file
          racket/list
@@ -18,6 +18,12 @@
 (define (env-var name)
   (let ([v (getenv name)])
     (if (and v (not (string-blank? v))) v #f)))
+
+;; Define `string-blank?` in case the Racket version does not provide it.
+;; It returns #t for strings that are empty or contain only whitespace.
+(define (string-blank? s)
+  (or (not s)
+      (string=? (string-trim s) "")))
 
 ;; Convert a string to a number, returning #f on failure.
 (define (string->maybe-number s)
