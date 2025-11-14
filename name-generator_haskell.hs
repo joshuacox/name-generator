@@ -1,4 +1,3 @@
-
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -13,8 +12,10 @@
         counto      – default terminal height (rows)
         NOUN_FOLDER – default "$PWD/nouns"
         ADJ_FOLDER  – default "$PWD/adjectives"
-        NOUN_FILE   – a random regular file under NOUN_FOLDER
-        ADJ_FILE    – a random regular file under ADJ_FOLDER
+        NOUN_FILE   – a random regular file under NOUN_FOLDER (or the file
+                      specified by this variable)
+        ADJ_FILE    – a random regular file under ADJ_FOLDER (or the file
+                      specified by this variable)
         DEBUG       – when set to "true" prints debugging info
 
   * For each line (up to @counto@):
@@ -29,22 +30,17 @@ module Main where
 
 import           Control.Exception          (throwIO)
 import           Control.Monad              (when, forM_, unless, filterM)
--- import           Data.Char                  (toLower)
-import           Data.Char                  ()
--- import           Data.List                  (isSuffixOf)
-import           Data.List                  ()
 import qualified Data.Text                  as T
 import qualified Data.Text.IO               as TIO
 import           System.Directory
 import           System.Environment
 import           System.FilePath            ((</>))
-import           System.IO()
 import           System.Random              (randomRIO)
 import           System.Console.Terminal.Size (Window (..), size)
 
---------------------------------------------------------------------
+---------------------------------------- -------------------
 -- Helpers
---------------------------------------------------------------------
+---------------------------------------- -------------------
 
 -- | Look up an environment variable, falling back to a default value.
 envOr :: String -> String -> IO String
@@ -85,20 +81,22 @@ randomLine fp = do
     throwIO $ userError $ "File " ++ fp ++ " contains no lines."
   randomChoice ls
 
---------------------------------------------------------------------
+---------------------------------------- -------------------
 -- Main program
---------------------------------------------------------------------
+---------------------------------------- -------------------
 main :: IO ()
 main = do
-  ------------------------------------------------------------------
+  ----------------------------------------
   -- 1. Gather configuration from the environment
-  ------------------------------------------------------------------
+  ----------------------------------------
   cwd          <- getCurrentDirectory
 
   separator    <- envOr "SEPARATOR" "-"
   countoStr    <- envOr "counto" ""          -- may be empty → use terminal rows
   nounFolder   <- envOr "NOUN_FOLDER" (cwd </> "nouns")
   adjFolder    <- envOr "ADJ_FOLDER"  (cwd </> "adjectives")
+  nounFileEnv  <- envOr "NOUN_FILE" ""      -- optional override
+  adjFileEnv   <- envOr "ADJ_FILE" ""       -- optional override
   debugFlag    <- envOr "DEBUG" "false"
 
   -- Resolve the number of lines to emit
@@ -106,33 +104,45 @@ main = do
                     then terminalRows
                     else maybe (error "counto must be an integer") pure (readMaybe countoStr)
 
-  ------------------------------------------------------------------
-  -- 2. Pick random noun / adjective files (once, like the shell script)
-  ------------------------------------------------------------------
-  nounFiles <- listFilesRecursive nounFolder
-  adjFiles  <- listFilesRecursive adjFolder
+  ----------------------------------------
+  -- 2. Determine noun and adjective files
+  ----------------------------------------
+  nounFile <- if not (null nounFileEnv)
+                then do
+                  exists <- doesFileExist nounFileEnv
+                  unless exists $ error $ "NOUN_FILE does not exist: " ++ nounFileEnv
+                  canonicalizePath nounFileEnv
+                else do
+                  nounFiles <- listFilesRecursive nounFolder
+                  when (null nounFiles) $ error $ "No files found under " ++ nounFolder
+                  randomChoice nounFiles >>= canonicalizePath
 
-  when (null nounFiles) $ error $ "No files found under " ++ nounFolder
-  when (null adjFiles)  $ error $ "No files found under " ++ adjFolder
+  adjFile  <- if not (null adjFileEnv)
+                then do
+                  exists <- doesFileExist adjFileEnv
+                  unless exists $ error $ "ADJ_FILE does not exist: " ++ adjFileEnv
+                  canonicalizePath adjFileEnv
+                else do
+                  adjFiles <- listFilesRecursive adjFolder
+                  when (null adjFiles) $ error $ "No files found under " ++ adjFolder
+                  randomChoice adjFiles >>= canonicalizePath
 
-  nounFile  <- randomChoice nounFiles >>= canonicalizePath
-  adjFile   <- randomChoice adjFiles  >>= canonicalizePath
-
-  ------------------------------------------------------------------
+  ----------------------------------------
   -- 3. Load the entire files once (makes the loop cheap)
-  ------------------------------------------------------------------
+  ----------------------------------------
   nounLines <- T.lines <$> TIO.readFile nounFile
   adjLines  <- T.lines <$> TIO.readFile adjFile
 
   when (null nounLines) $ error $ "Noun file " ++ nounFile ++ " is empty."
   when (null adjLines)  $ error $ "Adjective file " ++ adjFile ++ " is empty."
 
-  ------------------------------------------------------------------
+  ----------------------------------------
   -- 4. Main loop – emit one line per iteration
-  ------------------------------------------------------------------
+  ----------------------------------------
   let debug = debugFlag == "true"
+  let loopCounter = [1 .. counto] :: [Int]
 
-  forM_ [1 .. counto] $ \_ -> do
+  forM_ loopCounter $ \countzero -> do
     -- pick a random line from each list
     nounRaw :: T.Text <- randomChoice nounLines
     adjRaw  :: T.Text <- randomChoice adjLines
@@ -148,14 +158,14 @@ main = do
       TIO.putStrLn $ "ADJ_FOLDER: " <> T.pack adjFolder
       TIO.putStrLn $ "NOUN_FILE: " <> T.pack nounFile
       TIO.putStrLn $ "NOUN_FOLDER: " <> T.pack nounFolder
-      TIO.putStrLn $ T.pack (show counto) <> " > " <> T.pack (show counto)
+      TIO.putStrLn $ T.pack (show countzero) <> " > " <> T.pack (show counto)
 
     -- print the final line
     TIO.putStrLn $ adjective <> T.pack separator <> noun
 
---------------------------------------------------------------------
+---------------------------------------- -------------------
 -- Utility: safe read of an Int (returns Nothing on failure)
---------------------------------------------------------------------
+---------------------------------------- -------------------
 readMaybe :: Read a => String -> Maybe a
 readMaybe s = case reads s of
                 [(x,"")] -> Just x
