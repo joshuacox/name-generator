@@ -6,37 +6,36 @@ import java.util.stream.*;
 
 public class NameGenerator {
 
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // Configuration – values are taken from the environment, otherwise a default
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     private static final Path HERE = Paths.get("").toAbsolutePath();
 
     private static final int COUNT_O = getCountO();                     // number of lines to emit
     private static final Path NOUN_FOLDER = getPathEnv("NOUN_FOLDER", HERE.resolve("nouns"));
     private static final Path ADJ_FOLDER  = getPathEnv("ADJ_FOLDER",  HERE.resolve("adjectives"));
+    private static final Path NOUN_FILE   = getFileEnvOrRandom("NOUN_FILE", NOUN_FOLDER);
+    private static final Path ADJ_FILE    = getFileEnvOrRandom("ADJ_FILE",  ADJ_FOLDER);
+    private static final String SEPARATOR = System.getenv().getOrDefault("SEPARATOR", "-");
     private static final boolean DEBUG = "true".equalsIgnoreCase(System.getenv("DEBUG"));
 
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // Main entry point
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     public static void main(String[] args) {
         try {
-            // 1️⃣ Pick a random file from each folder
-            Path nounFile = pickRandomFile(NOUN_FOLDER);
-            Path adjFile  = pickRandomFile(ADJ_FOLDER);
+            // 1️⃣ Load the whole content of the selected files (so we can pick a random line fast)
+            List<String> nouns = readAllLines(NOUN_FILE);
+            List<String> adjs  = readAllLines(ADJ_FILE);
 
-            // 2️⃣ Load the whole content of the files (so we can pick a random line fast)
-            List<String> nouns = readAllLines(nounFile);
-            List<String> adjs  = readAllLines(adjFile);
-
-            // 3️⃣ Produce the output
+            // 2️⃣ Produce the output
             Random rnd = new Random();
             for (int i = 0; i < COUNT_O; i++) {
                 String noun = nouns.get(rnd.nextInt(nouns.size())).toLowerCase(Locale.ROOT);
                 String adj  = adjs.get(rnd.nextInt(adjs.size()));
 
-                String name = String.format("%s-%s", adj, noun);
-                debugPrint(i, nounFile, adjFile, noun, adj, name);
+                String name = String.format("%s%s%s", adj, SEPARATOR, noun);
+                debugPrint(i, NOUN_FILE, ADJ_FILE, noun, adj, name);
                 System.out.println(name);
             }
         } catch (IOException e) {
@@ -48,9 +47,9 @@ public class NameGenerator {
         }
     }
 
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // Helper methods
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     /** Returns the number of lines the original script would have printed.
      *  It tries to ask the terminal for its height (via the JNA‑based
@@ -90,6 +89,21 @@ public class NameGenerator {
     private static Path getPathEnv(String varName, Path defaultPath) {
         String val = System.getenv(varName);
         return (val == null || val.isBlank()) ? defaultPath : Paths.get(val).toAbsolutePath();
+    }
+
+    /** Returns the path to a file to be used (either from an env‑var or a random
+     *  regular file from the given folder). */
+    private static Path getFileEnvOrRandom(String varName, Path folder) throws IOException {
+        String val = System.getenv(varName);
+        if (val != null && !val.isBlank()) {
+            Path p = Paths.get(val).toAbsolutePath();
+            if (!Files.isRegularFile(p)) {
+                throw new IllegalStateException("Environment variable " + varName + " points to a non‑regular file: " + p);
+            }
+            return p;
+        }
+        // Fallback to a random regular file from the folder (same behaviour as the shell script)
+        return pickRandomFile(folder);
     }
 
     /** Picks a random regular file (not a directory) from the given folder.
