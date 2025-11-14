@@ -1,27 +1,30 @@
  #!/usr/bin/env bash
 #: "${MODEL:=ollama_chat/qwen2.5-coder:32b-base-fp16}"
 #: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
-: "${MODEL:=ollama_chat/llama4:scout}"
+#: "${MODEL:=ollama_chat/llama4:scout}"
 #: ${MODEL:=ollama_chat/gemma3:27b-it-fp16}
+: ${MODEL:=gpt-oss:120b}
 
 
 TMP=$(mktemp -d)
-FILES=$(find -iname '*.sh'|tr '\n' ' ') 
-FILES+=$(find -iname '*.bash'|tr '\n' ' ') 
-FILES+=$(find -iname '*.py'|tr '\n' ' ') 
-FILES+=$(find -iname '*.zsh'|tr '\n' ' ') 
-FILES+=$(find -iname '*.txt'|tr '\n' ' ') 
-FILES+=$(find -iname '*.js'|tr '\n' ' ') 
-FILES+=$(find -iname '*.json'|tr '\n' ' ') 
-FILES+=$(find -iname '*.md'|tr '\n' ' ') 
-FILES+=$(find -iname '*.mdx'|tr '\n' ' ') 
+# FILES=$(find . -iname '*.sh'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.bash'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.py'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.zsh'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.txt'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.js'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.json'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.md'|tr '\n' ' ') 
+# FILES+=$(find . -iname '*.mdx'|tr '\n' ' ') 
 #FILES+=$(find -iname '*.tsx'|tr '\n' ' ') 
 #echo $FILES |tr ' ' '\n' |sort
 #echo $FILES |tr ' ' '\n' |sort > $TMP/test2
 #diff $TMP/test1 $TMP/test2
 #echo $FILES
 #FILES=$(find . -iname '*.js' -o -iname '*.md' -o -iname '*.mdx' -o -iname '*.json' |tr '\n' ' ') 
-#echo $FILES |tr ' ' '\n' |sort > $TMP/test1
+#echoo $FILES |tr ' ' '\n' |sort > $TMP/test1
+FILES="./README.md\n"
+FILES+=$(find . -iname 'name-generator.*'|tr '\n' ' ') 
 
 
 if [[ $# -eq 0 ]]; then
