@@ -6,22 +6,34 @@ import java.util.stream.*;
 
 public class NameGenerator {
 
-    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------//
     // Configuration – values are taken from the environment, otherwise a default
-    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------//
     private static final Path HERE = Paths.get("").toAbsolutePath();
 
     private static final int COUNT_O = getCountO();                     // number of lines to emit
     private static final Path NOUN_FOLDER = getPathEnv("NOUN_FOLDER", HERE.resolve("nouns"));
     private static final Path ADJ_FOLDER  = getPathEnv("ADJ_FOLDER",  HERE.resolve("adjectives"));
-    private static final Path NOUN_FILE   = getFileEnvOrRandom("NOUN_FILE", NOUN_FOLDER);
-    private static final Path ADJ_FILE    = getFileEnvOrRandom("ADJ_FILE",  ADJ_FOLDER);
     private static final String SEPARATOR = System.getenv().getOrDefault("SEPARATOR", "-");
     private static final boolean DEBUG = "true".equalsIgnoreCase(System.getenv("DEBUG"));
 
-    // -------------------------------------------------------------------------------
+    // The file paths may throw IOException during selection, so we initialise them in a static block.
+    private static final Path NOUN_FILE;
+    private static final Path ADJ_FILE;
+
+    static {
+        try {
+            NOUN_FILE = getFileEnvOrRandom("NOUN_FILE", NOUN_FOLDER);
+            ADJ_FILE  = getFileEnvOrRandom("ADJ_FILE",  ADJ_FOLDER);
+        } catch (IOException e) {
+            // Convert the checked exception into an unchecked one so that static initialisation can fail cleanly.
+            throw new IllegalStateException("Failed to select noun or adjective file", e);
+        }
+    }
+
+    // -------------------------------------------------------------------------------//
     // Main entry point
-    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------//
     public static void main(String[] args) {
         try {
             // 1️⃣ Load the whole content of the selected files (so we can pick a random line fast)
@@ -47,9 +59,9 @@ public class NameGenerator {
         }
     }
 
-    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------//
     // Helper methods
-    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------//
 
     /** Returns the number of lines the original script would have printed.
      *  It tries to ask the terminal for its height (via the JNA‑based
