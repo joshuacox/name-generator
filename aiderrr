@@ -23,10 +23,12 @@ TMP=$(mktemp -d)
 #echo $FILES
 #FILES=$(find . -iname '*.js' -o -iname '*.md' -o -iname '*.mdx' -o -iname '*.json' |tr '\n' ' ') 
 #echoo $FILES |tr ' ' '\n' |sort > $TMP/test1
-FILES="./README.md\n"
-FILES+=$(find . -iname 'name-generator.*'|tr '\n' ' ') 
-FILES="NameGenerator.java"
-
+# FILES="./README.md\n"
+# FILES+=$(find . -iname 'name-generator.*'|tr '\n' ' ') 
+#FILES="NameGenerator.java"
+#FILES="./name-generator.sh\n"
+#FILES="./name-generator-sync.js"
+FILES="./name-generator.js"
 
 if [[ $# -eq 0 ]]; then
   aider --model $MODEL $FILES

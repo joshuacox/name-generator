@@ -168,3 +168,10 @@ setup() {
   result=$(java NameGenerator)
   assert_equal "$result" "test-test"
 }
+@test "test jssync test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  result=$(./name-generator-sync.js)
+  assert_equal "$result" "test-test"
+}
