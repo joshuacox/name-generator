@@ -2,15 +2,18 @@
 
 Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have 
 
-1. sh
 1. bash
-1. zsh
 1. c
-1. python
+1. golang
+1. haskell
 1. java
 1. javascript
-1. golang
+1. perl
+1. python
 1. rust
+1. ruby
+1. sh
+1. zsh
 
 PRs welcome for more!
 

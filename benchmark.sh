@@ -6,12 +6,14 @@ bench_runnr () {
   hyperfine \
     --warmup 2 \
     --runs 5 \
+    -shell=none \
     './name-generator' \
     './name-generator_go' \
     './name-generator.sh' \
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.js' \
+    './name-generator.pl' \
     './name-generator.rb' \
     'java NameGenerator' \
     'cabal run' \

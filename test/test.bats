@@ -69,6 +69,14 @@ setup() {
   result="$(export counto=77; ./name-generator.py|wc -l)"
   [ "$result" -eq 77 ]
 }
+@test "test name-generator.pl at 10" {
+  result="$(export counto=10; ./name-generator.pl|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.pl at 75" {
+  result="$(export counto=75; ./name-generator.pl|wc -l)"
+  [ "$result" -eq 75 ]
+}
 @test "test name-generator.js at 10" {
   result="$(export counto=10; ./name-generator.js|wc -l)"
   [ "$result" -eq 10 ]
@@ -123,6 +131,13 @@ setup() {
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
   result=$(./name-generator.bash | tail -n1)
+  assert_equal "$result" "test-test"
+}
+@test "test perl test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  result=$(./name-generator.pl | tail -n1)
   assert_equal "$result" "test-test"
 }
 @test "test ruby test/test" {
