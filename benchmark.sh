@@ -17,10 +17,12 @@ bench_runnr () {
     './name-generator.pl' \
     './name-generator.rb' \
     './name-generator.raku' \
+    './name-generator.rkt' \
     'java NameGenerator' \
     'cabal run' \
     "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
+    './name-generator.exs' \
     'erl -noshell -s name_generator name_generator -s init stop' \
     './name-generator.py'
 }

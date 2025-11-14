@@ -9,6 +9,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. bash
 1. c
 1. cpp
+1. elixir
 1. erlang
 1. golang
 1. haskell
@@ -17,6 +18,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. javascript sync
 1. perl
 1. python
+1. racket
 1. raku
 1. ruby
 1. rust

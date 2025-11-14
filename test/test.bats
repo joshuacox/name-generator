@@ -213,4 +213,27 @@ setup() {
   result="$(erl -noshell -s name_generator name_generator -s init stop)"
   assert_equal "$result" "test_test"
 }
-
+@test "test name-generator.exs at 10" {
+  result="$(counto=10 ./name-generator.exs|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.exs at 49" {
+  result="$(counto=49 ./name-generator.exs|wc -l)"
+  [ "$result" -eq 49 ]
+}
+@test "test elixir test/test" {
+  result=$(./name-generator.exs)
+  assert_equal "$result" "test_test"
+}
+@test "test name-generator.rkt at 10" {
+  result="$(counto=10 ./name-generator.rkt|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.rkt at 43" {
+  result="$(counto=43 ./name-generator.rkt|wc -l)"
+  [ "$result" -eq 43 ]
+}
+@test "test racket test/test" {
+  result=$(./name-generator.rkt)
+  assert_equal "$result" "test_test"
+}

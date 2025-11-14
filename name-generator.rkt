@@ -1,3 +1,4 @@
+#!/usr/bin/env racket
 #lang racket
 
 ;; ------------------------------------------------
@@ -70,7 +71,7 @@
   (or (maybe-number-from-env "counto")
       (let* ([tput-output (with-handlers ([exn:fail? (λ (_) #f)])
                             (with-output-to-string
-                              (λ () (system* "tput" "lines"))))])
+                              (λ () (system* "/usr/sbin/tput" "lines"))))])
         (and tput-output (string->maybe-number (string-trim tput-output))))
       24))
 
