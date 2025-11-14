@@ -1,4 +1,4 @@
-.PHONY: all test testx envtest
+.PHONY: all test testx
 
 all: name-generator ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
 
@@ -25,6 +25,3 @@ test:
 
 testx:
 	./test/bats/bin/bats -x test/test.bats
-
-envtest:
-	./test/bats/bin/bats -x test/envtest.bats

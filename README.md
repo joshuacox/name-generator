@@ -116,32 +116,54 @@ holistic-zisoux
 
 # Testing
 
-`./test.bats`
-
-󰰸 ❯ ./test.bats   
+```
+make test                                           
+./test/bats/bin/bats test/test.bats
 test.bats
  ✓ test name-generator at 10
- ✓ test name-generator at 100
+ ✓ test name-generator at 44
  ✓ test NameGenerator at 10
- ✓ test NameGenerator at 100
+ ✓ test NameGenerator at 55
  ✓ test name-generator_go at 10
- ✓ test name-generator_go at 100
+ ✓ test name-generator_go at 12399
  ✓ test name-generator.sh at 10
- ✓ test name-generator.sh at 100
+ ✓ test name-generator.sh at 22
  ✓ test name-generator.bash at 10
- ✓ test name-generator.bash at 100
+ ✓ test name-generator.bash at 33
  ✓ test name-generator.zsh at 10
- ✓ test name-generator.zsh at 100
+ ✓ test name-generator.zsh at 66
  ✓ test name-generator.py at 10
- ✓ test name-generator.py at 100
+ ✓ test name-generator.py at 77
+ ✓ test name-generator.pl at 10
+ ✓ test name-generator.pl at 75
  ✓ test name-generator.js at 10
- ✓ test name-generator.js at 100
+ ✓ test name-generator.js at 88
  ✓ test name-generator-sync.js at 10
- ✓ test name-generator-sync.js at 100
+ ✓ test name-generator-sync.js at 99
  ✓ test /home/thoth/.cargo/target/debug/name-generator at 10
- ✓ test /home/thoth/.cargo/target/debug/name-generator at 100
+ ✓ test /home/thoth/.cargo/target/debug/name-generator at 33433
+ ✓ test name-generator.rb at 10
+ ✓ test name-generator.rb at 83
+ ✓ test name-generator_haskell.hs at 10
+ ✓ test name-generator_haskell.hs at 83
+ ✓ test sh test/test
+ ✓ test bash test/test
+ ✓ test perl test/test
+ ✓ test ruby test/test
+ ✓ test zsh test/test
+ ✓ test go test/test
+ ✓ test java test/test
+ ✓ test jssync test/test
+ ✓ test js test/test
+ ✓ test py test/test
+ ✓ test rust test/test
+ ✓ test haskell test/test
+ ✓ test c test/test
 
-20 tests, 0 failures
+39 tests, 0 failures
+```
+
+
 
 # benchmarks
 
