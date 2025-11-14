@@ -16,62 +16,63 @@ setup() {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test haskell test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(cabal run | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test sh test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.sh | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test bash test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.bash | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test zsh test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.zsh | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test rust test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$($HOME/.cargo/target/debug/name-generator)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test go test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator_go)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test py test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.py)
-  assert_equal "$result" "test-test"
-}
-@test "test js test/test" {
-  export counto=1 
-  export NOUN_FILE=test/test 
-  export ADJ_FILE=test/test 
-  result=$(./name-generator.js)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }

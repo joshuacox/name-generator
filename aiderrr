@@ -28,7 +28,7 @@ TMP=$(mktemp -d)
 #FILES="NameGenerator.java"
 #FILES="./name-generator.sh\n"
 #FILES="./name-generator-sync.js"
-FILES="./name-generator.js"
+#FILES+=" ./name-generator.js"
 
 if [[ $# -eq 0 ]]; then
   aider --model $MODEL $FILES

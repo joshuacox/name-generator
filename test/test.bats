@@ -123,55 +123,71 @@ setup() {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.sh | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test bash test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.bash | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test perl test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.pl | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test ruby test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.rb | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test zsh test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator.zsh | tail -n1)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test go test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator_go)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test java test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(java NameGenerator)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
 }
 @test "test jssync test/test" {
   export counto=1 
   export NOUN_FILE=test/test 
   export ADJ_FILE=test/test 
+  export SEPARATOR=_
   result=$(./name-generator-sync.js)
-  assert_equal "$result" "test-test"
+  assert_equal "$result" "test_test"
+}
+@test "test js test/test" {
+  export counto=1 
+  export NOUN_FILE=test/test 
+  export ADJ_FILE=test/test 
+  export SEPARATOR=_
+  result=$(./name-generator.js)
+  assert_equal "$result" "test_test"
 }
