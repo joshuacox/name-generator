@@ -1,6 +1,6 @@
 .PHONY: all test testx
 
-all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class
+all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam
 
 clean:
 	-@rm -v name-generator 
@@ -8,6 +8,7 @@ clean:
 	-@rm -v ${HOME}/.cargo/target/debug/name-generator
 	-@rm -v NameGenerator.class
 	-@rm -v name-generator_go
+	-@rm -v name_generator.beam
 
 name-generator:
 	gcc name-generator.c -o name-generator
@@ -29,3 +30,6 @@ test:
 
 testx:
 	./test/bats/bin/bats -x test/test.bats
+
+name_generator.beam:
+	erl -compile name_generator

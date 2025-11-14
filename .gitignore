@@ -81,3 +81,5 @@ bench.html
 
 # Emacs
 .projectile
+name_generator.beam
+erl_crash.dump

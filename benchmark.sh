@@ -6,7 +6,7 @@ bench_runnr () {
   hyperfine \
     --warmup 2 \
     --runs 5 \
-    -shell=none \
+    --shell=none \
     './name-generator' \
     './name-generator_cpp' \
     './name-generator_go' \
@@ -21,6 +21,7 @@ bench_runnr () {
     'cabal run' \
     "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
+    'erl -noshell -s name_generator name_generator -s init stop' \
     './name-generator.py'
 }
 

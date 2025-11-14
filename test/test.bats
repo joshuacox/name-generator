@@ -200,3 +200,17 @@ setup() {
   result=$(./name-generator_cpp)
   assert_equal "$result" "test_test"
 }
+@test "test name_generator.erl at 10" {
+  result="$(counto=10 erl -noshell -s name_generator name_generator -s init stop|wc -l)"
+
+  [ "$result" -eq 10 ]
+}
+@test "test name_generator.erl at 41" {
+  result="$(counto=41 erl -noshell -s name_generator name_generator -s init stop|wc -l)"
+  [ "$result" -eq 41 ]
+}
+@test "test erlang test/test" {
+  result="$(erl -noshell -s name_generator name_generator -s init stop)"
+  assert_equal "$result" "test_test"
+}
+
