@@ -47,7 +47,8 @@
 
 ;; Debug output – prints to stderr when DEBUG=true.
 (define (debugger adjective noun noun-file adj-file noun-folder adj-folder countzero counto)
-  (when (string=? (getenv "DEBUG") "true")
+  ;; Guard against the environment variable being unset (returns #f).
+  (when (string=? (or (getenv "DEBUG") "") "true")
     (fprintf (current-error-port) "DEBUG:\n")
     (fprintf (current-error-port) "  adjective : ~a\n" adjective)
     (fprintf (current-error-port) "  noun      : ~a\n" noun)
