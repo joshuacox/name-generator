@@ -1,4 +1,4 @@
-%%--------------------------------------------------------------------
+%%-----------------------------------------------------------------
 %% @doc
 %%   Erlang implementation of the name-generator shell script.
 %%   It respects the following environment variables:
@@ -9,15 +9,15 @@
 %%     NOUN_FILE   – specific noun file to use (default: random file from NOUN_FOLDER)
 %%     ADJ_FILE    – specific adjective file to use (default: random file from ADJ_FOLDER)
 %%     DEBUG       – if set to "true", prints debugging information.
-%%--------------------------------------------------------------------
+%%-----------------------------------------------------------------
 -module(name_generator).
 -export([main/0]).
 
 -include_lib("kernel/include/file.hrl").
 
-%%====================================================================
+%%===================================================================
 %% Entry point
-%%====================================================================
+%%===================================================================
 main() ->
     %% Seed the random generator
     _ = rand:seed(exsplus, now_timestamp()),
@@ -36,9 +36,9 @@ main() ->
     generate_names(CountO, Separator, NounLines, AdjLines, Debug,
                    NounFile, AdjFile, NounFolder, AdjFolder).
 
-%%====================================================================
+%%===================================================================
 %% Helpers
-%%====================================================================
+%%===================================================================
 
 %% Get an environment variable or return Default.
 get_env(Var, Default) ->
@@ -157,6 +157,12 @@ maybe_debug(false, _Adj, _Noun, _AdjFile, _AdjFolder,
     ok.
 
 %% Helper to get a timestamp suitable for rand:seed/2.
+%% Uses erlang:system_time/1 to avoid the deprecated erlang:now/0.
 now_timestamp() ->
-    {Mega, Sec, Micro} = erlang:now(),
+    %% Get current time in microseconds.
+    Microseconds = erlang:system_time(microsecond),
+    %% Split into mega‑seconds, seconds, and remaining microseconds.
+    Mega = Microseconds div 1000000 div 1000000,
+    Sec  = (Microseconds div 1000000) rem 1000000,
+    Micro = Microseconds rem 1000000,
     {Mega, Sec, Micro}.
