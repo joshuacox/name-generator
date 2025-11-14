@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Updated to match the behaviour of name-generator.sh
-// - Select a single noun file and adjective file for the whole run
+// - Select a single noun file and adjective file for the whole run,
+//   honouring NOUN_FILE and ADJ_FILE environment variables.
 // - Use SEPARATOR env var (default "-")
 // - Default count to terminal height (tput lines) if counto not set
 // - Provide DEBUG output similar to the shell script
@@ -59,8 +60,8 @@ function debuggerInfo({
   console.error(`  ${countzero} > ${counto}`);
 }
 
-// Generate a single name using pre‑selected files
-async function generateName(nounLines, adjLines) {
+// Generate a single name using pre‑selected lines
+function generateName(nounLines, adjLines) {
   const noun = nounLines[Math.floor(Math.random() * nounLines.length)].toLowerCase();
   const adjective = adjLines[Math.floor(Math.random() * adjLines.length)];
   return `${adjective}${SEPARATOR}${noun}`;
@@ -76,9 +77,14 @@ async function generateName(nounLines, adjLines) {
     const countEnv = process.env.counto;
     const count = countEnv ? parseInt(countEnv, 10) : terminalLines;
 
-    // Resolve the single noun and adjective files (once per run)
-    const NOUN_FILE = await getRandomFile(NOUN_FOLDER);
-    const ADJ_FILE = await getRandomFile(ADJ_FOLDER);
+    // Resolve the noun and adjective files, honouring env vars if set.
+    const NOUN_FILE = process.env.NOUN_FILE
+      ? path.resolve(process.env.NOUN_FILE)
+      : await getRandomFile(NOUN_FOLDER);
+
+    const ADJ_FILE = process.env.ADJ_FILE
+      ? path.resolve(process.env.ADJ_FILE)
+      : await getRandomFile(ADJ_FOLDER);
 
     // Load their contents once
     const [nounLines, adjLines] = await Promise.all([
@@ -88,7 +94,7 @@ async function generateName(nounLines, adjLines) {
 
     // Emit names
     for (let i = 0; i < count; i++) {
-      const name = await generateName(nounLines, adjLines);
+      const name = generateName(nounLines, adjLines);
       // Split back to parts for debugging (mirrors shell behaviour)
       const [adjPart, nounPart] = name.split(SEPARATOR);
       debuggerInfo({
