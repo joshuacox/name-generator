@@ -5,7 +5,8 @@ const std = @import("std");
 // Returns a slice; no allocation is performed.
 // ----------------------------------------------
 fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
-    if (std.process.getenv(key)) |val| {
+    // Use std.os.getenv which is available across Zig versions.
+    if (std.os.getenv(key)) |val| {
         if (val.len > 0) return val;
     }
     return default;
@@ -45,13 +46,13 @@ pub fn main() !void {
 
     // ---------- Resolve files – env var overrides, otherwise pick a random file ----------
     const noun_file = blk: {
-        if (std.process.getenv("NOUN_FILE")) |val| {
+        if (std.os.getenv("NOUN_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, noun_folder);
     };
     const adj_file = blk: {
-        if (std.process.getenv("ADJ_FILE")) |val| {
+        if (std.os.getenv("ADJ_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, adj_folder);
@@ -64,7 +65,7 @@ pub fn main() !void {
     // ---------- Determine how many lines to emit (counto) ----------
     const counto: usize = blk: {
         // 1) env var "counto"
-        if (std.process.getenv("counto")) |val| {
+        if (std.os.getenv("counto")) |val| {
             const parsed = std.fmt.parseInt(usize, std.mem.trim(u8, val, &std.ascii.whitespace), 10) catch 0;
             if (parsed != 0) break :blk parsed;
         }
@@ -117,7 +118,7 @@ pub fn main() !void {
         const adjective = adj_lines[adj_idx];
 
         // Debug output if DEBUG=true
-        if (std.mem.eql(u8, (std.process.getenv("DEBUG") orelse ""), "true")) {
+        if (std.mem.eql(u8, (std.os.getenv("DEBUG") orelse ""), "true")) {
             try stderr.print("DEBUG:\n", .{});
             try stderr.print("  adjective : {s}\n", .{adjective});
             try stderr.print("  noun      : {s}\n", .{noun_lc});
