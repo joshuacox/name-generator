@@ -1,9 +1,9 @@
 const std = @import("std");
 
-// --------------------------
+// --------------------------------
 // Helper to get an environment variable or a default value.
 // Returns a slice; no allocation is performed.
-// --------------------------
+// ----------------------------------------------
 fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
     if (std.process.getEnvVar(key)) |val| {
         if (val.len > 0) return val;
@@ -99,7 +99,7 @@ pub fn main() !void {
     // Use a type alias for the PRNG to avoid the init‑argument confusion.
     const Prng = std.rand.DefaultPrng;
     // Create a seed once and reuse it for each PRNG instance.
-    const seed = @intCast(u64, std.time.milliTimestamp());
+    const seed: u64 = @intCast(std.time.milliTimestamp());
     var rng = Prng.init(seed);
     var countzero: usize = 0;
     const stdout = std.io.getStdOut().writer();
@@ -136,9 +136,9 @@ pub fn main() !void {
     }
 }
 
-// --------------------------
+// --------------------------------
 // Pick a random regular file from a directory (non‑recursive)
-// --------------------------
+// ----------------------------------------------
 fn pickRandomFile(allocator: std.mem.Allocator, folder: []const u8) ![]const u8 {
     var dir = try std.fs.openDirAbsolute(folder, .{ .iterate = true });
     defer dir.close();
@@ -160,7 +160,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, folder: []const u8) ![]const u8 
 
     // Use the same PRNG type alias for consistency.
     const Prng = std.rand.DefaultPrng;
-    const seed = @intCast(u64, std.time.milliTimestamp());
+    const seed: u64 = @intCast(std.time.milliTimestamp());
     var rng = Prng.init(seed);
     const idx = rng.random().intRangeLessThan(usize, files.items.len);
     const chosen = files.items[idx];
@@ -171,9 +171,9 @@ fn pickRandomFile(allocator: std.mem.Allocator, folder: []const u8) ![]const u8 
     return chosen;
 }
 
-// --------------------------
+// --------------------------------
 // Read a file and return an array of non‑empty trimmed lines (owned strings)
-// --------------------------
+// ----------------------------------------------
 fn readNonEmptyLines(allocator: std.mem.Allocator, path: []const u8) ![][]const u8 {
     const content = try std.fs.readFileAlloc(allocator, path, 1024 * 1024);
     defer allocator.free(content);
