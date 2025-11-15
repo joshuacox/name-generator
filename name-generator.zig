@@ -4,11 +4,9 @@ pub fn main() !void {
     const allocator = std.heap.page_allocator;
     const env = std.process;
 
-    // Helper to get env var or default
+    // Helper to get env var or default (returns a slice; no allocation)
     fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
-        const maybe = env.getEnvVarOwned(allocator, key) catch null;
-        if (maybe) |val| {
-            defer allocator.free(val);
+        if (env.getEnvVar(key)) |val| {
             if (val.len > 0) return val;
         }
         return default;
@@ -18,45 +16,41 @@ pub fn main() !void {
     const cwd = try std.fs.cwd().realpathAlloc(allocator, ".");
     defer allocator.free(cwd);
 
-    // -------------------------------------------------------------------------
-    // Configuration – environment overrides with sensible defaults
-    // -------------------------------------------------------------------------
+    // ---------- Configuration – environment overrides with sensible defaults ----------
     const separator = getEnvOrDefault("SEPARATOR", "-");
-    const noun_folder = getEnvOrDefault("NOUN_FOLDER", try std.fmt.allocPrint(allocator, "{s}/nouns", .{cwd}));
-    const adj_folder = getEnvOrDefault("ADJ_FOLDER", try std.fmt.allocPrint(allocator, "{s}/adjectives", .{cwd}));
-    defer if (noun_folder != "-") allocator.free(noun_folder);
-    defer if (adj_folder != "-") allocator.free(adj_folder);
 
-    // -------------------------------------------------------------------------
-    // Resolve files – env var overrides, otherwise pick a random file from the folder.
-    // -------------------------------------------------------------------------
+    // For folder paths we allocate the default strings (they will be freed later)
+    const noun_folder_default = try std.fmt.allocPrint(allocator, "{s}/nouns", .{cwd});
+    const adj_folder_default = try std.fmt.allocPrint(allocator, "{s}/adjectives", .{cwd});
+    const noun_folder = getEnvOrDefault("NOUN_FOLDER", noun_folder_default);
+    const adj_folder = getEnvOrDefault("ADJ_FOLDER", adj_folder_default);
+    // Free the allocated defaults (if they were used). If an env var was used, freeing the
+    // literal default is safe because it was never allocated.
+    defer if (noun_folder != noun_folder_default) {} else allocator.free(noun_folder_default);
+    defer if (adj_folder != adj_folder_default) {} else allocator.free(adj_folder_default);
+
+    // ---------- Resolve files – env var overrides, otherwise pick a random file ----------
     const noun_file = blk: {
-        const env_val = env.getEnvVarOwned(allocator, "NOUN_FILE") catch null;
-        if (env_val) |val| {
-            defer allocator.free(val);
+        if (env.getEnvVar("NOUN_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, noun_folder);
     };
     const adj_file = blk: {
-        const env_val = env.getEnvVarOwned(allocator, "ADJ_FILE") catch null;
-        if (env_val) |val| {
-            defer allocator.free(val);
+        if (env.getEnvVar("ADJ_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, adj_folder);
     };
-    defer allocator.free(noun_file);
-    defer allocator.free(adj_file);
+    // The files returned by pickRandomFile are owned; env‑var values are not.
+    // We only free when they are owned (i.e., when they came from pickRandomFile).
+    defer if (std.mem.eql(u8, noun_file, "")) {} else if (std.fs.path.isAbsolute(noun_file)) allocator.free(noun_file);
+    defer if (std.mem.eql(u8, adj_file, "")) {} else if (std.fs.path.isAbsolute(adj_file)) allocator.free(adj_file);
 
-    // -------------------------------------------------------------------------
-    // Determine how many lines to emit (counto)
-    // -------------------------------------------------------------------------
+    // ---------- Determine how many lines to emit (counto) ----------
     const counto: usize = blk: {
         // 1) env var "counto"
-        const env_cnt = env.getEnvVarOwned(allocator, "counto") catch null;
-        if (env_cnt) |val| {
-            defer allocator.free(val);
+        if (env.getEnvVar("counto")) |val| {
             const parsed = std.fmt.parseInt(usize, std.mem.trim(u8, val, &std.ascii.whitespace), 10) catch 0;
             if (parsed != 0) break :blk parsed;
         }
@@ -75,9 +69,7 @@ pub fn main() !void {
         break :blk 24;
     };
 
-    // -------------------------------------------------------------------------
-    // Load lines from the selected files
-    // -------------------------------------------------------------------------
+    // ---------- Load lines from the selected files ----------
     const noun_lines = try readNonEmptyLines(allocator, noun_file);
     defer {
         for (noun_lines) |line| allocator.free(line);
@@ -89,9 +81,7 @@ pub fn main() !void {
         allocator.free(adj_lines);
     }
 
-    // -------------------------------------------------------------------------
-    // Main generation loop
-    // -------------------------------------------------------------------------
+    // ---------- Main generation loop ----------
     var rng = std.rand.DefaultPrng.init(@intCast(u64, std.time.milliTimestamp()));
     var countzero: usize = 0;
     const stdout = std.io.getStdOut().writer();
@@ -100,10 +90,8 @@ pub fn main() !void {
     while (countzero < counto) : (countzero += 1) {
         // Random noun, lower‑cased
         const noun_idx = rng.random().intRangeLessThan(usize, noun_lines.len);
-        var noun = noun_lines[noun_idx];
-        // lower‑case in‑place (need a mutable copy)
+        const noun = noun_lines[noun_idx];
         const noun_lc = try std.mem.dupe(allocator, u8, noun);
-        defer allocator.free(noun_lc);
         for (noun_lc) |*c| c.* = std.ascii.toLower(c.*);
 
         // Random adjective, preserve case
@@ -124,6 +112,9 @@ pub fn main() !void {
 
         // Emit result
         try stdout.print("{s}{s}{s}\n", .{ adjective, separator, noun_lc });
+
+        // Free the temporary lower‑cased noun string for this iteration
+        allocator.free(noun_lc);
     }
 }
 
@@ -152,8 +143,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, folder: []const u8) ![]const u8 
     var rng = std.rand.DefaultPrng.init(@intCast(u64, std.time.milliTimestamp()));
     const idx = rng.random().intRangeLessThan(usize, files.items.len);
     const chosen = files.items[idx];
-    // Transfer ownership of the chosen string to the caller
-    // (the other strings in the list are freed)
+    // Transfer ownership of the chosen string to the caller (free the others)
     for (files.items) |f| {
         if (f != chosen) allocator.free(f);
     }
