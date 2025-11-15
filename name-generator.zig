@@ -5,8 +5,8 @@ const std = @import("std");
 // Returns a slice; no allocation is performed.
 // ----------------------------------------------
 fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
-    // Use std.os.getenv which is available across Zig versions.
-    if (std.os.getenv(key)) |val| {
+    // Use std.process.getenv which is available across Zig versions.
+    if (std.process.getenv(key)) |val| {
         if (val.len > 0) return val;
     }
     return default;
@@ -118,7 +118,7 @@ pub fn main() !void {
         const adjective = adj_lines[adj_idx];
 
         // Debug output if DEBUG=true
-        if (std.mem.eql(u8, (std.os.getenv("DEBUG") orelse ""), "true")) {
+        if (std.mem.eql(u8, (std.process.getenv("DEBUG") orelse ""), "true")) {
             try stderr.print("DEBUG:\n", .{});
             try stderr.print("  adjective : {s}\n", .{adjective});
             try stderr.print("  noun      : {s}\n", .{noun_lc});
