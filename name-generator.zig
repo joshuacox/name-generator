@@ -42,10 +42,10 @@ pub fn main() !void {
         }
         break :blk try pickRandomFile(allocator, adj_folder);
     };
-    // The files returned by pickRandomFile are owned; env‑var values are not.
-    // We only free when they are owned (i.e., when they came from pickRandomFile).
-    defer if (std.mem.eql(u8, noun_file, "")) {} else { if (std.fs.path.isAbsolute(noun_file)) allocator.free(noun_file); }
-    defer if (std.mem.eql(u8, adj_file, "")) {} else { if (std.fs.path.isAbsolute(adj_file)) allocator.free(adj_file); }
+    // NOTE: We deliberately do NOT free noun_file or adj_file here because they may
+    // point to environment strings (which we do not own). The strings returned by
+    // pickRandomFile are owned, but freeing them would require tracking ownership.
+    // The small amount of leaked memory is acceptable for this short‑lived program.
 
     // ---------- Determine how many lines to emit (counto) ----------
     const counto: usize = blk: {
