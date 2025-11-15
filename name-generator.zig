@@ -28,8 +28,20 @@ pub fn main() !void {
     const adj_folder = getEnvOrDefault("ADJ_FOLDER", adj_folder_default);
     // Free the allocated defaults (if they were used). If an env var was used, freeing the
     // literal default is safe because it was never allocated.
-    defer if (noun_folder != noun_folder_default) {} else { allocator.free(noun_folder_default); }
-    defer if (adj_folder != adj_folder_default) {} else { allocator.free(adj_folder_default); }
+    defer {
+        if (noun_folder != noun_folder_default) {
+            // The default was not used; nothing to free.
+        } else {
+            allocator.free(noun_folder_default);
+        }
+    }
+    defer {
+        if (adj_folder != adj_folder_default) {
+            // The default was not used; nothing to free.
+        } else {
+            allocator.free(adj_folder_default);
+        }
+    }
 
     // ---------- Resolve files – env var overrides, otherwise pick a random file ----------
     const noun_file = blk: {
