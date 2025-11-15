@@ -1,6 +1,6 @@
 # Name Generator
 
-This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. This project differs in that I am attempting have much larger adjective and noun lists generating more variation.
+This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. This project differs in that I am attempting to have a much larger adjective and noun lists generating more variation.
 
 ## Why
 

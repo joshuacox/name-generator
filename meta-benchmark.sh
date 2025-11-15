@@ -7,22 +7,39 @@ meta_runnr () {
 }
 
 main () {
-export counto=2
+export counto=1
 meta_runnr
-export counto=12
+export counto=3
+meta_runnr
+export counto=5
+meta_runnr
+export counto=8
+meta_runnr
+export counto=11
 meta_runnr
 export counto=25
 meta_runnr
 export counto=50
+export SPEED=fast
 meta_runnr
 export counto=100
 meta_runnr
 export counto=250
 meta_runnr
+export SPEED=faster
 export counto=500
 meta_runnr
 export counto=1000
 meta_runnr
+export counto=10000
+faster_meta_runnr 
+export SPEED=fastest
+export counto=100000
+faster_meta_runnr 
+export counto=1000000
+faster_meta_runnr 
+export counto=10000000
+fastest_meta_runnr 
 }
 
 time main

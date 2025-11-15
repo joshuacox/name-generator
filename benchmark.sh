@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 : ${counto:=12}
+: "${SPEED:=normal}"
 export counto=${counto}
 set -eux
 bench_runnr () {
@@ -27,8 +28,53 @@ bench_runnr () {
     './name-generator.py'
 }
 
+fast_bench_runnr () {
+  hyperfine \
+    --warmup 1 \
+    --runs 5 \
+    --shell=none \
+    './name-generator' \
+    './name-generator_cpp' \
+    './name-generator_go' \
+    './name-generator.js' \
+    './name-generator.pl' \
+    'java NameGenerator' \
+    'cabal run' \
+    "$HOME/.cargo/target/debug/name-generator"
+}
+
+faster_bench_runnr () {
+  hyperfine \
+    --warmup 1 \
+    --runs 2 \
+    --shell=none \
+    './name-generator_cpp' \
+    './name-generator_go' \
+    './name-generator.js' \
+    './name-generator.pl' \
+    "$HOME/.cargo/target/debug/name-generator"
+}
+
+fastest_bench_runnr () {
+  hyperfine \
+    --warmup 0 \
+    --runs 1 \
+    --shell=none \
+    './name-generator_cpp' \
+    './name-generator_go' \
+    './name-generator.pl'
+}
+
 main () {
-bench_runnr
+if [[ ${SPEED} == 'fast' ]]; then
+  fast_bench_runnr
+elif [[ ${SPEED} == 'faster' ]]; then
+  faster_bench_runnr
+elif [[ ${SPEED} == 'fastest' ]]; then
+  fastest_bench_runnr
+else
+  bench_runnr
+fi
 }
 
 time main
