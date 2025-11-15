@@ -96,7 +96,9 @@ pub fn main() !void {
     }
 
     // ---------- Main generation loop ----------
-    var rng = std.rand.DefaultPrng.init(@intCast(u64, std.time.milliTimestamp()));
+    // Use a type alias for the PRNG to avoid the init‑argument confusion.
+    const Prng = std.rand.DefaultPrng;
+    var rng = Prng.init(@intCast(u64, std.time.milliTimestamp()));
     var countzero: usize = 0;
     const stdout = std.io.getStdOut().writer();
     const stderr = std.io.getStdErr().writer();
@@ -154,7 +156,9 @@ fn pickRandomFile(allocator: std.mem.Allocator, folder: []const u8) ![]const u8 
         return error.NoFilesInFolder;
     }
 
-    var rng = std.rand.DefaultPrng.init(@intCast(u64, std.time.milliTimestamp()));
+    // Use the same PRNG type alias for consistency.
+    const Prng = std.rand.DefaultPrng;
+    var rng = Prng.init(@intCast(u64, std.time.milliTimestamp()));
     const idx = rng.random().intRangeLessThan(usize, files.items.len);
     const chosen = files.items[idx];
     // Transfer ownership of the chosen string to the caller (free the others)
