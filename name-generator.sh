@@ -65,7 +65,7 @@ fi
 # Debug helper – prints to stderr when DEBUG=true
 # ----------------------------------------------------------------------
 debugger() {
-  if [ "$(getenv DEBUG)" = "true" ]; then
+  if [ "${DEBUG}" = "true" ]; then
     # Enable shell tracing for extra visibility (optional)
     set -x
     printf '%s\n' "$this_adjective"
