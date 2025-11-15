@@ -26,8 +26,8 @@ pub fn main() !void {
     const adj_folder = getEnvOrDefault("ADJ_FOLDER", adj_folder_default);
     // Free the allocated defaults (if they were used). If an env var was used, freeing the
     // literal default is safe because it was never allocated.
-    defer if (noun_folder != noun_folder_default) {} else allocator.free(noun_folder_default);
-    defer if (adj_folder != adj_folder_default) {} else allocator.free(adj_folder_default);
+    defer if (noun_folder != noun_folder_default) {} else { allocator.free(noun_folder_default); }
+    defer if (adj_folder != adj_folder_default) {} else { allocator.free(adj_folder_default); }
 
     // ---------- Resolve files – env var overrides, otherwise pick a random file ----------
     const noun_file = blk: {
@@ -44,8 +44,8 @@ pub fn main() !void {
     };
     // The files returned by pickRandomFile are owned; env‑var values are not.
     // We only free when they are owned (i.e., when they came from pickRandomFile).
-    defer if (std.mem.eql(u8, noun_file, "")) {} else if (std.fs.path.isAbsolute(noun_file)) allocator.free(noun_file);
-    defer if (std.mem.eql(u8, adj_file, "")) {} else if (std.fs.path.isAbsolute(adj_file)) allocator.free(adj_file);
+    defer if (std.mem.eql(u8, noun_file, "")) {} else { if (std.fs.path.isAbsolute(noun_file)) allocator.free(noun_file); }
+    defer if (std.mem.eql(u8, adj_file, "")) {} else { if (std.fs.path.isAbsolute(adj_file)) allocator.free(adj_file); }
 
     // ---------- Determine how many lines to emit (counto) ----------
     const counto: usize = blk: {
