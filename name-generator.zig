@@ -1,16 +1,18 @@
 const std = @import("std");
 
+// -----------------------------------------------------------------------------
+// Helper to get an environment variable or a default value.
+// Returns a slice; no allocation is performed.
+// -----------------------------------------------------------------------------
+fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
+    if (std.process.getEnvVar(key)) |val| {
+        if (val.len > 0) return val;
+    }
+    return default;
+}
+
 pub fn main() !void {
     const allocator = std.heap.page_allocator;
-    const env = std.process;
-
-    // Helper to get env var or default (returns a slice; no allocation)
-    fn getEnvOrDefault(key: []const u8, default: []const u8) []const u8 {
-        if (env.getEnvVar(key)) |val| {
-            if (val.len > 0) return val;
-        }
-        return default;
-    }
 
     // Resolve current working directory (absolute)
     const cwd = try std.fs.cwd().realpathAlloc(allocator, ".");
@@ -31,13 +33,13 @@ pub fn main() !void {
 
     // ---------- Resolve files – env var overrides, otherwise pick a random file ----------
     const noun_file = blk: {
-        if (env.getEnvVar("NOUN_FILE")) |val| {
+        if (std.process.getEnvVar("NOUN_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, noun_folder);
     };
     const adj_file = blk: {
-        if (env.getEnvVar("ADJ_FILE")) |val| {
+        if (std.process.getEnvVar("ADJ_FILE")) |val| {
             if (val.len > 0) break :blk val;
         }
         break :blk try pickRandomFile(allocator, adj_folder);
@@ -50,7 +52,7 @@ pub fn main() !void {
     // ---------- Determine how many lines to emit (counto) ----------
     const counto: usize = blk: {
         // 1) env var "counto"
-        if (env.getEnvVar("counto")) |val| {
+        if (std.process.getEnvVar("counto")) |val| {
             const parsed = std.fmt.parseInt(usize, std.mem.trim(u8, val, &std.ascii.whitespace), 10) catch 0;
             if (parsed != 0) break :blk parsed;
         }
@@ -99,7 +101,7 @@ pub fn main() !void {
         const adjective = adj_lines[adj_idx];
 
         // Debug output if DEBUG=true
-        if (std.mem.eql(u8, env.getEnvVar("DEBUG") orelse "", "true")) {
+        if (std.mem.eql(u8, (std.process.getEnvVar("DEBUG") orelse ""), "true")) {
             try stderr.print("DEBUG:\n", .{});
             try stderr.print("  adjective : {s}\n", .{adjective});
             try stderr.print("  noun      : {s}\n", .{noun_lc});
