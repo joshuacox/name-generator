@@ -32,7 +32,7 @@ fn resolveFileOrRandom(
 
 // Pick a random regular file from a directory (non‑recursive).
 fn pickRandomFile(allocator: *std.mem.Allocator, dir_path: []const u8) ![]const u8 {
-    var dir = try std.fs.openDirAbsolute(dir_path, .{ .iterate = true });
+    var dir = try std.fs.openDirAbsolute(dir_path, .{});
     defer dir.close();
 
     var files = std.ArrayList([]const u8).init(allocator);
