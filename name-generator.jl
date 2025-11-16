@@ -11,7 +11,7 @@ using Base.Filesystem: isfile, realpath
 
 # ----------------------------------------------------------------------
 # Helper functions
-# ----------------------------------------------------------------------
+# --------------------------------------------------------------
 """
     env_or_default(var::String, default::String) -> String
 
@@ -27,27 +27,31 @@ end
     get_counto() -> Int
 
 Determine how many names to generate.
-First tries `tput lines`; if that fails, checks the `counto` environment variable;
-finally falls back to 24.
+First checks the `counto` environment variable; if it is set and numeric,
+its value is used. Otherwise it tries `tput lines`; if that fails,
+it falls back to 24.
 """
 function get_counto()
+    # Check environment variable first
+    env = get(ENV, "counto", "")
+    if !isempty(env)
+        try
+            return parse(Int, strip(env))
+        catch
+            # Invalid number – ignore and fall back
+        end
+    end
+
     # Try tput lines
     try
         lines_str = read(`tput lines`, String)
         return parse(Int, strip(lines_str))
     catch
-        # Not available or parsing failed – try env var
-        env = get(ENV, "counto", "")
-        if !isempty(env)
-            try
-                return parse(Int, strip(env))
-            catch
-                # ignore and fall back
-            end
-        end
-        # Default fallback
-        return 24
+        # Not available or parsing failed – fall back
     end
+
+    # Default fallback
+    return 24
 end
 
 """
