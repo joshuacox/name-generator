@@ -45,7 +45,9 @@ fn pickRandomFile(allocator: *std.mem.Allocator, dir_path: []const u8) ![]const 
         return error.NoFilesInDirectory;
     }
 
-    const prng = std.rand.DefaultPrng.init(@intCast(u64, std.time.timestamp()));
+    // Seed the PRNG with the current timestamp.
+    const seed = @intCast(u64, std.time.timestamp());
+    const prng = std.rand.DefaultPrng.init(seed);
     const idx = prng.random().intRangeLessThan(usize, files.items.len);
     return files.items[idx];
 }
