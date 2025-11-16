@@ -114,9 +114,5 @@
           (princ (format "%s%s%s\n" adj separator noun)))))))
 
 ;; Execute when run as a script (non‑interactive Emacs)
-(when (not noninteractive)
-  ;; In interactive sessions we do nothing.
-  nil)
-
 (when noninteractive
   (name-generator-run))
