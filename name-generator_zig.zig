@@ -55,14 +55,14 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     var dir = try std.fs.openDirAbsolute(dir_path, .{ .iterate = true });
     defer dir.close();
 
-    // Initialise the ArrayList with a pointer to the allocator.
-    var files = std.ArrayList([]const u8).init(&allocator);
+    // Initialise the ArrayList with the allocator value.
+    var files = std.ArrayList([]const u8).init(allocator);
     defer files.deinit();
 
     var it = try dir.iterate();
     while (try it.next()) |entry| {
         if (entry.kind == .File) {
-            const full_path = try std.fs.path.join(&allocator, &.{ dir_path, entry.name });
+            const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
             try files.append(full_path);
         }
     }
@@ -85,11 +85,11 @@ fn readNonEmptyLines(allocator: std.mem.Allocator, file_path: []const u8) ![]con
     const file = try std.fs.openFileAbsolute(file_path, .{});
     defer file.close();
 
-    const content = try file.readToEndAlloc(&allocator, 10 * 1024 * 1024);
+    const content = try file.readToEndAlloc(allocator, 10 * 1024 * 1024);
     defer allocator.free(content);
 
-    // Initialise the ArrayList with a pointer to the allocator.
-    var lines = std.ArrayList([]const u8).init(&allocator);
+    // Initialise the ArrayList with the allocator value.
+    var lines = std.ArrayList([]const u8).init(allocator);
     defer lines.deinit();
 
     var it = std.mem.split(u8, content, "\n");
