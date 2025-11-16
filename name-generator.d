@@ -56,7 +56,7 @@ int getCountO() {
         proc.wait();
         if (proc.status == 0) {
             // Strip any trailing newline/whitespace from the output
-            auto out = proc.stdout.readLine().strip;
+            auto out = proc.output.readLine().strip;
             return parseIntOr(out, 24);
         }
     } catch (Exception) {
