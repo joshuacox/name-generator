@@ -3,6 +3,7 @@ import gleam/string
 import gleam/list
 import gleam/random
 import gleam/erlang
+import gleam/result.{Result, Ok, Error}
 
 pub fn main() {
   // Separator (default "-")
