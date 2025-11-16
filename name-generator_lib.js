@@ -16,12 +16,22 @@
  * Theming support:
  *   The library exports a `setTheme` function that allows you to
  *   customise CSS variables used by the UI (see name-generator.html).
- *   Example:
- *     import { setTheme } from './name-generator_lib.js';
- *     setTheme({ primaryColor: '#ff6600', backgroundColor: '#111111' });
+ *
+ * Copy‑to‑clipboard support:
+ *   `copyToClipboard(text)` copies the supplied text to the clipboard.
+ *   `nameWithCopyButton(name)` returns an HTML snippet that displays the
+ *   name together with a “Copy” button.
  */
 
+/* -------------------------------------------------------------------------- */
+/* Configuration                                                             */
+/* -------------------------------------------------------------------------- */
+
 const SEPARATOR = '-';
+
+/* -------------------------------------------------------------------------- */
+/* Helper functions                                                          */
+/* -------------------------------------------------------------------------- */
 
 /**
  * Fetch a text file and return an array of non‑empty trimmed lines.
@@ -40,6 +50,57 @@ async function fetchLines(url) {
     .map(line => line.trim())
     .filter(line => line.length > 0);
 }
+
+/**
+ * Copy a string to the clipboard using the Clipboard API.
+ *
+ * @param {string} text - Text to copy.
+ * @returns {Promise<void>}
+ */
+export async function copyToClipboard(text) {
+  if (!navigator.clipboard) {
+    // Fallback for older browsers
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed'; // avoid scrolling to bottom
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+    } finally {
+      document.body.removeChild(textarea);
+    }
+    return;
+  }
+  await navigator.clipboard.writeText(text);
+}
+
+/**
+ * Return an HTML snippet that shows a name together with a copy button.
+ *
+ * @param {string} name - The generated name.
+ * @returns {string} HTML string.
+ */
+export function nameWithCopyButton(name) {
+  // Escape any potential HTML characters in the name
+  const escaped = name
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+  return `
+    <div class="name-item">
+      <span class="generated-name">${escaped}</span>
+      <button class="copy-btn" data-name="${escaped}">Copy</button>
+    </div>
+  `.trim();
+}
+
+/* -------------------------------------------------------------------------- */
+/* Public API                                                                */
+/* -------------------------------------------------------------------------- */
 
 /**
  * Generate a single random name.
