@@ -144,8 +144,8 @@ fn debugPrint(
 // Main entry point – mimics name-generator.sh behaviour.
 // ---------------------------------------------------------------
 pub fn main() !void {
-    // Use a pointer to the global page allocator so we can pass it where a *Allocator is required.
-    const allocator = &std.heap.page_allocator;
+    // Use a mutable variable for the allocator so we can pass a mutable pointer.
+    var allocator = std.heap.page_allocator;
 
     // ---------------------------------
     // Configuration – environment overrides with sensible defaults.
@@ -154,11 +154,11 @@ pub fn main() !void {
     const counto_str = envOrDefault("counto", "24");
     const counto = parseInt(counto_str, 24);
 
-    const cwd = try std.process.getCwdAlloc(allocator);
+    const cwd = try std.process.getCwdAlloc(&allocator);
     defer allocator.free(cwd);
 
-    const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "nouns" }));
-    const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "adjectives" }));
+    const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(&allocator, &.{ cwd, "nouns" }));
+    const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(&allocator, &.{ cwd, "adjectives" }));
     defer allocator.free(noun_folder);
     defer allocator.free(adj_folder);
 
@@ -166,14 +166,14 @@ pub fn main() !void {
     const noun_file_env = envOrDefault("NOUN_FILE", "");
     const adj_file_env = envOrDefault("ADJ_FILE", "");
 
-    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(allocator, noun_folder);
-    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(allocator, adj_folder);
+    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(&allocator, noun_folder);
+    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(&allocator, adj_folder);
     defer allocator.free(noun_file);
     defer allocator.free(adj_file);
 
     // Load lines from the selected files.
-    const noun_lines = try readNonEmptyLines(allocator, noun_file);
-    const adj_lines = try readNonEmptyLines(allocator, adj_file);
+    const noun_lines = try readNonEmptyLines(&allocator, noun_file);
+    const adj_lines = try readNonEmptyLines(&allocator, adj_file);
     defer {
         for (noun_lines) |l| allocator.free(l);
         allocator.free(noun_lines);
@@ -193,13 +193,13 @@ pub fn main() !void {
         const adj_raw = adj_lines[rand.intRangeLessThan(usize, adj_lines.len)];
 
         // Lower‑case noun.
-        const noun_lc = try toLower(allocator, noun_raw);
+        const noun_lc = try toLower(&allocator, noun_raw);
         defer allocator.free(noun_lc);
 
         // Debug output if requested.
         if (std.mem.eql(u8, envOrDefault("DEBUG", ""), "true")) {
             try debugPrint(
-                allocator,
+                &allocator,
                 adj_raw,
                 noun_lc,
                 adj_file,
