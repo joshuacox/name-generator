@@ -9,19 +9,19 @@ pub fn main() {
   // Separator (default "-")
   let separator =
     case erlang.get_env("SEPARATOR") {
-      Some(s) -> s,
-      None -> "-",
+      Ok(s) -> s,
+      Error(_) -> "-",
     }
 
   // Number of lines to emit (default 24)
   let count_o =
     case erlang.get_env("counto") {
-      Some(s) ->
+      Ok(s) ->
         case string.to_int(s) {
           Ok(i) -> i,
           Error(_) -> 24,
         },
-      None -> 24,
+      Error(_) -> 24,
     }
 
   // Resolve noun and adjective files
@@ -45,12 +45,12 @@ fn resolve_file(
 ) -> String {
   // If the file env var is set, use it directly
   case erlang.get_env(file_env) {
-    Some(path) -> path,
-    None ->
+    Ok(path) -> path,
+    Error(_) ->
       // Determine the folder to search
       case erlang.get_env(folder_env) {
-        Some(folder) -> pick_random_file(folder),
-        None -> pick_random_file(default_folder),
+        Ok(folder) -> pick_random_file(folder),
+        Error(_) -> pick_random_file(default_folder),
       },
   }
 }
