@@ -91,7 +91,7 @@ fn readNonEmptyLines(allocator: std.mem.Allocator, file_path: []const u8) ![]con
 
     // Initialise the ArrayList with the allocator.
     var lines = std.ArrayList([]const u8).init(allocator);
-    defer lines.deinit();
+    defer lines.deinit(allocator);
 
     var it = std.mem.split(u8, content, "\n");
     while (it.next()) |line| {
