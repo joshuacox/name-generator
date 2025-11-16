@@ -1,6 +1,11 @@
-# Name Generator
+# [Name Generator](https://joshuacox.github.io/name-generator/)
 
-This repository contains a simple name generator script that combines random nouns and adjectives to create unique names. This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) that generates names. This project differs in that I am attempting to have a much larger adjective and noun lists generating more variation.
+This repository contains a
+[website](https://joshuacox.github.io/name-generator/)
+and simple name generator script that combines random nouns and adjectives to create unique names. 
+This was inpsired by the [docker mechanism](https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L134-L135) 
+that generates names. 
+This project differs in that I am attempting to have a much larger adjective and noun lists generating more variation.
 
 ## Why
 
@@ -14,9 +19,9 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. golang
 1. haskell
 1. java
-1. javascript async
-1. javascript sync
+1. javascript async + sync
 1. julia
+1. kotlin
 1. perl
 1. python
 1. racket
@@ -31,11 +36,20 @@ PRs welcome for more!
 
 ## Getting Started
 
-To use this repository, follow these steps:
+#### web based
 
-1. Clone the repository to your local machine using Git: `git clone https://github.com/your-username/name-generator.git`
-2. Navigate to the cloned repository: `cd name-generator`
-3. Run the script using Python: `python name-generator.py`
+1. simply visit the [site](https://joshuacox.github.io/name-generator/) in github.io.
+1. click generate
+
+#### CLI based
+
+follow these steps:
+
+1. Clone the repository to your local machine using Git: `git clone https://github.com/joshuacox/name-generator.git`
+1. Navigate to the cloned repository: `cd name-generator`
+1. Run the script using shell: `./name-generator.sh`
+1. Run the script using Python: `./name-generator.py`
+1. refer to the `test/test.bats` or `benchmark.sh` script for examples of running all languages that are tested
 
 ## Usage
 
@@ -100,25 +114,42 @@ If you'd like to contribute to this project, please fork the repository and subm
 ## Funniest generations
 
 worse-bunghole
-inappropriate-middleman
-sordid-pronoun
-heavenly-lordstanly
-joyous-snookie
-overrated-truffle
-staunch-djolu
-discrete-concrete
-facetious-tool
-brainless-rebel
-artless-lunch
-unattractive-prevention
-purported-teila
-meaningless-nash
-hazardous-master
-ashamed-bimka
-gasping-rennie
-resentful-antibody
-holistic-zisoux
 
+inappropriate-middleman
+
+sordid-pronoun
+
+heavenly-lordstanly
+
+joyous-snookie
+
+overrated-truffle
+
+staunch-djolu
+
+discrete-concrete
+
+facetious-tool
+
+brainless-rebel
+
+artless-lunch
+
+unattractive-prevention
+
+purported-teila
+
+meaningless-nash
+
+hazardous-master
+
+ashamed-bimka
+
+gasping-rennie
+
+resentful-antibody
+
+holistic-zisoux
 
 # Testing
 
