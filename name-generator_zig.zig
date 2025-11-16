@@ -107,8 +107,8 @@ fn readNonEmptyLines(allocator: *std.mem.Allocator, file_path: []const u8) ![]co
 fn toLower(allocator: *std.mem.Allocator, s: []const u8) ![]const u8 {
     var buf = try allocator.alloc(u8, s.len);
     var i: usize = 0;
-    for (s) |c| {
-        buf[i] = std.ascii.toLower(c);
+    for (s) |ch| {
+        buf[i] = std.ascii.toLower(ch);
         i += 1;
     }
     return buf;
