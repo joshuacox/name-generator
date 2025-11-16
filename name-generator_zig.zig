@@ -144,7 +144,8 @@ fn debugPrint(
 // Main entry point – mimics name-generator.sh behaviour.
 // ---------------------------------------------------------------
 pub fn main() !void {
-    const allocator = std.heap.page_allocator;
+    // Use a pointer to the global page allocator so we can pass it where a *Allocator is required.
+    const allocator = &std.heap.page_allocator;
 
     // ---------------------------------
     // Configuration – environment overrides with sensible defaults.
@@ -165,8 +166,8 @@ pub fn main() !void {
     const noun_file_env = envOrDefault("NOUN_FILE", "");
     const adj_file_env = envOrDefault("ADJ_FILE", "");
 
-    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(&allocator, noun_folder);
-    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(&allocator, adj_folder);
+    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(allocator, noun_folder);
+    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(allocator, adj_folder);
     defer allocator.free(noun_file);
     defer allocator.free(adj_file);
 
