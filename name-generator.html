@@ -8,23 +8,39 @@
       font-family: Arial, sans-serif;
       padding: 2rem;
     }
-    #name {
-      font-size: 1.5rem;
+    #name, #namesList {
       margin-top: 1rem;
+      font-size: 1.5rem;
     }
     button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    input[type="number"] {
+      width: 4rem;
+      padding: 0.3rem;
+      font-size: 1rem;
+    }
+    .name-item {
+      margin: 0.2rem 0;
     }
   </style>
 </head>
 <body>
   <h1>Name Generator</h1>
-  <button id="generateBtn">Generate Name</button>
+
+  <button id="generateBtn">Generate One Name</button>
+
+  <label for="countInput">Generate multiple:</label>
+  <input type="number" id="countInput" min="1" value="5">
+  <button id="generateMultipleBtn">Generate</button>
+
   <div id="name"></div>
+  <div id="namesList"></div>
 
   <script type="module">
-    import { generateName } from './name-generator_lib.js';
+    import { generateName, generateNames } from './name-generator_lib.js';
 
     const btn = document.getElementById('generateBtn');
     const output = document.getElementById('name');
@@ -33,8 +49,30 @@
       try {
         const name = await generateName();
         output.textContent = name;
+        // Clear any previous multiple results
+        document.getElementById('namesList').innerHTML = '';
       } catch (e) {
         output.textContent = 'Error: ' + e.message;
+      }
+    });
+
+    const multiBtn = document.getElementById('generateMultipleBtn');
+    const countInput = document.getElementById('countInput');
+    const listDiv = document.getElementById('namesList');
+
+    multiBtn.addEventListener('click', async () => {
+      const count = parseInt(countInput.value, 10) || 1;
+      try {
+        const names = await generateNames(count);
+        // Render each name on its own line
+        listDiv.innerHTML = names
+          .map(name => `<div class="name-item">${name}</div>`)
+          .join('');
+        // Clear the single‑name output
+        output.textContent = '';
+      } catch (e) {
+        listDiv.textContent = 'Error: ' + e.message;
+        output.textContent = '';
       }
     });
   </script>

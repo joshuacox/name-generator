@@ -11,7 +11,7 @@
  *   /adjectives/full.list   (or any file inside the `adjectives` folder)
  *
  * If you need different locations, pass them as arguments to
- * `generateName`.
+ * `generateName` or `generateNames`.
  */
 
 const SEPARATOR = '-';
@@ -35,7 +35,7 @@ async function fetchLines(url) {
 }
 
 /**
- * Generate a random name.
+ * Generate a single random name.
  *
  * @param {string} [nounUrl='/nouns/full.list']        - URL of the noun list.
  * @param {string} [adjUrl='/adjectives/full.list']    - URL of the adjective list.
@@ -58,4 +58,42 @@ export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adje
   const adjective = adjLines[Math.floor(Math.random() * adjLines.length)];
 
   return `${adjective}${SEPARATOR}${noun}`;
+}
+
+/**
+ * Generate multiple random names.
+ *
+ * @param {number} count - How many names to generate.
+ * @param {string} [nounUrl='/nouns/full.list']        - URL of the noun list.
+ * @param {string} [adjUrl='/adjectives/full.list']    - URL of the adjective list.
+ * @returns {Promise<string[]>} Array of generated names.
+ */
+export async function generateNames(
+  count,
+  nounUrl = '/nouns/full.list',
+  adjUrl = '/adjectives/full.list'
+) {
+  if (!Number.isInteger(count) || count <= 0) {
+    throw new Error('Count must be a positive integer');
+  }
+
+  const [nounLines, adjLines] = await Promise.all([
+    fetchLines(nounUrl),
+    fetchLines(adjUrl)
+  ]);
+
+  if (nounLines.length === 0) {
+    throw new Error('Noun list is empty');
+  }
+  if (adjLines.length === 0) {
+    throw new Error('Adjective list is empty');
+  }
+
+  const names = [];
+  for (let i = 0; i < count; i++) {
+    const noun = nounLines[Math.floor(Math.random() * nounLines.length)].toLowerCase();
+    const adjective = adjLines[Math.floor(Math.random() * adjLines.length)];
+    names.push(`${adjective}${SEPARATOR}${noun}`);
+  }
+  return names;
 }
