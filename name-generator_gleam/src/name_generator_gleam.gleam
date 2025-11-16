@@ -10,7 +10,7 @@ pub fn main() {
   let separator =
     case erlang.get_env("SEPARATOR") {
       Some(s) -> s,
-      None -> "-"
+      None -> "-",
     }
 
   // Number of lines to emit (default 24)
@@ -19,9 +19,9 @@ pub fn main() {
       Some(s) ->
         case string.to_int(s) {
           Ok(i) -> i,
-          Error(_) -> 24
+          Error(_) -> 24,
         },
-      None -> 24
+      None -> 24,
     }
 
   // Resolve noun and adjective files
@@ -50,8 +50,8 @@ fn resolve_file(
       // Determine the folder to search
       case erlang.get_env(folder_env) {
         Some(folder) -> pick_random_file(folder),
-        None -> pick_random_file(default_folder)
-      }
+        None -> pick_random_file(default_folder),
+      },
   }
 }
 
@@ -62,7 +62,7 @@ fn pick_random_file(folder: String) -> String {
   let entries =
     case erlang.list_dir(folder) {
       Ok(es) -> es,
-      Error(_) -> io:panic("Cannot list folder " <> folder)
+      Error(_) -> io:panic("Cannot list folder " <> folder),
     }
 
   // Ensure there is at least one entry
@@ -75,7 +75,7 @@ fn pick_random_file(folder: String) -> String {
     let idx = random.int(0, len - 1)
     case List.at(entries, idx) {
       Some(name) -> folder <> "/" <> name,
-      None -> io:panic("Failed to pick a file from folder " <> folder)
+      None -> io:panic("Failed to pick a file from folder " <> folder),
     }
   }
 }
@@ -85,7 +85,7 @@ fn read_nonempty_lines(path: String) -> List(String) {
   let content =
     case io:read_file(path) {
       Ok(c) -> c,
-      Error(_) -> io:panic("Cannot read file " <> path)
+      Error(_) -> io:panic("Cannot read file " <> path),
     }
 
   content
@@ -129,6 +129,6 @@ fn random_choice(list: List(a)) -> a {
   let idx = random.int(0, len - 1)
   case List.at(list, idx) {
     Some(v) -> v,
-    None -> io:panic("Attempted to pick from an empty list")
+    None -> io:panic("Attempted to pick from an empty list"),
   }
 }
