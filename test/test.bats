@@ -285,3 +285,15 @@ setup() {
   result=$(./name-generator.el)
   assert_equal "$result" "test_test"
 }
+@test "test name-generator.dart at 10" {
+  result="$(counto=10 ./name-generator.dart|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.dart at 57" {
+  result="$(counto=57 ./name-generator.dart|wc -l)"
+  [ "$result" -eq 57 ]
+}
+@test "test dart test/test" {
+  result=$(./name-generator.dart)
+  assert_equal "$result" "test_test"
+}
