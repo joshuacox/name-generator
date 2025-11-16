@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Name Generator</title>
+  <style>
+    :root {
+      --primary-color: #4a90e2;
+      --bg-color: #f5f5f5;
+      --text-color: #333;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: var(--primary-color);
+    }
+    .controls {
+      margin-bottom: 1rem;
+    }
+    .controls label {
+      margin-right: 0.5rem;
+    }
+    .controls input[type="text"],
+    .controls input[type="number"] {
+      padding: 0.2rem 0.4rem;
+      margin-right: 1rem;
+    }
+    .name-list {
+      margin-top: 1rem;
+    }
+    .name-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .copy-btn {
+      margin-left: 1rem;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Name Generator</h1>
+
+  <div class="controls">
+    <label for="separatorInput">Separator:</label>
+    <input type="text" id="separatorInput" value="-" size="2" maxlength="5">
+
+    <!-- Additional separator field -->
+    <label for="separatorInput2">Separator (alt):</label>
+    <input type="text" id="separatorInput2" value="-" size="2" maxlength="5">
+
+    <label for="countInput">Count:</label>
+    <input type="number" id="countInput" value="20" min="1" style="width: 60px;">
+
+    <button id="generateBtn">Generate</button>
+  </div>
+
+  <div class="name-list" id="nameList"></div>
+
+  <script type="module">
+    import {
+      generateNames,
+      setSeparator,
+      nameWithCopyButton,
+      copyToClipboard,
+      showToast,
+      setTheme
+    } from './name-generator_lib.js';
+
+    // Optional: apply a custom theme
+    setTheme({
+      primaryColor: '#4a90e2',
+      backgroundColor: '#f5f5f5',
+      textColor: '#333'
+    });
+
+    const separatorInput = document.getElementById('separatorInput');
+    const separatorInput2 = document.getElementById('separatorInput2');
+    const countInput = document.getElementById('countInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const nameListDiv = document.getElementById('nameList');
+
+    // Helper to sync both separator inputs
+    function syncSeparatorInputs(value) {
+      separatorInput.value = value;
+      separatorInput2.value = value;
+    }
+
+    // Update separator whenever the user changes either input
+    separatorInput.addEventListener('input', () => {
+      const val = separatorInput.value;
+      setSeparator(val);
+      syncSeparatorInputs(val);
+    });
+
+    separatorInput2.addEventListener('input', () => {
+      const val = separatorInput2.value;
+      setSeparator(val);
+      syncSeparatorInputs(val);
+    });
+
+    generateBtn.addEventListener('click', async () => {
+      const count = parseInt(countInput.value, 10);
+      if (isNaN(count) || count <= 0) {
+        showToast('Please enter a valid count', 2000);
+        return;
+      }
+
+      try {
+        const names = await generateNames(count);
+        nameListDiv.innerHTML = names.map(nameWithCopyButton).join('');
+        // Attach copy handlers
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const name = e.currentTarget.getAttribute('data-name');
+            await copyToClipboard(name);
+            showToast(`Copied "${name}"`, 1500);
+          });
+        });
+      } catch (err) {
+        console.error(err);
+        showToast('Error generating names', 3000);
+      }
+    });
+
+    // Initialise with the default separator value
+    setSeparator(separatorInput.value);
+  </script>
+</body>
+</html>
