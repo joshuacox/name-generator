@@ -7,8 +7,8 @@
  * shell script `name-generator.sh`.
  *
  * The files are expected to be served from the same origin, e.g.
- *   /nouns        (or any file inside the `nouns` folder)
- *   /adjectives   (or any file inside the `adjectives` folder)
+ *   /nouns/full.list   (or any file inside the `nouns` folder)
+ *   /adjectives        (or any file inside the `adjectives` folder)
  *
  * If you need different locations, pass them as arguments to
  * `generateName`.
@@ -37,11 +37,11 @@ async function fetchLines(url) {
 /**
  * Generate a random name.
  *
- * @param {string} [nounUrl='/nouns']        - URL of the noun list.
+ * @param {string} [nounUrl='/nouns/full.list']        - URL of the noun list.
  * @param {string} [adjUrl='/adjectives']    - URL of the adjective list.
  * @returns {Promise<string>} The generated name.
  */
-export async function generateName(nounUrl = '/nouns', adjUrl = '/adjectives') {
+export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adjectives') {
   const [nounLines, adjLines] = await Promise.all([
     fetchLines(nounUrl),
     fetchLines(adjUrl)
