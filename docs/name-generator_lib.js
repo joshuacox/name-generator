@@ -151,7 +151,7 @@ export function getSeparator() {
  * @param {string} [adjUrl='/adjectives/full.list']    - URL of the adjective list.
  * @returns {Promise<string>} The generated name.
  */
-export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adjectives/full.list') {
+export async function generateName(nounUrl = './nouns/full.list', adjUrl = './adjectives/full.list') {
   const [nounLines, adjLines] = await Promise.all([
     fetchLines(nounUrl),
     fetchLines(adjUrl)
