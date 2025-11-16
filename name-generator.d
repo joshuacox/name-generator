@@ -24,13 +24,13 @@ import std.algorithm : filter, map, canFind, sort, min;
 import std.conv : to;
 import std.exception : enforce;
 import std.random : uniform;
+import std.array : array;
 import core.stdc.stdlib : getenv;
-import std.string : toStringz;
 
 /// Retrieve an environment variable as a D string. Returns an empty string if not set.
 string getEnv(string name) {
     const char* p = getenv(name.toStringz);
-    return p ? cast(string) p : "";
+    return p ? to!string(p) : "";
 }
 
 /// Return the value of an environment variable or a default.
@@ -61,7 +61,8 @@ int getCountO() {
 
     // Step 2: tput lines
     try {
-        auto proc = pipeProcess(["tput", "lines"], redirectStdout: true);
+        // pipeProcess expects an array of const(char)[]; using Redirect.stdout to capture output.
+        auto proc = pipeProcess(["tput", "lines"], Redirect.stdout);
         proc.wait();
         if (proc.status == 0) {
             // Strip any trailing newline/whitespace from the output
@@ -78,6 +79,7 @@ int getCountO() {
 
 /// Return a random regular file from `folder`.
 string pickRandomFile(string folder) {
+    // DirEntryType.file is defined in std.file
     auto entries = dirEntries(folder, DirEntryType.file);
     enforce(!entries.empty, "Folder `" ~ folder ~ "` contains no regular files.");
 
