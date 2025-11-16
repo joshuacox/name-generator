@@ -63,13 +63,13 @@ export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adje
 /**
  * Generate multiple random names.
  *
- * @param {number} count - How many names to generate.
+ * @param {number} [count=50] - How many names to generate (defaults to 50).
  * @param {string} [nounUrl='/nouns/full.list']        - URL of the noun list.
  * @param {string} [adjUrl='/adjectives/full.list']    - URL of the adjective list.
  * @returns {Promise<string[]>} Array of generated names.
  */
 export async function generateNames(
-  count,
+  count = 50,
   nounUrl = '/nouns/full.list',
   adjUrl = '/adjectives/full.list'
 ) {

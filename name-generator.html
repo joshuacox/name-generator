@@ -33,7 +33,7 @@
   <button id="generateBtn">Generate One Name</button>
 
   <label for="countInput">Generate multiple:</label>
-  <input type="number" id="countInput" min="1" value="5">
+  <input type="number" id="countInput" min="1" value="50">
   <button id="generateMultipleBtn">Generate</button>
 
   <div id="name"></div>
@@ -61,7 +61,7 @@
     const listDiv = document.getElementById('namesList');
 
     multiBtn.addEventListener('click', async () => {
-      const count = parseInt(countInput.value, 10) || 1;
+      const count = parseInt(countInput.value, 10) || 50;
       try {
         const names = await generateNames(count);
         // Render each name on its own line
