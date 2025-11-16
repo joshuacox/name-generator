@@ -27,10 +27,9 @@
 
 (defun random-file-from (directory)
   "Pick a random regular file from DIRECTORY."
-  (let (files)
-    (dired-do-find-files-and-directories directory t nil (lambda (file) 
-      (when (file-regular-p file)
-        (push (expand-file-name file) files))))
+  (let ((files (directory-files directory t)))
+    (when (and files (not (null (cdr files))))
+      (file-accessible-directory-p directory))
     (and files
          (nth (random (length files)) files))))
 
