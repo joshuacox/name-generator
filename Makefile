@@ -36,3 +36,9 @@ testx:
 
 name_generator.beam:
 	erl -compile name_generator
+
+BENCHMARK.md:
+	./meta-benchmark.sh | tee BENCHMARK.md
+
+name-generator_zig:
+	zig build-exe -I . name-generator_zig.zig -lc
