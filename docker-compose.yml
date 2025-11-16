@@ -8,4 +8,4 @@ services:
     ports:
       - "${NAME_GENERATOR_PORT:-8080}:80"
     volumes:
-      - "./web:/usr/share/nginx/html:ro"
+      - "./docs:/usr/share/nginx/html:ro"
