@@ -32,14 +32,14 @@ meta_runnr
 export counto=1000
 meta_runnr
 export counto=10000
-faster_meta_runnr 
+meta_runnr 
 export SPEED=fastest
 export counto=100000
-faster_meta_runnr 
+meta_runnr 
 export counto=1000000
-faster_meta_runnr 
+meta_runnr 
 export counto=10000000
-fastest_meta_runnr 
+meta_runnr 
 }
 
 time main

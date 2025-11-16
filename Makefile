@@ -36,3 +36,6 @@ testx:
 
 name_generator.beam:
 	erl -compile name_generator
+
+BENCHMARK.md:
+	./meta-benchmark.sh | tee BENCHMARK.md
