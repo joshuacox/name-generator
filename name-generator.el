@@ -88,8 +88,10 @@
       (message "%s" (generate-name)))))
 
 ;; Entry point
-(unless (batch-mode)
-  (generate-names 
-   (if-let ((counto (getenv "counto")))
-     (string-to-number counto)
-   24)))
+(let ((counto (or (and (boundp 'counto) counto)        ; compatibility with older Emacs versions
+                 (string-to-number (getenv "counto")))))
+  (if (member "--batch" command-line-args)
+      (progn
+        (generate-names (if counto (string-to-number counto) 24))
+        (kill-emacs))
+    (generate-names (if counto (string-to-number counto) 24))))
