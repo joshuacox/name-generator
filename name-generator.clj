@@ -1,3 +1,4 @@
+#!/usr/bin/env -S clojure -M ./name-generator.clj
 (ns name-generator.core
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
