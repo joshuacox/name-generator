@@ -59,7 +59,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     var files = std.ArrayList([]const u8).initCapacity(allocator, 10) catch unreachable;
     defer files.deinit(allocator);
 
-    var it = try dir.iterator(allocator);
+    var it = dir.iterate();
     while (try it.next()) |entry| {
         if (entry.kind == .file) {
             const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
