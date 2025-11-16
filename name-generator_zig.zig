@@ -63,7 +63,8 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     while (try it.next()) |entry| {
         if (entry.kind == .file) {
             const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
-            try files.append(full_path);
+            // Use explicit pointer to satisfy the expected argument count.
+            try (&files).append(full_path);
         }
     }
 
