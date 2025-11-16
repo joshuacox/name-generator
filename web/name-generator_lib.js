@@ -26,15 +26,15 @@
  *   `showToast(message, duration)` displays a temporary toast notification.
  */
 
-/* -------------------------------------------------------------------------- */
-/* Configuration                                                             */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------- */
+/* Configuration                  */
+/* ------------------------------- */
 
-const SEPARATOR = '-';
+let SEPARATOR = '-'; // default separator, can be changed via setSeparator()
 
-/* -------------------------------------------------------------------------- */
-/* Helper functions                                                          */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------- */
+/* Helper functions               */
+/* ------------------------------- */
 
 /**
  * Fetch a text file and return an array of non‑empty trimmed lines.
@@ -122,9 +122,27 @@ export function showToast(message, duration = 2000) {
   }, duration);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Public API                                                                */
-/* -------------------------------------------------------------------------- */
+/**
+ * Change the separator used when joining adjective and noun.
+ *
+ * @param {string} newSep - New separator string (typically a single character).
+ */
+export function setSeparator(newSep) {
+  SEPARATOR = newSep;
+}
+
+/**
+ * Retrieve the current separator.
+ *
+ * @returns {string} The current separator.
+ */
+export function getSeparator() {
+  return SEPARATOR;
+}
+
+/* ------------------------------- */
+/* Public API                     */
+/* ------------------------------- */
 
 /**
  * Generate a single random name.

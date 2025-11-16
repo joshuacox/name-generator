@@ -134,6 +134,11 @@
   </nav>
 
   <section class="controls">
+    <label for="separatorInput">Separator:</label>
+    <input type="text" id="separatorInput" maxlength="1" value="-">
+    <!-- Additional separator field as requested -->
+    <label for="separatorInputAlt">Separator (alt):</label>
+    <input type="text" id="separatorInputAlt" maxlength="1" value="-">
     <label for="countInput">Generate multiple:</label>
     <input type="number" id="countInput" min="1" value="33">
     <button id="generateMultipleBtn">Generate</button>
@@ -147,7 +152,9 @@
       nameWithCopyButton,
       copyToClipboard,
       setTheme,
-      showToast
+      showToast,
+      setSeparator,
+      getSeparator
     } from './name-generator_lib.js';
 
     // Apply the default theme (you can customize colours here)
@@ -159,7 +166,27 @@
 
     const multiBtn = document.getElementById('generateMultipleBtn');
     const countInput = document.getElementById('countInput');
+    const separatorInput = document.getElementById('separatorInput');
+    const separatorInputAlt = document.getElementById('separatorInputAlt');
     const listDiv = document.getElementById('namesList');
+
+    // Initialise separator from the first input
+    setSeparator(separatorInput.value || '-');
+
+    // Keep both separator inputs in sync and update the library separator
+    function updateSeparatorFrom(input) {
+      const newSep = input.value || '-';
+      setSeparator(newSep);
+      // Sync the other input
+      if (input === separatorInput) {
+        separatorInputAlt.value = newSep;
+      } else {
+        separatorInput.value = newSep;
+      }
+    }
+
+    separatorInput.addEventListener('input', () => updateSeparatorFrom(separatorInput));
+    separatorInputAlt.addEventListener('input', () => updateSeparatorFrom(separatorInputAlt));
 
     multiBtn.addEventListener('click', async () => {
       const count = parseInt(countInput.value, 10) || 50;
