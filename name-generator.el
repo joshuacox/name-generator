@@ -16,28 +16,32 @@
   :type 'string
   :group 'name-generator)
 
-;;
 ;; Helper functions
-;;
-
 (defun command-exists-p (cmd)
   "Check if CMD is available in the system."
   (let ((executable (executable-find cmd)))
     (and executable (file-executable-p executable))))
 
+(defun strip-string (s)
+  "Trim leading and trailing whitespace from string S."
+  (if (fboundp 'string-trim)
+      (string-trim s)
+    ;; Fallback for older Emacs versions
+    (replace-regexp-in-string
+     "\\`[ \t\n\r]+\\|[ \t\n\r]+\\'" "" s)))
+
 (defun random-file-from (directory)
   "Pick a random regular file from DIRECTORY."
-  (let ((files (directory-files directory t)))
-    (when (and files (not (null (cdr files))))
-      (file-accessible-directory-p directory))
-    (and files
-         (nth (random (length files)) files))))
+  (let* ((all-files (directory-files directory t))
+         (files (seq-filter #'file-regular-p all-files)))
+    (when files
+      (nth (random (length files)) files))))
 
 (defun read-nonempty-lines (file)
   "Read FILE and return non-empty lines."
   (with-temp-buffer
     (insert-file-contents file nil nil nil t)
-    (mapcar #'(lambda (line) (strip-string line))
+    (mapcar #'strip-string
             (split-string (buffer-string) "\n" t))))
 
 ;; Random selection
@@ -45,17 +49,17 @@
   "Pick a random adjective, preserving case."
   (let ((file (or (getenv "ADJ_FILE")
                   (random-file-from adj-folder))))
-    (nth (random (length (read-nonempty-lines file))) 
-         (read-nonempty-lines file))))
+    (let ((lines (read-nonempty-lines file)))
+      (when lines
+        (nth (random (length lines)) lines)))))
 
 (defun random-noun ()
   "Pick a random noun and convert to lowercase."
-  (let* ((file (or (getenv "NOUN_FILE") 
+  (let* ((file (or (getenv "NOUN_FILE")
                    (random-file-from noun-folder)))
-         (lines (read-nonempty-lines file))
-         (shuffled (append lines (list nil)))) ; Add nil to handle empty lists
-    (when shuffled
-      (downcase (nth (random (length shuffled)) shuffled)))))
+         (lines (read-nonempty-lines file)))
+    (when lines
+      (downcase (nth (random (length lines)) lines)))))
 
 ;; Debugging
 (defun debug-print (&optional adjective noun _noun-file _adj-file _noun-folder _adj-folder)
@@ -74,9 +78,9 @@
   "Generate and return a random name."
   (let ((adjective (random-adjective))
         (noun (random-noun)))
-    (debug-print adjective noun 
+    (debug-print adjective noun
                 (or (getenv "NOUN_FILE") "")
-                (or (getenv "ADJ_FILE") "") 
+                (or (getenv "ADJ_FILE") "")
                 noun-folder
                 adj-folder)
     (concat adjective separator noun)))
@@ -90,9 +94,9 @@
       (message "%s" (generate-name)))))
 
 ;; Entry point
-(let ((count (if (getenv "counto") 
-                (string-to-number (getenv "counto")) 
-              24)))
+(let ((count (if (getenv "counto")
+                 (string-to-number (getenv "counto"))
+               24)))
   (if (member "--batch" command-line-args)
       (progn
         (generate-names count)
