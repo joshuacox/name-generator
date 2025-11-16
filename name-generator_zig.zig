@@ -46,7 +46,7 @@ fn pickRandomFile(allocator: *std.mem.Allocator, dir_path: []const u8) ![]const 
     }
 
     // Seed the PRNG with the current timestamp.
-    const seed = @intCast(u64, std.time.timestamp());
+    const seed = @as(u64, std.time.timestamp());
     const prng = std.rand.DefaultPrng.init(seed);
     const idx = prng.random().intRangeLessThan(usize, files.items.len);
     return files.items[idx];
@@ -156,7 +156,7 @@ pub fn main() !void {
     }
 
     // Prepare PRNG.
-    var prng = std.rand.DefaultPrng.init(@intCast(u64, std.time.timestamp()));
+    var prng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
     const rand = &prng.random();
 
     // Main generation loop.
