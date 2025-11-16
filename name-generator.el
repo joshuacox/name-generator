@@ -17,7 +17,10 @@
   :type 'string
   :group 'name-generator)
 
+;;
 ;; Helper functions
+;;
+
 (defun command-exists-p (cmd)
   "Check if CMD is available in the system."
   (let ((executable (executable-find cmd)))
@@ -87,8 +90,7 @@
 
 ;; Entry point
 (unless (batch-mode)
-  ( progn
-     (generate-names 
-      (if-let ((counto (getenv "counto")))
-        (string-to-number counto)
-      24)))))
+  (generate-names 
+   (if-let ((counto (getenv "counto")))
+     (string-to-number counto)
+   24)))
