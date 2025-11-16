@@ -1,16 +1,13 @@
 #!/usr/bin/env julia
 # Julia implementation of the name-generator.sh script.
-# Respects the following environment variables:
-#   SEPARATOR   – string placed between adjective and noun (default "-")
-#   NOUN_FILE   – path to a noun list file (if not set, a random file from NOUN_FOLDER is used)
-#   ADJ_FILE    – path to an adjective list file (if not set, a random file from ADJ_FOLDER is used)
-#   NOUN_FOLDER – folder containing noun list files (default "./nouns")
-#   ADJ_FOLDER  – folder containing adjective list files (default "./adjectives")
-#   counto      – number of lines to emit (overrides terminal height)
-#   DEBUG       – when set to "true", prints debug information to stderr
+# Behaves like the original shell script with respect to SEPARATOR,
+# NOUN_FILE and ADJ_FILE handling.
 
 using Random
 using Printf
+using Dates
+using Statistics
+using Base.Filesystem: isfile, realpath
 
 # ----------------------------------------------------------------------
 # Helper functions
@@ -65,7 +62,28 @@ function pick_random_file(folder::String)
     if isempty(files)
         error("Folder $folder does not contain any regular files")
     end
-    return rand(files)
+    # Return an absolute (real) path for consistency with the shell script
+    return realpath(rand(files))
+end
+
+"""
+    resolve_file(env_var::String, folder::String) -> String
+
+If the environment variable `env_var` is set and points to a regular file,
+return its absolute path. Otherwise pick a random regular file from `folder`.
+"""
+function resolve_file(env_var::String, folder::String)
+    val = get(ENV, env_var, "")
+    if !isempty(val)
+        abs_path = realpath(val)
+        if isfile(abs_path)
+            return abs_path
+        else
+            error("Environment variable $env_var points to a non‑regular file: $val")
+        end
+    else
+        return pick_random_file(folder)
+    end
 end
 
 """
@@ -113,8 +131,8 @@ NOUN_FOLDER = env_or_default("NOUN_FOLDER", joinpath(HERE, "nouns"))
 ADJ_FOLDER  = env_or_default("ADJ_FOLDER",  joinpath(HERE, "adjectives"))
 
 # Resolve files – env var overrides, otherwise pick a random file from the folder.
-NOUN_FILE = env_or_default("NOUN_FILE", pick_random_file(NOUN_FOLDER))
-ADJ_FILE  = env_or_default("ADJ_FILE",  pick_random_file(ADJ_FOLDER))
+NOUN_FILE = resolve_file("NOUN_FILE", NOUN_FOLDER)
+ADJ_FILE  = resolve_file("ADJ_FILE",  ADJ_FOLDER)
 
 # Pre‑load the files' contents (filtering empty lines)
 noun_lines = read_nonempty_lines(NOUN_FILE)
