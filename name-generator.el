@@ -88,8 +88,11 @@
       (message "%s" (generate-name)))))
 
 ;; Entry point
-(if batch-mode
-  (let ((count (or (getenv "counto") "24")))
-    (generate-names (string-to-number count))
-    (kill-emacs))
-  (generate-names (string-to-number (or (getenv "counto") "24"))))
+(let ((count (if (getenv "counto") 
+                (string-to-number (getenv "counto")) 
+              24)))
+  (if (member "--batch" command-line-args)
+      (progn
+        (generate-names count)
+        (kill-emacs))
+    (generate-names count)))
