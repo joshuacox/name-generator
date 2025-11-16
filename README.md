@@ -14,6 +14,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. bash
 1. c
 1. cpp
+1. elisp
 1. elixir
 1. erlang
 1. golang

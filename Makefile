@@ -1,4 +1,4 @@
-.PHONY: all test testx homepage
+.PHONY: all test testx homepage github
 
 all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar
 
@@ -10,8 +10,11 @@ clean:
 	-@rm -v name-generator_go
 	-@rm -v name_generator.beam
 
+github:
+	${BROWSER} https://github.com/joshuacox/name-generator/ &
+
 homepage:
-	vivaldi https://github.com/joshuacox/name-generator/
+	${BROWSER}  https://joshuacox.github.io/name-generator/ &
 
 name-generator:
 	gcc name-generator.c -o name-generator

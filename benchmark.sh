@@ -30,6 +30,7 @@ slow_bench_runnr () {
     'java -jar ./name-generator.jar' \
     './name-generator.kts' \
     './name-generator.pl' \
+    './name-generator.el' \
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.rkt' \
@@ -63,6 +64,7 @@ scanner_bench_runnr () {
     'counto={num_count} java -jar ./name-generator.jar' \
     'counto={num_count} ./name-generator.kts' \
     'counto={num_count} ./name-generator.pl' \
+    'counto={num_count} ./name-generator.el' \
     'counto={num_count} ./name-generator.rb' \
     'counto={num_count} ./name-generator.raku' \
     'counto={num_count} ./name-generator.rkt' \

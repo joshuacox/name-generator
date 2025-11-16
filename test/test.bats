@@ -273,3 +273,15 @@ setup() {
   result=$(java -jar ./name-generator.jar)
   assert_equal "$result" "test_test"
 }
+@test "test elisp name-generator.el at 10" {
+  result="$(counto=10 ./name-generator.el|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test elisp name-generator.el at 22" {
+  result="$(counto=22 ./name-generator.el|wc -l)"
+  [ "$result" -eq 22 ]
+}
+@test "test elisp test/test" {
+  result=$(./name-generator.el)
+  assert_equal "$result" "test_test"
+}
