@@ -8,12 +8,22 @@ const c = @cImport({
 /// Retrieve an environment variable using C's `getenv`.
 /// Returns `null` if the variable is not set.
 fn cGetenv(key: []const u8) ?[]const u8 {
-    // C's getenv expects a null‑terminated C string.
-    const c_key = std.cstr.addNullByte(key) catch return null;
+    // Allocate a null‑terminated C string on the heap.
+    const allocator = std.heap.page_allocator;
+    const c_key = allocator.alloc(u8, key.len + 1) catch return null;
+    // Ensure we free the allocation before returning.
+    defer allocator.free(c_key);
+
+    // Copy the Zig string into the buffer and add the terminating NUL.
+    std.mem.copy(u8, c_key[0..key.len], key);
+    c_key[key.len] = 0;
+
+    // Call C's getenv.
     const c_val = c.getenv(c_key.ptr);
     if (c_val) |ptr| {
-        // Determine length of the C string.
+        // Determine length of the C string returned by getenv.
         const len = std.mem.len(ptr);
+        // Return a slice referencing the C string (no need to copy; it's owned by the environment).
         return ptr[0..len];
     }
     return null;
