@@ -101,7 +101,8 @@ fn generate_and_print(
   nouns: List(String),
   adjs: List(String),
 ) {
-  let rec loop = fn(remaining: Int) {
+  // Recursive helper to emit the required number of names
+  let rec loop = fn(remaining: Int) -> 
     if remaining <= 0 {
       Nil
     } else {
@@ -113,11 +114,11 @@ fn generate_and_print(
       let name = adj <> separator <> noun
       io:println(name)
 
-      // Continue
+      // Continue with one fewer iteration
       loop(remaining - 1)
     }
-  }
 
+  // Start the recursion
   loop(count)
   Nil
 }
