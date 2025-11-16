@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  name-generator:
+    image: nginx:alpine
+    container_name: name-generator
+    restart: unless-stopped
+    ports:
+      - "${NAME_GENERATOR_PORT:-8080}:80"
+    volumes:
+      - "./web:/usr/share/nginx/html:ro"
