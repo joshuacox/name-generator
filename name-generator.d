@@ -18,7 +18,7 @@ module name_generator;
 import std.stdio;
 import std.file;
 import std.path;
-import std.process;
+import std.process : execute;
 import std.string;
 import std.algorithm : filter, map, canFind, sort, min;
 import std.conv : to;
@@ -61,14 +61,9 @@ int getCountO() {
 
     // Step 2: tput lines
     try {
-        // pipeProcess expects an array of const(char)[]; using Redirect.stdout to capture output.
-        auto proc = pipeProcess(["tput", "lines"], Redirect.stdout);
-        proc.wait();
-        if (proc.status == 0) {
-            // Strip any trailing newline/whitespace from the output
-            auto lineOut = proc.stdout.readLine().strip;
-            return parseIntOr(lineOut, 24);
-        }
+        // `execute` runs the command and returns its stdout as a string.
+        auto out = execute(["tput", "lines"]);
+        return parseIntOr(out.strip, 24);
     } catch (Exception) {
         // ignore – fall back
     }
