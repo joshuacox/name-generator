@@ -58,7 +58,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     // Initialize the ArrayList with the allocator pointer using with_capacity
     // Initialize with try to handle allocation errors properly
     var files = try std.ArrayList([]const u8).initCapacity(allocator, 1);
-    errdefer files.deinit();
+    errdefer files.deinit(allocator);
 
     var it = dir.iterate();
     while (try it.next()) |entry| {
@@ -179,6 +179,13 @@ pub fn main() !void {
     // Load lines from the selected files.
     const noun_lines = try readNonEmptyLines(allocator, noun_file);
     const adj_lines = try readNonEmptyLines(allocator, adj_file);
+    
+    // Shuffle the lines for better randomness
+    var noun_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
+    var adj_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp() + 1));
+    
+    const noun_shuffled = try randomChoice(noun_lines.items, allocator, &noun_rng);
+    const adj_shuffled = try randomChoice(adj_lines.items, allocator, &adj_rng);
     defer {
         for (noun_lines) |l| allocator.free(l);
         allocator.free(noun_lines);
