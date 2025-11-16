@@ -1,5 +1,7 @@
 #!/usr/bin/env -S clojure -M ./name-generator.clj
 
+(require '[clojure.java.shell :refer [sh]])
+
 ;; Environment variables and configuration
 (def ^:dynamic *separator* (or (System/getenv "SEPARATOR") "-"))
 (def ^:dynamic *noun-folder* (or (System/getenv "NOUN_FOLDER") "./nouns"))
@@ -7,10 +9,11 @@
 
 ;; Randomness and file handling
 (defn command-exists? [cmd]
-  (try 
-    (Runtime/getRuntime (str "which " cmd))
+  (try
+    (:exit (clojure.java.shell/sh "which" cmd))
     true
-    (catch java.io.IOException _ false)))
+    (catch java.io.IOException _
+      false)))
 
 (defn realpath-fallback [path-str]
   (if (command-exists? "realpath")
