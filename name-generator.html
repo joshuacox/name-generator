@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Name Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    #name {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Name Generator</h1>
+  <button id="generateBtn">Generate Name</button>
+  <div id="name"></div>
+
+  <script type="module">
+    import { generateName } from './name-generator_lib.js';
+
+    const btn = document.getElementById('generateBtn');
+    const output = document.getElementById('name');
+
+    btn.addEventListener('click', async () => {
+      try {
+        const name = await generateName();
+        output.textContent = name;
+      } catch (e) {
+        output.textContent = 'Error: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
