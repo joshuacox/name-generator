@@ -1,4 +1,4 @@
-#!/usr/bin/env emacs --script
+#!/usr/bin/env -S emacs --script
 ;; name-generator.el
 ;; Emacs‑Lisp implementation of the behaviour of name-generator.sh
 ;; It respects the environment variables:
