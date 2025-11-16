@@ -4,8 +4,8 @@ const std = @import("std");
 // Helper: read an environment variable, falling back to a default string.
 // ---------------------------------------------------------------
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    // std.os.getenv returns ?[]const u8 (null if the variable is unset)
-    return std.os.getenv(key) orelse fallback;
+    // std.process.getenv returns ?[]const u8 (null if the variable is unset)
+    return std.process.getenv(key) orelse fallback;
 }
 
 // ---------------------------------------------------------------
