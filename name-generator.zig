@@ -5,20 +5,16 @@ fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
 }
 
 // Resolve a path to an absolute canonical form.
-// Prefer `realpath`; fall back to `readlink -f`.
-fn resolvePath(path: []const u8) ![]const u8 {
-    if (std.os.realpath(path, null) != null) {
-        return std.os.realpath(path, null) catch unreachable;
-    } else {
-        // Fallback to readlink -f if realpath fails.  This is less portable.
-        // Note: readlink -f is not available on all systems.
-        return error.Unsupported;
-    }
+// Prefer `realpath`; fall back to `readlink -f` (not implemented here).
+fn resolvePath(path: []const u8) anyerror![]const u8 {
+    const result = std.os.realpath(path, null);
+    return switch (result) {
+        .Ok => |abs_path| abs_path,
+        .Err => error.Unsupported,
+    };
 }
 
 pub fn main() !void {
-    const allocator = std.heap.page_allocator;
-
     const key = "MY_ENV_VAR";
     const defaultValue = "default value";
     const envVarValue = envOrDefault(key, defaultValue);
