@@ -63,7 +63,8 @@ fn resolve_file(
         }
 
       // Pick a random entry (the original scripts assume all entries are regular files)
-      let idx = random.int(0, List.length(entries))
+      // `random.int` is inclusive on both bounds, so we subtract 1 from the length.
+      let idx = random.int(0, List.length(entries) - 1)
       case List.at(entries, idx) {
         Some(name) -> folder <> "/" <> name
         None -> io:panic("No files found in folder " <> folder)
@@ -116,7 +117,8 @@ fn generate_and_print(
 // Helper: pick a random element from a non‑empty list
 fn random_choice(list: List(a)) -> a {
   let len = List.length(list)
-  let idx = random.int(0, len)
+  // `random.int` is inclusive, so we use `len - 1` as the upper bound.
+  let idx = random.int(0, len - 1)
   case List.at(list, idx) {
     Some(v) -> v
     None -> io:panic("Attempted to pick from an empty list")
