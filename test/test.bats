@@ -237,3 +237,15 @@ setup() {
   result=$(./name-generator.rkt)
   assert_equal "$result" "test_test"
 }
+@test "test name-generator.jl at 10" {
+  result="$(counto=10 ./name-generator.jl|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.jl at 83" {
+  result="$(counto=83 ./name-generator.jl|wc -l)"
+  [ "$result" -eq 83 ]
+}
+@test "test julia test/test" {
+  result=$(./name-generator.jl)
+  assert_equal "$result" "test_test"
+}

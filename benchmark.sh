@@ -15,6 +15,7 @@ bench_runnr () {
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.js' \
+    './name-generator.jl' \
     './name-generator.pl' \
     './name-generator.rb' \
     './name-generator.raku' \

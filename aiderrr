@@ -1,5 +1,5 @@
  #!/usr/bin/env bash
- : ${EXTRA_OPTS:="--thinking-tokens 8k"}
+ : ${EXTRA_OPTS:="--thinking-tokens 8k --read name-generator.sh"}
 #: "${MODEL:=ollama_chat/qwen2.5-coder:32b-base-fp16}"
 #: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
 #: "${MODEL:=ollama_chat/llama4:scout}"

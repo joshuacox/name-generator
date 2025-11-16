@@ -40,5 +40,10 @@ name_generator.beam:
 BENCHMARK.md:
 	./meta-benchmark.sh | tee BENCHMARK.md
 
+# WIPs
+#
 name-generator_zig:
 	zig build-exe -I . name-generator_zig.zig -lc
+
+dmd name-generator_d:
+	dmd name-generator_d.d
