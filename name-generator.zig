@@ -1,14 +1,14 @@
 const std = @import("std");
 
-// -----------------------------------------------------------------
+// ---------------------------------------------------------------
 // Helper: read an environment variable, falling back to a default string.
 // ---------------------------------------------------------------
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    // std.os.getenv returns ?[]const u8 (null if the variable is unset)
-    return std.os.getenv(key) orelse fallback;
+    // std.process.getenv returns ?[]const u8 (null if the variable is unset)
+    return std.process.getenv(key) orelse fallback;
 }
 
-// -----------------------------------------------------------------
+// ---------------------------------------------------------------
 // Resolve a path to an absolute canonical form.
 // Prefer `realpath`; if it fails we propagate the error.
 // ---------------------------------------------------------------
@@ -19,7 +19,7 @@ fn resolvePath(path: []const u8) anyerror![]const u8 {
     return abs_path;
 }
 
-// -----------------------------------------------------------------
+// ---------------------------------------------------------------
 // Entry point
 // ---------------------------------------------------------------
 pub fn main() !void {
