@@ -52,15 +52,14 @@ fn parseInt(str: []const u8, fallback: usize) usize {
 // Helper: pick a random regular file from a directory.
 // ---------------------------------------------------------------
 fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u8 {
-    var dir = try std.fs.openDirAbsolute(dir_path, .{ .iterate = true });
+    var dir = try std.fs.openDirAbsolute(dir_path, .{});
     defer dir.close();
 
     // Initialise the ArrayList with the allocator pointer.
-    //var files = std.ArrayList([]const u8).init(&allocator);
     var files = std.ArrayList([]const u8).initCapacity(allocator, 1) catch unreachable;
     defer files.deinit();
 
-    var it = try dir.iterate();
+    var it = dir.iterate();
     while (try it.next()) |entry| {
         if (entry.kind == .File) {
             const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
