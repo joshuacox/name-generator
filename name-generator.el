@@ -37,7 +37,8 @@
   "Read FILE and return non-empty lines."
   (with-temp-buffer
     (insert-file-contents file nil nil nil t)
-    (split-string-and-strip (buffer-string) "\n" t)))
+    (mapcar #'(lambda (line) (strip-string line))
+            (split-string (buffer-string) "\n" t))))
 
 ;; Random selection
 (defun random-adjective ()
@@ -49,10 +50,12 @@
 
 (defun random-noun ()
   "Pick a random noun and convert to lowercase."
-  (let ((file (or (getenv "NOUN_FILE") 
-                  (random-file-from noun-folder))))
-    (downcase (nth (random (length (read-nonempty-lines file)))
-                   (read-nonempty-lines file)))))
+  (let* ((file (or (getenv "NOUN_FILE") 
+                   (random-file-from noun-folder)))
+         (lines (read-nonempty-lines file))
+         (shuffled (append lines (list nil)))) ; Add nil to handle empty lists
+    (when shuffled
+      (downcase (nth (random (length shuffled)) shuffled)))))
 
 ;; Debugging
 (defun debug-print (&optional adjective noun _noun-file _adj-file _noun-folder _adj-folder)
