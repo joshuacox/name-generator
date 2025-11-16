@@ -1,8 +1,8 @@
 const std = @import("std");
 
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    const env = std.process.env.get(key);
-    return if (env) |val| if (val.len > 0) val else fallback else fallback;
+    const env = std.process.env_get(key) orelse fallback;
+    return env;
 }
 
 // Resolve a path to an absolute canonical form.
@@ -86,7 +86,7 @@ fn getTerminalLines(allocator: *std.mem.Allocator) usize {
         .cmd = &.{ "tput", "lines" },
     });
 
-    var output = try cmd.run();
+    var output = cmd.run();
     if (output.exit_code != 0) {
         return 24;
     }
