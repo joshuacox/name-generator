@@ -90,13 +90,12 @@
 ;; ----------------------------------------------------------------------
 (defun name-generator-run ()
   "Generate names according to the same rules as name-generator.sh."
-  (let* ((separator (env-or-default "SEPARATOR" "-"))
-         (here (expand-file-name default-directory))
-         (noun-folder (env-or-default "NOUN_FOLDER"
-                                      (expand-file-name "nouns" here)))
-         (adj-folder  (env-or-default "ADJ_FOLDER"
-                                      (expand-file-name "adjectives" here)))
-    ;; Resolve files (env var overrides, otherwise random file from folder)
+  (let ((separator (env-or-default "SEPARATOR" "-"))
+        (here (expand-file-name default-directory))
+        (noun-folder (env-or-default "NOUN_FOLDER"
+                                     (expand-file-name "nouns" here)))
+        (adj-folder  (env-or-default "ADJ_FOLDER"
+                                     (expand-file-name "adjectives" here))))
     (let* ((noun-file (resolve-file "NOUN_FILE" noun-folder))
            (adj-file  (resolve-file "ADJ_FILE"  adj-folder))
            (noun-lines (read-nonempty-lines noun-file))
@@ -106,12 +105,15 @@
         (error "Noun list %s is empty" noun-file))
       (unless adj-lines
         (error "Adjective list %s is empty" adj-file))
-      (dotimes (i counto)
-        (let* ((raw-noun (nth (random (length noun-lines)) noun-lines))
-               (noun (downcase raw-noun))
-               (adj  (nth (random (length adj-lines)) adj-lines)))
-          (debug-print (1+ i) noun-file adj-file noun-folder adj-folder noun adj)
-          (princ (format "%s%s%s\n" adj separator noun)))))))
+      
+      (let ((i 0))
+        (while (< i counto)
+          (let* ((raw-noun (nth (random (length noun-lines)) noun-lines))
+                 (noun (downcase raw-noun))
+                 (adj  (nth (random (length adj-lines)) adj-lines)))
+            (debug-print (1+ i) noun-file adj-file noun-folder adj-folder noun adj)
+            (princ (format "%s%s%s\n" adj separator noun)))
+          (setq i (1+ i)))))))
 
 ;; Execute when run as a script (non‑interactive Emacs)
 (when noninteractive
