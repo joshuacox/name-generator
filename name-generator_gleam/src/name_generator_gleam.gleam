@@ -9,7 +9,7 @@ pub fn main() {
   // Separator (default "-")
   let separator =
     case erlang.get_env("SEPARATOR") {
-      Some(s) -> s
+      Some(s) -> s,
       None -> "-"
     }
 
@@ -18,9 +18,9 @@ pub fn main() {
     case erlang.get_env("counto") {
       Some(s) ->
         case string.to_int(s) {
-          Ok(i) -> i
+          Ok(i) -> i,
           Error(_) -> 24
-        }
+        },
       None -> 24
     }
 
@@ -45,11 +45,11 @@ fn resolve_file(
 ) -> String {
   // If the file env var is set, use it directly
   case erlang.get_env(file_env) {
-    Some(path) -> path
+    Some(path) -> path,
     None ->
       // Determine the folder to search
       case erlang.get_env(folder_env) {
-        Some(folder) -> pick_random_file(folder)
+        Some(folder) -> pick_random_file(folder),
         None -> pick_random_file(default_folder)
       }
   }
@@ -61,7 +61,7 @@ fn pick_random_file(folder: String) -> String {
   // List entries in the folder
   let entries =
     case erlang.list_dir(folder) {
-      Ok(es) -> es
+      Ok(es) -> es,
       Error(_) -> io:panic("Cannot list folder " <> folder)
     }
 
@@ -74,7 +74,7 @@ fn pick_random_file(folder: String) -> String {
     // `random.int` is inclusive, so we use `len - 1` as the upper bound.
     let idx = random.int(0, len - 1)
     case List.at(entries, idx) {
-      Some(name) -> folder <> "/" <> name
+      Some(name) -> folder <> "/" <> name,
       None -> io:panic("Failed to pick a file from folder " <> folder)
     }
   }
@@ -84,7 +84,7 @@ fn pick_random_file(folder: String) -> String {
 fn read_nonempty_lines(path: String) -> List(String) {
   let content =
     case io:read_file(path) {
-      Ok(c) -> c
+      Ok(c) -> c,
       Error(_) -> io:panic("Cannot read file " <> path)
     }
 
@@ -128,7 +128,7 @@ fn random_choice(list: List(a)) -> a {
   // `random.int` is inclusive, so we use `len - 1` as the upper bound.
   let idx = random.int(0, len - 1)
   case List.at(list, idx) {
-    Some(v) -> v
+    Some(v) -> v,
     None -> io:panic("Attempted to pick from an empty list")
   }
 }
