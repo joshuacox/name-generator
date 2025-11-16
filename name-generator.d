@@ -13,6 +13,8 @@
  *   - Optional debug output when DEBUG=true.
  */
 
+module name_generator;
+
 import std.stdio;
 import std.file;
 import std.path;
@@ -56,8 +58,8 @@ int getCountO() {
         proc.wait();
         if (proc.status == 0) {
             // Strip any trailing newline/whitespace from the output
-            auto out = proc.output.readLine().strip;
-            return parseIntOr(out, 24);
+            auto lineOut = proc.stdout.readLine().strip;
+            return parseIntOr(lineOut, 24);
         }
     } catch (Exception) {
         // ignore – fall back
