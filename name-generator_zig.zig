@@ -137,8 +137,8 @@ pub fn main() !void {
     defer allocator.free(adj_folder);
 
     // Resolve files – env var overrides, otherwise pick a random file.
-    const noun_file_env = std.process.getenv("NOUN_FILE");
-    const adj_file_env = std.process.getenv("ADJ_FILE");
+    const noun_file_env = std.os.getenv("NOUN_FILE");
+    const adj_file_env = std.os.getenv("ADJ_FILE");
 
     const noun_file = if (noun_file_env) |v| v else try pickRandomFile(allocator, noun_folder);
     const adj_file = if (adj_file_env) |v| v else try pickRandomFile(allocator, adj_folder);
@@ -171,7 +171,7 @@ pub fn main() !void {
         defer allocator.free(noun_lc);
 
         // Debug output if requested.
-        if (std.process.getenv("DEBUG")) |dbg| {
+        if (std.os.getenv("DEBUG")) |dbg| {
             if (std.mem.eql(u8, dbg, "true")) {
                 try debugPrint(
                     allocator,
