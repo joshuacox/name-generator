@@ -11,10 +11,9 @@
   :type 'string
   :group 'name-generator)
 
-(defcustom separator "-"
-  "Separator between adjective and noun"
-  :type 'string
-  :group 'name-generator)
+;; Separator: respect the SEPARATOR environment variable, default to "-"
+(defvar separator (or (getenv "SEPARATOR") "-")
+  "Separator between adjective and noun, can be overridden by the SEPARATOR env var.")
 
 ;; Helper functions
 (defun command-exists-p (cmd)
