@@ -98,6 +98,25 @@
     .copy-btn:hover {
       opacity: 0.85;
     }
+
+    /* Toast styling */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-color);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -121,7 +140,13 @@
   <div id="namesList"></div>
 
   <script type="module">
-    import { generateNames, nameWithCopyButton, setTheme } from './name-generator_lib.js';
+    import {
+      generateNames,
+      nameWithCopyButton,
+      copyToClipboard,
+      setTheme,
+      showToast
+    } from './name-generator_lib.js';
 
     // Apply the default theme (you can customize colours here)
     setTheme({
@@ -138,12 +163,31 @@
       const count = parseInt(countInput.value, 10) || 50;
       try {
         const names = await generateNames(count);
-        // Render each name with a copy button and a horizontal rule between entries
-        listDiv.innerHTML = names
-          .map(name => nameWithCopyButton(name))
-          .join('');
+        // Render each name with a copy button and a horizontal rule
+        listDiv.innerHTML = names.map(name => nameWithCopyButton(name)).join('');
       } catch (e) {
         listDiv.textContent = 'Error: ' + e.message;
+      }
+    });
+
+    // Event delegation for copy buttons
+    listDiv.addEventListener('click', async (event) => {
+      const target = event.target;
+      if (target.classList.contains('copy-btn')) {
+        const name = target.dataset.name;
+        try {
+          await copyToClipboard(name);
+          // Show toast feedback
+          showToast('Copied!');
+          // Optional visual feedback on the button itself
+          const originalText = target.textContent;
+          target.textContent = 'Copied!';
+          setTimeout(() => {
+            target.textContent = originalText;
+          }, 1500);
+        } catch (err) {
+          console.error('Copy failed', err);
+        }
       }
     });
   </script>

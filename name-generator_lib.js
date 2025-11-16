@@ -21,17 +21,20 @@
  *   `copyToClipboard(text)` copies the supplied text to the clipboard.
  *   `nameWithCopyButton(name)` returns an HTML snippet that displays the
  *   name together with a “Copy” button.
+ *
+ * Toast feedback support:
+ *   `showToast(message, duration)` displays a temporary toast notification.
  */
 
-/* ------------------------------------------------------------ */
-/* Configuration                                                 */
-/* ------------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
+/* Configuration                                                             */
+/* -------------------------------------------------------------------------- */
 
 const SEPARATOR = '-';
 
-/* ------------------------------------------------------------ */
-/* Helper functions                                              */
-/* ------------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
+/* Helper functions                                                          */
+/* -------------------------------------------------------------------------- */
 
 /**
  * Fetch a text file and return an array of non‑empty trimmed lines.
@@ -99,9 +102,29 @@ export function nameWithCopyButton(name) {
   `.trim();
 }
 
-/* ------------------------------------------------------------ */
-/* Public API                                                    */
-/* ------------------------------------------------------------ */
+/**
+ * Show a temporary toast notification.
+ *
+ * @param {string} message - Text to display.
+ * @param {number} [duration=2000] - How long (ms) the toast stays visible.
+ */
+export function showToast(message, duration = 2000) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  // Force reflow so transition works
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, duration);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Public API                                                                */
+/* -------------------------------------------------------------------------- */
 
 /**
  * Generate a single random name.
