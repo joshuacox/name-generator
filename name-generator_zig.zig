@@ -184,8 +184,27 @@ pub fn main() !void {
     var noun_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
     var adj_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp() + 1));
     
-    const noun_shuffled = try randomChoice(noun_lines.items, allocator, &noun_rng);
-    const adj_shuffled = try randomChoice(adj_lines.items, allocator, &adj_rng);
+    // Use std.random.select to get a weighted random index without replacement
+    const noun_indices = try std.Allocator.createArray(allocator, usize, noun_lines.items.len);
+    defer allocator.free(noun_indices);
+    
+    for (noun_indices, 0..) |*idx, i| {
+        idx.* = i;
+    }
+    
+    const adj_indices = try std.Allocator.createArray(allocator, usize, adj_lines.items.len);
+    defer allocator.free(adj_indices);
+    
+    for (adj_indices, 0..) |*idx, i| {
+        idx.* = i;
+    }
+
+    const noun_shuffled = std.random.select(noun_rng, noun_indices[0..], null);
+    const adj_shuffled = std.random.select(adj_rng, adj_indices[0..], null);
+
+    // Get the actual lines from the selected indices
+    const final_noun = noun_lines.items[noun_shuffled];
+    const final_adj = adj_lines.items[adj_shuffled];
     defer {
         for (noun_lines) |l| allocator.free(l);
         allocator.free(noun_lines);
