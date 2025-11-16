@@ -11,6 +11,7 @@
 ;;   DEBUG       – if set to "true", prints debugging information to stderr.
 
 (require 'cl-lib)
+(require 'subr-x)   ;; for `string-trim`
 
 ;; ----------------------------------------------------------------------
 ;; Helper utilities
@@ -30,7 +31,7 @@
   (ignore-errors
     (let ((output (with-output-to-string
                     (with-current-buffer standard-output
-                      (call-process "tput" nil t nil "lines")))))
+                      (call-process "tput" nil t nil "lines"))))
       (when (string-match-p "^[0-9]+$" (string-trim output))
         (string-to-number (string-trim output))))))
 
