@@ -181,7 +181,7 @@ export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adje
 export async function generateNames(
   count = 50,
   nounUrl = '/nouns/full.list',
-  adjUrl = '../adjectives/full.list'
+  adjUrl = '/adjectives/full.list'
 ) {
   if (!Number.isInteger(count) || count <= 0) {
     throw new Error('Count must be a positive integer');
