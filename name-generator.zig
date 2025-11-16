@@ -5,8 +5,8 @@ fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
     return if (env) |val| if (val.len > 0) val else fallback else fallback;
 }
 
-// Resolve a path: if the environment variable is set and points to a regular file, use it.
-// Otherwise pick a random regular file from the given folder.
+// Resolve a path to an absolute canonical form.
+// Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.
 fn resolveFileOrRandom(
     allocator: *std.mem.Allocator,
     envVar: []const u8,
@@ -30,7 +30,7 @@ fn resolveFileOrRandom(
     return try pickRandomFile(allocator, folder);
 }
 
-// Pick a random regular file from a directory (non‑recursive).
+// Pick a random regular file from a directory.
 fn pickRandomFile(allocator: *std.mem.Allocator, dir_path: []const u8) ![]const u8 {
     var dir = try std.fs.openDirAbsolute(dir_path, .{});
     defer dir.close();
@@ -64,11 +64,11 @@ fn readAllLines(allocator: *std.mem.Allocator, path: []const u8) !std.ArrayList(
     defer lines.deinit();
 
     var start: usize = 0;
-    for (content) |c, i| {
+    for (content) |c| {
         if (c == '\n') {
-            const line = std.mem.trim(u8, content[start..i], &std.ascii.whitespace);
+            const line = std.mem.trim(u8, content[start..], &std.ascii.whitespace);
             try lines.append(line);
-            start = i + 1;
+            start = start + 1;
         }
     }
     // last line (if file doesn't end with newline)
@@ -146,7 +146,7 @@ pub fn main() !void {
     const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "nouns" }));
     const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "adjectives" }));
 
-    // Resolve files (env overrides or random pick)
+    // Resolve files – env var overrides, otherwise pick a random file from the folder.
     const noun_file = try resolveFileOrRandom(allocator, "NOUN_FILE", noun_folder);
     defer allocator.free(noun_file);
     const adj_file = try resolveFileOrRandom(allocator, "ADJ_FILE", adj_folder);
