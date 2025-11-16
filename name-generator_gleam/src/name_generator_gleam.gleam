@@ -54,14 +54,12 @@ fn resolve_file(
           Some(f) -> f
           None -> default_folder
         }
-
       // List entries in the folder
       let entries =
         case erlang.list_dir(folder) {
           Ok(es) -> es
           Error(_) -> io:panic("Cannot list folder " <> folder)
         }
-
       // Ensure there is at least one entry
       let len = List.length(entries)
       if len == 0 {
