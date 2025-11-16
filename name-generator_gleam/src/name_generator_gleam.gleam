@@ -3,7 +3,6 @@ import gleam/string
 import gleam/list
 import gleam/random
 import gleam/erlang
-import gleam/result.{Ok, Error}
 
 pub fn main() {
   // Separator (default "-")
@@ -100,9 +99,9 @@ fn generate_and_print(
   separator: String,
   nouns: List(String),
   adjs: List(String),
-) {
+) -> Nil {
   // Recursive helper to emit the required number of names
-  let rec loop = fn(remaining: Int) -> 
+  let rec loop = fn(remaining: Int) -> Nil {
     if remaining <= 0 {
       Nil
     } else {
@@ -117,10 +116,10 @@ fn generate_and_print(
       // Continue with one fewer iteration
       loop(remaining - 1)
     }
+  }
 
   // Start the recursion
   loop(count)
-  Nil
 }
 
 // Helper: pick a random element from a non‑empty list
