@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Name Generator</title>
   <style>
+    /* Basic HTML5 UP inspired theming */
+    :root {
+      --primary-color: #ff6600;
+      --bg-color: #1e1e1e;
+      --text-color: #f0f0f0;
+      --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      line-height: 1.6;
+    }
+
+    .wrapper {
+      max-width: 68rem;
+      margin: 0 auto;
       padding: 2rem;
     }
 
     header {
-      margin-bottom: 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: var(--primary-color);
     }
 
     nav ul {
@@ -19,80 +43,121 @@
       padding: 0;
       margin: 0;
       display: flex;
-      gap: 1rem;
+      justify-content: center;
+      gap: 1.5rem;
     }
 
     nav a {
       text-decoration: none;
-      color: inherit;
+      color: var(--text-color);
+      font-weight: bold;
     }
 
-    #name,
-    #namesList {
-      margin-top: 1rem;
-      font-size: 1.5rem;
+    nav a:hover {
+      color: var(--primary-color);
     }
 
-    button {
-      padding: 0.5rem 1rem;
+    .controls {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls label,
+    .controls input,
+    .controls button {
       font-size: 1rem;
-      margin-right: 0.5rem;
     }
 
-    input[type="number"] {
-      width: 4rem;
+    .controls input {
+      width: 5rem;
       padding: 0.3rem;
-      font-size: 1rem;
+      margin-left: 0.5rem;
     }
 
-    .name-item {
+    .controls button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      background: var(--primary-color);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      opacity: 0.9;
+    }
+
+    #namesList .name-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
       margin: 0.2rem 0;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+
+    #name {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-top: 1rem;
+      color: var(--primary-color);
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>Name Generator</h1>
-  </header>
+  <div class="wrapper">
+    <header>
+      <h1>Name Generator</h1>
+    </header>
 
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="https://github.com/yourrepo">GitHub</a></li>
-    </ul>
-  </nav>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="https://github.com/yourrepo">GitHub</a></li>
+      </ul>
+    </nav>
 
-  <label for="countInput">Generate multiple:</label>
-  <input type="number" id="countInput" min="1" value="33">
-  <button id="generateMultipleBtn">Generate</button>
+    <section class="controls">
+      <label for="countInput">Generate multiple:</label>
+      <input type="number" id="countInput" min="1" value="50">
+      <button id="generateMultipleBtn">Generate</button>
+    </section>
 
-  <div id="name"></div>
-  <div id="namesList"></div>
+    <div id="name"></div>
+    <div id="namesList"></div>
+  </div>
 
   <script type="module">
-    import {generateName, generateNames} from './name-generator_lib.js';
+    import { generateName, generateNames, setTheme } from './name-generator_lib.js';
+
+    // Optional: apply a custom theme (you can change colours here)
+    setTheme({
+      primaryColor: '#ff6600',
+      backgroundColor: '#1e1e1e',
+      textColor: '#f0f0f0'
+    });
 
     const multiBtn = document.getElementById('generateMultipleBtn');
     const countInput = document.getElementById('countInput');
     const listDiv = document.getElementById('namesList');
+    const singleOutput = document.getElementById('name');
+
+    // If you ever want a single name, you can uncomment the following lines:
+    // import { generateName } from './name-generator_lib.js';
+    // generateName().then(name => { singleOutput.textContent = name; });
 
     multiBtn.addEventListener('click', async () => {
       const count = parseInt(countInput.value, 10) || 50;
       try {
         const names = await generateNames(count);
-        // Render each name on its own line
         listDiv.innerHTML = names
           .map(name => `<div class="name-item">${name}</div>`)
           .join('');
-        // Clear the single‑name output
-        document.getElementById('name').textContent = '';
+        singleOutput.textContent = '';
       } catch (e) {
         listDiv.textContent = 'Error: ' + e.message;
-        document.getElementById('name').textContent = '';
+        singleOutput.textContent = '';
       }
     });
   </script>
 </body>
-
 </html>

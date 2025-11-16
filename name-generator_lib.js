@@ -12,6 +12,13 @@
  *
  * If you need different locations, pass them as arguments to
  * `generateName` or `generateNames`.
+ *
+ * Theming support:
+ *   The library now exports a `setTheme` function that allows you to
+ *   customise CSS variables used by the UI (see name-generator.html).
+ *   Example:
+ *     import { setTheme } from './name-generator_lib.js';
+ *     setTheme({ primaryColor: '#ff6600', backgroundColor: '#111111' });
  */
 
 const SEPARATOR = '-';
@@ -96,4 +103,19 @@ export async function generateNames(
     names.push(`${adjective}${SEPARATOR}${noun}`);
   }
   return names;
+}
+
+/**
+ * Apply a simple theme by setting CSS custom properties.
+ *
+ * @param {Object} theme - Theme configuration.
+ * @param {string} [theme.primaryColor] - Primary accent colour.
+ * @param {string} [theme.backgroundColor] - Page background colour.
+ * @param {string} [theme.textColor] - Default text colour.
+ */
+export function setTheme({ primaryColor, backgroundColor, textColor } = {}) {
+  const root = document.documentElement;
+  if (primaryColor) root.style.setProperty('--primary-color', primaryColor);
+  if (backgroundColor) root.style.setProperty('--bg-color', backgroundColor);
+  if (textColor) root.style.setProperty('--text-color', textColor);
 }
