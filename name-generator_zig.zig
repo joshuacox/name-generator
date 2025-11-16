@@ -154,7 +154,8 @@ pub fn main() !void {
     const counto_str = envOrDefault("counto", "24");
     const counto = parseInt(counto_str, 24);
 
-    const cwd = try std.process.getCwdAlloc(&allocator);
+    // getCwdAlloc now expects the allocator value, not a pointer.
+    const cwd = try std.process.getCwdAlloc(allocator);
     defer allocator.free(cwd);
 
     const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(&allocator, &.{ cwd, "nouns" }));
