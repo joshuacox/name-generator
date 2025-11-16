@@ -165,8 +165,8 @@ pub fn main() !void {
     const noun_file_env = envOrDefault("NOUN_FILE", "");
     const adj_file_env = envOrDefault("ADJ_FILE", "");
 
-    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(allocator, noun_folder);
-    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(allocator, adj_folder);
+    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(&allocator, noun_folder);
+    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(&allocator, adj_folder);
     defer allocator.free(noun_file);
     defer allocator.free(adj_file);
 
