@@ -8,7 +8,7 @@
  *
  * The files are expected to be served from the same origin, e.g.
  *   /nouns/full.list   (or any file inside the `nouns` folder)
- *   /adjectives        (or any file inside the `adjectives` folder)
+ *   /adjectives/full.list   (or any file inside the `adjectives` folder)
  *
  * If you need different locations, pass them as arguments to
  * `generateName`.
@@ -38,10 +38,10 @@ async function fetchLines(url) {
  * Generate a random name.
  *
  * @param {string} [nounUrl='/nouns/full.list']        - URL of the noun list.
- * @param {string} [adjUrl='/adjectives']    - URL of the adjective list.
+ * @param {string} [adjUrl='/adjectives/full.list']    - URL of the adjective list.
  * @returns {Promise<string>} The generated name.
  */
-export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adjectives') {
+export async function generateName(nounUrl = '/nouns/full.list', adjUrl = '/adjectives/full.list') {
   const [nounLines, adjLines] = await Promise.all([
     fetchLines(nounUrl),
     fetchLines(adjUrl)
