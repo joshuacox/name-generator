@@ -65,14 +65,14 @@ fn pick_random_file(folder: String) -> String {
     }
 
   // Ensure there is at least one entry
-  let len = List.length(entries)
+  let len = list.length(entries)
   if len == 0 {
     io:panic("No files found in folder " <> folder)
   } else {
     // Pick a random entry (the original scripts assume all entries are regular files)
     // `random.int` is inclusive, so we use `len - 1` as the upper bound.
     let idx = random.int(0, len - 1)
-    case List.at(entries, idx) {
+    case list.at(entries, idx) {
       Some(name) -> folder <> "/" <> name,
       None -> io:panic("Failed to pick a file from folder " <> folder),
     }
@@ -89,8 +89,8 @@ fn read_nonempty_lines(path: String) -> List(String) {
 
   content
   |> string.split("\n")
-  |> List.map(fn(line) { string.trim(line) })
-  |> List.filter(fn(line) { line != "" })
+  |> list.map(fn(line) { string.trim(line) })
+  |> list.filter(fn(line) { line != "" })
 }
 
 // Generate `count` names and print each on its own line
@@ -124,10 +124,10 @@ fn generate_and_print(
 
 // Helper: pick a random element from a non‑empty list
 fn random_choice(items: List(a)) -> a {
-  let len = List.length(items)
+  let len = list.length(items)
   // `random.int` is inclusive, so we use `len - 1` as the upper bound.
   let idx = random.int(0, len - 1)
-  case List.at(items, idx) {
+  case list.at(items, idx) {
     Some(v) -> v,
     None -> io:panic("Attempted to pick from an empty list"),
   }
