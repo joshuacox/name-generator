@@ -88,10 +88,8 @@
       (message "%s" (generate-name)))))
 
 ;; Entry point
-(let ((counto (or (and (boundp 'counto) counto)        ; compatibility with older Emacs versions
-                 (string-to-number (getenv "counto")))))
-  (if (batch-mode)
-      (let ((count (or counto 24)))
-        (generate-names (string-to-number (number-to-string count)))
-        (kill-emacs))
-    (generate-names (if counto (string-to-number counto) 24))))
+(if batch-mode
+  (let ((count (or (getenv "counto") "24")))
+    (generate-names (string-to-number count))
+    (kill-emacs))
+  (generate-names (string-to-number (or (getenv "counto") "24"))))
