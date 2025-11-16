@@ -1,10 +1,7 @@
 const std = @import("std");
 
 // ---------------------------------------------------------------
-// Helper: read an environment variable, falling back to a default string.
-// This implementation works across Zig versions by checking which
-// module provides `getenv`. If neither is available we simply return
-// the fallback value.
+// Helper: read an environment variable, falling back to a default.
 // ---------------------------------------------------------------
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
     // Zig 0.11+ provides std.process.getenv
@@ -15,33 +12,179 @@ fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
     if (@hasDecl(std.os, "getenv")) {
         return std.os.getenv(key) orelse fallback;
     }
-    // As a last resort, just return the fallback.
     return fallback;
 }
 
 // ---------------------------------------------------------------
-// Resolve a path to an absolute canonical form.
-// Prefer `realpath`; if it fails we propagate the error.
+// Helper: parse an integer from a string, returning fallback on error.
 // ---------------------------------------------------------------
-fn resolvePath(path: []const u8) anyerror![]const u8 {
-    // std.os.realpath returns an error‑union: ![]const u8
-    // `try` propagates the error to the caller.
-    const abs_path = try std.os.realpath(path, null);
-    return abs_path;
+fn parseInt(str: []const u8, fallback: usize) usize {
+    const parsed = std.fmt.parseInt(usize, str, 10) catch return fallback;
+    return parsed;
 }
 
 // ---------------------------------------------------------------
-// Entry point
+// Helper: pick a random regular file from a directory.
+// ---------------------------------------------------------------
+fn pickRandomFile(allocator: *std.mem.Allocator, dir_path: []const u8) ![]const u8 {
+    var dir = try std.fs.openDirAbsolute(dir_path, .{ .iterate = true });
+    defer dir.close();
+
+    var files = std.ArrayList([]const u8).init(allocator);
+    defer files.deinit();
+
+    var it = try dir.iterate();
+    while (try it.next()) |entry| {
+        if (entry.kind == .File) {
+            const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
+            try files.append(full_path);
+        }
+    }
+
+    if (files.items.len == 0) {
+        return error.NoFilesInDirectory;
+    }
+
+    const prng = std.rand.DefaultPrng.init(@intCast(u64, std.time.timestamp()));
+    const idx = prng.random().intRangeLessThan(usize, files.items.len);
+    return files.items[idx];
+}
+
+// ---------------------------------------------------------------
+// Helper: read non‑empty lines from a file.
+// ---------------------------------------------------------------
+fn readNonEmptyLines(allocator: *std.mem.Allocator, file_path: []const u8) ![]const []const u8 {
+    const file = try std.fs.openFileAbsolute(file_path, .{});
+    defer file.close();
+
+    const content = try file.readToEndAlloc(allocator, 10 * 1024 * 1024);
+    defer allocator.free(content);
+
+    var lines = std.ArrayList([]const u8).init(allocator);
+    defer lines.deinit();
+
+    var it = std.mem.split(u8, content, "\n");
+    while (it.next()) |line| {
+        const trimmed = std.mem.trim(u8, line, &std.ascii.whitespace);
+        if (trimmed.len > 0) {
+            try lines.append(trimmed);
+        }
+    }
+
+    return try allocator.dupe([]const u8, lines.items);
+}
+
+// ---------------------------------------------------------------
+// Helper: lower‑case a UTF‑8 string (ASCII safe for our use case).
+// ---------------------------------------------------------------
+fn toLower(allocator: *std.mem.Allocator, s: []const u8) ![]const u8 {
+    var buf = try allocator.alloc(u8, s.len);
+    for (s) |c, i| {
+        buf[i] = std.ascii.toLower(c);
+    }
+    return buf;
+}
+
+// ---------------------------------------------------------------
+// Debug printer – writes to stderr when DEBUG=true.
+// ---------------------------------------------------------------
+fn debugPrint(
+    allocator: *std.mem.Allocator,
+    adjective: []const u8,
+    noun: []const u8,
+    adj_file: []const u8,
+    adj_folder: []const u8,
+    noun_file: []const u8,
+    noun_folder: []const u8,
+    countzero: usize,
+    counto: usize,
+) !void {
+    const stderr = std.io.getStdErr().writer();
+    try stderr.print("DEBUG:\n", .{});
+    try stderr.print("  adjective : {s}\n", .{adjective});
+    try stderr.print("  noun      : {s}\n", .{noun});
+    try stderr.print("  ADJ_FILE  : {s}\n", .{adj_file});
+    try stderr.print("  ADJ_FOLDER: {s}\n", .{adj_folder});
+    try stderr.print("  NOUN_FILE : {s}\n", .{noun_file});
+    try stderr.print("  NOUN_FOLDER: {s}\n", .{noun_folder});
+    try stderr.print("  {d} > {d}\n", .{ countzero, counto });
+    _ = allocator; // silence unused warning
+}
+
+// ---------------------------------------------------------------
+// Main entry point – mimics name-generator.sh behaviour.
 // ---------------------------------------------------------------
 pub fn main() !void {
-    const key = "MY_ENV_VAR";
-    const defaultValue = "default value";
+    const allocator = std.heap.page_allocator;
 
-    const envVarValue = envOrDefault(key, defaultValue);
-    std.debug.print("Environment variable {s} is: {s}\n", .{ key, envVarValue });
+    // -----------------------------------------------------------------
+    // Configuration – environment overrides with sensible defaults.
+    // -----------------------------------------------------------------
+    const separator = envOrDefault("SEPARATOR", "-");
+    const counto_str = envOrDefault("counto", "24");
+    const counto = parseInt(counto_str, 24);
 
-    // Example usage of resolvePath (uncomment to test)
-    // const pathToResolve = "./some_file.txt";
-    // const resolvedPath = try resolvePath(pathToResolve);
-    // std.debug.print("Resolved path for {s} is: {s}\n", .{ pathToResolve, resolvedPath });
+    const cwd = try std.process.getCwdAlloc(allocator);
+    defer allocator.free(cwd);
+
+    const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "nouns" }));
+    const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "adjectives" }));
+    defer allocator.free(noun_folder);
+    defer allocator.free(adj_folder);
+
+    // Resolve files – env var overrides, otherwise pick a random file.
+    const noun_file_env = std.process.getenv("NOUN_FILE");
+    const adj_file_env = std.process.getenv("ADJ_FILE");
+
+    const noun_file = if (noun_file_env) |v| v else try pickRandomFile(allocator, noun_folder);
+    const adj_file = if (adj_file_env) |v| v else try pickRandomFile(allocator, adj_folder);
+    defer allocator.free(noun_file);
+    defer allocator.free(adj_file);
+
+    // Load lines from the selected files.
+    const noun_lines = try readNonEmptyLines(allocator, noun_file);
+    const adj_lines = try readNonEmptyLines(allocator, adj_file);
+    defer {
+        for (noun_lines) |l| allocator.free(l);
+        allocator.free(noun_lines);
+        for (adj_lines) |l| allocator.free(l);
+        allocator.free(adj_lines);
+    }
+
+    // Prepare PRNG.
+    var prng = std.rand.DefaultPrng.init(@intCast(u64, std.time.timestamp()));
+    const rand = &prng.random();
+
+    // Main generation loop.
+    var countzero: usize = 0;
+    while (countzero < counto) : (countzero += 1) {
+        // Pick random noun and adjective.
+        const noun_raw = noun_lines[rand.intRangeLessThan(usize, noun_lines.len)];
+        const adj_raw = adj_lines[rand.intRangeLessThan(usize, adj_lines.len)];
+
+        // Lower‑case noun.
+        const noun_lc = try toLower(allocator, noun_raw);
+        defer allocator.free(noun_lc);
+
+        // Debug output if requested.
+        if (std.process.getenv("DEBUG")) |dbg| {
+            if (std.mem.eql(u8, dbg, "true")) {
+                try debugPrint(
+                    allocator,
+                    adj_raw,
+                    noun_lc,
+                    adj_file,
+                    adj_folder,
+                    noun_file,
+                    noun_folder,
+                    countzero,
+                    counto,
+                );
+            }
+        }
+
+        // Emit result.
+        const stdout = std.io.getStdOut().writer();
+        try stdout.print("{s}{s}{s}\n", .{ adj_raw, separator, noun_lc });
+    }
 }
