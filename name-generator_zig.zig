@@ -15,7 +15,7 @@ fn cGetenv(key: []const u8) ?[]const u8 {
     defer allocator.free(c_key);
 
     // Copy the Zig string into the buffer and add the terminating NUL.
-    std.mem.copy(u8, c_key[0..key.len], key);
+    std.mem.copyForwards(u8, c_key[0..key.len], key);
     c_key[key.len] = 0;
 
     // Call C's getenv.
