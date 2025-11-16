@@ -121,12 +121,7 @@
   <div id="namesList"></div>
 
   <script type="module">
-    import {
-      generateNames,
-      nameWithCopyButton,
-      copyToClipboard,
-      setTheme
-    } from './name-generator_lib.js';
+    import { generateNames, nameWithCopyButton, setTheme } from './name-generator_lib.js';
 
     // Apply the default theme (you can customize colours here)
     setTheme({
@@ -139,33 +134,16 @@
     const countInput = document.getElementById('countInput');
     const listDiv = document.getElementById('namesList');
 
-    // Generate and render multiple names
     multiBtn.addEventListener('click', async () => {
       const count = parseInt(countInput.value, 10) || 50;
       try {
         const names = await generateNames(count);
-        // Use the helper to create HTML with copy buttons
-        listDiv.innerHTML = names.map(name => nameWithCopyButton(name)).join('');
+        // Render each name with a copy button and a horizontal rule between entries
+        listDiv.innerHTML = names
+          .map(name => nameWithCopyButton(name))
+          .join('');
       } catch (e) {
         listDiv.textContent = 'Error: ' + e.message;
-      }
-    });
-
-    // Event delegation for copy buttons
-    listDiv.addEventListener('click', async (event) => {
-      const target = event.target;
-      if (target.classList.contains('copy-btn')) {
-        const name = target.dataset.name;
-        try {
-          await copyToClipboard(name);
-          // Simple feedback – you could replace this with a toast, etc.
-          target.textContent = 'Copied!';
-          setTimeout(() => {
-            target.textContent = 'Copy';
-          }, 1500);
-        } catch (err) {
-          console.error('Copy failed', err);
-        }
       }
     });
   </script>
