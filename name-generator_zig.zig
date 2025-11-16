@@ -29,9 +29,9 @@ fn cGetenv(key: []const u8) ?[]const u8 {
     return null;
 }
 
-// --------------
+// --
 // Helper: read an environment variable, falling back to a default.
-// --------------
+// --
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
     if (cGetenv(key)) |val| {
         // Treat empty strings as unset.
@@ -40,19 +40,29 @@ fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
     return fallback;
 }
 
-// --------------
+// --
 // Helper: parse an integer from a string, returning fallback on error.
-// --------------
+// --
 fn parseInt(str: []const u8, fallback: usize) usize {
     const parsed = std.fmt.parseInt(usize, str, 10) catch return fallback;
     return parsed;
 }
 
-// --------------
-// Helper: pick a random regular file from a directory.
-// --------------
-fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u8 {
-    var dir = try std.fs.openDirAbsolute(dir_path, .{});
+// --
+// Helper: pick a random regular file from a directory or return the path if it is already a file.
+// --
+fn pickRandomFile(allocator: std.mem.Allocator, path: []const u8) ![]const u8 {
+    // First, try to open the path as a file. If it succeeds, we assume the user gave a file path.
+    const file = std.fs.openFileAbsolute(path, .{});
+    if (file) |f| {
+        f.close();
+        // The path is a regular file; return it directly.
+        return path;
+    } else |_| {
+        // Not a file; treat it as a directory.
+    }
+
+    var dir = try std.fs.openDirAbsolute(path, .{});
     defer dir.close();
 
     // Initialize the ArrayList with the allocator.
@@ -62,7 +72,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     var it = dir.iterate();
     while (try it.next()) |entry| {
         if (entry.kind == .file) {
-            const full_path = try std.fs.path.join(allocator, &.{ dir_path, entry.name });
+            const full_path = try std.fs.path.join(allocator, &.{ path, entry.name });
             // Append the path to the list.
             try files.append(full_path);
         }
@@ -73,16 +83,15 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     }
 
     // Seed the PRNG with the current timestamp.
-    const seed = @as(u64, @intCast(std.time.timestamp()));
+    const seed = @intCast(u64, std.time.timestamp());
     var prng = std.Random.DefaultPrng.init(seed);
-    //const idx = prng.random().intRangeLessThan(usize, files.items.len);
     const idx = prng.random().intRangeLessThan(usize, 0, files.items.len);
     return files.items[idx];
 }
 
-// --------------
+// --
 // Helper: read non‑empty lines from a file.
-// --------------
+// --
 fn readNonEmptyLines(allocator: std.mem.Allocator, file_path: []const u8) ![]const []const u8 {
     const file = try std.fs.openFileAbsolute(file_path, .{});
     defer file.close();
@@ -105,9 +114,9 @@ fn readNonEmptyLines(allocator: std.mem.Allocator, file_path: []const u8) ![]con
     return try allocator.dupe([]const u8, lines.items);
 }
 
-// --------------
+// --
 // Helper: lower‑case a UTF‑8 string (ASCII safe for our use case).
-// --------------
+// --
 fn toLower(allocator: std.mem.Allocator, s: []const u8) ![]const u8 {
     var buf = try allocator.alloc(u8, s.len);
     var i: usize = 0;
@@ -118,9 +127,9 @@ fn toLower(allocator: std.mem.Allocator, s: []const u8) ![]const u8 {
     return buf;
 }
 
-// --------------
+// --
 // Debug printer – writes to stderr when DEBUG=true.
-// --------------
+// --
 fn debugPrint(
     allocator: std.mem.Allocator,
     adjective: []const u8,
@@ -144,16 +153,16 @@ fn debugPrint(
     _ = allocator; // silence unused warning
 }
 
-// --------------
+// --
 // Main entry point – mimics name-generator.sh behaviour.
-// --------------
+// --
 pub fn main() !void {
     // Use a mutable variable for the allocator so we can pass it where required.
     var allocator = std.heap.page_allocator;
 
-    // --------------
+    // --
     // Configuration – environment overrides with sensible defaults.
-    // --------------
+    // --
     const separator = envOrDefault("SEPARATOR", "-");
     const counto_str = envOrDefault("counto", "24");
     const counto = parseInt(counto_str, 24);
@@ -182,7 +191,7 @@ pub fn main() !void {
     const adj_lines = try readNonEmptyLines(allocator, adj_file);
     
     // Prepare PRNG.
-    var prng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
+    var prng = std.rand.DefaultPrng.init(@intCast(u64, std.time.timestamp()));
     const rand = &prng.random();
 
     // Main generation loop.
