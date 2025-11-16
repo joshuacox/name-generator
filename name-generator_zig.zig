@@ -57,7 +57,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
 
     // Initialise the ArrayList with the allocator pointer.
     //var files = std.ArrayList([]const u8).init(&allocator);
-    var files = std.ArrayList([]u8).with_capacity(1);
+    var files = std.ArrayList([]const u8).initCapacity(allocator, 1) catch unreachable;
     defer files.deinit();
 
     var it = try dir.iterate();
