@@ -109,7 +109,7 @@
       (dotimes (i counto)
         (let* ((raw-noun (nth (random (length noun-lines)) noun-lines))
                (noun (downcase raw-noun))
-               (adj  (nth (random (length adj-lines)) adj-lines))
+               (adj  (nth (random (length adj-lines)) adj-lines)))
           (debug-print (1+ i) noun-file adj-file noun-folder adj-folder noun adj)
           (princ (format "%s%s%s\n" adj separator noun)))))))
 
