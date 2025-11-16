@@ -55,6 +55,7 @@
                             tput-lines 24)]
   (def ^:dynamic *counto* counto))
 
+;; Ensure files are set
 (when-not (System/getenv "NOUN_FILE")
   (set! (var-get (find-var 'user/*noun-file*)) 
         (realpath-fallback (random-file-from *noun-folder*))))
@@ -63,13 +64,19 @@
   (set! (var-get (find-var 'user/*adj-file*)) 
         (realpath-fallback (random-file-from *adj-folder*))))
 
-(doseq [i (range *counto*)]
-  (let [noun-line (-> (slurp *noun-file*) 
-                     clojure.string/split-lines 
-                     rand-nth 
-                     .toLowerCase)
-        adj-line (-> (slurp *adj-file*) 
-                    clojure.string/split-lines 
-                    rand-nth)]
-    (debugger adj-line noun-line *adj-file* *adj-folder* *noun-file* *noun-folder* i *counto*)
-    (println (str adj-line *separator* noun-line))))
+;; Main generation loop
+(let [countzero (atom 0)]
+  while (< @countzero *counto*)
+    do
+    (let [noun-line (-> (slurp *noun-file*) 
+                       clojure.string/split-lines 
+                       (filter seq) ; Remove any empty lines
+                       rand-nth 
+                       clojure.string/lower-case)
+          adj-line (-> (slurp *adj-file*) 
+                      clojure.string/split-lines 
+                      (filter seq) ; Remove any empty lines
+                      rand-nth)]
+      (debugger adj-line noun-line *adj-file* *adj-folder* *noun-file* *noun-folder* @countzero *counto*)
+      (println (str adj-line *separator* noun-line))
+      (swap! countzero inc))))
