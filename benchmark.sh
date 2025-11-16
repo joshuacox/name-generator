@@ -33,6 +33,7 @@ slow_bench_runnr () {
     './name-generator.el' \
     './name-generator.rb' \
     './name-generator.raku' \
+    './name-generator.dart' \
     './name-generator.rkt' \
     'java NameGenerator' \
     'cabal run' \
@@ -68,6 +69,7 @@ scanner_bench_runnr () {
     'counto={num_count} ./name-generator.rb' \
     'counto={num_count} ./name-generator.raku' \
     'counto={num_count} ./name-generator.rkt' \
+    'counto={num_count} ./name-generator.dart' \
     'counto={num_count} java NameGenerator' \
     'counto={num_count} cabal run' \
     "counto={num_count} $HOME/.cargo/target/debug/name-generator" \
@@ -96,6 +98,7 @@ bench_runnr () {
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.rkt' \
+    './name-generator.dart' \
     'java NameGenerator' \
     'java -jar ./name-generator.jar' \
     'cabal run' \

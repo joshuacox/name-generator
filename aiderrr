@@ -1,5 +1,5 @@
  #!/usr/bin/env bash
-FILES='name-generator.el'
+FILES='name-generator.dart'
  : ${EXTRA_OPTS:="--thinking-tokens 8k --read name-generator.sh"}
 #: "${MODEL:=ollama_chat/qwen2.5-coder:32b-base-fp16}"
 #: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
