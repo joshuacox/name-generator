@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+: ${NAME_GENERATOR_PORT:=8080}
+
+if [[ -f .cid ]]; then
+  docker stop `cat .cid`
+  docker rm   `cat .cid`
+  rm .cid
+fi
+
+docker run \
+  -p ${NAME_GENERATOR_PORT}:80 \
+  --restart=unless-stopped \
+  --cidfile .cid \
+  --name name-generator \
+  -v $(pwd)/web:/usr/share/nginx/html:ro \
+  -d nginx:alpine

@@ -84,3 +84,4 @@ bench.html
 name_generator.beam
 erl_crash.dump
 name-generator_zig
+.cid
