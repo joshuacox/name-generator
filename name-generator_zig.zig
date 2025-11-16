@@ -79,8 +79,10 @@ fn readNonEmptyLines(allocator: *std.mem.Allocator, file_path: []const u8) ![]co
 // ---------------------------------------------------------------
 fn toLower(allocator: *std.mem.Allocator, s: []const u8) ![]const u8 {
     var buf = try allocator.alloc(u8, s.len);
-    for (s) |c, i| {
+    var i: usize = 0;
+    for (s) |c| {
         buf[i] = std.ascii.toLower(c);
+        i += 1;
     }
     return buf;
 }
@@ -117,9 +119,9 @@ fn debugPrint(
 pub fn main() !void {
     const allocator = std.heap.page_allocator;
 
-    // -----------------------------------------------------------------
+    // ---------------------------------
     // Configuration – environment overrides with sensible defaults.
-    // -----------------------------------------------------------------
+    // ---------------------------------
     const separator = envOrDefault("SEPARATOR", "-");
     const counto_str = envOrDefault("counto", "24");
     const counto = parseInt(counto_str, 24);
