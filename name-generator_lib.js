@@ -14,7 +14,7 @@
  * `generateName` or `generateNames`.
  *
  * Theming support:
- *   The library now exports a `setTheme` function that allows you to
+ *   The library exports a `setTheme` function that allows you to
  *   customise CSS variables used by the UI (see name-generator.html).
  *   Example:
  *     import { setTheme } from './name-generator_lib.js';
