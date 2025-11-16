@@ -22,13 +22,20 @@ import std.process;
 import std.string;
 import std.algorithm : filter, map, canFind, sort, min;
 import std.conv : to;
-import std.env;
 import std.exception : enforce;
 import std.random : uniform;
+import core.stdc.stdlib : getenv;
+import std.string : toStringz;
+
+/// Retrieve an environment variable as a D string. Returns an empty string if not set.
+string getEnv(string name) {
+    const char* p = getenv(name.toStringz);
+    return p ? cast(string) p : "";
+}
 
 /// Return the value of an environment variable or a default.
 string envOrDefault(string name, string defaultValue) {
-    auto val = getenv(name);
+    auto val = getEnv(name);
     return (val.length != 0) ? val : defaultValue;
 }
 
@@ -47,7 +54,7 @@ int parseIntOr(string s, int fallback) {
 /// 3. Fallback to 24.
 int getCountO() {
     // Step 1: env var
-    auto env = getenv("counto");
+    auto env = getEnv("counto");
     if (env.length != 0) {
         return parseIntOr(env, 24);
     }
@@ -101,7 +108,7 @@ void maybeDebug(string adjective, string noun,
                 string nounFile, string adjFile,
                 string nounFolder, string adjFolder,
                 size_t iteration, size_t counto) {
-    if (getenv("DEBUG") == "true") {
+    if (getEnv("DEBUG") == "true") {
         stderr.writeln("DEBUG iteration ", iteration, "/", counto);
         stderr.writeln("  adjective : ", adjective);
         stderr.writeln("  noun      : ", noun);
@@ -122,11 +129,11 @@ void main() {
     immutable string ADJ_FOLDER  = envOrDefault("ADJ_FOLDER",  "adjectives");
 
     // Resolve noun and adjective files
-    string nounFile = getenv("NOUN_FILE");
+    string nounFile = getEnv("NOUN_FILE");
     if (nounFile.length == 0) {
         nounFile = pickRandomFile(NOUN_FOLDER);
     }
-    string adjFile = getenv("ADJ_FILE");
+    string adjFile = getEnv("ADJ_FILE");
     if (adjFile.length == 0) {
         adjFile = pickRandomFile(ADJ_FOLDER);
     }
