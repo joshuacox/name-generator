@@ -1,4 +1,4 @@
-#!/usr/bin/env -S emacs --script
+#!/usr/bin/env -S emacs -Q --script
 
 ;; Configuration - environment overrides with sensible defaults
 (defcustom noun-folder (expand-file-name "nouns" default-directory)
