@@ -88,8 +88,8 @@ fn randomChoice(comptime T: type, list: []const T) T {
 // Convert a string to lower case (ASCII only, matching the shell script behaviour).
 fn toLower(allocator: *std.mem.Allocator, s: []const u8) ![]const u8 {
     var buf = try allocator.alloc(u8, s.len);
-    for (s) |c, i| {
-        buf[i] = if (c >= 'A' and c <= 'Z') c + 32 else c;
+    for (s) |c| {
+        buf[0] = if (c >= 'A' and c <= 'Z') c + 32 else c;
     }
     return buf;
 }
