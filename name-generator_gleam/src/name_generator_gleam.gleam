@@ -1,8 +1,6 @@
 import gleam/io
 import gleam/string
 import gleam/list
-import gleam/result.{Result, Ok, Error}
-import gleam/option.{Option, Some, None}
 import gleam/random
 import gleam/erlang
 
@@ -49,30 +47,35 @@ fn resolve_file(
     Some(path) -> path
     None ->
       // Determine the folder to search
-      let folder =
-        case erlang.get_env(folder_env) {
-          Some(f) -> f
-          None -> default_folder
-        }
-      // List entries in the folder
-      let entries =
-        case erlang.list_dir(folder) {
-          Ok(es) -> es
-          Error(_) -> io:panic("Cannot list folder " <> folder)
-        }
-      // Ensure there is at least one entry
-      let len = List.length(entries)
-      if len == 0 {
-        io:panic("No files found in folder " <> folder)
-      } else {
-        // Pick a random entry (the original scripts assume all entries are regular files)
-        // `random.int` is inclusive, so we use `len - 1` as the upper bound.
-        let idx = random.int(0, len - 1)
-        case List.at(entries, idx) {
-          Some(name) -> folder <> "/" <> name
-          None -> io:panic("Failed to pick a file from folder " <> folder)
-        }
+      case erlang.get_env(folder_env) {
+        Some(folder) -> pick_random_file(folder)
+        None -> pick_random_file(default_folder)
       }
+  }
+}
+
+// Pick a random regular file from `folder`.
+// Panics if the folder cannot be listed or contains no entries.
+fn pick_random_file(folder: String) -> String {
+  // List entries in the folder
+  let entries =
+    case erlang.list_dir(folder) {
+      Ok(es) -> es
+      Error(_) -> io:panic("Cannot list folder " <> folder)
+    }
+
+  // Ensure there is at least one entry
+  let len = List.length(entries)
+  if len == 0 {
+    io:panic("No files found in folder " <> folder)
+  } else {
+    // Pick a random entry (the original scripts assume all entries are regular files)
+    // `random.int` is inclusive, so we use `len - 1` as the upper bound.
+    let idx = random.int(0, len - 1)
+    case List.at(entries, idx) {
+      Some(name) -> folder <> "/" <> name
+      None -> io:panic("Failed to pick a file from folder " <> folder)
+    }
   }
 }
 
