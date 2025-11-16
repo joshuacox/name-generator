@@ -56,8 +56,7 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     defer dir.close();
 
     // Initialize the ArrayList with the allocator.
-    var files = std.ArrayList([]const u8){};
-    files.init(allocator);
+    var files = std.ArrayList([]const u8).init(allocator);
     defer files.deinit(allocator);
 
     var it = dir.iterate();
@@ -91,8 +90,7 @@ fn readNonEmptyLines(allocator: std.mem.Allocator, file_path: []const u8) ![]con
     defer allocator.free(content);
 
     // Initialise the ArrayList with the allocator.
-    var lines = std.ArrayList([]const u8){};
-    lines.init(allocator);
+    var lines = std.ArrayList([]const u8).init(allocator);
     defer lines.deinit(allocator);
 
     var it = std.mem.split(u8, content, "\n");
