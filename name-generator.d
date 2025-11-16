@@ -55,7 +55,8 @@ int getCountO() {
         auto proc = pipeProcess(["tput", "lines"], redirectStdout: true);
         proc.wait();
         if (proc.status == 0) {
-            auto out = proc.output.readLine();
+            // Strip any trailing newline/whitespace from the output
+            auto out = proc.output.readLine().strip;
             return parseIntOr(out, 24);
         }
     } catch (Exception) {
