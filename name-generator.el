@@ -65,13 +65,13 @@
 (defun debug-print (&optional adjective noun _noun-file _adj-file _noun-folder _adj-folder)
   "Print debug information when DEBUG is set."
   (when (equal (getenv "DEBUG") "true")
-    (message "Debug:")
-    (message "Adjective: %s" adjective)
-    (message "Noun: %s" noun)
-    (message "ADJ_FILE: %s" _adj-file)
-    (message "ADJ_FOLDER: %s" _adj-folder)
-    (message "NOUN_FILE: %s" _noun-file)
-    (message "NOUN_FOLDER: %s" _noun-folder)))
+    (princ "Debug:\n")
+    (princ (format "Adjective: %s\n" adjective))
+    (princ (format "Noun: %s\n" noun))
+    (princ (format "ADJ_FILE: %s\n" _adj-file))
+    (princ (format "ADJ_FOLDER: %s\n" _adj-folder))
+    (princ (format "NOUN_FILE: %s\n" _noun-file))
+    (princ (format "NOUN_FOLDER: %s\n" _noun-folder))))
 
 ;; Main generation
 (defun generate-name ()
@@ -91,7 +91,8 @@
                            (string-to-number (shell-command-to-string "tput lines"))
                          24)))
     (dotimes (_ count terminal-lines)
-      (message "%s" (generate-name)))))
+      (princ (generate-name))
+      (princ "\n"))))
 
 ;; Entry point
 (let ((count (if (getenv "counto")
