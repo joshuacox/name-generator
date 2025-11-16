@@ -1,7 +1,7 @@
 const std = @import("std");
 
 // Import C's getenv for environment variable access without using std.os or std.process.
-const c = @cImport({
+pub const c = @cImport({
     @cInclude("stdlib.h");
 });
 
