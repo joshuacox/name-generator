@@ -2,10 +2,21 @@ const std = @import("std");
 
 // ---------------------------------------------------------------
 // Helper: read an environment variable, falling back to a default string.
+// This implementation works across Zig versions by checking which
+// module provides `getenv`. If neither is available we simply return
+// the fallback value.
 // ---------------------------------------------------------------
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    // std.process.getenv returns ?[]const u8 (null if the variable is unset)
-    return std.process.getenv(key) orelse fallback;
+    // Zig 0.11+ provides std.process.getenv
+    if (@hasDecl(std.process, "getenv")) {
+        return std.process.getenv(key) orelse fallback;
+    }
+    // Older Zig releases expose getenv via std.os
+    if (@hasDecl(std.os, "getenv")) {
+        return std.os.getenv(key) orelse fallback;
+    }
+    // As a last resort, just return the fallback.
+    return fallback;
 }
 
 // ---------------------------------------------------------------
