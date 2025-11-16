@@ -8,6 +8,20 @@
       font-family: Arial, sans-serif;
       padding: 2rem;
     }
+    header {
+      margin-bottom: 1rem;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: inherit;
+    }
     #name, #namesList {
       margin-top: 1rem;
       font-size: 1.5rem;
@@ -28,7 +42,16 @@
   </style>
 </head>
 <body>
-  <h1>Name Generator</h1>
+  <header>
+    <h1>Name Generator</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="https://github.com/yourrepo">GitHub</a></li>
+    </ul>
+  </nav>
 
   <label for="countInput">Generate multiple:</label>
   <input type="number" id="countInput" min="1" value="50">
