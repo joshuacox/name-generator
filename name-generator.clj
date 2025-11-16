@@ -2,11 +2,13 @@
 (ns name-generator.core
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
-            [clojure.java.shell :refer [sh]]))
+            [clojure.java.shell :refer [sh]])
+  (:import [java.nio.file Files Paths Path]
+           [java.util.stream Stream]))
 
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Helpers
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 (defn env
   "Return the value of environment variable `k` or `default` if not set or blank."
   [k default]
@@ -31,10 +33,10 @@
 (defn list-regular-files
   "Return a vector of absolute paths (as strings) for regular files in `dir`."
   [dir]
-  (with-open [stream (java.nio.file.Files/list (java.nio.file.Paths/get dir (into-array String [])))]
-    (->> (iterator-seq (.iterator stream))
-         (filter #(java.nio.file.Files/isRegularFile %))
-         (map #(.toString %))
+  (with-open [stream (Files/list (Paths/get dir (into-array String [])))]
+    (->> (iterator-seq (.iterator ^Stream stream))
+         (filter #(Files/isRegularFile ^Path %))
+         (map #(.toString ^Path %))
          vec)))
 
 (defn random-file
@@ -54,9 +56,9 @@
        (remove str/blank?)
        vec))
 
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Configuration (mirrors name-generator.sh)
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 (def separator (env "SEPARATOR" "-"))
 
 ;; Number of lines to emit – use `tput lines` when available, otherwise 24.
@@ -72,9 +74,9 @@
 (def noun-file (env "NOUN_FILE" (random-file noun-folder)))
 (def adj-file  (env "ADJ_FILE"  (random-file adj-folder)))
 
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Load word lists
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 (def noun-lines (read-nonempty-lines noun-file))
 (def adj-lines  (read-nonempty-lines adj-file))
 
@@ -83,9 +85,9 @@
 (when (empty? adj-lines)
   (throw (ex-info (str "Adjective list is empty in " adj-file) {})))
 
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Debug helper (mirrors the shell script's debugger)
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 (def debug? (= (env "DEBUG" "") "true"))
 
 (defn debug-print
@@ -101,9 +103,9 @@
       (println noun-folder)
       (println (format "%s > %s" countzero counto)))))
 
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 ;; Main generation loop
-;; ----------------------------------------------------------------------
+;; --------------------------------------------------------
 (defn -main
   "Generate `counto` names, printing each to stdout."
   [& _args]
