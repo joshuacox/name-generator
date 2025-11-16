@@ -144,7 +144,7 @@ fn debugPrint(
 // Main entry point – mimics name-generator.sh behaviour.
 // ---------------------------------------------------------------
 pub fn main() !void {
-    // Use a mutable variable for the allocator so we can pass a mutable pointer.
+    // Use a mutable variable for the allocator so we can pass a mutable pointer where required.
     var allocator = std.heap.page_allocator;
 
     // ---------------------------------
@@ -154,12 +154,13 @@ pub fn main() !void {
     const counto_str = envOrDefault("counto", "24");
     const counto = parseInt(counto_str, 24);
 
-    // getCwdAlloc now expects the allocator value, not a pointer.
+    // getCwdAlloc expects the allocator value, not a pointer.
     const cwd = try std.process.getCwdAlloc(allocator);
     defer allocator.free(cwd);
 
-    const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(&allocator, &.{ cwd, "nouns" }));
-    const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(&allocator, &.{ cwd, "adjectives" }));
+    // Join paths using the allocator value (not a pointer) as required by the current std.fs.path.join signature.
+    const noun_folder = envOrDefault("NOUN_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "nouns" }));
+    const adj_folder = envOrDefault("ADJ_FOLDER", try std.fs.path.join(allocator, &.{ cwd, "adjectives" }));
     defer allocator.free(noun_folder);
     defer allocator.free(adj_folder);
 
