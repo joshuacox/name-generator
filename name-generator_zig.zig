@@ -1,16 +1,31 @@
 const std = @import("std");
 
+// Import C's getenv for environment variable access without using std.os or std.process.
+const c = @cImport({
+    @cInclude("stdlib.h");
+});
+
+/// Retrieve an environment variable using C's `getenv`.
+/// Returns `null` if the variable is not set.
+fn cGetenv(key: []const u8) ?[]const u8 {
+    // C's getenv expects a null‑terminated C string.
+    const c_key = std.cstr.addNullByte(key) catch return null;
+    const c_val = c.getenv(c_key.ptr);
+    if (c_val) |ptr| {
+        // Determine length of the C string.
+        const len = std.mem.len(ptr);
+        return ptr[0..len];
+    }
+    return null;
+}
+
 // ---------------------------------------------------------------
 // Helper: read an environment variable, falling back to a default.
 // ---------------------------------------------------------------
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    // Zig 0.11+ provides std.process.getenv
-    if (@hasDecl(std.process, "getenv")) {
-        return std.process.getenv(key) orelse fallback;
-    }
-    // Older Zig releases expose getenv via std.os
-    if (@hasDecl(std.os, "getenv")) {
-        return std.os.getenv(key) orelse fallback;
+    if (cGetenv(key)) |val| {
+        // Treat empty strings as unset.
+        return if (val.len == 0) fallback else val;
     }
     return fallback;
 }
@@ -137,11 +152,11 @@ pub fn main() !void {
     defer allocator.free(adj_folder);
 
     // Resolve files – env var overrides, otherwise pick a random file.
-    const noun_file_env = std.os.getenv("NOUN_FILE");
-    const adj_file_env = std.os.getenv("ADJ_FILE");
+    const noun_file_env = envOrDefault("NOUN_FILE", "");
+    const adj_file_env = envOrDefault("ADJ_FILE", "");
 
-    const noun_file = if (noun_file_env) |v| v else try pickRandomFile(allocator, noun_folder);
-    const adj_file = if (adj_file_env) |v| v else try pickRandomFile(allocator, adj_folder);
+    const noun_file = if (noun_file_env.len > 0) noun_file_env else try pickRandomFile(allocator, noun_folder);
+    const adj_file = if (adj_file_env.len > 0) adj_file_env else try pickRandomFile(allocator, adj_folder);
     defer allocator.free(noun_file);
     defer allocator.free(adj_file);
 
@@ -171,20 +186,18 @@ pub fn main() !void {
         defer allocator.free(noun_lc);
 
         // Debug output if requested.
-        if (std.os.getenv("DEBUG")) |dbg| {
-            if (std.mem.eql(u8, dbg, "true")) {
-                try debugPrint(
-                    allocator,
-                    adj_raw,
-                    noun_lc,
-                    adj_file,
-                    adj_folder,
-                    noun_file,
-                    noun_folder,
-                    countzero,
-                    counto,
-                );
-            }
+        if (std.mem.eql(u8, envOrDefault("DEBUG", ""), "true")) {
+            try debugPrint(
+                allocator,
+                adj_raw,
+                noun_lc,
+                adj_file,
+                adj_folder,
+                noun_file,
+                noun_folder,
+                countzero,
+                counto,
+            );
         }
 
         // Emit result.
