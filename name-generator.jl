@@ -80,14 +80,14 @@ end
 
 """
     debug_print(iter::Int, counto::Int,
-                adjective::String, noun::String,
+                adjective::AbstractString, noun::AbstractString,
                 noun_file::String, adj_file::String,
                 noun_folder::String, adj_folder::String)
 
 Print debugging information to `stderr` when `DEBUG=true`.
 """
 function debug_print(iter::Int, counto::Int,
-                     adjective::String, noun::String,
+                     adjective::AbstractString, noun::AbstractString,
                      noun_file::String, adj_file::String,
                      noun_folder::String, adj_folder::String)
     if get(ENV, "DEBUG", "") == "true"
