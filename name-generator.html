@@ -30,8 +30,6 @@
 <body>
   <h1>Name Generator</h1>
 
-  <button id="generateBtn">Generate One Name</button>
-
   <label for="countInput">Generate multiple:</label>
   <input type="number" id="countInput" min="1" value="50">
   <button id="generateMultipleBtn">Generate</button>
@@ -41,20 +39,6 @@
 
   <script type="module">
     import { generateName, generateNames } from './name-generator_lib.js';
-
-    const btn = document.getElementById('generateBtn');
-    const output = document.getElementById('name');
-
-    btn.addEventListener('click', async () => {
-      try {
-        const name = await generateName();
-        output.textContent = name;
-        // Clear any previous multiple results
-        document.getElementById('namesList').innerHTML = '';
-      } catch (e) {
-        output.textContent = 'Error: ' + e.message;
-      }
-    });
 
     const multiBtn = document.getElementById('generateMultipleBtn');
     const countInput = document.getElementById('countInput');
@@ -69,10 +53,10 @@
           .map(name => `<div class="name-item">${name}</div>`)
           .join('');
         // Clear the single‑name output
-        output.textContent = '';
+        document.getElementById('name').textContent = '';
       } catch (e) {
         listDiv.textContent = 'Error: ' + e.message;
-        output.textContent = '';
+        document.getElementById('name').textContent = '';
       }
     });
   </script>
