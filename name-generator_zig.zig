@@ -180,38 +180,6 @@ pub fn main() !void {
     const noun_lines = try readNonEmptyLines(allocator, noun_file);
     const adj_lines = try readNonEmptyLines(allocator, adj_file);
     
-    // Shuffle the lines for better randomness
-    var noun_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
-    var adj_rng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp() + 1));
-    
-    // Use std.random.select to get a weighted random index without replacement
-    const noun_indices = try std.Allocator.createArray(allocator, usize, noun_lines.items.len);
-    defer allocator.free(noun_indices);
-    
-    for (noun_indices, 0..) |*idx, i| {
-        idx.* = i;
-    }
-    
-    const adj_indices = try std.Allocator.createArray(allocator, usize, adj_lines.items.len);
-    defer allocator.free(adj_indices);
-    
-    for (adj_indices, 0..) |*idx, i| {
-        idx.* = i;
-    }
-
-    const noun_shuffled = std.random.select(noun_rng, noun_indices[0..], null);
-    const adj_shuffled = std.random.select(adj_rng, adj_indices[0..], null);
-
-    // Get the actual lines from the selected indices
-    const final_noun = noun_lines.items[noun_shuffled];
-    const final_adj = adj_lines.items[adj_shuffled];
-    defer {
-        for (noun_lines) |l| allocator.free(l);
-        allocator.free(noun_lines);
-        for (adj_lines) |l| allocator.free(l);
-        allocator.free(adj_lines);
-    }
-
     // Prepare PRNG.
     var prng = std.rand.DefaultPrng.init(@as(u64, std.time.timestamp()));
     const rand = &prng.random();
@@ -246,4 +214,10 @@ pub fn main() !void {
         const stdout = std.io.getStdOut().writer();
         try stdout.print("{s}{s}{s}\n", .{ adj_raw, separator, noun_lc });
     }
+
+    // Clean up allocated line buffers.
+    for (noun_lines) |l| allocator.free(l);
+    allocator.free(noun_lines);
+    for (adj_lines) |l| allocator.free(l);
+    allocator.free(adj_lines);
 }
