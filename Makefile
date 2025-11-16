@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage
 
-all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam
+all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar
 
 clean:
 	-@rm -v name-generator 
@@ -39,6 +39,9 @@ name_generator.beam:
 
 BENCHMARK.md:
 	./meta-benchmark.sh | tee BENCHMARK.md
+
+name-generator.jar:
+	kotlinc name-generator.kt -include-runtime -d name-generator.jar
 
 # WIPs
 #

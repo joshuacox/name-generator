@@ -7,8 +7,10 @@ meta_runnr () {
 }
 
 main () {
+export SPEED=slow
 export counto=1
 meta_runnr
+export SPEED=normal
 export counto=3
 meta_runnr
 export counto=5

@@ -86,3 +86,4 @@ erl_crash.dump
 name-generator_zig
 .cid
 log
+*.jar
