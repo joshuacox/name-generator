@@ -56,11 +56,8 @@ fn pickRandomFile(allocator: std.mem.Allocator, dir_path: []const u8) ![]const u
     defer dir.close();
 
     // Initialize the ArrayList with the allocator pointer using with_capacity
-    var files = std.ArrayList([]const u8).init(allocator);
-    defer files.deinit(allocator);
-    files.ensureCapacity(1) catch {
-        @panic("out of memory");
-    };
+    var files = std.ArrayList([]const u8).initCapacity(allocator, 1);
+    defer files.deinit();
 
     var it = dir.iterate();
     while (try it.next()) |entry| {
