@@ -63,7 +63,7 @@ int getCountO() {
     try {
         // `execute` runs the command and returns its stdout as a string.
         auto out = execute(["tput", "lines"]);
-        return parseIntOr(out.strip, 24);
+        return parseIntOr(strip(out), 24);
     } catch (Exception) {
         // ignore – fall back
     }
