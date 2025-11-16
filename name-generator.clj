@@ -45,15 +45,17 @@
     (println (str countzero " > " counto))))
 
 ;; Main logic
-(let [counto (if-let [tput-lines (try 
-                                  (-> (.exec (Runtime/getRuntime) "tput lines") 
-                                      .waitFor() 
-                                      .getInputStream 
-                                      (slurp) 
-                                      Integer/parseInt)
-                                  (catch Exception _ nil)] 
-                            tput-lines 24)]
-  (def ^:dynamic *counto* counto))
+(defn get-terminal-lines []
+  (if-let [tput-lines (try 
+                        (-> (.exec (Runtime/getRuntime) "tput lines") 
+                            .waitFor() 
+                            .getInputStream 
+                            (slurp) 
+                            Integer/parseInt)
+                        (catch Exception _ nil)] 
+    tput-lines 24))
+
+(def ^:dynamic *counto* (get-terminal-lines))
 
 ;; Ensure files are set
 (when-not (System/getenv "NOUN_FILE")
