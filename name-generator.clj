@@ -1,4 +1,4 @@
-#!/usr/bin/env clojure
+#!/usr/bin/env -S clojure -M ./name-generator.clj
 
 ;; Environment variables and configuration
 (def ^:dynamic *separator* (or (System/getenv "SEPARATOR") "-"))
