@@ -83,4 +83,4 @@ bench.html
 .projectile
 name_generator.beam
 erl_crash.dump
-zig
+name-generator_zig
