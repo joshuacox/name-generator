@@ -62,7 +62,7 @@ File resolveFile(String envVar, String folderPath) {
   final envVal = Platform.environment[envVar];
   if (envVal != null && envVal.trim().isNotEmpty) {
     final f = File(envVal);
-    if (!f.existsSync() || !f.statSync().type == FileSystemEntityType.file) {
+    if (!f.existsSync() || f.statSync().type != FileSystemEntityType.file) {
       throw StateError('Environment variable $envVar points to a non‑regular file: $envVal');
     }
     return f;
