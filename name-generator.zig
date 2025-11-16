@@ -1,33 +1,19 @@
 const std = @import("std");
 
 fn envOrDefault(key: []const u8, fallback: []const u8) []const u8 {
-    const env = std.os.getenv(key);
+    const env = std.process.env.get(key);
     return if (env) |val| if (val.len > 0) val else fallback else fallback;
 }
 
 // Resolve a path to an absolute canonical form.
-// Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.
+// Prefer `realpath`; fall back to `pickRandomFile`
 fn resolveFileOrRandom(
     allocator: *std.mem.Allocator,
     envVar: []const u8,
     folder: []const u8,
 ) ![]const u8 {
-    const env = std.os.getenv(envVar);
-    if (env) |val| {
-        if (val.len > 0) {
-            const path = try std.fs.realpathAlloc(allocator, val);
-            defer allocator.free(path);
-            const file = std.fs.openFileAbsolute(path, .{}) catch null;
-            if (file) |f| {
-                f.close();
-                return path;
-            } else {
-                return error.InvalidEnvPath;
-            }
-        }
-    }
-    // fallback: pick random regular file from folder
-    return try pickRandomFile(allocator, folder);
+    const env = envOrDefault(envVar, folder);
+    return try std.fs.path.absolute(allocator, env);
 }
 
 // Pick a random regular file from a directory.
@@ -96,19 +82,18 @@ fn toLower(allocator: *std.mem.Allocator, s: []const u8) ![]const u8 {
 
 // Try to obtain terminal height via `tput lines`. If that fails, return fallback.
 fn getTerminalLines(allocator: *std.mem.Allocator) usize {
-    var child = std.ChildProcess.init(&.{ "tput", "lines" }, allocator);
-    child.stdout_behavior = .Pipe;
-    child.stderr_behavior = .Ignore;
-    const result = child.spawnAndWait() catch return 24;
-    if (result.term != .Exited or result.code != 0) return 24;
+    var cmd = std.process.Cmd.init(.{
+        .cmd = &.{ "tput", "lines" },
+    });
 
-    const out = child.stdout.?;
-    const output = out.readToEndAlloc(allocator, 64) catch return 24;
-    defer allocator.free(output);
+    var output = try cmd.run();
+    if (output.exit_code != 0) {
+        return 24;
+    }
 
-    const trimmed = std.mem.trim(u8, output, &std.ascii.whitespace);
-    const parsed = std.fmt.parseInt(usize, trimmed, 10) catch 24;
-    return parsed;
+    const stdout = stdout;
+    const trimmed = std.mem.trim(u8, stdout, &std.ascii.whitespace);
+    return std.fmt.parseInt(usize, trimmed, 10) catch 24;
 }
 
 // Debug printer, mirrors the shell script's `debugger` function.
@@ -162,30 +147,17 @@ pub fn main() !void {
     var countzero: usize = 0;
     while (countzero < counto) : (countzero += 1) {
         const raw_noun = randomChoice([]const u8, noun_lines.items);
-        const noun_lower = try toLower(allocator, raw_noun);
-        defer allocator.free(noun_lower);
-
+        const noun = try toLower(allocator, raw_noun);
+        defer allocator.free(noun);
         const adjective = randomChoice([]const u8, adj_lines.items);
 
         // Debug output if requested
-        if (std.os.getenv("DEBUG")) |dbg| {
-            if (std.mem.eql(u8, dbg, "true")) {
-                debugPrint(
-                    allocator,
-                    adjective,
-                    noun_lower,
-                    adj_file,
-                    adj_folder,
-                    noun_file,
-                    noun_folder,
-                    countzero,
-                    counto,
-                );
-            }
+        if (std.debug.debug) {
+            debugPrint(allocator, adjective, noun, adj_file, adj_folder, noun_file, noun_folder, countzero, counto);
         }
 
         // Print result
         const stdout = std.io.getStdOut().writer();
-        _ = stdout.print("{s}{s}{s}\n", .{ adjective, separator, noun_lower }) catch {};
+        _ = stdout.print("{s}{s}{s}\n", .{ adjective, separator, noun }) catch {};
     }
 }
