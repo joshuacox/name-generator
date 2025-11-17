@@ -26,9 +26,13 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : Int = try
-      let lines_env = env("LINES")
-      let lines = if lines_env != "" then Int.from_string(lines_env) else _tput_lines() end
-      lines
+      match env("LINES") with
+      | Some(lines) if lines != "" =>
+          let count = parse_int_or_err(lines)
+          count.o2i()
+      else
+        _tput_lines()
+      end
     else
       24
     end
@@ -57,9 +61,9 @@ class FileHandler
     // Pick a random regular file from the folder
     let files = File.list(folder)
     let filtered_files = Array.filter(files, { (f) => 
-        f.find(".DS_Store") == -1 && File.info(f).kind == FileInfo_kind_file })
+        f.find(".DS_Store") == -1 and File.info(f).kind == File_kind_file })
     if filtered_files.size > 0 then
-      filtered_files.random()
+      Rand.select(filtered_files)
     else
       ""
     end
