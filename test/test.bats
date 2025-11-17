@@ -270,7 +270,7 @@ setup() {
   [ "$result" -eq 82 ]
 }
 @test "test kotlin kt test/test" {
-  result=$(java -jar ./name-generator.jar)
+  result=java -jar ./name-generator.jar
   assert_equal "$result" "test_test"
 }
 @test "test elisp name-generator.el at 10" {
@@ -307,5 +307,20 @@ setup() {
 }
 @test "test lua test/test" {
   result=$(./name-generator.lua)
+  assert_equal "$result" "test_test"
+}
+# -------------------------------------------
+# OCaml implementation (name-generator.ml)
+# -----------------
+@test "test name-generator.ml at 10" {
+  result="$(counto=10 name-generator.ml | wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.ml at 73" {
+  result="$(counto=73 name-generator.ml | wc -l)"
+  [ "$result" -eq 73 ]
+}
+@test "test ocaml test/test" {
+  result=$(name-generator.ml)
   assert_equal "$result" "test_test"
 }
