@@ -21,17 +21,16 @@ class Config
     separator = separator'
     
     // Number of lines to generate - try tput lines, fallback to 24
-    let tput_lines = Process.env().get("LINES")
-    match tput_lines | Some(val) => 
-      try
-        let parsed_count = U32.from(String(val))
-        count_o = parsed_count
+    let count_o' : U32 = try
+      match Process.env().get("LINES") | Some(val) =>
+        U32.from(String(val))
       else
-        count_o = 0
+        _tput_lines()
       end
-    | None =>
-      count_o = 24
+    else
+      24
     end
+    count_o = count_o'
 
 class FileHandler
   let noun_folder: String
