@@ -25,16 +25,11 @@ class Config
     Separator = separator'
     
     // Number of lines to generate - try tput lines, fallback to 24
-    let count_o' : Int = try
-      match env("LINES") with
+    let count_o' : Int = match env("LINES") with
       | Some(lines) if lines != "" =>
-          let count = parse_int_or_err(lines)
-          count.o2i()
+          parse_int_or_err(lines).o2i()
       else
         _tput_lines()
-      end
-    else
-      24
     end
     count_o = count_o'.U32()
 
