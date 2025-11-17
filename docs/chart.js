@@ -26,11 +26,11 @@ function parseLine(line) {
   return { command, x, y: mean };
 }
 
-async function loadData() {
-  // The CSV lives in the same folder as this script, so we fetch it directly.
-  const response = await fetch('scanner-12.csv');
+async function loadDataFrom(csvPath) {
+  // Load and parse a CSV file (e.g. scanner-12.csv or fast_scanner-12.csv)
+  const response = await fetch(csvPath);
   if (!response.ok) {
-    throw new Error(`Failed to load CSV: ${response.status}`);
+    throw new Error(`Failed to load CSV ${csvPath}: ${response.status}`);
   }
   const text = await response.text();
   const lines = text.trim().split('\n');
@@ -49,36 +49,32 @@ async function loadData() {
     byCommand.get(command).push({ x, y });
   }
 
-  // Sort each command’s series by x (parameter_num_count)
+  // Ensure points are ordered by x (2^parameter_num_count)
   for (const series of byCommand.values()) {
     series.sort((a, b) => a.x - b.x);
   }
-
-  // Return the map – the caller will turn it into Chart.js datasets
   return byCommand;
 }
 
-async function drawChart() {
-  const ctx = document.getElementById('myChart').getContext('2d');
-  const byCommand = await loadData();   // Map<string,Array<{x,y}>>
+/* ---------- Shared colour palette ---------- */
+const palette = [
+  '#4e79a7', '#f28e2b', '#e15759', '#76b7b2',
+  '#59a14f', '#edc949', '#af7aa1', '#ff9da7',
+  '#9c755f', '#bab0ab'
+];
+const getColor = i => palette[i % palette.length];
 
-  // ---------- Helper: generate a distinct colour ----------
-  const palette = [
-    '#4e79a7', '#f28e2b', '#e15759', '#76b7b2',
-    '#59a14f', '#edc949', '#af7aa1', '#ff9da7',
-    '#9c755f', '#bab0ab'
-  ];
-  const getColor = i => palette[i % palette.length];
-
-  // ---------- Build Chart.js datasets ----------
+/* Draw a Chart.js line chart on the canvas identified by `canvasId` */
+function drawChartOn(canvasId, byCommand) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
   const datasets = [];
   let idx = 0;
   for (const [cmd, points] of byCommand.entries()) {
     datasets.push({
       label: cmd,
-      data: points,               // each point is {x, y}
+      data: points,
       borderColor: getColor(idx),
-      backgroundColor: getColor(idx) + '33', // 20% opacity
+      backgroundColor: getColor(idx) + '33',
       fill: false,
       tension: 0.1,
       pointRadius: 3,
@@ -88,10 +84,7 @@ async function drawChart() {
 
   new Chart(ctx, {
     type: 'line',
-    data: {
-      // When data objects contain explicit x values, we can omit `labels`.
-      datasets: datasets
-    },
+    data: { datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -99,7 +92,7 @@ async function drawChart() {
         x: {
           title: { display: true, text: '2^parameter_num_count' },
           type: 'linear',
-          ticks: { precision: 0 }   // integer ticks
+          ticks: { precision: 0 }
         },
         y: {
           title: { display: true, text: 'mean (seconds)' },
@@ -109,7 +102,6 @@ async function drawChart() {
       plugins: {
         tooltip: {
           callbacks: {
-            // Show command, x and y in the tooltip
             title: ctx => ctx[0].dataset.label,
             label: ctx => `count = ${ctx.parsed.x}, mean = ${ctx.parsed.y}`
           }
@@ -119,5 +111,14 @@ async function drawChart() {
   });
 }
 
+/* Top‑level orchestrator – load both CSVs and render two charts */
+async function drawCharts() {
+  const scannerData = await loadDataFrom('scanner-12.csv');
+  const fastData    = await loadDataFrom('fast_scanner-12.csv');
+
+  drawChartOn('myChart',      scannerData);
+  drawChartOn('myChartFast',  fastData);
+}
+
 // Run when the page is ready
-document.addEventListener('DOMContentLoaded', drawChart);
+document.addEventListener('DOMContentLoaded', drawCharts);
