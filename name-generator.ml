@@ -61,7 +61,7 @@ let list_regular_files dir =
     match Unix.readdir dh with
     | entry when entry = "." || entry = ".." -> loop acc
     | entry ->
-        let path = Filename.concat dir entry |> Filename.realpath in
+        let path = Filename.concat dir entry |> Unix.realpath in
         if (Unix.stat path).st_kind = S_REG then loop (path :: acc) else loop acc
     | exception End_of_file ->
         Unix.closedir dh;
