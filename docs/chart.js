@@ -20,7 +20,7 @@ function parseLine(line) {
 
 // Fetch the CSV, turn it into an array of {x,y}
 async function loadData() {
-  const response = await fetch('../log/scanner-12.csv');
+  const response = await fetch('../scanner-12.csv');
   if (!response.ok) {
     throw new Error(`Failed to load CSV: ${response.status}`);
   }
@@ -48,7 +48,7 @@ async function drawChart() {
 
   // Separate the arrays for Chart.js (labels = x, data = y)
   const labels = dataPoints.map(p => p.x);
-  const data   = dataPoints.map(p => p.y);
+  const data = dataPoints.map(p => p.y);
 
   new Chart(ctx, {
     type: 'line',
