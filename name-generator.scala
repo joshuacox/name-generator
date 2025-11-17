@@ -49,6 +49,7 @@ object NameGenerator {
       if (output.matches("\\d+")) return Integer.parseInt(output)
     } catch {
       case _: Exception =>
+    }
     
     // Final fallback to 24
     24
