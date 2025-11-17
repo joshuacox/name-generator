@@ -7,9 +7,9 @@ import gleam/random.{int}
 import gleam/option.{Option, Some, Nil}
 import gleam/erlang.{lookup_env, list_dir, file_info, file_info_type, regular}
 
-// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------
 // Helpers
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------
 
 // Get an environment variable or return a default value.
 pub fn env(var_name: String, default: String) -> String {
@@ -29,8 +29,10 @@ pub fn parse_int(str: String, fallback: Int) -> Int {
 
 // Read a file and return a list of its non‑empty, trimmed lines.
 pub fn read_non_empty_lines(path: String) -> Result(List(String), String) {
-  // `io.read_file` returns `Result(String, IOError)`. We map the success case.
+  // `io.read_file` returns `Result(String, IOError)`. Convert the error to a `String`
+  // and then map the successful contents to a list of trimmed, non‑empty lines.
   io.read_file(path)
+  |> Result.map_error(fn _ -> "Failed to read file: " <> path end)
   |> Result.map(fn contents ->
        contents
        |> split("\n")
@@ -88,9 +90,9 @@ pub fn resolve_file(env_var: String, folder: String) -> Result(String, String) {
   }
 }
 
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------
 // Main program
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------
 
 pub fn main() -> Nil {
   // Configuration (mirrors name-generator.sh)
