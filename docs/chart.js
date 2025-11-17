@@ -116,10 +116,12 @@ async function drawCharts() {
   const scannerData = await loadDataFrom('scanner-12.csv');
   const fastData = await loadDataFrom('fast_scanner-15.csv');
   const fasterData = await loadDataFrom('faster_scanner-20.csv');
+  const fastestData = await loadDataFrom('fastest_scanner-22.csv');
 
   drawChartOn('myChart', scannerData);
   drawChartOn('myChartFast', fastData);
   drawChartOn('myChartFaster', fasterData);
+  drawChartOn('myChartFastest', fastestData);
 }
 
 // Run when the page is ready
