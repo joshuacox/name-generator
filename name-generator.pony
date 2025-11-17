@@ -11,7 +11,7 @@ class Config
   let separator: String
   let count_o: U32
   
-  new (name: String, default: String) =>
+  new create(name: String, default: String) =>
     // Default values
     noun_folder := env_or_default("NOUN_FOLDER", "nouns")
     adj_folder := env_or_default("ADJ_FOLDER", "adjectives")
@@ -24,15 +24,15 @@ class Config
         try
           count_o := U32.from(String(val))
         else
-          count_o := 0u32
+          count_o := 0_u32
       | None =>
-        count_o := 24u32
+        count_o := 24_u32
 
 class FileHandler
   let noun_folder: String
   let adj_folder: String
   
-  new (noun_folder': String, adj_folder': String) =>
+  new create(noun_folder': String, adj_folder': String) =>
     noun_folder = noun_folder'
     adj_folder = adj_folder'
 
@@ -49,7 +49,7 @@ class NameGenerator
   let config: Config
   let file_handler: FileHandler
   
-  new (config': Config) =>
+  new create(config': Config) =>
     config = config'
     file_handler = FileHandler(config.noun_folder, config.adj_folder)
 
@@ -92,6 +92,5 @@ actor Main
     while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1u32
-      let name = name_generator.generate_name()
-      env.out.print(name + "\n")
+      name_count := name_count + 1_u32
+    end
