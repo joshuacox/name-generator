@@ -14,12 +14,16 @@ function parseLine(line) {
   // Example: “counto=1 ./name-generator” → “./name-generator”
   const rawCommand = parts[0].trim();                 // column 1
   const command = rawCommand.replace(/^counto=\S+\s*/, '');
-  const mean = parseFloat(parts[1]);               // column 2
-  const paramCount = parseInt(parts[8], 10);       // column 9
+  const mean = parseFloat(parts[1]);                  // column 2
+  const paramCount = parseInt(parts[8], 10);          // column 9
+
+  // NEW – X‑value is 2 raised to the parameter count
+  const x = Math.pow(2, paramCount);
+
   if (!command || isNaN(mean) || isNaN(paramCount)) return null;
 
   // Return an object that carries the command together with the point.
-  return { command, x: paramCount, y: mean };
+  return { command, x, y: mean };
 }
 
 async function loadData() {
@@ -93,7 +97,7 @@ async function drawChart() {
       maintainAspectRatio: false,
       scales: {
         x: {
-          title: { display: true, text: 'parameter_num_count' },
+          title: { display: true, text: '2^parameter_num_count' },
           type: 'linear',
           ticks: { precision: 0 }   // integer ticks
         },
