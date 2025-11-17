@@ -23,13 +23,13 @@ class Config
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
     match tput_lines | Some(val) => 
-        try
-            count_o = U32.from(String(val))
-        else
-            count_o: U32 = 0
-        end
+      try
+        count_o = U32.from(String(val))
+      else
+        count_o: U32 = 0
+      end
     | None =>
-        count_o: U32 = 24
+      count_o: U32 = 24
     end
 
 class FileHandler
@@ -95,12 +95,17 @@ class NameGenerator
 
 actor Main
   new create(env: Env) =>
-    let config = Config(EnvHelper.env_or_default("count_o", "24"), EnvHelper.env_or_default("separator", "-"))
+    let config = Config(
+      noun_folder' = EnvHelper.env_or_default("noun_folder", "nouns"),
+      adj_folder' = EnvHelper.env_or_default("adj_folder", "adjectives"),
+      separator' = EnvHelper.env_or_default("separator", "-")
+    )
+    
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
     var name_count: U32 = 0
-    while name_count < config.count_o:
+    while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
       name_count := name_count + 1
