@@ -10,7 +10,10 @@ function parseLine(line) {
   // Guard against malformed rows
   if (parts.length < 9) return null;
 
-  const command = parts[0].trim();                 // column 1
+  // Strip the leading “counto=<num> ” that the benchmark script prefixes.
+  // Example: “counto=1 ./name-generator” → “./name-generator”
+  const rawCommand = parts[0].trim();                 // column 1
+  const command = rawCommand.replace(/^counto=\d+\s*/, '');
   const mean = parseFloat(parts[1]);               // column 2
   const paramCount = parseInt(parts[8], 10);       // column 9
   if (!command || isNaN(mean) || isNaN(paramCount)) return null;
@@ -20,7 +23,8 @@ function parseLine(line) {
 }
 
 async function loadData() {
-  const response = await fetch('../scanner-12.csv');
+  // The CSV lives in the same folder as this script, so we fetch it directly.
+  const response = await fetch('scanner-12.csv');
   if (!response.ok) {
     throw new Error(`Failed to load CSV: ${response.status}`);
   }
