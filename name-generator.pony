@@ -2,12 +2,10 @@
 
 use "files"
 use "random"
-use "arrays"
-use "env"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    match Process.env().get(var_name) | Some(v) => v else default end
+    match Process.env(var_name) | Some(v) => v else default end
 
 class Config
   let noun_folder: String
@@ -22,7 +20,7 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : U32 = try
-      let lines_env = Process.env().get("LINES")
+      let lines_env = Process.env("LINES")
       let lines = if lines_env != "" then U32.from(lines_env) else _tput_lines() end
       lines
     else
@@ -83,7 +81,7 @@ class NameGenerator
     let full_name = adjective + config.separator + noun
   
     // Debug output if needed
-    if Process.env().get("DEBUG") == "true" then
+    if Process.env("DEBUG") == "true" then
       Debug.out("Adjective: " + adjective)
       Debug.out("Noun: " + noun)
       Debug.out("Full Name: " + full_name)
