@@ -24,12 +24,13 @@ class Config
     let tput_lines = Process.env().get("LINES")
     match tput_lines | Some(val) => 
       try
-        count_o = U32.from(String(val))
+        let parsed_count = U32.from(String(val))
+        count_o = parsed_count
       else
-        count_o: U32 = 0
+        count_o = 0
       end
     | None =>
-      count_o: U32 = 24
+      count_o = 24
     end
 
 class FileHandler
@@ -108,5 +109,5 @@ actor Main
     while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1
+      name_count = name_count + 1
     end
