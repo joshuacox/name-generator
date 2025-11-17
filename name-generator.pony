@@ -13,9 +13,9 @@ class Config
   
   new create(name: String, default: String) =>
     // Default values
-    noun_folder := env_or_default("NOUN_FOLDER", "nouns")
-    adj_folder := env_or_default("ADJ_FOLDER", "adjectives")
-    separator := env_or_default("SEPARATOR", "-")
+    noun_folder = env_or_default["NOUN_FOLDER"]("nouns")
+    adj_folder = env_or_default["ADJ_FOLDER"]("adjectives") 
+    separator = env_or_default["SEPARATOR"]("-")
     
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
@@ -24,9 +24,9 @@ class Config
         try
           count_o := U32.from(String(val))
         else
-          count_o := 0_u32
+          count_o := 0u32
       | None =>
-        count_o := 24_u32
+        count_o := 24u32
 
 class FileHandler
   let noun_folder: String
@@ -63,12 +63,14 @@ class NameGenerator
     let noun_lines = FileLines.read_and_filter(noun_file, { (l) => l != "" })
     
     // Pick random entries preserving case for adjectives, lowercasing nouns
-    let adjective = match adj_lines.random():
-      | Some(line) => line
+    var adjective: String = ""
+    match adj_lines.random():
+      | Some(line) => adjective := line
       | None => ""
     
-    let noun = match noun_lines.random():
-      | Some(line) => line.lower()
+    var noun: String = ""
+    match noun_lines.random():
+      | Some(line) => noun := line.lower()
       | None => ""
 
     let full_name = adjective + config.separator + noun
@@ -84,13 +86,13 @@ class NameGenerator
 // Main function
 actor Main
   new create(env: Env) =>
-    let config = Config(env_or_default<String>("counto", "24"))
+    let config = Config(env_or_default["counto"]("24"))
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
-    var name_count: U32 = 0
-    while name_count < config.count_o do
+    var name_count: U32 = 0u32
+    while name_count <= config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1_u32
+      name_count := name_count + 1u32
     end
