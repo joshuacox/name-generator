@@ -91,7 +91,7 @@ async function main(): Promise<void> {
     // Determine how many names to generate
     // Determine how many names to generate (using tput lines logic)
     function getCountO(): number {
-        // Try to get count from environment variable first
+        // 1️⃣ Try to get from environment variable first (preferred)
         const envCount = process.env.counto;
         if (envCount) {
             try {
@@ -101,7 +101,18 @@ async function main(): Promise<void> {
             }
         }
 
-        // Fallback to default value
+        // 2️⃣ Try to get terminal height using tput lines
+        try {
+            const terminalLines = require('child_process')
+                .execSync('tput', 'lines') // Use same command as shell script
+                .toString().trim();
+            
+            return parseInt(terminalLines, 10) || 24;
+        } catch (e) {
+            // Ignore errors and fall through
+        }
+
+        // 3️⃣ Final fallback to 24 if all else fails
         return 24; // Same as shell script's fallback
     }
 
