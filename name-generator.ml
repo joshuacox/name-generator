@@ -79,7 +79,7 @@ let random_choice lst =
 let resolve_file ~var ~folder =
   match env_opt var with
   | Some v when String.trim v <> "" ->
-      let p = Filename.realpath (String.trim v) in
+      let p = Unix.realpath (String.trim v) in
       if (Unix.stat p).st_kind <> S_REG then
         failwith (sprintf "Environment variable %s points to a non‑regular file: %s" var v)
       else p
