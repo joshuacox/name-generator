@@ -54,3 +54,6 @@ name-generator_zig:
 
 dmd name-generator_d:
 	dmd name-generator_d.d
+
+name-generator_pony:
+	ponyc -b name-generator_pony

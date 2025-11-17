@@ -27,7 +27,7 @@ main () {
   touch ${NEW_LANG_FILE}
   chmod +x ${NEW_LANG_FILE}
   aiderrr "write ${NEW_LANG_FILE} in ${NEW_LANG} so that it behaves with SEPARATOR, NOUN_FILE and ADJ_FILE like the shellscript name-generator.sh does"
-  aiderrr "can you add ${NEW_LANG} tests to the test/test.bats file?"
+  #aiderrr "can you add ${NEW_LANG} tests to the test/test.bats file?"
 
 }
 
