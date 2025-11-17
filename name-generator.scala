@@ -2,6 +2,7 @@
 import java.io.File
 import java.util.Random
 import scala.io.Source
+import scala.util.Try
 
 object NameGenerator {
   private val random = new Random()
@@ -11,11 +12,8 @@ object NameGenerator {
   // -------------------------------------------------------------------------------//
   val HERE: File = new File(System.getProperty("user.dir")).getCanonicalFile
   
-  // Extract SEPARATOR from environment
-  //val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
-
-  // Load environment variables with fallbacks
-  val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
+  // Load configuration from **environment variables** (fallbacks match the shell script)
+  val SEPARATOR: String = sys.env.getOrElse("SEPARATOR", "-")
   val NOUN_FOLDER: File = getEnvAsFile("NOUN_FOLDER", new File(HERE, "nouns"))
   val ADJ_FOLDER: File = getEnvAsFile("ADJ_FOLDER", new File(HERE, "adjectives"))
 
@@ -26,39 +24,38 @@ object NameGenerator {
   // Helper methods
   // -------------------------------------------------------------------------------//
 
+  /** Resolve an environment variable to a regular file.
+    * If the variable is unset/empty → return the supplied `default` folder.
+    * If it is set → return the canonical file (must exist and be a regular file). */
   private def getEnvAsFile(varName: String, default: File): File = {
-    System.getProperty(varName) match {
-      case null | "" => default
-      case path => new File(path).getCanonicalFile
+    sys.env.get(varName) match {
+      case Some(p) if p.trim.nonEmpty =>
+        val f = new File(p).getCanonicalFile
+        if (!f.isFile) throw new IllegalStateException(
+          s"Environment variable $varName points to a non‑regular file: $p")
+        f
+      case _ => default
     }
   }
 
   private def getCountO(): Int = {
-    // 1️⃣ First check for counto environment variable (preferred)
-    //val envCount = System.getProperty("counto")
-    val envCount = sys.env.getOrElse("counto", "2")
-    if (envCount != null) {
-      try {
-        return Integer.parseInt(envCount)
-      } catch {
-        case _: NumberFormatException =>
-      }
+    // 1️⃣ Environment variable `counto` (preferred)
+    sys.env.get("counto").flatMap(s => Try(s.toInt).toOption) match {
+      case Some(v) => return v
+      case None    => // continue
     }
 
-    // 2️⃣ Then try to get from tput lines
+    // 2️⃣ Try `tput lines`
     try {
-      val processBuilder = new ProcessBuilder("tput", "lines")
-      val process = processBuilder.start()
-      val output = Source.fromInputStream(process.getInputStream).mkString.trim
-      if (output.matches("\\d+")) {
-        return Integer.parseInt(output)
-      }
+      val proc = new ProcessBuilder("tput", "lines").start()
+      val out = Source.fromInputStream(proc.getInputStream).mkString.trim
+      if (out.matches("\\d+")) return out.toInt
     } catch {
-      case _: Exception =>
+      case _: Exception => // ignore
     }
 
-    // 3️⃣ Final fallback to 24 if all else fails
-    return 2
+    // 3️⃣ Fallback to 24 (same as the shell script)
+    24
   }
 
   private def listRegularFiles(folder: File): List[File] = {
@@ -89,25 +86,35 @@ object NameGenerator {
   // Main generation logic
   // -------------------------------------------------------------------------------//
 
-  private def maybeDebug(adjective: String, noun: String): Unit = {
-    if (System.getProperty("DEBUG") == "true") {
+  private def maybeDebug(adjective: String, noun: String, nounFile: File, adjFile: File): Unit = {
+    if (sys.env.get("DEBUG").contains("true")) {
       System.err.println("DEBUG:")
       System.err.println(s"Adjective: $adjective")
       System.err.println(s"Noun: $noun")
+      System.err.println(s"NOUN_FILE: ${nounFile.getPath}")
+      System.err.println(s"ADJ_FILE: ${adjFile.getPath}")
       System.err.println(s"NOUN_FOLDER: ${NOUN_FOLDER.getPath}")
       System.err.println(s"ADJ_FOLDER: ${ADJ_FOLDER.getPath}")
+      System.err.println(s"SEPARATOR: $SEPARATOR")
+    }
+  }
+
+  // Resolve a file from an env‑var or pick a random regular file from `folder`.
+  private def resolveFile(envVar: String, folder: File): File = {
+    sys.env.get(envVar) match {
+      case Some(p) if p.trim.nonEmpty =>
+        val f = new File(p).getCanonicalFile
+        if (!f.isFile) throw new IllegalStateException(
+          s"Environment variable $envVar points to a non‑regular file: $p")
+        f
+      case _ => pickRandomFile(folder)
     }
   }
 
   def generateNames(): Unit = {
-    // Resolve files - env var overrides, otherwise pick a random file from the folder
-    val nounFile = Option(System.getProperty("NOUN_FILE"))
-        .map(new File(_).getCanonicalFile)
-        .getOrElse(pickRandomFile(NOUN_FOLDER))
-    
-    val adjFile = Option(System.getProperty("ADJ_FILE"))
-        .map(new File(_).getCanonicalFile)
-        .getOrElse(pickRandomFile(ADJ_FOLDER))
+    // Resolve files – env var overrides, otherwise pick a random file from the folder
+    val nounFile = resolveFile("NOUN_FILE", NOUN_FOLDER)
+    val adjFile = resolveFile("ADJ_FILE", ADJ_FOLDER)
 
     // Rest of the method remains the same...
     val nouns = readNonEmptyLines(nounFile)
@@ -119,7 +126,7 @@ object NameGenerator {
       val noun = nouns(random.nextInt(nouns.size)).toLowerCase()
       val adjective = adjectives(random.nextInt(adjectives.size))
       
-      maybeDebug(adjective, noun)
+      maybeDebug(adjective, noun, nounFile, adjFile)
       
       println(s"$adjective$SEPARATOR$noun")
       
