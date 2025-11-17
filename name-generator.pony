@@ -7,13 +7,13 @@ use "env"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    Process.env().get(var_name) ?: default
+    Process.env().get(var_name) ?? default
 
 class Config
   let noun_folder: String
   let adj_folder: String
   let separator: String
-  var count_o: U32
+  let count_o: U32
   
   new create(noun_folder': String = "nouns", adj_folder': String = "adjectives", separator': String = "-") =>
     noun_folder = noun_folder'
