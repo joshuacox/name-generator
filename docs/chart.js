@@ -3,7 +3,6 @@
 // from the CSV file `log/scanner-12.csv`.
 // ---------------------------------------------------------------------------
 
-// Helper: parse a CSV line into an object {x: Number, y: Number}
 function parseLine(line) {
   // CSV columns (see the file header):
   // command,mean,stddev,median,user,system,min,max,parameter_num_count
@@ -11,14 +10,15 @@ function parseLine(line) {
   // Guard against malformed rows
   if (parts.length < 9) return null;
 
+  const command = parts[0].trim();                 // column 1
   const mean = parseFloat(parts[1]);               // column 2
   const paramCount = parseInt(parts[8], 10);       // column 9
-  if (isNaN(mean) || isNaN(paramCount)) return null;
+  if (!command || isNaN(mean) || isNaN(paramCount)) return null;
 
-  return { x: paramCount, y: mean };
+  // Return an object that carries the command together with the point.
+  return { command, x: paramCount, y: mean };
 }
 
-// Fetch the CSV, turn it into an array of {x,y}
 async function loadData() {
   const response = await fetch('../scanner-12.csv');
   if (!response.ok) {
@@ -30,39 +30,59 @@ async function loadData() {
   // Remove header line
   lines.shift();
 
-  const points = [];
+  /** Map<string, Array<{x:number,y:number}>> */
+  const byCommand = new Map();
+
   for (const line of lines) {
     const pt = parseLine(line);
-    if (pt) points.push(pt);
+    if (!pt) continue;
+    const { command, x, y } = pt;
+    if (!byCommand.has(command)) byCommand.set(command, []);
+    byCommand.get(command).push({ x, y });
   }
 
-  // Sort by x so the line chart is monotonic in the x‑direction
-  points.sort((a, b) => a.x - b.x);
-  return points;
+  // Sort each command’s series by x (parameter_num_count)
+  for (const series of byCommand.values()) {
+    series.sort((a, b) => a.x - b.x);
+  }
+
+  // Return the map – the caller will turn it into Chart.js datasets
+  return byCommand;
 }
 
-// Create the Chart.js instance
 async function drawChart() {
   const ctx = document.getElementById('myChart').getContext('2d');
-  const dataPoints = await loadData();
+  const byCommand = await loadData();   // Map<string,Array<{x,y}>>
 
-  // Separate the arrays for Chart.js (labels = x, data = y)
-  const labels = dataPoints.map(p => p.x);
-  const data = dataPoints.map(p => p.y);
+  // ---------- Helper: generate a distinct colour ----------
+  const palette = [
+    '#4e79a7', '#f28e2b', '#e15759', '#76b7b2',
+    '#59a14f', '#edc949', '#af7aa1', '#ff9da7',
+    '#9c755f', '#bab0ab'
+  ];
+  const getColor = i => palette[i % palette.length];
+
+  // ---------- Build Chart.js datasets ----------
+  const datasets = [];
+  let idx = 0;
+  for (const [cmd, points] of byCommand.entries()) {
+    datasets.push({
+      label: cmd,
+      data: points,               // each point is {x, y}
+      borderColor: getColor(idx),
+      backgroundColor: getColor(idx) + '33', // 20% opacity
+      fill: false,
+      tension: 0.1,
+      pointRadius: 3,
+    });
+    idx++;
+  }
 
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: labels,
-      datasets: [{
-        label: 'Mean',
-        data: data,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: false,
-        tension: 0.1,          // smooth line
-        pointRadius: 3,
-      }]
+      // When data objects contain explicit x values, we can omit `labels`.
+      datasets: datasets
     },
     options: {
       responsive: true,
@@ -70,6 +90,7 @@ async function drawChart() {
       scales: {
         x: {
           title: { display: true, text: 'parameter_num_count' },
+          type: 'linear',
           ticks: { precision: 0 }   // integer ticks
         },
         y: {
@@ -80,8 +101,9 @@ async function drawChart() {
       plugins: {
         tooltip: {
           callbacks: {
-            // Show both x and y in the tooltip
-            label: ctx => `mean = ${ctx.parsed.y}`
+            // Show command, x and y in the tooltip
+            title: ctx => ctx[0].dataset.label,
+            label: ctx => `count = ${ctx.parsed.x}, mean = ${ctx.parsed.y}`
           }
         }
       }
