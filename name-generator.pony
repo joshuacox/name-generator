@@ -11,11 +11,10 @@ class Config
   let separator: String
   let count_o: U32
   
-  new create(name: String, default: String) =>
-    // Default values
-    noun_folder = env_or_default["NOUN_FOLDER"]("nouns")
-    adj_folder = env_or_default["ADJ_FOLDER"]("adjectives") 
-    separator = env_or_default["SEPARATOR"]("-")
+  new create(noun_folder': String, adj_folder': String, separator': String) =>
+    noun_folder = noun_folder'
+    adj_folder = adj_folder'
+    separator = separator'
     
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
@@ -90,7 +89,7 @@ class NameGenerator
 // Main function
 actor Main
   new create(env: Env) =>
-    let config = Config(env_or_default["counto"]("24"))
+    let config = Config(env_or_default["count_o"]("24"), env_or_default["separator"]("-"))
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
