@@ -9,7 +9,6 @@ granite3.3:8b
 codegemma:latest
 gemma2:latest
 nous-hermes2:latest
-mistral-nemo:latest
 phi3:medium
 deepseek-coder-v2:latest
 mistral-small:latest
