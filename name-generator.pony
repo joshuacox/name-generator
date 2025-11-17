@@ -7,7 +7,7 @@ use "env"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    Process.env().get(var_name) ?? default
+    match Process.env().get(var_name) | Some(v) => v else default end
 
 class Config
   let noun_folder: String
@@ -28,7 +28,7 @@ class Config
       else
         count_o = 0: U32
       end
-    | None =>
+    else
       count_o = 24: U32
     end
 
@@ -89,6 +89,7 @@ class NameGenerator
       Debug.out("Adjective: " + adjective)
       Debug.out("Noun: " + noun)
       Debug.out("Full Name: " + full_name)
+    end
   
     return full_name
 
