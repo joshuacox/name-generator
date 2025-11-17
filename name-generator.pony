@@ -9,8 +9,8 @@ use "logger"
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
     match env(var_name) with
-      | Some(v) => v
-      | None => default
+      | Some(v) => Option.get(v).map(v => Int64.try(int => int))
+      | None => Some(0)
     end
 
 class Config

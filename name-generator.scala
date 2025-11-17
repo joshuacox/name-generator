@@ -10,12 +10,14 @@ object NameGenerator {
   // -------------------------------------------------------------------------------//
   val HERE: File = new File(System.getProperty("user.dir")).getCanonicalFile
   
+  // Extract SEPARATOR from environment
   val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
-  
+
+  // Load environment variables with fallbacks
   val NOUN_FOLDER: File = getEnvAsFile("NOUN_FOLDER", new File(HERE, "nouns"))
   val ADJ_FOLDER: File = getEnvAsFile("ADJ_FOLDER", new File(HERE, "adjectives"))
 
-  // Number of lines to emit - use `tput lines` when available, otherwise 24.
+  // Get the number of lines to generate 
   val COUNT_O: Int = getCountO()
 
   // -------------------------------------------------------------------------------//
