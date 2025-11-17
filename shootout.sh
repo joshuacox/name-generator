@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-: "${counto:=24}"
+: ${FILES:='name-generator.sh'}
 : ${TEST:="make test"}
 : ${MESSAGE:="/test ${TEST}"}
 : ${MODELS_FILE:="models/models.list"}
+: "${counto:=24}"
 
 countzero=0
 
@@ -13,7 +14,8 @@ for i in $(cat ${MODELS_FILE}); do
   aider \
     --config config/shootout.conf.yml \
     -m "${MESSAGE}"\
-    --model "ollama_chat/$i"
+    --model "ollama_chat/$i" \
+    ${FILES}
   ((countzero++))
   $TEST
   if [[ $? -eq 0 ]]; then

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-: "${counto:=24}"
+: ${FILES:='name-generator.sh'}
 : ${TEST:="make test"}
 : ${MESSAGE:="/test ${TEST}"}
+: "${counto:=24}"
 #: "${MODEL:=ollama_chat/qwen2.5-coder:32b-base-fp16}"
 #: "${MODEL:=ollama_chat/qwen3:32b-fp16}"
 #: "${MODEL:=ollama_chat/llama4:scout}"
@@ -16,7 +17,8 @@ if [[ ! $? -eq 0 ]]; then
     --config config/shootout.conf.yml \
     --model "ollama_chat/${MODEL}" \
     --test-cmd ${TEST} \
-    -m "${MESSAGE}"
+    -m "${MESSAGE}" \
+    ${FILES}
   ((countzero++))
   $TEST
   if [[ $? -eq 0 ]]; then

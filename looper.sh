@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-: "${counto:=24}"
+: ${FILES:='name-generator.sh'}
 : ${TEST:="make test"}
 : ${MESSAGE:="/test ${TEST}"}
+: "${counto:=24}"
 
 countzero=0
 
 $TEST
 if [[ ! $? -eq 0 ]]; then
 while [[ ${countzero} -lt ${counto} ]]; do
-  aider -m "${MESSAGE}"
+  aider -m "${MESSAGE}" ${FILES}
   ((countzero++))
   $TEST
   if [[ $? -eq 0 ]]; then
