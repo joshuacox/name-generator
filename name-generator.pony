@@ -7,13 +7,13 @@ use "env"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    Process.env().get(var_name) ?? default
+    Process.env().get(var_name) ?: default
 
 class Config
   let noun_folder: String
   let adj_folder: String
   let separator: String
-  let count_o: U32
+  var count_o: U32
   
   new create(noun_folder': String = "nouns", adj_folder': String = "adjectives", separator': String = "-") =>
     noun_folder = noun_folder'
@@ -24,12 +24,12 @@ class Config
     let tput_lines = Process.env().get("LINES")
     match tput_lines | Some(val) => 
       try
-        count_o := U32.from(String(val))
+        count_o = U32.from(String(val))
       else
-        count_o := 0: U32
+        count_o = 0: U32
       end
     | None =>
-      count_o := 24: U32
+      count_o = 24: U32
     end
 
 class FileHandler
@@ -70,14 +70,14 @@ class NameGenerator
     // Pick random entries preserving case for adjectives, lowercasing nouns
     var adjective: String = ""
     match adj_lines.random() | Some(line) =>
-      adjective := line
+      adjective = line
     | None =>
       ""
     end
     
     var noun: String = ""
     match noun_lines.random() | Some(line) =>
-      noun := line.lower()
+      noun = line.lower()
     | None =>
       ""
     end
