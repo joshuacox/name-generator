@@ -8,7 +8,10 @@ use "logger"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    (env(var_name) | Some(v) => v else default)
+    match env(var_name) with
+    | Some(v) if v != "" => v
+    | _ => default
+    end
 
 class Config
   let noun_folder: String
@@ -22,23 +25,24 @@ class Config
     Separator = separator'
     
     // Number of lines to generate - try tput lines, fallback to 24
-    let count_o' : U32 = try
+    let count_o' : Int = try
       let lines_env = env("LINES")
-      let lines = if lines_env != "" then U32.from(lines_env) else _tput_lines() end
+      let lines = if lines_env != "" then Int.from_string(lines_env) else _tput_lines() end
       lines
     else
       24
     end
-    count_o = count_o'
+    count_o = count_o'.U32()
 
-  fun _tput_lines(): U32 =>
+  fun _tput_lines(): Int =>
     try
         let height = terminal_height()
         if height.gt(0) then
             height.U32()
         else
             24
-    catch
+        end
+    else
         24
 
 class FileHandler
@@ -52,7 +56,8 @@ class FileHandler
   fun pick_random_file(folder: String): String =>
     // Pick a random regular file from the folder
     let files = File.list(folder)
-    let filtered_files = Array.filter(files, { (f) => f.find(".DS_Store") == -1 })
+    let filtered_files = Array.filter(files, { (f) => 
+        f.find(".DS_Store") == -1 && File.info(f).kind == FileInfo_kind_file })
     if filtered_files.size > 0 then
       filtered_files.random()
     else
