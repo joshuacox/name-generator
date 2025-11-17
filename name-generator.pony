@@ -13,16 +13,16 @@ actor Main
     // -----------------------------------------------
 
     // Separator between adjective and noun (default " ")
-    let separator = match env.var("SEPARATOR")
+    let separator = match env.`var`("SEPARATOR")
       | let s: String => s
       | None => " "
     end
 
     // Number of lines to emit – env var `counto` > `tput lines` > 24
     let count: USize = try
-      // env.var returns (String | None); we unwrap each step,
+      // env.`var` returns (String | None); we unwrap each step,
       // raising an error if any part is missing.
-      env.var("counto")?.as_int()?.usize()
+      env.`var`("counto")?.as_int()?.usize()
     else
       // try `tput lines`
       try
@@ -39,13 +39,13 @@ actor Main
     let cwd = Path.cwd()
     // Build Path objects from either the env var or the default location.
     let noun_folder = Path.from_string(
-      match env.var("NOUN_FOLDER")
+      match env.`var`("NOUN_FOLDER")
         | let s: String => s
         | None => cwd + "/nouns"
       end
     )?
     let adj_folder = Path.from_string(
-      match env.var("ADJ_FOLDER")
+      match env.`var`("ADJ_FOLDER")
         | let s: String => s
         | None => cwd + "/adjectives"
       end
@@ -60,7 +60,7 @@ actor Main
     let adj_lines  = read_nonempty_lines(adj_file )?
 
     // Debug flag – prints extra information to stderr when true
-    let debug = match env.var("DEBUG")
+    let debug = match env.`var`("DEBUG")
       | let s: String => s == "true"
       | None => false
     end
@@ -102,7 +102,7 @@ actor Main
   // -----------------------------------------------
   fun resolve_file(env: Env, var_name: String, folder: Path): (Path | None) ? =>
     // 1️⃣  Environment variable overrides
-    if let val = env.var(var_name) then
+    if let val = env.`var`(var_name) then
       if not val.trim().is_empty() then
         let p = Path.from_string(val)?
         if p.is_file() then
