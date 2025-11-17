@@ -15,6 +15,7 @@ object NameGenerator {
   val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
 
   // Load environment variables with fallbacks
+  val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
   val NOUN_FOLDER: File = getEnvAsFile("NOUN_FOLDER", new File(HERE, "nouns"))
   val ADJ_FOLDER: File = getEnvAsFile("ADJ_FOLDER", new File(HERE, "adjectives"))
 
@@ -100,9 +101,15 @@ object NameGenerator {
 
   def generateNames(): Unit = {
     // Resolve files - env var overrides, otherwise pick a random file from the folder
-    val nounFile = Option(System.getProperty("NOUN_FILE")).map(new File(_).getCanonicalFile).getOrElse(pickRandomFile(NOUN_FOLDER))
-    val adjFile = Option(System.getProperty("ADJ_FILE")).map(new File(_).getCanonicalFile).getOrElse(pickRandomFile(ADJ_FOLDER))
+    val nounFile = Option(System.getProperty("NOUN_FILE"))
+        .map(new File(_).getCanonicalFile)
+        .getOrElse(pickRandomFile(NOUN_FOLDER))
+    
+    val adjFile = Option(System.getProperty("ADJ_FILE"))
+        .map(new File(_).getCanonicalFile)
+        .getOrElse(pickRandomFile(ADJ_FOLDER))
 
+    // Rest of the method remains the same...
     val nouns = readNonEmptyLines(nounFile)
     val adjectives = readNonEmptyLines(adjFile)
 
