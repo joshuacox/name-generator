@@ -8,3 +8,4 @@ These languages are a work in progress (WIP)
 1. gleam
 1. matlab / octave
 1. pony
+1. R
