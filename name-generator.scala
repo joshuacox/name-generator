@@ -1,3 +1,4 @@
+#!/usr/bin/env scala
 import java.io.File
 import java.util.Random
 import scala.io.Source
