@@ -1,4 +1,4 @@
-#!/usr/bin/env -S ocaml -I +unix
+#!/usr/bin/env -S ocaml -I +unix unix.cma
 (* --------------------------------------------------------
    OCaml implementation of the “name‑generator” behaviour described in
    name-generator.sh.
