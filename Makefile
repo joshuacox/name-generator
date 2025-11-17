@@ -32,7 +32,8 @@ NameGenerator.class:
 	javac NameGenerator.java
 
 test:
-	./test/bats/bin/bats test/test.bats
+	bats test/test.bats
+	#./test/bats/bin/bats test/test.bats
 
 testx:
 	./test/bats/bin/bats -x test/test.bats

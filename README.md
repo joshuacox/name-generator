@@ -24,6 +24,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. javascript async + sync
 1. julia
 1. kotlin
+1. lua
 1. perl
 1. python
 1. racket

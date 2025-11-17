@@ -35,6 +35,7 @@ cabal-tests.log
 
 # Output of release and bootstrap
 _build
+build
 
 # editor temp files
 

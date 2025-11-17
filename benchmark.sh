@@ -9,12 +9,13 @@
 #: ${HYPERFINE_LOGS:=--export-csv log/timing.csv --export-json log/timing.json --export-asciidoc log/timing.ascii --export-markdown log/timing.md
 export counto=${counto}
 set -eux
+mkdir -p log
 
 slow_bench_runnr () {
   hyperfine \
     --export-csv ${HYPERFINE_LOGDIR}/timing-slow-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-slow-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-slow-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-slow-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-slow-${counto}.md \
     --warmup 3 \
     --runs 5 \
@@ -34,6 +35,7 @@ slow_bench_runnr () {
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.dart' \
+    './name-generator.lua' \
     './name-generator.rkt' \
     'java NameGenerator' \
     'cabal run' \
@@ -49,7 +51,7 @@ scanner_bench_runnr () {
     -P num_count ${SCAN_START} ${SCAN_END} \
     --export-csv ${HYPERFINE_LOGDIR}/scanner-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/scanner-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/scanner-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/scanner-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/scanner-${counto}.md \
     --warmup 3 \
     --runs 5 \
@@ -70,6 +72,7 @@ scanner_bench_runnr () {
     'counto={num_count} ./name-generator.raku' \
     'counto={num_count} ./name-generator.rkt' \
     'counto={num_count} ./name-generator.dart' \
+    'counto={num_count} ./name-generator.lua' \
     'counto={num_count} java NameGenerator' \
     'counto={num_count} cabal run' \
     "counto={num_count} $HOME/.cargo/target/debug/name-generator" \
@@ -86,7 +89,7 @@ bench_runnr () {
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-${counto}.md \
     './name-generator' \
     './name-generator_cpp' \
@@ -99,6 +102,7 @@ bench_runnr () {
     './name-generator.raku' \
     './name-generator.rkt' \
     './name-generator.dart' \
+    './name-generator.lua' \
     'java NameGenerator' \
     'java -jar ./name-generator.jar' \
     'cabal run' \
@@ -115,11 +119,12 @@ fast_bench_runnr () {
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-fast-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-fast-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fast-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fast-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-fast-${counto}.md \
     './name-generator' \
     './name-generator_cpp' \
     './name-generator_go' \
+    './name-generator.lua' \
     './name-generator.js' \
     './name-generator.pl' \
     'java NameGenerator' \
@@ -134,11 +139,12 @@ faster_bench_runnr () {
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-faster-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-faster-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-faster-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-faster-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-faster-${counto}.md \
     './name-generator_cpp' \
     './name-generator_go' \
     './name-generator.js' \
+    './name-generator.lua' \
     './name-generator.pl' \
     "$HOME/.cargo/target/debug/name-generator"
 }
@@ -150,10 +156,12 @@ fastest_bench_runnr () {
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.asciidoc \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.md \
     './name-generator_cpp' \
     './name-generator_go' \
+    './name-generator.lua' \
+    "$HOME/.cargo/target/debug/name-generator" \
     './name-generator.pl'
 }
 
