@@ -1,4 +1,5 @@
 program NameGenerator;
+{ This is the sole Pascal source file for the project }
 
 {$mode objfpc}{$H+}
 uses
