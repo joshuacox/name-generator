@@ -2,7 +2,7 @@
 : ${counto:=12}
 : "${SPEED:=normal}"
 : ${SCAN_START:=1}
-: ${SCAN_END:=3}
+: ${SCAN_END:=10}
 : ${HYPERFINE_LOGDIR:=log}
 #: ${COMMON_HYPERFINE_OPTS:="counto={num_count} ./name-generator" "counto={num_count} ./name-generator_go" -P num_count 1 3 --export-csv log/timing.csv --export-json log/timing.json --export-asciidoc log/timing.ascii --export-markdown log/timing.md
 #: ${COMMON_HYPERFINE_OPTS:='-P num_count 1 3'} --export-csv log/timing.csv --export-json log/timing.json --export-asciidoc log/timing.ascii --export-markdown log/timing.md
@@ -70,7 +70,6 @@ scanner_bench_runnr () {
     'counto={num_count} ./name-generator.ts' \
     'counto={num_count} ./name-generator.jl' \
     'counto={num_count} java -jar ./name-generator.jar' \
-    'counto={num_count} ./name-generator.kts' \
     'counto={num_count} ./name-generator.pl' \
     'counto={num_count} ./name-generator.php' \
     'counto={num_count} ./name-generator.el' \
