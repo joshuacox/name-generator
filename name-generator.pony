@@ -34,7 +34,7 @@ class Config
   fun _tput_lines(): U32 =>
     try
         let height = terminal_height()
-        if height >= 0 then
+        if height.gt(0) then
             height.U32()
         else
             24
@@ -65,7 +65,7 @@ class NameGenerator
   
   new create(config': Config) =>
     config = config'
-    file_handler = None
+    this.file_handler = FileHandler(config.noun_folder, config.adj_folder)
 
   fun generate_name(): String =>
     // Pick random adjective and noun files
