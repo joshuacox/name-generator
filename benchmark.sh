@@ -17,8 +17,8 @@ slow_bench_runnr () {
     --export-json ${HYPERFINE_LOGDIR}/timing-slow-${counto}.json \
     --export-asciidoc ${HYPERFINE_LOGDIR}/timing-slow-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-slow-${counto}.md \
-    --warmup 3 \
-    --runs 5 \
+    --warmup 1 \
+    --runs 3 \
     --shell=none \
     './name-generator' \
     './name-generator_cpp' \
@@ -32,6 +32,7 @@ slow_bench_runnr () {
     './name-generator.kts' \
     './name-generator.pl' \
     './name-generator.el' \
+    './name-generator.ml' \
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.dart' \
@@ -68,6 +69,7 @@ scanner_bench_runnr () {
     'counto={num_count} ./name-generator.kts' \
     'counto={num_count} ./name-generator.pl' \
     'counto={num_count} ./name-generator.el' \
+    'counto={num_count} ./name-generator.ml' \
     'counto={num_count} ./name-generator.rb' \
     'counto={num_count} ./name-generator.raku' \
     'counto={num_count} ./name-generator.rkt' \
@@ -101,6 +103,7 @@ bench_runnr () {
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.rkt' \
+    './name-generator.ml' \
     './name-generator.dart' \
     './name-generator.lua' \
     'java NameGenerator' \
