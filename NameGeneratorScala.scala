@@ -1,10 +1,9 @@
-#!/usr/bin/env scala
 import java.io.File
 import java.util.Random
 import scala.io.Source
 import scala.util.Try
 
-object NameGenerator {
+object NameGeneratorScala {
   private val random = new Random()
 
   // -------------------------------------------------------------------------------//

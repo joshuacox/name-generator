@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit
 
-all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar
+all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala
 
 clean:
 	-@rm -v name-generator 
@@ -9,6 +9,7 @@ clean:
 	-@rm -v NameGenerator.class
 	-@rm -v name-generator_go
 	-@rm -v name_generator.beam
+	-@rm -v NameGeneratorScala.class
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -63,3 +64,6 @@ name-generator_pony:
 
 commit:
 	aider --commit --model=ollama_chat/llama3.2
+
+NameGeneratorScala:
+	scalac NameGeneratorScala.scala
