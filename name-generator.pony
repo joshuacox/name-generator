@@ -66,14 +66,20 @@ class NameGenerator
     // Pick random entries preserving case for adjectives, lowercasing nouns
     var adjective: String = ""
     match adj_lines.random() {
-      | Some(line) => (adjective := line; "")
-      | None => ""
+      | Some(line) => 
+        adjective := line
+        ""
+      | None =>
+        ""
     }
     
     var noun: String = ""
     match noun_lines.random() {
-      | Some(line) => noun := line.lower()
-      | None => ""
+      | Some(line) => 
+        noun := line.lower()
+        ""
+      | None =>
+        ""
     }
 
     let full_name = adjective + config.separator + noun
