@@ -66,7 +66,7 @@ function ResolveFile(const EnvVar, Folder: string): string;
 var
   EnvPath: string;
 begin
-  EnvPath := GetEnv(EnvVar);
+  EnvPath := SysUtils.GetEnv(EnvVar);
   if (EnvPath <> '') then
   begin
     EnvPath := ExpandFileName(EnvPath);
@@ -133,7 +133,7 @@ var
   Tmp: Integer;
 begin
   // 1️⃣ env var `counto` (preferred)
-  EnvVal := GetEnv('counto');
+  EnvVal := SysUtils.GetEnv('counto');
   if (EnvVal <> '') and TryStrToInt(EnvVal, Tmp) then
     Exit(Tmp);
 
@@ -150,7 +150,7 @@ end;
 procedure MaybeDebug(const Adj, Noun, AdjFile, NounFile,
                     AdjFolder, NounFolder: string; CountZero, CountO: Integer);
 begin
-  if GetEnv('DEBUG') = 'true' then
+  if SysUtils.GetEnv('DEBUG') = 'true' then
   begin
     WriteLn(StdErr, Adj);
     WriteLn(StdErr, Noun);
@@ -167,7 +167,7 @@ function GetEnvOrDefault(const Name, Default: string): string;
 var
   Val: string;
 begin
-  Val := GetEnv(Name);
+  Val := SysUtils.GetEnv(Name);
   if Val = '' then
     Result := Default
   else
