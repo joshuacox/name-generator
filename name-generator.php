@@ -12,14 +12,15 @@
  *     "<cwd>/adjectives".
  *   * The noun is lower‑cased, the adjective keeps its original case.
  *   * When DEBUG=true a small debug dump is written to STDERR.
- *   * Adds a casual greeting (default "Hey") before each generated name.
+ *   * No greeting is added – the output matches the original shell script
+ *     (e.g., "test_test").
  */
 
 declare(strict_types=1);
 
-/* --------------------------------------------------------------------- *
+/* --------------------------------------------------- *
  * Helper utilities
- * --------------------------------------------------------------------- */
+ * --------------------------------------------------- */
 
 /**
  * Return true if $path points to a regular file.
@@ -128,9 +129,9 @@ function get_count_o(): int
     return 24;
 }
 
-/* --------------------------------------------------------------------- *
+/* --------------------------------------------------- *
  * Configuration (environment → defaults)
- * --------------------------------------------------------------------- */
+ * --------------------------------------------------- */
 
 $HERE = getcwd();
 
@@ -145,15 +146,9 @@ $ADJ_FOLDER  = getenv('ADJ_FOLDER')
 $NOUN_FILE = resolve_file('NOUN_FILE', $NOUN_FOLDER);
 $ADJ_FILE  = resolve_file('ADJ_FILE',  $ADJ_FOLDER);
 
-/**
- * Casual greeting to prepend to each generated name.
- * Can be overridden via the GREETING environment variable.
- */
-$GREETING = getenv('GREETING') ?: 'Hey';
-
-/* --------------------------------------------------------------------- *
+/* --------------------------------------------------- *
  * Load the word lists
- * --------------------------------------------------------------------- */
+ * --------------------------------------------------- */
 
 $nounLines = read_nonempty_lines($NOUN_FILE);
 $adjLines  = read_nonempty_lines($ADJ_FILE);
@@ -167,9 +162,9 @@ if (count($adjLines) === 0) {
     exit(1);
 }
 
-/* --------------------------------------------------------------------- *
+/* --------------------------------------------------- *
  * Main generation loop
- * --------------------------------------------------------------------- */
+ * --------------------------------------------------- */
 
 $debug = getenv('DEBUG') === 'true';
 
@@ -192,6 +187,6 @@ for ($i = 0; $i < $COUNT_O; $i++) {
         fwrite(STDERR, "  $i > $COUNT_O\n");
     }
 
-    // Output with casual greeting
-    echo $GREETING . ' ' . $adj . $SEPARATOR . $noun . PHP_EOL;
+    // Output without any greeting, matching the original script
+    echo $adj . $SEPARATOR . $noun . PHP_EOL;
 }
