@@ -35,7 +35,7 @@ object NameGenerator {
   private def getCountO(): Int = {
     // 1️⃣ First check for counto environment variable (preferred)
     //val envCount = System.getProperty("counto")
-    val envCount = sys.env.get("counto")
+    val envCount = sys.env.getOrElse("counto", "2")
     if (envCount != null) {
       try {
         return Integer.parseInt(envCount)
@@ -44,20 +44,20 @@ object NameGenerator {
       }
     }
 
-    // // 2️⃣ Then try to get from tput lines
-    // try {
-    //   val processBuilder = new ProcessBuilder("tput", "lines")
-    //   val process = processBuilder.start()
-    //   val output = Source.fromInputStream(process.getInputStream).mkString.trim
-    //   if (output.matches("\\d+")) {
-    //     return Integer.parseInt(output)
-    //   }
-    // } catch {
-    //   case _: Exception =>
-    // }
-    //
-    // // 3️⃣ Final fallback to 24 if all else fails
-    // return 2
+    // 2️⃣ Then try to get from tput lines
+    try {
+      val processBuilder = new ProcessBuilder("tput", "lines")
+      val process = processBuilder.start()
+      val output = Source.fromInputStream(process.getInputStream).mkString.trim
+      if (output.matches("\\d+")) {
+        return Integer.parseInt(output)
+      }
+    } catch {
+      case _: Exception =>
+    }
+
+    // 3️⃣ Final fallback to 24 if all else fails
+    return 2
   }
 
   private def listRegularFiles(folder: File): List[File] = {

@@ -14,11 +14,11 @@ $TEST
 if [[ ! $? -eq 0 ]]; then
   echo "$i  <=======================" 
   aider \
-    --config config/shootout.conf.yml \
+    --config config/test.conf.yml \
     --model "ollama_chat/${MODEL}" \
     --test-cmd ${TEST} \
     -m "${MESSAGE}" \
-    ${FILES}
+    --file "${FILES}"
   ((countzero++))
   $TEST
   if [[ $? -eq 0 ]]; then
