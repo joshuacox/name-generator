@@ -1,4 +1,4 @@
-.PHONY: all test testx homepage github
+.PHONY: all test testx homepage github commit
 
 all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar
 
@@ -44,6 +44,9 @@ name_generator.beam:
 BENCHMARK.md:
 	./meta-benchmark.sh | tee BENCHMARK.md
 
+benchmark.cast:
+	time asciinema rec --command "./meta-benchmark.sh" benchmark.cast
+
 name-generator.jar:
 	kotlinc name-generator.kt -include-runtime -d name-generator.jar
 
@@ -57,3 +60,6 @@ dmd name-generator_d:
 
 name-generator_pony:
 	ponyc -b name-generator_pony
+
+commit:
+	aider --commit --model=ollama_chat/llama3.2

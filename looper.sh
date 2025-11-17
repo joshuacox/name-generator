@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 : "${counto:=24}"
-: ${TEST:="ponyc -b name-generator_pony"}
-: ${MESSAGE:="/test ponyc -b name-generator_pony"}
+: ${TEST:="./name-generator.r"}
+: ${MESSAGE:="/test ${TEST}"}
 
 countzero=0
 
