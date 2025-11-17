@@ -23,11 +23,11 @@ class Config
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
     match tput_lines | Some(val) => 
-      try
-        count_o = U32.from(String(val))
-      else
-        count_o: U32 = 0
-      end
+        try
+            count_o = U32.from(String(val))
+        else
+            count_o: U32 = 0
+        end
     | None =>
         count_o: U32 = 24
     end
@@ -100,7 +100,7 @@ actor Main
     
     // Generate names count_o times
     var name_count: U32 = 0
-    while name_count < config.count_o do
+    while name_count < config.count_o:
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
       name_count := name_count + 1
