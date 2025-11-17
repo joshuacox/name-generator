@@ -9,8 +9,8 @@ use "logger"
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
     match env(var_name) with
-    | Some(v) if v != "" => v
-    | _ => default
+    | Some(v) => v
+    | None => default
     end
 
 class Config
@@ -26,7 +26,7 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : Int = match env("LINES") with
-      | Some(lines) if lines != "" =>
+      | Some(lines) =>
           parse_int_or_err(lines).o2i()
       else
         _tput_lines()
