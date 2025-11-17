@@ -297,3 +297,15 @@ setup() {
   result=$(./name-generator.dart)
   assert_equal "$result" "test_test"
 }
+@test "test name_generator.lua at 10" {
+  result="$(counto=10 lua name_generator.lua | wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name_generator.lua at 33" {
+  result="$(counto=33 lua name_generator.lua | wc -l)"
+  [ "$result" -eq 33 ]
+}
+@test "test lua test/test" {
+  result=$(lua name_generator.lua)
+  assert_equal "$result" "test_test"
+}
