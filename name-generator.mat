@@ -1,0 +1,160 @@
+% name-generator.mat
+% --------------------------------------------------------------
+% Replicates the behaviour of the original `name-generator.sh`.
+%   * Uses the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,
+%     NOUN_FOLDER, ADJ_FOLDER and counto (terminal height).
+%   * Falls back to sensible defaults when the variables are missing.
+%   * Prints `adjective<separator>noun` (noun lower‑cased, adjective
+%     unchanged) one line per iteration.
+%   * If DEBUG=true prints the same debug information the shell script
+%     prints (to stderr).
+% --------------------------------------------------------------
+
+%% ---------- Helper functions ----------
+function val = envOrDefault(varName, defaultVal)
+    % Return the value of an environment variable or a default.
+    val = getenv(varName);
+    if isempty(val)
+        val = defaultVal;
+    end
+end
+
+function filePath = pickRandomFileFromFolder(folder)
+    % Return an absolute path to a random regular file inside `folder`.
+    entries = dir(fullfile(folder, '*'));
+    % Keep only regular files (skip directories, . and ..)
+    files = entries(~[entries.isdir]);
+    if isempty(files)
+        error('Folder %s does not contain any regular files.', folder);
+    end
+    idx = randi(numel(files));
+    filePath = fullfile(folder, files(idx).name);
+    filePath = GetFullPath(filePath);
+end
+
+function txt = GetFullPath(p)
+    % Resolve a path to an absolute canonical form (fallback to input).
+    % MATLAB's `fullfile` + `pwd` already gives an absolute path, but we
+    % also try `realpath`/`readlink -f` when they exist (mirroring the shell).
+    if ispc
+        txt = char(java.io.File(p).getCanonicalPath());
+    else
+        % Try external commands only if they exist.
+        if system('command -v realpath > /dev/null 2>&1') == 0
+            [~, out] = system(sprintf('realpath %s', escapeShellArg(p)));
+            txt = strtrim(out);
+        elseif system('command -v readlink > /dev/null 2>&1') == 0
+            [~, out] = system(sprintf('readlink -f %s', escapeShellArg(p)));
+            txt = strtrim(out);
+        else
+            txt = char(java.io.File(p).getAbsolutePath());
+        end
+    end
+end
+
+function s = escapeShellArg(arg)
+    % Very simple escaping for the few places we call external commands.
+    s = sprintf('''%s''', strrep(arg,'''',''\''''));
+end
+
+function lines = readNonEmptyLines(filePath)
+    % Read a file, trim each line and discard empty ones.
+    raw = fileread(filePath);
+    splitLines = regexp(raw, '\r?\n', 'split');
+    trimmed = strtrim(splitLines);
+    lines = trimmed(~cellfun('isempty', trimmed));
+    if isempty(lines)
+        error('File %s contains no non‑empty lines.', filePath);
+    end
+end
+
+%% ---------- Configuration ----------
+HERE = pwd;                                   % repository root (like `realpath .`)
+
+% Separator (default "-")
+SEPARATOR = envOrDefault('SEPARATOR', '-');
+
+% Number of lines to emit -------------------------------------------------
+% 1) Try `tput lines`
+[status, out] = system('tput lines 2>/dev/null');
+if status == 0
+    counto = str2double(strtrim(out));
+else
+    % 2) Env var `counto`
+    envCount = getenv('counto');
+    if ~isempty(envCount) && ~isnan(str2double(envCount))
+        counto = str2double(envCount);
+    else
+        counto = 24;                         % final fallback
+    end
+end
+
+% Folders -----------------------------------------------------------------
+NOUN_FOLDER = envOrDefault('NOUN_FOLDER', fullfile(HERE, 'nouns'));
+ADJ_FOLDER  = envOrDefault('ADJ_FOLDER',  fullfile(HERE, 'adjectives'));
+
+% Resolve files ------------------------------------------------------------
+NOUN_FILE = getenv('NOUN_FILE');
+if isempty(NOUN_FILE)
+    NOUN_FILE = pickRandomFileFromFolder(NOUN_FOLDER);
+else
+    NOUN_FILE = GetFullPath(NOUN_FILE);
+    if ~isfile(NOUN_FILE)
+        error('Environment variable NOUN_FILE points to a non‑regular file: %s', NOUN_FILE);
+    end
+end
+
+ADJ_FILE = getenv('ADJ_FILE');
+if isempty(ADJ_FILE)
+    ADJ_FILE = pickRandomFileFromFolder(ADJ_FOLDER);
+else
+    ADJ_FILE = GetFullPath(ADJ_FILE);
+    if ~isfile(ADJ_FILE)
+        error('Environment variable ADJ_FILE points to a non‑regular file: %s', ADJ_FILE);
+    end
+end
+
+% Load the word lists -------------------------------------------------------
+nounLines = readNonEmptyLines(NOUN_FILE);
+adjLines  = readNonEmptyLines(ADJ_FILE);
+
+% Debug flag ---------------------------------------------------------------
+DEBUG = strcmpi(getenv('DEBUG'), 'true');
+
+% Casual greeting -----------------------------------------------------------
+fprintf('Hey! Generating %d name%s for you:\n', counto, plural(counto));
+
+%% ---------- Main generation loop ----------
+for i = 1:counto
+    % Pick random noun and adjective
+    nounRaw = nounLines{randi(numel(nounLines))};
+    adjRaw  = adjLines{randi(numel(adjLines))};
+
+    noun = lower(strtrim(nounRaw));   % lower‑case noun
+    adjective = strtrim(adjRaw);      % keep original case
+
+    % Optional debug output (to stderr)
+    if DEBUG
+        fprintf(2, 'DEBUG:\n');
+        fprintf(2, '  adjective : %s\n', adjective);
+        fprintf(2, '  noun      : %s\n', noun);
+        fprintf(2, '  ADJ_FILE  : %s\n', ADJ_FILE);
+        fprintf(2, '  ADJ_FOLDER: %s\n', ADJ_FOLDER);
+        fprintf(2, '  NOUN_FILE : %s\n', NOUN_FILE);
+        fprintf(2, '  NOUN_FOLDER: %s\n', NOUN_FOLDER);
+        fprintf(2, '  %d > %d\n', i, counto);
+    end
+
+    % Emit the generated name
+    fprintf('%s%s%s\n', adjective, SEPARATOR, noun);
+end
+
+%% ---------- Helper for pluralisation ----------
+function s = plural(n)
+    % Returns 's' if n is not 1, otherwise empty string.
+    if n == 1
+        s = '';
+    else
+        s = 's';
+    end
+end
