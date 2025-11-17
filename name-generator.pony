@@ -7,16 +7,15 @@ use "process"
 
 actor Main
   new create(env: Env) =>
-    // ------------------------------------------------
+    // -----------------------------------------------
     // Configuration – values are taken from the environment,
     // falling back to the same defaults the shell script uses.
-    // ------------------------------------------------
+    // -----------------------------------------------
 
     // Separator between adjective and noun (default " ")
-    let separator = match env.var("SEPARATOR") |
-      let s: String => s
-    else
-      " "
+    let separator = match env.var("SEPARATOR")
+      | let s: String => s
+      | None => " "
     end
 
     // Number of lines to emit – env var `counto` > `tput lines` > 24
@@ -40,17 +39,15 @@ actor Main
     let cwd = Path.cwd()
     // Build Path objects from either the env var or the default location.
     let noun_folder = Path.from_string(
-      match env.var("NOUN_FOLDER") |
-        let s: String => s
-      else
-        cwd.path() + "/nouns"
+      match env.var("NOUN_FOLDER")
+        | let s: String => s
+        | None => cwd + "/nouns"
       end
     )?
     let adj_folder = Path.from_string(
-      match env.var("ADJ_FOLDER") |
-        let s: String => s
-      else
-        cwd.path() + "/adjectives"
+      match env.var("ADJ_FOLDER")
+        | let s: String => s
+        | None => cwd + "/adjectives"
       end
     )?
 
@@ -63,15 +60,14 @@ actor Main
     let adj_lines  = read_nonempty_lines(adj_file )?
 
     // Debug flag – prints extra information to stderr when true
-    let debug = match env.var("DEBUG") |
-      let s: String => s == "true"
-    else
-      false
+    let debug = match env.var("DEBUG")
+      | let s: String => s == "true"
+      | None => false
     end
 
-    // ------------------------------------------------
+    // -----------------------------------------------
     // Main generation loop
-    // ------------------------------------------------
+    // -----------------------------------------------
     var i: USize = 0
     while i < count do
       // Pick a random noun, lower‑casing it.
@@ -99,11 +95,11 @@ actor Main
       i = i + 1
     end
 
-  // ------------------------------------------------
+  // -----------------------------------------------
   // Resolve an environment variable to a regular file.
   // If the variable is unset/blank, pick a random regular file from
   // the supplied folder (same behaviour as the shell script).
-  // ------------------------------------------------
+  // -----------------------------------------------
   fun resolve_file(env: Env, var_name: String, folder: Path): (Path | None) ? =>
     // 1️⃣  Environment variable overrides
     if let val = env.var(var_name) then
@@ -128,9 +124,9 @@ actor Main
     if candidates.size() == 0 then error end
     random_choice(candidates)?
 
-  // ------------------------------------------------
+  // -----------------------------------------------
   // Read a file and return all non‑empty, trimmed lines.
-  // ------------------------------------------------
+  // -----------------------------------------------
   fun read_nonempty_lines(file: Path): Array[String] ? =>
     let lines = Array[String]
     let f = OpenFile(file)?
@@ -144,9 +140,9 @@ actor Main
     f.close()
     lines
 
-  // ------------------------------------------------
+  // -----------------------------------------------
   // Pick a random element from an Array.
-  // ------------------------------------------------
+  // -----------------------------------------------
   fun random_choice[T: (Any #read #send)](arr: Array[T]): T ? =>
     let idx = Random.int(arr.size())
     arr(idx)?
