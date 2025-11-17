@@ -33,7 +33,17 @@ object NameGenerator {
   }
 
   private def getCountO(): Int = {
-    // Try tput lines first (like shell script)
+    // 1️⃣ First check for counto environment variable (preferred)
+    val envCount = System.getProperty("counto")
+    if (envCount != null) {
+      try {
+        return Integer.parseInt(envCount)
+      } catch {
+        case _: NumberFormatException =>
+      }
+    }
+
+    // 2️⃣ Then try to get from tput lines
     try {
       val processBuilder = new ProcessBuilder("tput", "lines")
       val process = processBuilder.start()
@@ -45,17 +55,7 @@ object NameGenerator {
       case _: Exception =>
     }
 
-    // Fall back to environment variable "counto"
-    val envCount = System.getProperty("counto")
-    if (envCount != null) {
-      try {
-        return Integer.parseInt(envCount)
-      } catch {
-        case _: NumberFormatException =>
-      }
-    }
-
-    // Final fallback to 24
+    // 3️⃣ Final fallback to 24 if all else fails
     24
   }
 
