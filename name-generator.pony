@@ -67,7 +67,7 @@ class NameGenerator
     // Pick random entries preserving case for adjectives, lowercasing nouns
     var adjective: String = ""
     match adj_lines.random() {
-      | Some(line) => adjective := line
+      | Some(line) => (adjective := line; "")
       | None => ""
     }
     
@@ -94,9 +94,9 @@ actor Main
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
-    var name_count: U32 = 0: U32
+    var name_count: U32 = 0
     while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1: U32
+      name_count := name_count + 1
     end
