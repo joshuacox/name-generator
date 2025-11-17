@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 : "${counto:=24}"
-: ${TEST:="./name-generator.r"}
+: ${TEST:="make test"}
 : ${MESSAGE:="/test ${TEST}"}
 
 countzero=0

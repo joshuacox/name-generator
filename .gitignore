@@ -1,6 +1,7 @@
 .aider*
 name-generator
 name-generator_go
+name-generator_cpp
 NameGenerator.class
 .cabal-sandbox/
 cabal.sandbox.config
