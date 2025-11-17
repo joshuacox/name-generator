@@ -5,13 +5,17 @@ use "random"
 use "arrays"
 use "env"
 
+// Helper function to get environment variable or default value
+fun env_or_default(var_name: String, default: String): String =>
+    Process.env().get(var_name) ?? default
+
 class Config
   let noun_folder: String
   let adj_folder: String
   let separator: String
   let count_o: U32
   
-  new create(noun_folder': String, adj_folder': String, separator': String) =>
+  new create(noun_folder': String = "nouns", adj_folder': String = "adjectives", separator': String = "-") =>
     noun_folder = noun_folder'
     adj_folder = adj_folder'
     separator = separator'
@@ -95,7 +99,7 @@ class NameGenerator
 // Main function
 actor Main
   new create(env: Env) =>
-    let config = Config(env_or_default["count_o"]("24"), env_or_default["separator"]("-"))
+    let config = Config(env_or_default("count_o")("24"), env_or_default("separator")("-"))
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
