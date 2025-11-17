@@ -8,7 +8,7 @@ use "logger"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    match env: var_name | Some(v) => v else default end
+    env(var_name) | Some(v) => v else default end
 
 class Config
   let noun_folder: String
@@ -23,7 +23,7 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : U32 = try
-      let lines_env = env: "LINES" | Some(v) => v else ""
+      let lines_env = env("LINES")
       let lines = if lines_env != "" then U32.from(lines_env) else _tput_lines() end
       lines
     else
@@ -34,7 +34,7 @@ class Config
   fun _tput_lines(): U32 =>
     try
         let height = terminal_height()
-        if height > 0 then
+        if height.gt(0) then
             height.U32()
         else
             24
@@ -92,7 +92,7 @@ class NameGenerator
     let full_name = adjective + config.separator + noun
   
     // Debug output if needed
-    if env: "DEBUG" | Some("true") then
+    if env("DEBUG") == "true" then
       logger.log("Adjective: " + adjective)
       logger.log("Noun: " + noun)
       logger.log("Full Name: " + full_name)
