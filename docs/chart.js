@@ -13,7 +13,7 @@ function parseLine(line) {
   // Strip the leading “counto=<num> ” that the benchmark script prefixes.
   // Example: “counto=1 ./name-generator” → “./name-generator”
   const rawCommand = parts[0].trim();                 // column 1
-  const command = rawCommand.replace(/^counto=\d+\s*/, '');
+  const command = rawCommand.replace(/^counto=\S+\s*/, '');
   const mean = parseFloat(parts[1]);               // column 2
   const paramCount = parseInt(parts[8], 10);       // column 9
   if (!command || isNaN(mean) || isNaN(paramCount)) return null;
