@@ -19,14 +19,15 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
-    match tput_lines:
+    match tput_lines {
       | Some(val) => 
         try
           count_o := U32.from(String(val))
         else
-          count_o := 0u32
+          count_o := 0: U32
       | None =>
-        count_o := 24u32
+        count_o := 24: U32
+    }
 
 class FileHandler
   let noun_folder: String
@@ -44,6 +45,7 @@ class FileHandler
       filtered_files.random()
     else
       ""
+    end
 
 class NameGenerator
   let config: Config
@@ -64,14 +66,16 @@ class NameGenerator
     
     // Pick random entries preserving case for adjectives, lowercasing nouns
     var adjective: String = ""
-    match adj_lines.random():
+    match adj_lines.random() {
       | Some(line) => adjective := line
       | None => ""
+    }
     
     var noun: String = ""
-    match noun_lines.random():
+    match noun_lines.random() {
       | Some(line) => noun := line.lower()
       | None => ""
+    }
 
     let full_name = adjective + config.separator + noun
     
@@ -90,9 +94,9 @@ actor Main
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
-    var name_count: U32 = 0u32
-    while name_count <= config.count_o do
+    var name_count: U32 = 0: U32
+    while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1u32
+      name_count := name_count + 1: U32
     end
