@@ -13,20 +13,24 @@ actor Main
     // ------------------------------------------------
 
     // Separator between adjective and noun (default " ")
-    let separator = env.var("SEPARATOR").or_else(" ")
+    let separator = match env.var("SEPARATOR") |
+      let s: String => s
+    else
+      " "
+    end
 
     // Number of lines to emit – env var `counto` > `tput lines` > 24
     let count: USize = try
       // env.var returns (String | None); we unwrap each step,
       // raising an error if any part is missing.
-      env.var("counto")?.as_int()?.usize()?
+      env.var("counto")?.as_int()?.usize()
     else
       // try `tput lines`
       try
         let proc = Process.create(env, "tput", ["lines"])
         proc.wait()
         let out = proc.stdout().read_string()
-        out.trim().as_int()?.usize()?
+        out.trim().as_int()?.usize()
       else
         24
       end
@@ -36,10 +40,18 @@ actor Main
     let cwd = Path.cwd()
     // Build Path objects from either the env var or the default location.
     let noun_folder = Path.from_string(
-      env.var("NOUN_FOLDER").or_else(cwd.path() + "/nouns")
+      match env.var("NOUN_FOLDER") |
+        let s: String => s
+      else
+        cwd.path() + "/nouns"
+      end
     )?
     let adj_folder = Path.from_string(
-      env.var("ADJ_FOLDER").or_else(cwd.path() + "/adjectives")
+      match env.var("ADJ_FOLDER") |
+        let s: String => s
+      else
+        cwd.path() + "/adjectives"
+      end
     )?
 
     // Resolve the noun and adjective files (env var > random file in folder)
@@ -51,8 +63,11 @@ actor Main
     let adj_lines  = read_nonempty_lines(adj_file )?
 
     // Debug flag – prints extra information to stderr when true
-    // env.var returns (String | None); we unwrap and compare.
-    let debug = (env.var("DEBUG")? == "true")?
+    let debug = match env.var("DEBUG") |
+      let s: String => s == "true"
+    else
+      false
+    end
 
     // ------------------------------------------------
     // Main generation loop
