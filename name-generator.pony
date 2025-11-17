@@ -71,14 +71,14 @@ class NameGenerator
     var adjective: String = ""
     match adj_lines.random() | Some(line) =>
       adjective = line
-    | None =>
+    else
       ""
     end
     
     var noun: String = ""
     match noun_lines.random() | Some(line) =>
       noun = line.lower()
-    | None =>
+    else
       ""
     end
 
