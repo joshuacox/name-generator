@@ -10,8 +10,8 @@
 : ${MODEL:=ollama_chat/gpt-oss:120b}
 #: ${MODEL:=ollama_chat/deepseek-r1:70b-llama-distill-q8_0}
 #: ${MODEL:=ollama_chat/granite4:32b-a9b-h}
-echo TEST
-#$TEST
+#echo TEST
+$TEST
 if [[ ! $? -eq 0 ]]; then
   aider \
     --config config/test.conf.yml \

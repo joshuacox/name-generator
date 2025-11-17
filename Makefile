@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit
 
-all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala
+all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala SLOCCOUNT.md
 
 clean:
 	-@rm -v name-generator 
@@ -10,6 +10,7 @@ clean:
 	-@rm -v name-generator_go
 	-@rm -v name_generator.beam
 	-@rm -v NameGeneratorScala.class
+	-@rm -v SLOCCOUNT.md
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -67,3 +68,6 @@ commit:
 
 NameGeneratorScala:
 	scalac NameGeneratorScala.scala
+
+SLOCCOUNT.md:
+	sloccount ./ > SLOCCOUNT.md

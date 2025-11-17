@@ -11,3 +11,4 @@ These languages are a work in progress (WIP)
 1. R
 1. solidity
 1. swift 
+1. pascal
