@@ -1,0 +1,8 @@
+read: "./name-generator.sh"
+file: "./name-generator.pony"
+#editor-edit-format: editor-whole
+editor-edit-format: editor-diff
+yes-always: true
+architect: true
+auto-accept-architect: true
+#reasoning-effort: 100

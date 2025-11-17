@@ -1,0 +1,11 @@
+read: "./name-generator.sh"
+file: "./name-generator.pony"
+#editor-edit-format: editor-whole
+editor-edit-format: editor-diff
+yes-always: true
+architect: true
+auto-accept-architect: true
+#test-cmd: 'gleam run'
+## Enable/disable automatic testing after changes (default: False)
+auto-test: true
+test: true
