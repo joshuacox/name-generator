@@ -12,7 +12,7 @@ object NameGenerator {
   val HERE: File = new File(System.getProperty("user.dir")).getCanonicalFile
   
   // Extract SEPARATOR from environment
-  val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
+  //val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
 
   // Load environment variables with fallbacks
   val SEPARATOR: String = System.getProperty("SEPARATOR", "-")
