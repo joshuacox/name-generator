@@ -26,10 +26,10 @@ class Config
       try
         count_o = U32.from(String(val))
       else
-        count_o = 0: U32
+        count_o: U32 = 0
       end
     else
-      count_o = 24: U32
+      count_o: U32 = 24
     end
 
 class FileHandler
@@ -103,5 +103,5 @@ actor Main
     while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count := name_count + 1
+      name_count = name_count + 1
     end
