@@ -36,7 +36,7 @@ actor Main
     // --------------------------------------------------------
     // Debug flag – prints the same data the shell script prints
     // --------------------------------------------------------
-    let debug = env.var("DEBUG") == "true"
+    let debug = env.var("DEBUG").get_or_else("") == "true"
 
     // --------------------------------------------------------
     // Main generation loop
