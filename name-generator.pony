@@ -5,8 +5,8 @@ use "random"
 use "arrays"
 use "env"
 
-// Helper function to get environment variable or default value
-fun env_or_default(var_name: String, default: String): String =>
+class EnvHelper
+  fun env_or_default(var_name: String, default: String): String =>
     Process.env().get(var_name) ?? default
 
 class Config
@@ -22,15 +22,15 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let tput_lines = Process.env().get("LINES")
-    match tput_lines {
-      | Some(val) => 
-        try
-          count_o := U32.from(String(val))
-        else
-          count_o := 0: U32
-      | None =>
-        count_o := 24: U32
-    }
+    match tput_lines | Some(val) => 
+      try
+        count_o := U32.from(String(val))
+      else
+        count_o := 0: U32
+      end
+    | None =>
+      count_o := 24: U32
+    end
 
 class FileHandler
   let noun_folder: String
@@ -69,22 +69,18 @@ class NameGenerator
     
     // Pick random entries preserving case for adjectives, lowercasing nouns
     var adjective: String = ""
-    match adj_lines.random() {
-      | Some(line) => 
-        adjective := line
-        ""
-      | None =>
-        ""
-    }
+    match adj_lines.random() | Some(line) =>
+      adjective := line
+    | None =>
+      ""
+    end
     
     var noun: String = ""
-    match noun_lines.random() {
-      | Some(line) => 
-        noun := line.lower()
-        ""
-      | None =>
-        ""
-    }
+    match noun_lines.random() | Some(line) =>
+      noun := line.lower()
+    | None =>
+      ""
+    end
 
     let full_name = adjective + config.separator + noun
     
@@ -96,10 +92,9 @@ class NameGenerator
   
     return full_name
 
-// Main function
 actor Main
   new create(env: Env) =>
-    let config = Config(env_or_default("count_o")("24"), env_or_default("separator")("-"))
+    let config = Config(EnvHelper.env_or_default("count_o", "24"), EnvHelper.env_or_default("separator", "-"))
     let name_generator = NameGenerator(config)
     
     // Generate names count_o times
