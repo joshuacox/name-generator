@@ -28,8 +28,8 @@ class Config
       else
         count_o: U32 = 0
       end
-    else
-      count_o: U32 = 24
+    | None =>
+        count_o: U32 = 24
     end
 
 class FileHandler
@@ -83,7 +83,7 @@ class NameGenerator
     end
 
     let full_name = adjective + config.separator + noun
-    
+  
     // Debug output if needed
     if Process.env().get("DEBUG") == "true" then
       Debug.out("Adjective: " + adjective)
