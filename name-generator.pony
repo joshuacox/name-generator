@@ -22,11 +22,9 @@ class Config
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : U32 = try
-      match Process.env().get("LINES") | Some(val) =>
-        U32.from(String(val))
-      else
-        _tput_lines()
-      end
+      let lines_env = Process.env().get("LINES")
+      let lines = if lines_env != "" then U32.from(lines_env) else _tput_lines() end
+      lines
     else
       24
     end
