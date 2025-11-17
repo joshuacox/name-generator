@@ -17,6 +17,7 @@ setup() {
     export counto=1
 }
 
+# go
 @test "test name-generator_go at 10" {
   result="$(counto=10 ./name-generator_go|wc -l)"
   [ "$result" -eq 10 ]
@@ -29,6 +30,7 @@ setup() {
   result=$(./name-generator_go)
   assert_equal "$result" "test_test"
 }
+# raku
 @test "test name-generator.raku at 10" {
   result="$(counto=10 ./name-generator.raku|wc -l)"
   [ "$result" -eq 10 ]
@@ -41,6 +43,7 @@ setup() {
   result=$(./name-generator.raku)
   assert_equal "$result" "test_test"
 }
+# perl 
 @test "test name-generator.pl at 10" {
   result="$(counto=10 ./name-generator.pl|wc -l)"
   [ "$result" -eq 10 ]
@@ -53,6 +56,7 @@ setup() {
   result=$(./name-generator.pl)
   assert_equal "$result" "test_test"
 }
+# rust
 @test "test $HOME/.cargo/target/debug/name-generator at 10" {
   result="$(counto=10 $HOME/.cargo/target/debug/name-generator|wc -l)"
   [ "$result" -eq 10 ]
@@ -62,10 +66,10 @@ setup() {
   [ "$result" -eq 33433 ]
 }
 @test "test rust test/test" {
-  result=$(./name-generator.pl)
   result="$($HOME/.cargo/target/debug/name-generator)"
   assert_equal "$result" "test_test"
 }
+# sh
 @test "test name-generator.sh at 10" {
   result="$(counto=10 ./name-generator.sh|wc -l)"
   [ "$result" -eq 10 ]
@@ -78,6 +82,7 @@ setup() {
   result=$(./name-generator.sh)
   assert_equal "$result" "test_test"
 }
+# bash
 @test "test name-generator.bash at 10" {
   result="$(counto=10 ./name-generator.bash|wc -l)"
   [ "$result" -eq 10 ]
@@ -91,6 +96,7 @@ setup() {
   result=$(./name-generator.bash)
   assert_equal "$result" "test_test"
 }
+# ruby
 @test "test name-generator.rb at 10" {
   result="$(counto=10 ./name-generator.rb|wc -l)"
   echo $result
@@ -104,6 +110,7 @@ setup() {
   result=$(./name-generator.rb)
   assert_equal "$result" "test_test"
 }
+# zsh
 @test "test name-generator.zsh at 10" {
   result="$(counto=10 ./name-generator.zsh|wc -l)"
   [ "$result" -eq 10 ]
@@ -116,6 +123,7 @@ setup() {
   result=$(./name-generator.zsh)
   assert_equal "$result" "test_test"
 }
+# java
 @test "test NameGenerator at 10" {
   result="$(counto=10 java NameGenerator|wc -l)"
   [ "$result" -eq 10 ]
@@ -128,6 +136,20 @@ setup() {
   result=$(java NameGenerator)
   assert_equal "$result" "test_test"
 }
+# scala
+@test "test NameGeneratorScala at 10" {
+  result="$(counto=10 scala NameGeneratorScala|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test NameGeneratorScala at 55" {
+  result="$(counto=55 scala NameGeneratorScala|wc -l)"
+  [ "$result" -eq 55 ]
+}
+@test "test java test/test" {
+  result=$(scala NameGeneratorScala)
+  assert_equal "$result" "test_test"
+}
+# js sync
 @test "test name-generator-sync.js at 10" {
   result="$(counto=10 ./name-generator-sync.js|wc -l)"
   [ "$result" -eq 10 ]
@@ -140,6 +162,7 @@ setup() {
   result=$(./name-generator-sync.js)
   assert_equal "$result" "test_test"
 }
+# js async
 @test "test name-generator.js at 10" {
   result="$(counto=10 ./name-generator.js|wc -l)"
   [ "$result" -eq 10 ]
@@ -152,6 +175,7 @@ setup() {
   result=$(./name-generator.js)
   assert_equal "$result" "test_test"
 }
+# python
 @test "test name-generator.py at 10" {
   result="$(counto=10 ./name-generator.py|wc -l)"
   [ "$result" -eq 10 ]
@@ -164,6 +188,7 @@ setup() {
   result=$(./name-generator.py)
   assert_equal "$result" "test_test"
 }
+# haskell
 @test "test name-generator_haskell.hs at 10" {
   result="$(counto=10 cabal run|wc -l)"
   [ "$result" -eq 10 ]
@@ -176,6 +201,7 @@ setup() {
   result=$(cabal run)
   assert_equal "$result" "test_test"
 }
+# c
 @test "test name-generator at 10" {
   result="$(counto=10 ./name-generator|wc -l)"
   [ "$result" -eq 10 ]
@@ -188,6 +214,7 @@ setup() {
   result=$(./name-generator)
   assert_equal "$result" "test_test"
 }
+# cpp
 @test "test name-generator_cpp at 10" {
   result="$(counto=10 ./name-generator_cpp|wc -l)"
   [ "$result" -eq 10 ]
@@ -200,6 +227,7 @@ setup() {
   result=$(./name-generator_cpp)
   assert_equal "$result" "test_test"
 }
+# erlang
 @test "test name_generator.erl at 10" {
   result="$(counto=10 erl -noshell -s name_generator name_generator -s init stop|wc -l)"
 
@@ -213,6 +241,7 @@ setup() {
   result="$(erl -noshell -s name_generator name_generator -s init stop)"
   assert_equal "$result" "test_test"
 }
+# elixir
 @test "test name-generator.exs at 10" {
   result="$(counto=10 ./name-generator.exs|wc -l)"
   [ "$result" -eq 10 ]
@@ -225,6 +254,7 @@ setup() {
   result=$(./name-generator.exs)
   assert_equal "$result" "test_test"
 }
+# racket
 @test "test name-generator.rkt at 10" {
   result="$(counto=10 ./name-generator.rkt|wc -l)"
   [ "$result" -eq 10 ]
@@ -237,6 +267,7 @@ setup() {
   result=$(./name-generator.rkt)
   assert_equal "$result" "test_test"
 }
+# julia
 @test "test name-generator.jl at 10" {
   result="$(counto=10 ./name-generator.jl|wc -l)"
   [ "$result" -eq 10 ]
@@ -249,6 +280,7 @@ setup() {
   result=$(./name-generator.jl)
   assert_equal "$result" "test_test"
 }
+# kotlin kts is slow
 # @test "test kotlin name-generator.kts at 10" {
 #   result="$(counto=10 ./name-generator.kts|wc -l)"
 #   [ "$result" -eq 10 ]
@@ -257,10 +289,11 @@ setup() {
 #   result="$(counto=82 ./name-generator.kts|wc -l)"
 #   [ "$result" -eq 82 ]
 # }
-@test "test kotlin kts test/test" {
-  result=$(./name-generator.kts)
-  assert_equal "$result" "test_test"
-}
+# @test "test kotlin kts test/test" {
+#   result=$(./name-generator.kts)
+#   assert_equal "$result" "test_test"
+# }
+# kotlin
 @test "test kotlin name-generator.jar at 10" {
   result="$(counto=10 java -jar ./name-generator.jar|wc -l)"
   [ "$result" -eq 10 ]
@@ -273,6 +306,7 @@ setup() {
   result="$(java -jar ./name-generator.jar)"
   assert_equal "$result" "test_test"
 }
+# elisp
 @test "test elisp name-generator.el at 10" {
   result="$(counto=10 ./name-generator.el|wc -l)"
   [ "$result" -eq 10 ]
@@ -285,6 +319,7 @@ setup() {
   result=$(./name-generator.el)
   assert_equal "$result" "test_test"
 }
+# dart
 @test "test name-generator.dart at 10" {
   result="$(counto=10 ./name-generator.dart|wc -l)"
   [ "$result" -eq 10 ]
@@ -297,6 +332,7 @@ setup() {
   result=$(./name-generator.dart)
   assert_equal "$result" "test_test"
 }
+# lua
 @test "test name_generator.lua at 10" {
   result="$(counto=10 ./name-generator.lua | wc -l)"
   [ "$result" -eq 10 ]

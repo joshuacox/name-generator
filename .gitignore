@@ -2,8 +2,7 @@
 name-generator
 name-generator_go
 name-generator_cpp
-NameGenerator.class
-NameGeneratorScala.class
+*.class
 .cabal-sandbox/
 cabal.sandbox.config
 cabal.project.local
