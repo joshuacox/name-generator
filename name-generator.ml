@@ -1,3 +1,4 @@
+#!/usr/bin/env -S ocaml -I +unix
 (* --------------------------------------------------------
    OCaml implementation of the “name‑generator” behaviour described in
    name-generator.sh.
