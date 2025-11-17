@@ -327,11 +327,24 @@ setup() {
   result="$(counto=10 ./name-generator.php | wc -l)"
   [ "$result" -eq 10 ]
 }
-@test "test name-generator.php at 23" {
+@test "test name-generator.php at 73" {
   result="$(counto=73 ./name-generator.php | wc -l)"
   [ "$result" -eq 73 ]
 }
 @test "test php test/test" {
   result="$(./name-generator.php)"
+  assert_equal "$result" "test_test"
+}
+# ts implementation (name-generator.ts)
+@test "test name-generator.ts at 10" {
+  result="$(counto=10 ./name-generator.ts | wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.ts at 33" {
+  result="$(counto=33 ./name-generator.ts | wc -l)"
+  [ "$result" -eq 33 ]
+}
+@test "test ts test/test" {
+  result="$(./name-generator.ts)"
   assert_equal "$result" "test_test"
 }
