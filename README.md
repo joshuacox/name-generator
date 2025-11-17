@@ -33,6 +33,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. raku
 1. ruby
 1. rust
+1. scala
 1. sh
 1. typescript
 1. zsh

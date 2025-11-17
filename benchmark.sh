@@ -41,6 +41,7 @@ slow_bench_runnr () {
     './name-generator.lua' \
     './name-generator.rkt' \
     'java NameGenerator' \
+    'scala NameGeneratorScala' \
     'cabal run' \
     "$HOME/.cargo/target/debug/name-generator" \
     './name-generator-sync.js' \
@@ -80,6 +81,7 @@ scanner_bench_runnr () {
     'counto={num_count} ./name-generator.dart' \
     'counto={num_count} ./name-generator.lua' \
     'counto={num_count} java NameGenerator' \
+    'counto={num_count} scala NameGeneratorScala' \
     'counto={num_count} cabal run' \
     "counto={num_count} $HOME/.cargo/target/debug/name-generator" \
     'counto={num_count} ./name-generator-sync.js' \
