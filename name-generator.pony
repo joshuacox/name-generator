@@ -8,18 +8,18 @@ use "logger"
 
 class EnvHelper
   fun env_or_default(var_name: String, default: String): String =>
-    env(var_name) | Some(v) => v else default end
+    (env(var_name) | Some(v) => v else default)
 
 class Config
   let noun_folder: String
   let adj_folder: String
-  let separator: String
+  let Separator: String
   let count_o: U32
   
   new create(noun_folder': String = "nouns", adj_folder': String = "adjectives", separator': String = "-") =>
     noun_folder = noun_folder'
     adj_folder = adj_folder'
-    separator = separator'
+    Separator = separator'
     
     // Number of lines to generate - try tput lines, fallback to 24
     let count_o' : U32 = try
@@ -34,7 +34,7 @@ class Config
   fun _tput_lines(): U32 =>
     try
         let height = terminal_height()
-        if height.gt(0) then
+        if height >= 0 then
             height.U32()
         else
             24
@@ -65,7 +65,7 @@ class NameGenerator
   
   new create(config': Config) =>
     config = config'
-    file_handler = FileHandler(config.noun_folder, config.adj_folder)
+    file_handler = None
 
   fun generate_name(): String =>
     // Pick random adjective and noun files
@@ -89,7 +89,7 @@ class NameGenerator
         ""
     end
 
-    let full_name = adjective + config.separator + noun
+    let full_name = adjective + config.Separator + noun
   
     // Debug output if needed
     if env("DEBUG") == "true" then
