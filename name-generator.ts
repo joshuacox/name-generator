@@ -9,6 +9,25 @@ const SEPARATOR: string = process.env.SEPARATOR || "-";
 const NOUN_FOLDER: string = process.env.NOUN_FOLDER || path.join(process.cwd(), "nouns");
 const ADJ_FOLDER: string = process.env.ADJ_FOLDER || path.join(process.cwd(), "adjectives");
 
+// Add new helper function for resolving files
+function resolveFilePath(envVar: string, defaultFolder: string): string {
+    const envVal = process.env[envVar];
+    if (envVal) {
+        // If the env var points to a directory, throw error like shell script
+        if (fs.existsSync(envVal) && fs.lstatSync(envVal).isDirectory()) {
+            throw new Error(`Environment variable ${envVar} points to a directory`);
+        }
+        return path.resolve(envVal);
+    }
+    // If no env var, return random file from default folder
+    const files = fs.readdirSync(defaultFolder)
+                    .filter(f => fs.lstatSync(path.join(defaultFolder, f)).isFile());
+    if (files.length === 0) {
+        throw new Error(`Folder ${defaultFolder} contains no regular files`);
+    }
+    return path.join(defaultFolder, files[Math.floor(Math.random() * files.length)]);
+}
+
 // ------------------------------------------------------------------------------- //
 // Helper functions
 // ------------------------------------------------------------------------------- //
@@ -43,23 +62,6 @@ function pickRandomLine(lines: string[]): string {
 // Main generation logic
 // ------------------------------------------------------------------------------- //
 
-/**
- * Gets the number of lines to output, using tput lines if available
- */
-function getCountO(): number {
-    // Try to get count from environment variable first
-    const envCount = process.env.counto;
-    if (envCount) {
-        try {
-            return parseInt(envCount, 10);
-        } catch (e) {
-            // Ignore parse error and fall through
-        }
-    }
-
-    // Fallback to default value
-    return 24; // Same as shell script's fallback
-}
 
 /**
  * Outputs debug information if DEBUG environment variable is set
@@ -78,23 +80,31 @@ function maybeDebug(adjective: string, noun: string): void {
  * Main execution function
  */
 async function main(): Promise<void> {
-    // Read directories for noun and adjective files
-    const nounFiles = await fs.promises.readdir(NOUN_FOLDER);
-    const adjFiles = await fs.promises.readdir(ADJ_FOLDER);
-
-    if (nounFiles.length === 0 || adjFiles.length === 0) {
-        throw new Error("No files found in folders");
-    }
-
-    // Select random files
-    const nounFile = path.join(NOUN_FOLDER, nounFiles[Math.floor(Math.random() * nounFiles.length)]);
-    const adjFile = path.join(ADJ_FOLDER, adjFiles[Math.floor(Math.random() * adjFiles.length)]);
+    // Get noun and adjective files based on environment variables or random selection
+    const nounFile = resolveFilePath('NOUN_FILE', NOUN_FOLDER);
+    const adjFile = resolveFilePath('ADJ_FILE', ADJ_FOLDER);
 
     // Read lines from selected files
     const nouns = readNonEmptyLines(nounFile);
     const adjectives = readNonEmptyLines(adjFile);
 
     // Determine how many names to generate
+    // Determine how many names to generate (using tput lines logic)
+    function getCountO(): number {
+        // Try to get count from environment variable first
+        const envCount = process.env.counto;
+        if (envCount) {
+            try {
+                return parseInt(envCount, 10);
+            } catch (e) {
+                // Ignore parse error and fall through
+            }
+        }
+
+        // Fallback to default value
+        return 24; // Same as shell script's fallback
+    }
+
     const counto = getCountO();
 
     for (let countzero = 0; countzero < counto; countzero++) {
