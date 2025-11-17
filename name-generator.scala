@@ -36,7 +36,9 @@ object NameGenerator {
     val envCount = System.getProperty("counto")
     if (envCount != null) {
       try return Integer.parseInt(envCount)
-      catch case _: NumberFormatException => 
+      catch { 
+        case _: NumberFormatException =>
+      }
     }
     
     // Try tput lines fallback
@@ -45,7 +47,8 @@ object NameGenerator {
       val process = processBuilder.start()
       val output = Source.fromInputStream(process.getInputStream).mkString.trim
       if (output.matches("\\d+")) return Integer.parseInt(output)
-    } catch case _: Exception =>
+    } catch {
+      case _: Exception =>
     
     // Final fallback to 24
     24
