@@ -33,25 +33,28 @@ object NameGenerator {
   }
 
   private def getCountO(): Int = {
-    // Try to get count from environment variable first
-    val envCount = System.getProperty("counto")
-    if (envCount != null) {
-      try return Integer.parseInt(envCount)
-      catch { 
-        case _: NumberFormatException =>
-      }
-    }
-    
-    // Try tput lines fallback
+    // Try tput lines first (like shell script)
     try {
       val processBuilder = new ProcessBuilder("tput", "lines")
       val process = processBuilder.start()
       val output = Source.fromInputStream(process.getInputStream).mkString.trim
-      if (output.matches("\\d+")) return Integer.parseInt(output)
+      if (output.matches("\\d+")) {
+        return Integer.parseInt(output)
+      }
     } catch {
       case _: Exception =>
     }
-    
+
+    // Fall back to environment variable "counto"
+    val envCount = System.getProperty("counto")
+    if (envCount != null) {
+      try {
+        return Integer.parseInt(envCount)
+      } catch {
+        case _: NumberFormatException =>
+      }
+    }
+
     // Final fallback to 24
     24
   }
