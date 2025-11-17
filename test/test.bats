@@ -322,3 +322,16 @@ setup() {
   result=$(./name-generator.ml)
   assert_equal "$result" "test_test"
 }
+# php implementation (name-generator.php)
+@test "test name-generator.php at 10" {
+  result="$(counto=10 ./name-generator.php | wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.php at 23" {
+  result="$(counto=73 ./name-generator.php | wc -l)"
+  [ "$result" -eq 73 ]
+}
+@test "test php test/test" {
+  result="$(./name-generator.php)"
+  assert_equal "$result" "test_test"
+}

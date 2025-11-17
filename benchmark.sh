@@ -31,6 +31,7 @@ slow_bench_runnr () {
     'java -jar ./name-generator.jar' \
     './name-generator.kts' \
     './name-generator.pl' \
+    './name-generator.php' \
     './name-generator.el' \
     './name-generator.ml' \
     './name-generator.rb' \
@@ -68,6 +69,7 @@ scanner_bench_runnr () {
     'counto={num_count} java -jar ./name-generator.jar' \
     'counto={num_count} ./name-generator.kts' \
     'counto={num_count} ./name-generator.pl' \
+    'counto={num_count} ./name-generator.php' \
     'counto={num_count} ./name-generator.el' \
     'counto={num_count} ./name-generator.ml' \
     'counto={num_count} ./name-generator.rb' \
@@ -100,6 +102,7 @@ bench_runnr () {
     './name-generator.js' \
     './name-generator.jl' \
     './name-generator.pl' \
+    './name-generator.php' \
     './name-generator.rb' \
     './name-generator.raku' \
     './name-generator.rkt' \
@@ -130,6 +133,7 @@ fast_bench_runnr () {
     './name-generator.lua' \
     './name-generator.js' \
     './name-generator.pl' \
+    './name-generator.php' \
     'java NameGenerator' \
     'cabal run' \
     "$HOME/.cargo/target/debug/name-generator"
@@ -149,6 +153,7 @@ faster_bench_runnr () {
     './name-generator.js' \
     './name-generator.lua' \
     './name-generator.pl' \
+    './name-generator.php' \
     "$HOME/.cargo/target/debug/name-generator"
 }
 
@@ -165,6 +170,7 @@ fastest_bench_runnr () {
     './name-generator_go' \
     './name-generator.lua' \
     "$HOME/.cargo/target/debug/name-generator" \
+    './name-generator.php' \
     './name-generator.pl'
 }
 
