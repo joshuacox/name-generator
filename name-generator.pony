@@ -103,5 +103,5 @@ actor Main
     while name_count < config.count_o do
       let name = name_generator.generate_name()
       env.out.print(name + "\n")
-      name_count = name_count + 1
+      name_count := name_count + 1
     end
