@@ -5,6 +5,8 @@
     <title>Slowest Scanner – per‑command chart</title>
     <!-- Chart.js from CDN (any recent 4.x version works) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <!-- Chart.js Zoom plugin (adds mouse‑wheel / pinch zoom & pan) -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
     <!-- Our own script – will be loaded after the page is built -->
     <script defer src="slowest-chart.js"></script>
 
@@ -16,6 +18,9 @@
 
 <body>
     <h1>Slowest scanner – mean time vs. parameter count</h1>
+
+    <!-- Reset‑zoom control -->
+    <button id="resetZoomBtn" style="margin-bottom:0.5rem;">Reset zoom</button>
 
     <!-- The chart will be rendered into this canvas -->
     <canvas id="slowestChart"></canvas>

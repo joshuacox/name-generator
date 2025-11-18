@@ -132,4 +132,15 @@ async function draw() {
 /* ------------------------------------------ *
  *  Kick‑off when the page has finished loading.
  * ------------------------------------------ */
-window.addEventListener('DOMContentLoaded', draw);
+window.addEventListener('DOMContentLoaded', () => {
+    draw().then(() => {
+        const resetBtn = document.getElementById('resetZoomBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (window._slowestChartInstance) {
+                    window._slowestChartInstance.resetZoom();
+                }
+            });
+        }
+    });
+});
