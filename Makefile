@@ -34,11 +34,8 @@ NameGenerator.class:
 	javac NameGenerator.java
 
 test:
-	bats test/test.bats
-	#./test/bats/bin/bats test/test.bats
-
-testx:
 	./test/bats/bin/bats -x test/test.bats
+
 
 name_generator.beam:
 	erl -compile name_generator
