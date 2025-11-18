@@ -94,6 +94,19 @@ async function draw() {
     }
 
     const ctx = document.getElementById('slowestChart').getContext('2d');
+    /* ------------------------------------------------
+     *  Compute global axis limits (so we can always “reset” to them)
+     * ------------------------------------------------ */
+    let globalXMin = Infinity, globalXMax = -Infinity;
+    let globalYMin = Infinity, globalYMax = -Infinity;
+    for (const pts of groups.values()) {
+        for (const p of pts) {
+            if (p.x < globalXMin) globalXMin = p.x;
+            if (p.x > globalXMax) globalXMax = p.x;
+            if (p.y < globalYMin) globalYMin = p.y;
+            if (p.y > globalYMax) globalYMax = p.y;
+        }
+    }
 
     const chart = new Chart(ctx, {
         type: 'line',
@@ -116,6 +129,11 @@ async function draw() {
                     pan: {
                         enabled: true,
                         mode: 'xy'
+                    },
+                    // Keep the *original* limits we just computed
+                    limits: {
+                        x: { min: globalXMin, max: globalXMax },
+                        y: { min: globalYMin, max: globalYMax }
                     }
                 },
                 // keep existing tooltip & legend definitions
@@ -135,11 +153,15 @@ async function draw() {
                 x: {
                     type: 'linear',
                     title: { display: true, text: 'parameter_num_count (2ⁿ)' },
-                    ticks: { precision: 0 }
+                    ticks: { precision: 0 },
+                    min: globalXMin,
+                    max: globalXMax
                 },
                 y: {
                     title: { display: true, text: 'mean (seconds)' },
-                    beginAtZero: false
+                    beginAtZero: false,
+                    min: globalYMin,
+                    max: globalYMax
                 }
             }
         }
