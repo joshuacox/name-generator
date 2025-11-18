@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Benchmark Charts</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chart-container { margin-bottom: 40px; }
+        canvas { max-width: 100%; height: 400px; }
+    </style>
+    <!-- Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Our loader script -->
+    <script src="./new-chart.js" defer></script>
+</head>
+<body>
+    <h1>Benchmark Charts</h1>
+
+    <div class="chart-container">
+        <h2>slowest_scanner‑10.csv</h2>
+        <canvas id="chart0"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>slow_scanner‑7.csv</h2>
+        <canvas id="chart1"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>scanner‑11.csv</h2>
+        <canvas id="chart2"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>fast_scanner‑15.csv</h2>
+        <canvas id="chart3"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>faster_scanner‑20.csv</h2>
+        <canvas id="chart4"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>fastest_scanner‑22.csv</h2>
+        <canvas id="chart5"></canvas>
+    </div>
+</body>
+</html>
