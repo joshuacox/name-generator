@@ -22,6 +22,10 @@ slow_bench_runnr () {
     --shell=none \
     './name-generator' \
     './name-generator_cpp' \
+    './name-generator_O2' \
+    './name-generator_cpp_O2' \
+    './name-generator_O1' \
+    './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.sh' \
     './name-generator.bash' \
@@ -62,6 +66,10 @@ slowest_scanner_bench_runnr () {
     --shell=bash \
     'counto={num_count} ./name-generator' \
     'counto={num_count} ./name-generator_cpp' \
+    'counto={num_count} ./name-generator_O2' \
+    'counto={num_count} ./name-generator_cpp_O2' \
+    'counto={num_count} ./name-generator_O1' \
+    'counto={num_count} ./name-generator_cpp_O1' \
     'counto={num_count} ./name-generator_go' \
     'counto={num_count} ./name-generator.sh' \
     'counto={num_count} ./name-generator.bash' \
@@ -101,6 +109,10 @@ slow_scanner_bench_runnr () {
     --shell=bash \
     'counto=$((2**{num_count})) ./name-generator' \
     'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_O2' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O2' \
+    'counto=$((2**{num_count})) ./name-generator_O1' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.sh' \
     'counto=$((2**{num_count})) ./name-generator.bash' \
@@ -140,6 +152,10 @@ scanner_bench_runnr () {
     --shell=bash \
     'counto=$((2**{num_count})) ./name-generator' \
     'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_O2' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O2' \
+    'counto=$((2**{num_count})) ./name-generator_O1' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.js' \
     'counto=$((2**{num_count})) ./name-generator.ts' \
@@ -167,6 +183,8 @@ fast_scanner_bench_runnr () {
     --runs 2 \
     --shell=bash \
     'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O2' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.js' \
     'counto=$((2**{num_count})) ./name-generator.ts' \
@@ -191,6 +209,8 @@ faster_scanner_bench_runnr () {
     --runs 2 \
     --shell=bash \
     'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O2' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.js' \
     'counto=$((2**{num_count})) ./name-generator.ts' \
@@ -215,6 +235,8 @@ fastest_scanner_bench_runnr () {
     --runs 2 \
     --shell=bash \
     'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O2' \
+    'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator.php' \
@@ -234,6 +256,10 @@ bench_runnr () {
     --export-markdown ${HYPERFINE_LOGDIR}/timing-${counto}.md \
     './name-generator' \
     './name-generator_cpp' \
+    './name-generator_O2' \
+    './name-generator_cpp_O2' \
+    './name-generator_O1' \
+    './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.zsh' \
     './name-generator.ts' \
@@ -267,6 +293,10 @@ fast_bench_runnr () {
     --export-markdown ${HYPERFINE_LOGDIR}/timing-fast-${counto}.md \
     './name-generator' \
     './name-generator_cpp' \
+    './name-generator_O2' \
+    './name-generator_cpp_O2' \
+    './name-generator_O1' \
+    './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.lua' \
     './name-generator.js' \
@@ -287,6 +317,10 @@ faster_bench_runnr () {
     --export-asciidoc ${HYPERFINE_LOGDIR}/timing-faster-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-faster-${counto}.md \
     './name-generator_cpp' \
+    './name-generator_O2' \
+    './name-generator_cpp_O2' \
+    './name-generator_O1' \
+    './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.js' \
     './name-generator.lua' \
@@ -305,6 +339,10 @@ fastest_bench_runnr () {
     --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.md \
     './name-generator_cpp' \
+    './name-generator_O2' \
+    './name-generator_cpp_O2' \
+    './name-generator_O1' \
+    './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.lua' \
     'rust/target/debug/name-generator' \
