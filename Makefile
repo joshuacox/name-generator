@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit rust data
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala rust/target/debug/name-generator
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class
 
 clean:
 	-@rm -v name-generator 
@@ -22,6 +22,18 @@ name-generator:
 
 name-generator_cpp:
 	g++ -O3 name-generator.cpp -o name-generator_cpp
+
+name-generator_O2:
+	gcc -O2 name-generator.c -o name-generator_O2
+
+name-generator_cpp_O2:
+	g++ -O2 name-generator.cpp -o name-generator_cpp_O2
+
+name-generator_O1:
+	gcc -O1 name-generator.c -o name-generator_O1
+
+name-generator_cpp_O1:
+	g++ -O1 name-generator.cpp -o name-generator_cpp_O1
 
 rust: rust/target/debug/name-generator
 
