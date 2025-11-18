@@ -137,7 +137,6 @@ fast_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.rb' \
     'counto=$((2**{num_count})) ./name-generator.lua' \
     'counto=$((2**{num_count})) java NameGenerator' \
-    'counto=$((2**{num_count})) cabal run' \
     'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator.py'
 }

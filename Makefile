@@ -1,4 +1,4 @@
-.PHONY: all test testx homepage github commit rust
+.PHONY: all test testx homepage github commit rust data
 
 all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala rust/target/debug/name-generator
 
@@ -69,3 +69,21 @@ NameGeneratorScala.class:
 
 SLOCCOUNT.md:
 	sloccount ./ > SLOCCOUNT.md
+
+data: docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv
+
+docs/fastest_scanner-22.csv:
+	SPEED=fastest_scanner SCAN_END=22 ./benchmark.sh
+	cp log/fastest_scanner-22.csv docs/
+
+docs/faster_scanner-20.csv:
+	SPEED=faster_scanner SCAN_END=20 ./benchmark.sh
+	cp log/faster_scanner-20.csv docs/
+
+docs/fast_scanner-15.csv:
+	SPEED=fast_scanner SCAN_END=15 ./benchmark.sh
+	cp log/fast_scanner-15.csv docs/
+
+docs/scanner-11.csv:
+	SPEED=scanner SCAN_END=11 ./benchmark.sh
+	cp log/scanner-11.csv docs/
