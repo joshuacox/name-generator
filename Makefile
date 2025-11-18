@@ -70,7 +70,7 @@ NameGeneratorScala.class:
 SLOCCOUNT.md:
 	sloccount ./ > SLOCCOUNT.md
 
-data: docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv
+data: docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
 
 docs/fastest_scanner-22.csv:
 	SPEED=fastest_scanner SCAN_END=22 ./benchmark.sh
@@ -87,3 +87,11 @@ docs/fast_scanner-15.csv:
 docs/scanner-11.csv:
 	SPEED=scanner SCAN_END=11 ./benchmark.sh
 	cp log/scanner-11.csv docs/
+
+docs/slow_scanner-5.csv:
+	SPEED=slow_scanner SCAN_END=5 ./benchmark.sh
+	cp log/slow_scanner-5.csv docs/
+
+docs/slowest_scanner-10.csv:
+	SPEED=slowest_scanner SCAN_END=10 ./benchmark.sh
+	cp log/slowest_scanner-10.csv docs/

@@ -50,6 +50,45 @@ slow_bench_runnr () {
     './name-generator.py'
 }
 
+slowest_scanner_bench_runnr () {
+  hyperfine \
+    -P num_count ${SCAN_START} ${SCAN_END} \
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto={num_count} ./name-generator' \
+    'counto={num_count} ./name-generator_cpp' \
+    'counto={num_count} ./name-generator_go' \
+    'counto={num_count} ./name-generator.sh' \
+    'counto={num_count} ./name-generator.bash' \
+    'counto={num_count} ./name-generator.zsh' \
+    'counto={num_count} ./name-generator.jl' \
+    'counto={num_count} ./name-generator.el' \
+    'counto={num_count} ./name-generator.pl' \
+    'counto={num_count} ./name-generator.php' \
+    'counto={num_count} ./name-generator.ml' \
+    'counto={num_count} ./name-generator.rb' \
+    'counto={num_count} ./name-generator.raku' \
+    'counto={num_count} ./name-generator.rkt' \
+    'counto={num_count} ./name-generator.dart' \
+    'counto={num_count} ./name-generator.lua' \
+    'counto={num_count} ./name-generator-sync.js' \
+    'counto={num_count} ./name-generator.exs' \
+    'counto={num_count} ./name-generator.ts' \
+    'counto={num_count} ./name-generator.js' \
+    'counto={num_count} java -jar ./name-generator.jar' \
+    'counto={num_count} java NameGenerator' \
+    'counto={num_count} scala NameGeneratorScala' \
+    'counto={num_count} cabal run' \
+    'counto={num_count} rust/target/debug/name-generator' \
+    'counto={num_count} erl -noshell -s name_generator name_generator -s init stop' \
+    'counto={num_count} ./name-generator.py'
+}
+
 slow_scanner_bench_runnr () {
   hyperfine \
     -P num_count ${SCAN_START} ${SCAN_END} \
@@ -284,6 +323,8 @@ elif [[ ${SPEED} == 'fastest' ]]; then
   fastest_bench_runnr
 elif [[ ${SPEED} == 'scanner' ]]; then
   scanner_bench_runnr
+elif [[ ${SPEED} == 'slowest_scanner' ]]; then
+  slowest_scanner_bench_runnr
 elif [[ ${SPEED} == 'slow_scanner' ]]; then
   slow_scanner_bench_runnr
 elif [[ ${SPEED} == 'fast_scanner' ]]; then
