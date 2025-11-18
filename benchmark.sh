@@ -2,7 +2,7 @@
 : ${counto:=12}
 : "${SPEED:=normal}"
 : ${SCAN_START:=1}
-: ${SCAN_END:=10}
+: ${SCAN_END:=15}
 : ${HYPERFINE_LOGDIR:=log}
 #: ${COMMON_HYPERFINE_OPTS:="counto={num_count} ./name-generator" "counto={num_count} ./name-generator_go" -P num_count 1 3 --export-csv log/timing.csv --export-json log/timing.json --export-asciidoc log/timing.ascii --export-markdown log/timing.md
 #: ${COMMON_HYPERFINE_OPTS:='-P num_count 1 3'} --export-csv log/timing.csv --export-json log/timing.json --export-asciidoc log/timing.ascii --export-markdown log/timing.md
@@ -50,43 +50,139 @@ slow_bench_runnr () {
     './name-generator.py'
 }
 
+slow_scanner_bench_runnr () {
+  hyperfine \
+    -P num_count ${SCAN_START} ${SCAN_END} \
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto=$((2**{num_count})) ./name-generator' \
+    'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_go' \
+    'counto=$((2**{num_count})) ./name-generator.sh' \
+    'counto=$((2**{num_count})) ./name-generator.bash' \
+    'counto=$((2**{num_count})) ./name-generator.zsh' \
+    'counto=$((2**{num_count})) ./name-generator.js' \
+    'counto=$((2**{num_count})) ./name-generator.ts' \
+    'counto=$((2**{num_count})) ./name-generator.jl' \
+    'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
+    'counto=$((2**{num_count})) ./name-generator.el' \
+    'counto=$((2**{num_count})) ./name-generator.pl' \
+    'counto=$((2**{num_count})) ./name-generator.php' \
+    'counto=$((2**{num_count})) ./name-generator.ml' \
+    'counto=$((2**{num_count})) ./name-generator.rb' \
+    'counto=$((2**{num_count})) ./name-generator.raku' \
+    'counto=$((2**{num_count})) ./name-generator.rkt' \
+    'counto=$((2**{num_count})) ./name-generator.dart' \
+    'counto=$((2**{num_count})) ./name-generator.lua' \
+    'counto=$((2**{num_count})) java NameGenerator' \
+    'counto=$((2**{num_count})) scala NameGeneratorScala' \
+    'counto=$((2**{num_count})) cabal run' \
+    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) ./name-generator-sync.js' \
+    'counto=$((2**{num_count})) ./name-generator.exs' \
+    'counto=$((2**{num_count})) erl -noshell -s name_generator name_generator -s init stop' \
+    'counto=$((2**{num_count})) ./name-generator.py'
+}
+
 scanner_bench_runnr () {
   hyperfine \
     -P num_count ${SCAN_START} ${SCAN_END} \
-    --export-csv ${HYPERFINE_LOGDIR}/scanner-${counto}.csv \
-    --export-json ${HYPERFINE_LOGDIR}/scanner-${counto}.json \
-    --export-asciidoc ${HYPERFINE_LOGDIR}/scanner-${counto}.adoc \
-    --export-markdown ${HYPERFINE_LOGDIR}/scanner-${counto}.md \
-    --warmup 3 \
-    --runs 5 \
-    --shell=sh \
-    'counto={num_count} ./name-generator' \
-    'counto={num_count} ./name-generator_cpp' \
-    'counto={num_count} ./name-generator_go' \
-    'counto={num_count} ./name-generator.sh' \
-    'counto={num_count} ./name-generator.bash' \
-    'counto={num_count} ./name-generator.zsh' \
-    'counto={num_count} ./name-generator.js' \
-    'counto={num_count} ./name-generator.ts' \
-    'counto={num_count} ./name-generator.jl' \
-    'counto={num_count} java -jar ./name-generator.jar' \
-    'counto={num_count} ./name-generator.pl' \
-    'counto={num_count} ./name-generator.php' \
-    'counto={num_count} ./name-generator.el' \
-    'counto={num_count} ./name-generator.ml' \
-    'counto={num_count} ./name-generator.rb' \
-    'counto={num_count} ./name-generator.raku' \
-    'counto={num_count} ./name-generator.rkt' \
-    'counto={num_count} ./name-generator.dart' \
-    'counto={num_count} ./name-generator.lua' \
-    'counto={num_count} java NameGenerator' \
-    'counto={num_count} scala NameGeneratorScala' \
-    'counto={num_count} cabal run' \
-    "counto={num_count} $HOME/.cargo/target/debug/name-generator" \
-    'counto={num_count} ./name-generator-sync.js' \
-    'counto={num_count} ./name-generator.exs' \
-    'counto={num_count} erl -noshell -s name_generator name_generator -s init stop' \
-    'counto={num_count} ./name-generator.py'
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto=$((2**{num_count})) ./name-generator' \
+    'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_go' \
+    'counto=$((2**{num_count})) ./name-generator.js' \
+    'counto=$((2**{num_count})) ./name-generator.ts' \
+    'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
+    'counto=$((2**{num_count})) ./name-generator.pl' \
+    'counto=$((2**{num_count})) ./name-generator.php' \
+    'counto=$((2**{num_count})) ./name-generator.ml' \
+    'counto=$((2**{num_count})) ./name-generator.rb' \
+    'counto=$((2**{num_count})) ./name-generator.lua' \
+    'counto=$((2**{num_count})) java NameGenerator' \
+    'counto=$((2**{num_count})) cabal run' \
+    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) ./name-generator.exs' \
+    'counto=$((2**{num_count})) ./name-generator.py'
+}
+
+fast_scanner_bench_runnr () {
+  hyperfine \
+    -P num_count ${SCAN_START} ${SCAN_END} \
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_go' \
+    'counto=$((2**{num_count})) ./name-generator.js' \
+    'counto=$((2**{num_count})) ./name-generator.ts' \
+    'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
+    'counto=$((2**{num_count})) ./name-generator.pl' \
+    'counto=$((2**{num_count})) ./name-generator.php' \
+    'counto=$((2**{num_count})) ./name-generator.rb' \
+    'counto=$((2**{num_count})) ./name-generator.lua' \
+    'counto=$((2**{num_count})) java NameGenerator' \
+    'counto=$((2**{num_count})) cabal run' \
+    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) ./name-generator.py'
+}
+
+faster_scanner_bench_runnr () {
+  hyperfine \
+    -P num_count ${SCAN_START} ${SCAN_END} \
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_go' \
+    'counto=$((2**{num_count})) ./name-generator.js' \
+    'counto=$((2**{num_count})) ./name-generator.ts' \
+    'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
+    'counto=$((2**{num_count})) ./name-generator.pl' \
+    'counto=$((2**{num_count})) ./name-generator.php' \
+    'counto=$((2**{num_count})) ./name-generator.rb' \
+    'counto=$((2**{num_count})) ./name-generator.lua' \
+    'counto=$((2**{num_count})) java NameGenerator' \
+    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) ./name-generator.py'
+}
+
+fastest_scanner_bench_runnr () {
+  hyperfine \
+    -P num_count ${SCAN_START} ${SCAN_END} \
+    --export-csv ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.csv \
+    --export-json ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.json \
+    --export-asciidoc ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.adoc \
+    --export-markdown ${HYPERFINE_LOGDIR}/${SPEED}-${SCAN_END}.md \
+    --warmup 1 \
+    --runs 2 \
+    --shell=bash \
+    'counto=$((2**{num_count})) ./name-generator_cpp' \
+    'counto=$((2**{num_count})) ./name-generator_go' \
+    'counto=$((2**{num_count})) ./name-generator.pl' \
+    'counto=$((2**{num_count})) ./name-generator.php' \
+    'counto=$((2**{num_count})) ./name-generator.lua' \
+    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) ./name-generator.py'
 }
 
 bench_runnr () {
@@ -189,6 +285,14 @@ elif [[ ${SPEED} == 'fastest' ]]; then
   fastest_bench_runnr
 elif [[ ${SPEED} == 'scanner' ]]; then
   scanner_bench_runnr
+elif [[ ${SPEED} == 'slow_scanner' ]]; then
+  slow_scanner_bench_runnr
+elif [[ ${SPEED} == 'fast_scanner' ]]; then
+  fast_scanner_bench_runnr
+elif [[ ${SPEED} == 'faster_scanner' ]]; then
+  faster_scanner_bench_runnr
+elif [[ ${SPEED} == 'fastest_scanner' ]]; then
+  fastest_scanner_bench_runnr
 else
   bench_runnr
 fi
