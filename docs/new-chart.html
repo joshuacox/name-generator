@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Name‑Generator Benchmarks</title>
+  <!-- Chart.js v3 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    body {font-family:Arial,Helvetica,sans-serif; margin:20px;}
+    .chart {margin-bottom:40px;}
+  </style>
+</head>
+<body>
+  <h1>Name‑Generator Benchmark Charts</h1>
+
+  <!-- 1️⃣ slowest_scanner‑10.csv -->
+  <div class="chart">
+    <canvas id="chart-slowest"></canvas>
+  </div>
+
+  <!-- 2️⃣ slow_scanner‑5.csv (the closest file we have) -->
+  <div class="chart">
+    <canvas id="chart-slow"></canvas>
+  </div>
+
+  <!-- 3️⃣ scanner‑11.csv -->
+  <div class="chart">
+    <canvas id="chart-scanner"></canvas>
+  </div>
+
+  <!-- 4️⃣ fast_scanner‑15.csv -->
+  <div class="chart">
+    <canvas id="chart-fast"></canvas>
+  </div>
+
+  <!-- 5️⃣ faster_scanner‑20.csv -->
+  <div class="chart">
+    <canvas id="chart-faster"></canvas>
+  </div>
+
+  <!-- 6️⃣ fastest_scanner‑22.csv -->
+  <div class="chart">
+    <canvas id="chart-fastest"></canvas>
+  </div>
+
+  <script src="new-chart.js"></script>
+</body>
+</html>
