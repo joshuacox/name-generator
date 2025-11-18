@@ -186,8 +186,9 @@ async function draw() {
                 y: {
                     title: { display: true, text: 'mean (seconds)' },
                     beginAtZero: false,
-                    min: globalYMin,
-                    max: globalYMax,
+                    // No explicit min / max – Chart.js will auto‑scale to include all points.
+                    // The zoom plugin still uses the pre‑computed limits (globalYMin/YMax)
+                    // so the “Reset zoom” button continues to restore the original padded range.
                     ticks: {
                         // Show a readable number (3 decimal places is enough for the data)
                         callback: v => Number(v).toFixed(3)
