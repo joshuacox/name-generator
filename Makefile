@@ -64,7 +64,7 @@ name-generator_pony:
 commit:
 	aider --commit --model=ollama_chat/llama3.2
 
-NameGeneratorScala:
+NameGeneratorScala.class:
 	scalac NameGeneratorScala.scala
 
 SLOCCOUNT.md:
