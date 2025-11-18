@@ -113,7 +113,7 @@ function drawChartOn(canvasId, byCommand) {
 
 /* Top‑level orchestrator – load both CSVs and render two charts */
 async function drawCharts() {
-  const slowData = await loadDataFrom('slow_scanner-7.csv');
+  const slowData = await loadDataFrom('slow_scanner-5.csv');
   const scannerData = await loadDataFrom('scanner-11.csv');
   const fastData = await loadDataFrom('fast_scanner-15.csv');
   const fasterData = await loadDataFrom('faster_scanner-20.csv');
