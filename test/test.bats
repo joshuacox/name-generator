@@ -145,7 +145,7 @@ setup() {
   result="$(counto=55 scala NameGeneratorScala|wc -l)"
   [ "$result" -eq 55 ]
 }
-@test "test java test/test" {
+@test "test scala test/test" {
   result=$(scala NameGeneratorScala)
   assert_equal "$result" "test_test"
 }
