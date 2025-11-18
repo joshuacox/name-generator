@@ -1,9 +1,6 @@
-Computing results.
-
-
 SLOC	Directory	SLOC-by-Language (Sorted)
 5084    test            sh=5056,python=28
-1896    top_dir         sh=481,ansic=261,lisp=225,pascal=204,cpp=134,java=114,
+1995    top_dir         sh=580,ansic=261,lisp=225,pascal=204,cpp=134,java=114,
                         php=106,haskell=96,ml=94,perl=69,python=66,ruby=46
 80      dist-newstyle   haskell=80
 0       adjectives      (none)
@@ -20,29 +17,29 @@ SLOC	Directory	SLOC-by-Language (Sorted)
 
 
 Totals grouped by language (dominant language first):
-sh:            5537 (78.43%)
-ansic:          261 (3.70%)
-lisp:           225 (3.19%)
-pascal:         204 (2.89%)
-haskell:        176 (2.49%)
-cpp:            134 (1.90%)
-java:           114 (1.61%)
-php:            106 (1.50%)
-python:          94 (1.33%)
-ml:              94 (1.33%)
-perl:            69 (0.98%)
-ruby:            46 (0.65%)
+sh:            5636 (78.73%)
+ansic:          261 (3.65%)
+lisp:           225 (3.14%)
+pascal:         204 (2.85%)
+haskell:        176 (2.46%)
+cpp:            134 (1.87%)
+java:           114 (1.59%)
+php:            106 (1.48%)
+python:          94 (1.31%)
+ml:              94 (1.31%)
+perl:            69 (0.96%)
+ruby:            46 (0.64%)
 
 
 
 
-Total Physical Source Lines of Code (SLOC)                = 7,060
-Development Effort Estimate, Person-Years (Person-Months) = 1.56 (18.68)
+Total Physical Source Lines of Code (SLOC)                = 7,159
+Development Effort Estimate, Person-Years (Person-Months) = 1.58 (18.96)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.63 (7.60)
+Schedule Estimate, Years (Months)                         = 0.64 (7.65)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 2.46
-Total Estimated Cost to Develop                           = $ 210,323
+Estimated Average Number of Developers (Effort/Schedule)  = 2.48
+Total Estimated Cost to Develop                           = $ 213,421
  (average salary = $56,286/year, overhead = 2.40).
 SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
 SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.

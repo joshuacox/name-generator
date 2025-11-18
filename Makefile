@@ -1,16 +1,15 @@
-.PHONY: all test testx homepage github commit
+.PHONY: all test testx homepage github commit rust
 
-all: name-generator name-generator_cpp ${HOME}/.cargo/target/debug/name-generator name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala SLOCCOUNT.md
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar NameGeneratorScala rust/target/debug/name-generator
 
 clean:
 	-@rm -v name-generator 
 	-@rm -v name-generator_cpp
-	-@rm -v ${HOME}/.cargo/target/debug/name-generator
+	-@rm -v rust/target/debug/name-generator
 	-@rm -v NameGenerator.class
 	-@rm -v name-generator_go
 	-@rm -v name_generator.beam
 	-@rm -v NameGeneratorScala.class
-	-@rm -v SLOCCOUNT.md
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -24,11 +23,13 @@ name-generator:
 name-generator_cpp:
 	g++ -O3 name-generator.cpp -o name-generator_cpp
 
-${HOME}/.cargo/target/debug/name-generator:
+rust: rust/target/debug/name-generator
+
+rust/target/debug/name-generator:
 	$(MAKE) -C rust all
 
 name-generator_go:
-	go build -O3 -o name-generator_go name-generator.go
+	go build -o name-generator_go name-generator.go
 
 NameGenerator.class:
 	javac NameGenerator.java
