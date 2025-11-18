@@ -57,16 +57,16 @@ setup() {
   assert_equal "$result" "test_test"
 }
 # rust
-@test "test $HOME/.cargo/target/debug/name-generator at 10" {
-  result="$(counto=10 $HOME/.cargo/target/debug/name-generator|wc -l)"
+@test "test 'rust/target/debug/name-generator' at 10" {
+  result="$(counto=10 rust/target/debug/name-generator|wc -l)"
   [ "$result" -eq 10 ]
 }
-@test "test $HOME/.cargo/target/debug/name-generator at 33433" {
-  result="$(counto=33433 $HOME/.cargo/target/debug/name-generator|wc -l)"
+@test "test rust/target/debug/name-generator at 33433" {
+  result="$(counto=33433 rust/target/debug/name-generator|wc -l)"
   [ "$result" -eq 33433 ]
 }
 @test "test rust test/test" {
-  result="$($HOME/.cargo/target/debug/name-generator)"
+  result="$(rust/target/debug/name-generator)"
   assert_equal "$result" "test_test"
 }
 # sh
