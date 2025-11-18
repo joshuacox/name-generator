@@ -43,7 +43,7 @@ slow_bench_runnr () {
     'java NameGenerator' \
     'scala NameGeneratorScala' \
     'cabal run' \
-    "$HOME/.cargo/target/debug/name-generator" \
+    'rust/target/debug/name-generator' \
     './name-generator-sync.js' \
     './name-generator.exs' \
     'erl -noshell -s name_generator name_generator -s init stop' \
@@ -82,7 +82,7 @@ slow_scanner_bench_runnr () {
     'counto=$((2**{num_count})) java NameGenerator' \
     'counto=$((2**{num_count})) scala NameGeneratorScala' \
     'counto=$((2**{num_count})) cabal run' \
-    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator-sync.js' \
     'counto=$((2**{num_count})) ./name-generator.exs' \
     'counto=$((2**{num_count})) erl -noshell -s name_generator name_generator -s init stop' \
@@ -112,7 +112,7 @@ scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.lua' \
     'counto=$((2**{num_count})) java NameGenerator' \
     'counto=$((2**{num_count})) cabal run' \
-    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator.exs' \
     'counto=$((2**{num_count})) ./name-generator.py'
 }
@@ -138,7 +138,7 @@ fast_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.lua' \
     'counto=$((2**{num_count})) java NameGenerator' \
     'counto=$((2**{num_count})) cabal run' \
-    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator.py'
 }
 
@@ -162,7 +162,7 @@ faster_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.rb' \
     'counto=$((2**{num_count})) ./name-generator.lua' \
     'counto=$((2**{num_count})) java NameGenerator' \
-    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator.py'
 }
 
@@ -181,7 +181,7 @@ fastest_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator.php' \
     'counto=$((2**{num_count})) ./name-generator.lua' \
-    'counto=$((2**{num_count})) $HOME/.cargo/target/debug/name-generator' \
+    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
     'counto=$((2**{num_count})) ./name-generator.py'
 }
 
@@ -212,7 +212,7 @@ bench_runnr () {
     'java NameGenerator' \
     'java -jar ./name-generator.jar' \
     'cabal run' \
-    "$HOME/.cargo/target/debug/name-generator" \
+    'rust/target/debug/name-generator' \
     './name-generator-sync.js' \
     './name-generator.exs' \
     './name-generator.py'
@@ -236,7 +236,7 @@ fast_bench_runnr () {
     './name-generator.php' \
     'java NameGenerator' \
     'cabal run' \
-    "$HOME/.cargo/target/debug/name-generator"
+    'rust/target/debug/name-generator'
 }
 
 faster_bench_runnr () {
@@ -254,7 +254,7 @@ faster_bench_runnr () {
     './name-generator.lua' \
     './name-generator.pl' \
     './name-generator.php' \
-    "$HOME/.cargo/target/debug/name-generator"
+    'rust/target/debug/name-generator'
 }
 
 fastest_bench_runnr () {
@@ -269,7 +269,7 @@ fastest_bench_runnr () {
     './name-generator_cpp' \
     './name-generator_go' \
     './name-generator.lua' \
-    "$HOME/.cargo/target/debug/name-generator" \
+    'rust/target/debug/name-generator' \
     './name-generator.php' \
     './name-generator.pl'
 }
