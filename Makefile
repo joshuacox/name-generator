@@ -19,16 +19,16 @@ homepage:
 	${BROWSER}  https://joshuacox.github.io/name-generator/ &
 
 name-generator:
-	gcc name-generator.c -o name-generator
+	gcc -O3 name-generator.c -o name-generator
 
 name-generator_cpp:
-	g++ name-generator.cpp -o name-generator_cpp
+	g++ -O3 name-generator.cpp -o name-generator_cpp
 
 ${HOME}/.cargo/target/debug/name-generator:
 	$(MAKE) -C rust all
 
 name-generator_go:
-	go build -o name-generator_go name-generator.go
+	go build -O3 -o name-generator_go name-generator.go
 
 NameGenerator.class:
 	javac NameGenerator.java
