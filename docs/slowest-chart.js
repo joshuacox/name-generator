@@ -108,6 +108,32 @@ async function draw() {
         }
     }
 
+    //  -----------------------------------------------------------------
+    //  Add a small padding so the outermost points are not drawn on the
+    //  exact edge of the chart.  This also protects against the edge case
+    //  where min === max (all points have the same value).
+    //  -----------------------------------------------------------------
+    const padX = (globalXMax - globalXMin) * 0.03;   // 3 % of the X‑range
+    const padY = (globalYMax - globalYMin) * 0.10;   // 10 % of the Y‑range
+
+    if (padX === 0) {               // all X values identical
+        globalXMin -= 1;
+        globalXMax += 1;
+    } else {
+        globalXMin -= padX;
+        globalXMax += padX;
+    }
+
+    if (padY === 0) {               // all Y values identical
+        globalYMin = globalYMin ? globalYMin * 0.9 : -1;
+        globalYMax = globalYMax ? globalYMax * 1.1 : 1;
+    } else {
+        globalYMin -= padY;
+        globalYMax += padY;
+    }
+
+    console.log('Chart Y‑range:', globalYMin, '→', globalYMax);
+
     const chart = new Chart(ctx, {
         type: 'line',
         data: { datasets },
@@ -161,7 +187,11 @@ async function draw() {
                     title: { display: true, text: 'mean (seconds)' },
                     beginAtZero: false,
                     min: globalYMin,
-                    max: globalYMax
+                    max: globalYMax,
+                    ticks: {
+                        // Show a readable number (3 decimal places is enough for the data)
+                        callback: v => Number(v).toFixed(3)
+                    }
                 }
             }
         }
