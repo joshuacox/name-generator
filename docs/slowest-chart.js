@@ -95,25 +95,30 @@ async function draw() {
 
     const ctx = document.getElementById('slowestChart').getContext('2d');
 
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: { datasets },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             interaction: { mode: 'nearest', intersect: false },
-            scales: {
-                x: {
-                    type: 'linear',
-                    title: { display: true, text: 'parameter_num_count (2ⁿ)' },
-                    ticks: { precision: 0 }
-                },
-                y: {
-                    title: { display: true, text: 'mean (seconds)' },
-                    beginAtZero: false
-                }
-            },
+
+            // ---------- enable zoom / pan ----------
             plugins: {
+                zoom: {
+                    // Enable zooming with mouse wheel or pinch
+                    zoom: {
+                        wheel: { enabled: true },
+                        pinch: { enabled: true },
+                        mode: 'xy'          // allow both axes
+                    },
+                    // Enable panning (drag)
+                    pan: {
+                        enabled: true,
+                        mode: 'xy'
+                    }
+                },
+                // keep existing tooltip & legend definitions
                 tooltip: {
                     callbacks: {
                         title: ctx => ctx[0].dataset.label,
@@ -124,9 +129,23 @@ async function draw() {
                     position: 'right',
                     labels: { usePointStyle: true }
                 }
+            },
+            // ---------- end zoom / pan ----------
+            scales: {
+                x: {
+                    type: 'linear',
+                    title: { display: true, text: 'parameter_num_count (2ⁿ)' },
+                    ticks: { precision: 0 }
+                },
+                y: {
+                    title: { display: true, text: 'mean (seconds)' },
+                    beginAtZero: false
+                }
             }
         }
     });
+    // expose chart for the reset button
+    window._slowestChartInstance = chart;
 }
 
 /* ------------------------------------------ *
