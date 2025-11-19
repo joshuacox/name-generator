@@ -88,35 +88,42 @@
      const colour = PALETTE[colorIdx % PALETTE.length];
      const seriesId = `series-${colorIdx + 1}`;   // unique class/id for toggling
 
-     // Append the path (the line)
+     // Append the path (the line) – now with hover tooltip
      chart.append("path")
-         .datum(sorted)
+         .datum(sorted)                         // bind the whole array of points
          .attr("class", seriesId)
          .attr("fill", "none")
          .attr("stroke", colour)
          .attr("stroke-width", 2)
-         .attr("d", lineGenerator);
-
-     // Also keep invisible circles for tooltip (optional – improves hover precision)
-     chart.selectAll(`.dot-${colorIdx + 1}`)
-         .data(sorted)
-         .enter()
-         .append("circle")
-         .attr("class", `dot-${colorIdx + 1}`)
-         .attr("cx", d => xScale(d.x))
-         .attr("cy", d => yScale(d.y))
-         .attr("r", 4)               // slightly larger hit‑area
-         .attr("fill", colour)
-         .attr("opacity", 0)         // invisible; only for mouse events
-         .on("mouseover", (event, d) => {
+         .attr("d", lineGenerator)
+         .style("cursor", "pointer")
+         // ---------- tooltip on line ----------
+         .on("mouseover", (event, data) => {
+           // Show tooltip immediately; we’ll update its content on mousemove
            tooltip.transition().duration(100).style("opacity", .9);
-           tooltip.html(
-             `<strong>${cmd}</strong><br/>counto=${d.x}<br/>mean=${d.y.toFixed(4)}s`
-           )
-           .style("left", (event.pageX + 8) + "px")
-           .style("top", (event.pageY - 28) + "px");
          })
-         .on("mouseout", () => tooltip.transition().duration(200).style("opacity", 0));
+         .on("mousemove", (event, data) => {
+           // `data` is the array of points for this series
+           const [mx, my] = d3.pointer(event);
+           const x0 = xScale.invert(mx);               // raw counto value under mouse
+           const bisect = d3.bisector(d => d.x).left;
+           const i = bisect(data, x0, 1);
+           const d0 = data[i - 1];
+           const d1 = data[i];
+           // Choose the nearer point
+           const d = (!d0 || (d1 && (x0 - d0.x > d1.x - x0))) ? d1 : d0;
+           if (d) {
+             tooltip.html(
+               `<strong>${cmd}</strong><br/>counto=${d.x}<br/>mean=${d.y.toFixed(4)} s`
+             )
+             .style("left", (event.pageX + 8) + "px")
+             .style("top", (event.pageY - 28) + "px");
+           }
+         })
+         .on("mouseout", () => {
+           tooltip.transition().duration(200).style("opacity", 0);
+         });
+
 
      colorIdx++;
    }
