@@ -31,11 +31,40 @@
       pointer-events: none;
       font-size: 12px;
     }
+
+    /* ---------- dark theme ---------- */
+    .dark-theme {
+      background: #1e1e1e;
+      color: #e0e0e0;
+    }
+    .dark-theme .tooltip {
+      background: rgba(255, 255, 255, 0.85);
+      color: #111;
+    }
+    .dark-theme .legend text,
+    .dark-theme .legend rect,
+    .dark-theme .axis path,
+    .dark-theme .axis line {
+      stroke: #e0e0e0;
+      fill: #e0e0e0;
+    }
   </style>
 </head>
 
 <body>
   <div id="chart"></div>
+  <!-- theme toggle button -->
+  <button id="theme-toggle"
+          style="
+            position:fixed;
+            top:12px; right:12px;
+            padding:4px 8px;
+            font-size:0.9rem;
+            cursor:pointer;
+            z-index:10;
+          ">
+    🌙 Dark Mode
+  </button>
   <script src="d3_slowest_scanner.js"></script>
 </body>
 

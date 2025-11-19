@@ -223,6 +223,33 @@
    }
  })();
 
+// -------------- Theme handling (dark / light) --------------
+// ---------------------------------------------------------
+function applyStoredTheme() {
+  const saved = localStorage.getItem('d3-theme');
+  if (saved === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeBtn.textContent = '☀️ Light Mode';
+  } else {
+    document.body.classList.remove('dark-theme');
+    themeBtn.textContent = '🌙 Dark Mode';
+  }
+}
+
+// Grab the button (it exists in the HTML now)
+const themeBtn = document.getElementById('theme-toggle');
+if (themeBtn) {
+  // Initialise from stored value
+  applyStoredTheme();
+
+  // Toggle on click
+  themeBtn.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-theme');
+    localStorage.setItem('d3-theme', isDark ? 'dark' : 'light');
+    themeBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  });
+}
+
  // -------------------------------------------------
  // Helper – parse a line of the CSV produced by the benchmark script
  // -------------------------------------------------
