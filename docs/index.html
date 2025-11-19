@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Name Generator</title>
   <style>
     :root {
@@ -130,7 +131,53 @@
     .toast.show {
       opacity: 1;
     }
-  </style>
+
+    /* Responsive grid container */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    /* Adjust name-item for grid (override earlier definition if needed) */
+    .name-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      margin: 0.2rem 0;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Flexible font size */
+    body {
+      font-size: 1.2rem;
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .controls input,
+      .controls button {
+        width: 100%;
+        margin: 0.2rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .controls label {
+        font-size: 0.9rem;
+      }
+    }
+
+    </style>
 </head>
 
 <body>
@@ -157,7 +204,7 @@
     <button id="generateMultipleBtn">Generate</button>
   </section>
 
-  <div id="namesList"></div>
+  <div id="namesList" class="grid-container"></div>
 
   <script type="module">
     import {
