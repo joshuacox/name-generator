@@ -1,5 +1,8 @@
 # [Name Generator](https://joshuacox.github.io/name-generator/)
 
+## [namgen](https://github.com/joshuacox/namgen)
+This repo has a sister-repo [namgen](https://github.com/joshuacox/namgen) that is a further implementation of this concept in cpp after proving itself to be the performance king.  This repo will continue to exist to pit languages against each other in a deathmatch.  The other repo will continue on as I add features like command line arguments and cap/camel casing.
+
 This repository contains a
 [website](https://joshuacox.github.io/name-generator/)
 and simple name generator script that combines random nouns and adjectives to create unique names. 
