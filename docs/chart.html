@@ -12,9 +12,15 @@
     body { font-family: Arial, sans-serif; margin: 2rem; }
     canvas { max-width: 100%; height: auto; }
   </style>
+  <style>
+    body.dark-theme { background:#222; color:#eee; }
+    body.dark-theme a { color:#9cf; }
+    body.dark-theme canvas { background:#111; }
+  </style>
 </head>
 <body>
   <h1>Mean vs. Parameter‑Num‑Count</h1>
+  <button id="theme-toggle" style="margin-bottom:1rem;">🌙 Dark Mode</button>
   <!-- The chart will be rendered into this canvas -->
   <div style="position:relative; height:60vh; width:100%;">
     <canvas id="myChart"></canvas>

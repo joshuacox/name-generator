@@ -127,7 +127,35 @@ async function drawCharts() {
 }
 
 // Run when the page is ready
-document.addEventListener('DOMContentLoaded', drawCharts);
+/* ---------- Theme handling ---------- */
+function applyStoredTheme() {
+  const saved = localStorage.getItem('chart-theme'); // "dark" or "light"
+  const body = document.body;
+  const btn  = document.getElementById('theme-toggle');
+  if (saved === 'dark') {
+    body.classList.add('dark-theme');
+    btn.textContent = '☀️ Light Mode';
+  } else {
+    body.classList.remove('dark-theme');
+    btn.textContent = '🌙 Dark Mode';
+  }
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const btn  = document.getElementById('theme-toggle');
+  const isDark = body.classList.toggle('dark-theme');
+  btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  localStorage.setItem('chart-theme', isDark ? 'dark' : 'light');
+}
+
+// Attach the click handler once the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.addEventListener('click', toggleTheme);
+  applyStoredTheme();          // set initial theme before charts are drawn
+  drawCharts();                // existing entry point
+});
 /**
  * Placeholder JavaScript file for chart functionality.
  * Add your chart implementation here.
