@@ -199,6 +199,26 @@ async function draw() {
     });
     // expose chart for the reset button
     window._slowestChartInstance = chart;
+
+    // -------------------------------------------------
+    // Freeze / Un‑freeze button handling
+    // -------------------------------------------------
+    const freezeBtn = document.getElementById('freezeBtn');
+    if (freezeBtn) {
+        // start in *un‑frozen* state (zoom enabled)
+        let frozen = false;
+        const updateButton = () => freezeBtn.textContent = frozen ? 'Un‑freeze' : 'Freeze';
+        updateButton();
+
+        freezeBtn.addEventListener('click', () => {
+            frozen = !frozen;
+            // The zoom plugin respects the `enabled` flag at the top level.
+            chart.options.plugins.zoom.enabled = !frozen;
+            // Force Chart.js to re‑apply the new options.
+            chart.update();
+            updateButton();
+        });
+    }
 }
 
 /* ------------------------------------------ *
