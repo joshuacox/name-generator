@@ -74,27 +74,51 @@
 
    const chart = svg.append("g").attr("clip-path", "url(#clip)");
 
-   // 5️⃣ Draw points per command (different colour per series)
+   // 5️⃣ Draw lines per command (different colour per series)
    let colorIdx = 0;
+   const lineGenerator = d3.line()
+       .x(d => xScale(d.x))
+       .y(d => yScale(d.y))
+       .curve(d3.curveMonotoneX);   // smooth monotone line (optional)
+
    for (const [cmd, pts] of groups) {
+     // Ensure points are sorted by the X value so the line is drawn correctly
+     const sorted = pts.slice().sort((a, b) => d3.ascending(a.x, b.x));
+
      const colour = PALETTE[colorIdx % PALETTE.length];
-     colorIdx++;
-     chart.selectAll(`.dot-${colorIdx}`)
-         .data(pts)
+     const seriesId = `series-${colorIdx + 1}`;   // unique class/id for toggling
+
+     // Append the path (the line)
+     chart.append("path")
+         .datum(sorted)
+         .attr("class", seriesId)
+         .attr("fill", "none")
+         .attr("stroke", colour)
+         .attr("stroke-width", 2)
+         .attr("d", lineGenerator);
+
+     // Also keep invisible circles for tooltip (optional – improves hover precision)
+     chart.selectAll(`.dot-${colorIdx + 1}`)
+         .data(sorted)
          .enter()
          .append("circle")
-         .attr("class", `dot-${colorIdx}`)
+         .attr("class", `dot-${colorIdx + 1}`)
          .attr("cx", d => xScale(d.x))
          .attr("cy", d => yScale(d.y))
-         .attr("r", 3)
+         .attr("r", 4)               // slightly larger hit‑area
          .attr("fill", colour)
+         .attr("opacity", 0)         // invisible; only for mouse events
          .on("mouseover", (event, d) => {
            tooltip.transition().duration(100).style("opacity", .9);
-           tooltip.html(`<strong>${cmd}</strong><br/>counto=${d.x}<br/>mean=${d.y.toFixed(4)}s`)
-                  .style("left", (event.pageX+8)+"px")
-                  .style("top", (event.pageY-28)+"px");
+           tooltip.html(
+             `<strong>${cmd}</strong><br/>counto=${d.x}<br/>mean=${d.y.toFixed(4)}s`
+           )
+           .style("left", (event.pageX + 8) + "px")
+           .style("top", (event.pageY - 28) + "px");
          })
          .on("mouseout", () => tooltip.transition().duration(200).style("opacity", 0));
+
+     colorIdx++;
    }
 
    // 6️⃣ Axes
@@ -137,12 +161,23 @@
      entry.append("text")
          .attr("x", 16).attr("y", 10)
          .text(cmd);
-     // toggle visibility on click
      entry.on("click", () => {
-       const visible = chart.selectAll(`.dot-${colorIdx+1}`).style("display") !== "none";
-       chart.selectAll(`.dot-${colorIdx+1}`)
-            .style("display", visible ? "none" : null);
-       entry.select("rect").attr("fill-opacity", visible ? 0.2 : 1);
+       const seriesClass = `series-${colorIdx + 1}`;
+       const dotsClass   = `dot-${colorIdx + 1}`;
+
+       const currentlyVisible = chart.selectAll(`.${seriesClass}`).style("display") !== "none";
+
+       // Toggle line visibility
+       chart.selectAll(`.${seriesClass}`)
+            .style("display", currentlyVisible ? "none" : null);
+
+       // Toggle the invisible circles used for tooltip
+       chart.selectAll(`.${dotsClass}`)
+            .style("display", currentlyVisible ? "none" : null);
+
+       // Dim/restore legend swatch
+       entry.select("rect")
+            .attr("fill-opacity", currentlyVisible ? 0.2 : 1);
      });
      legendY += 18;
      colorIdx++;
@@ -159,10 +194,22 @@
      const t = event.transform;
      const newX = t.rescaleX(xScale);
      const newY = t.rescaleY(yScale);
-     // update axes
+
+     // Update axes
      svg.selectAll("g.x-axis").call(d3.axisBottom(newX).ticks(10).tickFormat(d3.format("d")));
      svg.selectAll("g.y-axis").call(d3.axisLeft(newY).ticks(10));
-     // update points
+
+     // Update line generators with the new scales
+     const updatedLine = d3.line()
+         .x(d => newX(d.x))
+         .y(d => newY(d.y))
+         .curve(d3.curveMonotoneX);
+
+     // Redraw each series path
+     chart.selectAll("path")
+         .attr("d", d => updatedLine(d));
+
+     // Update invisible circles (still needed for tooltip)
      chart.selectAll("circle")
          .attr("cx", d => newX(d.x))
          .attr("cy", d => newY(d.y));
