@@ -284,8 +284,8 @@ bench_runnr () {
 
 fast_bench_runnr () {
   hyperfine \
-    --warmup 1 \
-    --runs 5 \
+    --warmup 3 \
+    --runs 15 \
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-fast-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-fast-${counto}.json \
@@ -310,43 +310,41 @@ fast_bench_runnr () {
 faster_bench_runnr () {
   hyperfine \
     --warmup 1 \
-    --runs 2 \
+    --runs 3 \
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-faster-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-faster-${counto}.json \
     --export-asciidoc ${HYPERFINE_LOGDIR}/timing-faster-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-faster-${counto}.md \
     './name-generator_cpp' \
-    './name-generator_O2' \
     './name-generator_cpp_O2' \
-    './name-generator_O1' \
     './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.js' \
     './name-generator.lua' \
     './name-generator.pl' \
     './name-generator.php' \
+    'java NameGenerator' \
     'rust/target/debug/name-generator'
 }
 
 fastest_bench_runnr () {
   hyperfine \
-    --warmup 0 \
-    --runs 1 \
+    --warmup 1 \
+    --runs 2 \
     --shell=none \
     --export-csv ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.csv \
     --export-json ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.json \
     --export-asciidoc ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.adoc \
     --export-markdown ${HYPERFINE_LOGDIR}/timing-fastest-${counto}.md \
     './name-generator_cpp' \
-    './name-generator_O2' \
     './name-generator_cpp_O2' \
-    './name-generator_O1' \
     './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.lua' \
     'rust/target/debug/name-generator' \
     './name-generator.php' \
+    'java NameGenerator' \
     './name-generator.pl'
 }
 

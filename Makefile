@@ -82,6 +82,9 @@ NameGeneratorScala.class:
 SLOCCOUNT.md:
 	sloccount ./ > SLOCCOUNT.md
 
+clean-data: 
+	rm -v docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
+
 data: docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
 
 docs/fastest_scanner-22.csv:
