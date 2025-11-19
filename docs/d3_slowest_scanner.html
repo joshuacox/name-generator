@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slowest‑Scanner D3 Explorer</title>
+  <!-- D3 v7 from CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {font-family: sans-serif; margin:0; padding:0;}
+    #chart {width:100vw; height:100vh;}
+    .legend {font-size:12px;}
+    .tooltip {
+      position: absolute;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 4px 6px;
+      border-radius: 3px;
+      pointer-events: none;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="d3_slowest_scanner.js"></script>
+</body>
+</html>
