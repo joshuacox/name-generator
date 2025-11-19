@@ -117,7 +117,7 @@ async function drawCharts() {
   const scannerData = await loadDataFrom('scanner-11.csv');
   const fastData = await loadDataFrom('fast_scanner-15.csv');
   const fasterData = await loadDataFrom('faster_scanner-20.csv');
-  const fastestData = await loadDataFrom('fastest_scanner-22.csv');
+  const fastestData = await loadDataFrom('fastest_scanner-24.csv');
 
   drawChartOn('myChartSlow', slowData);
   drawChartOn('myChart', scannerData);

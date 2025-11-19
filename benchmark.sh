@@ -239,10 +239,8 @@ fastest_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator_cpp_O1' \
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
-    'counto=$((2**{num_count})) ./name-generator.php' \
-    'counto=$((2**{num_count})) ./name-generator.lua' \
-    'counto=$((2**{num_count})) rust/target/debug/name-generator' \
-    'counto=$((2**{num_count})) ./name-generator.py'
+    'counto=$((2**{num_count})) java NameGenerator' \
+    'counto=$((2**{num_count})) ./name-generator.lua'
 }
 
 bench_runnr () {

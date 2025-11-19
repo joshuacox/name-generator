@@ -83,13 +83,13 @@ SLOCCOUNT.md:
 	sloccount ./ > SLOCCOUNT.md
 
 clean-data: 
-	rm -v docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
+	rm -v docs/faster_scanner-20.csv docs/fastest_scanner-24.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
 
-data: docs/faster_scanner-20.csv docs/fastest_scanner-22.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
+data: docs/faster_scanner-20.csv docs/fastest_scanner-24.csv docs/fast_scanner-15.csv docs/scanner-11.csv docs/slow_scanner-5.csv docs/slowest_scanner-10.csv
 
-docs/fastest_scanner-22.csv:
-	SPEED=fastest_scanner SCAN_END=22 ./benchmark.sh
-	cp log/fastest_scanner-22.csv docs/
+docs/fastest_scanner-24.csv:
+	SPEED=fastest_scanner SCAN_END=24 ./benchmark.sh
+	cp log/fastest_scanner-24.csv docs/
 
 docs/faster_scanner-20.csv:
 	SPEED=faster_scanner SCAN_END=20 ./benchmark.sh
