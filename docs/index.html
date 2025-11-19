@@ -140,6 +140,8 @@
     <input type="number" id="countInput" min="1" value="33">
     <label for="separatorInput">Separator:</label>
     <input type="text" id="separatorInput" maxlength="1" value="-">
+    <!-- Dark/Light theme toggle -->
+    <button id="themeToggleBtn">Switch to Light Theme</button>
     <button id="generateMultipleBtn">Generate</button>
   </section>
 
@@ -166,10 +168,44 @@
     const multiBtn = document.getElementById('generateMultipleBtn');
     const countInput = document.getElementById('countInput');
     const separatorInput = document.getElementById('separatorInput');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const listDiv = document.getElementById('namesList');
 
     // Initialise separator from the first input
     setSeparator(separatorInput.value || '-');
+
+    // -------------------------------------------------
+    // Theme handling (dark <-> light)
+    // -------------------------------------------------
+    let isDark = true;   // start with the dark theme (the default CSS)
+    const applyTheme = () => {
+      if (isDark) {
+        // Dark theme (same colours as the original page)
+        setTheme({
+          primaryColor: '#ff6600',
+          backgroundColor: '#1e1e1e',
+          textColor: '#f0f0f0'
+        });
+        themeToggleBtn.textContent = 'Switch to Light Theme';
+      } else {
+        // Light theme – feel free to adjust colours as you like
+        setTheme({
+          primaryColor: '#0066ff',
+          backgroundColor: '#ffffff',
+          textColor: '#000000'
+        });
+        themeToggleBtn.textContent = 'Switch to Dark Theme';
+      }
+    };
+
+    // Initialise the correct theme on page load
+    applyTheme();
+
+    // Toggle theme when the button is clicked
+    themeToggleBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      applyTheme();
+    });
 
     // Keep both separator inputs in sync and update the library separator
     function updateSeparatorFrom(input) {
