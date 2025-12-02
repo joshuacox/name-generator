@@ -51,7 +51,7 @@ set -l SEPARATOR (set -q SEPARATOR; and echo $SEPARATOR; or echo "-")
 if set -q counto
     set -l COUNT_O $counto
 else if __cmd_exists tput
-    set -l COUNT_O (tput lines ^/dev/null)
+    set -l COUNT_O (tput lines)
     # tput may fail (e.g. no tty); fall back to 24
     if test -z "$COUNT_O"
         set COUNT_O 24
