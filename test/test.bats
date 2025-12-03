@@ -17,6 +17,19 @@ setup() {
     export counto=1
 }
 
+# fish
+@test "test name-generator_fish at 10" {
+  result="$(counto=10 ./name-generator.fish|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_fish at 13" {
+  result="$(counto=13 ./name-generator.fish|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test fish test/test" {
+  result=$(./name-generator.fish)
+  assert_equal "$result" "test_test"
+}
 # go
 @test "test name-generator_go at 10" {
   result="$(counto=10 ./name-generator_go|wc -l)"

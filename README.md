@@ -21,6 +21,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. elisp
 1. elixir
 1. erlang
+1. fish
 1. golang
 1. haskell
 1. java

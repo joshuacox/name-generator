@@ -28,6 +28,7 @@ slow_bench_runnr () {
     './name-generator_cpp_O1' \
     './name-generator_go' \
     './name-generator.sh' \
+    './name-generator.fish' \
     './name-generator.bash' \
     './name-generator.zsh' \
     './name-generator.ts' \
@@ -73,6 +74,7 @@ slowest_scanner_bench_runnr () {
     'counto={num_count} ./name-generator_go' \
     'counto={num_count} ./name-generator.sh' \
     'counto={num_count} ./name-generator.bash' \
+    'counto={num_count} ./name-generator.fish' \
     'counto={num_count} ./name-generator.zsh' \
     'counto={num_count} ./name-generator.jl' \
     'counto={num_count} ./name-generator.el' \
@@ -116,6 +118,7 @@ slow_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator_go' \
     'counto=$((2**{num_count})) ./name-generator.sh' \
     'counto=$((2**{num_count})) ./name-generator.bash' \
+    'counto=$((2**{num_count})) ./name-generator.fish' \
     'counto=$((2**{num_count})) ./name-generator.zsh' \
     'counto=$((2**{num_count})) ./name-generator.js' \
     'counto=$((2**{num_count})) ./name-generator.ts' \

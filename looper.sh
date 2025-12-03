@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-: ${FILES:='name-generator.sh'}
-: ${TEST:="make test"}
+#: ${FILES:='name-generator.sh'}
+#: ${TEST:="make test"}
+: ${FILES:='name-generator.fish'}
+: ${TEST:="./name-generator.fish"}
 : ${MESSAGE:="/test ${TEST}"}
 : "${counto:=24}"
 
