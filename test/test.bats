@@ -17,6 +17,19 @@ setup() {
     export counto=1
 }
 
+# pascal
+@test "test name-generator_pascal at 10" {
+  result="$(counto=10 ./name-generator_pascal|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_pascal at 13" {
+  result="$(counto=13 ./name-generator_pascal|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test pascal test/test" {
+  result=$(./name-generator_pascal)
+  assert_equal "$result" "test_test"
+}
 # fish
 @test "test name-generator_fish at 10" {
   result="$(counto=10 ./name-generator.fish|wc -l)"

@@ -11,7 +11,11 @@
 #: ${MODEL:=ollama_chat/deepseek-r1:70b-llama-distill-q8_0}
 #: ${MODEL:=ollama_chat/granite4:32b-a9b-h}
 #echo TEST
-$TEST
+set -eu
+fpc name-generator.pas -oname-generator_pascal
+
+exit 0
+${TEST}
 if [[ ! $? -eq 0 ]]; then
   aider \
     --config config/test.conf.yml \

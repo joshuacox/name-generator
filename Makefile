@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit rust data
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal
 
 clean:
 	-@rm -v name-generator 
@@ -10,6 +10,7 @@ clean:
 	-@rm -v name-generator_go
 	-@rm -v name_generator.beam
 	-@rm -v NameGeneratorScala.class
+	-@rm -v name-generator_pascal
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -110,3 +111,6 @@ docs/slow_scanner-5.csv:
 docs/slowest_scanner-10.csv:
 	SPEED=slowest_scanner SCAN_END=10 ./benchmark.sh
 	cp log/slowest_scanner-10.csv docs/
+
+name-generator_pascal:
+	fpc name-generator.pas -oname-generator_pascal
