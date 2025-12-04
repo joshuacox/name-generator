@@ -5,13 +5,17 @@
 read:
   - "./name-generator.sh"
   - "./test.sh"
-  - "./test/r.bats"
+  - "./test/d.bats"
   - "./test/test"
+  #- "./test/r.bats"
 file: 
-  - "./name-generator.r"
+  - "./name-generator_d.d"
+  #- "./name-generator.r"
 #test-cmd: 'zig build-exe -I . name-generator_zig.zig -lc'
 #test-cmd: 'Rscript name-generator.r'
-test-cmd: 'ponyc -b name-generator_pony'
+#test-cmd: 'ponyc -b name-generator_pony'
+#test-cmd: 'dmd name-generator_d.d'
+test-cmd: 'bats -x test/d.bats'
 auto-test: true
 editor-edit-format: editor-whole
 #editor-edit-format: editor-diff

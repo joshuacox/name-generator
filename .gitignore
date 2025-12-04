@@ -1,12 +1,13 @@
 .aider*
 name-generator
-name-generator_pascal
-name-generator_go
-name-generator_cpp
 name-generator_O1
-name-generator_cpp_O1
 name-generator_O2
+name-generator_cpp
+name-generator_cpp_O1
 name-generator_cpp_O2
+name-generator_d
+name-generator_go
+name-generator_pascal
 name-generator_zig
 *.class
 .cabal-sandbox/

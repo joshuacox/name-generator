@@ -16,9 +16,9 @@
 module name_generator;
 
 import std.stdio;
-import std.file;
-import std.path;
-import std.process : execute;
+import std.file : dirEntries, readText, SpanMode, isFile, exists;
+import std.path : absolutePath, dirName;   // keep dirName for HERE, drop joinPath
+import std.process : execute, environment;   // <-- new
 import std.string;
 import std.algorithm : filter, map, canFind, sort, min;
 import std.conv : to;
@@ -28,9 +28,11 @@ import std.array : array;
 import core.stdc.stdlib : getenv;
 
 /// Retrieve an environment variable as a D string. Returns an empty string if not set.
+/// Retrieve an environment variable as a D string. Returns an empty string if not set.
 string getEnv(string name) {
-    const char* p = getenv(name.toStringz);
-    return p ? to!string(p) : "";
+    // `environment` returns a `string[string]` map that is already trimmed.
+    // If the key is missing we return an empty string.
+    return environment.get(name, "");
 }
 
 /// Return the value of an environment variable or a default.
@@ -62,8 +64,9 @@ int getCountO() {
     // Step 2: tput lines
     try {
         // `execute` runs the command and returns its stdout as a string.
-        auto out = execute(["tput", "lines"]);
-        return parseIntOr(strip(out), 24);
+        auto output = execute(["tput", "lines"]);
+        // `execute` returns a tuple (status, output). Use the second element.
+        return parseIntOr(strip(output[1]), 24);
     } catch (Exception) {
         // ignore – fall back
     }
@@ -74,19 +77,19 @@ int getCountO() {
 
 /// Return a random regular file from `folder`.
 string pickRandomFile(string folder) {
-    // DirEntryType.file is defined in std.file
-    auto entries = dirEntries(folder, DirEntryType.file);
-    enforce(!entries.empty, "Folder `" ~ folder ~ "` contains no regular files.");
+    // List entries in the folder and keep only regular files.
+    auto entries = dirEntries(folder, "*", SpanMode.shallow, true)
+                    .filter!((e) => e.isFile)
+                    .array;   // materialise as an array of DirEntry
 
-    // Convert to array of full paths
-    string[] files;
-    foreach (e; entries) {
-        files ~= e.path;
-    }
+    enforce(!entries.empty,
+            "Folder `" ~ folder ~ "` contains no regular files.");
 
-    // Pick random index
-    auto idx = uniform(0, files.length);
-    return files[idx];
+    // Pick a random index
+    auto idx = uniform(0, entries.length);
+    // Return the full absolute path of the selected entry
+    //return folder ~ "/" ~ entries[idx].name;
+    return entries[idx].name;
 }
 
 /// Read all non‑empty, trimmed lines from a file.
@@ -121,17 +124,27 @@ void main() {
     immutable string SEPARATOR = envOrDefault("SEPARATOR", "-");
 
     // Determine folders (defaults relative to current working directory)
-    immutable string HERE = dirName(__FILE__); // not strictly needed, but kept for parity
-    immutable string NOUN_FOLDER = envOrDefault("NOUN_FOLDER", "nouns");
-    immutable string ADJ_FOLDER  = envOrDefault("ADJ_FOLDER",  "adjectives");
+    immutable string HERE = dirName(__FILE__); // kept for parity with other ports
+    immutable string NOUN_FOLDER = absolutePath(envOrDefault("NOUN_FOLDER", "nouns"));
+    immutable string ADJ_FOLDER  = absolutePath(envOrDefault("ADJ_FOLDER",  "adjectives"));
 
     // Resolve noun and adjective files
     string nounFile = getEnv("NOUN_FILE");
-    if (nounFile.length == 0) {
+    if (nounFile.length != 0) {
+        // make the path absolute so the later read works even if cwd changes
+        nounFile = absolutePath(nounFile);
+        enforce(exists(nounFile) && isFile(nounFile),
+                "Environment variable NOUN_FILE points to a non‑regular file: " ~ nounFile);
+    } else {
         nounFile = pickRandomFile(NOUN_FOLDER);
     }
+
     string adjFile = getEnv("ADJ_FILE");
-    if (adjFile.length == 0) {
+    if (adjFile.length != 0) {
+        adjFile = absolutePath(adjFile);
+        enforce(exists(adjFile) && isFile(adjFile),
+                "Environment variable ADJ_FILE points to a non‑regular file: " ~ adjFile);
+    } else {
         adjFile = pickRandomFile(ADJ_FOLDER);
     }
 

@@ -17,6 +17,23 @@ setup() {
     export counto=1
 }
 
+# D
+@test "make name-generator_d" {
+  rm -fv ./name-generator_d
+  make ./name-generator_d
+}
+@test "test name-generator_d at 10" {
+  result="$(counto=10 ./name-generator_d|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_d at 13" {
+  result="$(counto=13 ./name-generator_d|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test D test/test" {
+  result=$(./name-generator_d)
+  assert_equal "$result" "test_test"
+}
 # R
 @test "test name-generator.r at 10" {
   result="$(counto=10 ./name-generator.r|wc -l)"

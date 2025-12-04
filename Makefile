@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit rust data
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d
 
 clean:
 	-@rm -v name-generator 
@@ -11,6 +11,7 @@ clean:
 	-@rm -v name_generator.beam
 	-@rm -v NameGeneratorScala.class
 	-@rm -v name-generator_pascal
+	-@rm -v name-generator_d
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -104,14 +105,13 @@ docs/slowest_scanner-10.csv:
 name-generator_pascal:
 	fpc name-generator.pas -oname-generator_pascal
 
+name-generator_d:
+	dmd name-generator_d.d
+
 # WIPs
 #
 name-generator_zig:
 	zig build-exe -I . name-generator_zig.zig -lc
 
-dmd name-generator_d:
-	dmd name-generator_d.d
-
 name-generator_pony:
 	ponyc -b name-generator_pony
-
