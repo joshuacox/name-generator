@@ -1,11 +1,13 @@
 .aider*
 name-generator
+name-generator_pascal
 name-generator_go
 name-generator_cpp
 name-generator_O1
 name-generator_cpp_O1
 name-generator_O2
 name-generator_cpp_O2
+name-generator_zig
 *.class
 .cabal-sandbox/
 cabal.sandbox.config
@@ -89,7 +91,6 @@ bench.html
 .projectile
 name_generator.beam
 erl_crash.dump
-name-generator_zig
 .cid
 log
 *.jar
