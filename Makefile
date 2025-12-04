@@ -63,17 +63,6 @@ benchmark.cast:
 name-generator.jar:
 	kotlinc name-generator.kt -include-runtime -d name-generator.jar
 
-# WIPs
-#
-name-generator_zig:
-	zig build-exe -I . name-generator_zig.zig -lc
-
-dmd name-generator_d:
-	dmd name-generator_d.d
-
-name-generator_pony:
-	ponyc -b name-generator_pony
-
 commit:
 	aider --commit --model=ollama_chat/llama3.2
 
@@ -114,3 +103,15 @@ docs/slowest_scanner-10.csv:
 
 name-generator_pascal:
 	fpc name-generator.pas -oname-generator_pascal
+
+# WIPs
+#
+name-generator_zig:
+	zig build-exe -I . name-generator_zig.zig -lc
+
+dmd name-generator_d:
+	dmd name-generator_d.d
+
+name-generator_pony:
+	ponyc -b name-generator_pony
+
