@@ -3,8 +3,11 @@
 #Rscript name-generator.r
 #bats -x test/r.bats
 #ponyc -b name-generator_pony
-rm name-generator_d
-set -eu
-dmd name-generator_d.d
-./name-generator_d
-bats -x test/d.bats
+# rm name-generator_d
+# set -eu
+# dmd name-generator_d.d
+# ./name-generator_d
+# bats -x test/d.bats
+cd name_generator_gleam
+rm -rf build
+gleam run

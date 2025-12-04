@@ -8,20 +8,20 @@ import gleam/erlang
 
 pub fn main() {
   // Separator (default "-")
-  let separator =
-    case erlang:get_env("SEPARATOR") {
-      Some(s) -> s
+  let separator: String =
+    case erlang.get_env("SEPARATOR") {
+      Some(s) -> s,
       None -> "-"
     }
 
   // Number of lines to emit (default 24)
-  let count_o =
-    case erlang:get_env("counto") {
+  let count_o: Int =
+    case erlang.get_env("counto") {
       Some(s) ->
         case string.to_int(s) {
-          Ok(i) -> i
+          Ok(i) -> i,
           Error(_) -> 24
-        }
+        },
       None -> 24
     }
 
@@ -44,45 +44,52 @@ fn resolve_file(
   folder_env: String,
   default_folder: String,
 ) -> String {
-  // If the file env var is set, use it directly
-  case erlang:get_env(file_env) {
-    Some(path) -> path
-    None ->
-      // Determine the folder to search
-      let folder =
-        case erlang:get_env(folder_env) {
-          Some(f) -> f
-          None -> default_folder
-        }
+  // If the environment variable points to a file, use it.
+  // Otherwise pick a random regular file from the appropriate folder.
+  case erlang.get_env(file_env) {
+    Some(path) -> path,
+    None -> resolve_from_folder(folder_env, default_folder)
+  }
+}
 
-      // List entries in the folder
-      let entries =
-        case erlang:list_dir(folder) {
-          Ok(es) -> es
-          Error(_) -> io:panic("Cannot list folder " <> folder)
-        }
+fn resolve_from_folder(
+  folder_env: String,
+  default_folder: String,
+) -> String {
+  // Determine which folder to use
+  let folder =
+    case erlang.get_env(folder_env) {
+      Some(f) -> f,
+      None -> default_folder
+    }
 
-      // Pick a random entry (the original scripts assume all entries are regular files)
-      let idx = random:int(0, List.length(entries))
-      case List.at(entries, idx) {
-        Some(name) -> folder <> "/" <> name
-        None -> io:panic("No files found in folder " <> folder)
-      }
+  // Get the list of entries in that folder
+  let entries =
+    case erlang.list_dir(folder) {
+      Ok(es) -> es,
+      Error(_) -> io.panic("Cannot list folder " <> folder)
+    }
+
+  // Pick a random entry
+  let idx = random.int(0, list.length(entries))
+  case list.at(entries, idx) {
+    Ok(name) -> folder <> "/" <> name,
+    Error(_) -> io.panic("No files found in folder " <> folder)
   }
 }
 
 // Read a file, split on newlines, trim whitespace, and drop empty lines
 fn read_nonempty_lines(path: String) -> List(String) {
   let content =
-    case io:read_file(path) {
-      Ok(c) -> c
-      Error(_) -> io:panic("Cannot read file " <> path)
+    case io.read_file(path) {
+      Ok(c) -> c,
+      Error(_) -> io.panic("Cannot read file " <> path)
     }
 
   content
   |> string.split("\n")
-  |> List.map(fn(line) { string.trim(line) })
-  |> List.filter(fn(line) { line != "" })
+  |> list.map(fn(line) { string.trim(line) })
+  |> list.filter(fn(line) { line != "" })
 }
 
 // Generate `count` names and print each on its own line
@@ -102,7 +109,7 @@ fn generate_and_print(
 
       // Build the name and output it
       let name = adj <> separator <> noun
-      io:println(name)
+      io.println(name)
 
       // Continue
       loop(remaining - 1)
@@ -114,11 +121,12 @@ fn generate_and_print(
 }
 
 // Helper: pick a random element from a non‑empty list
-fn random_choice(list: List(a)) -> a {
-  let len = List.length(list)
-  let idx = random:int(0, len)
-  case List.at(list, idx) {
-    Some(v) -> v
-    None -> io:panic("Attempted to pick from an empty list")
+fn random_choice(items: List(a)) -> a {
+  let len = list.length(items)
+  let idx = random.int(0, len)
+  case list.at(items, idx) {
+    Ok(v) -> v,
+    Error(_) -> io.panic("Attempted to pick from an empty list")
   }
 }
+ // End of file – compiled with panic imported unqualified
