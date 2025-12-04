@@ -32,15 +32,24 @@ cut -f1 -d, data/dogNames2.csv \
   > alternative-nouns/dog_names.list
 # drug names are not so good commenting for now
 # cat DrugNames.txt|sort|uniq|tr ' ' '-'|tr '/' '-'
+#cut -f1 -d, data/eldersScrollsNames.csv|sort|uniq -c|sort -n|wc -l
+cut -f1 -d, data/eldersScrollsNames.csv \
+  |tr '[:upper:]' '[:lower:]' \
+  |sort|uniq \
+  > alternative-nouns/elderscrolls.list 
 
 # congolmerate
 cat alternative-nouns/*.list \
   |grep -v ';' \
+  |sed "s/'//"
+  |sed "s/-//"
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
-  >nouns/full.list 
+  > nouns/full.list 
 cat alternative-adjectives/*.list \
   |grep -v ';' \
+  |sed "s/'//"
+  |sed "s/-//"
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
   > adjectives/full.list
