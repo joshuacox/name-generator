@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 set -eu
-zig build-exe -I . name-generator_zig.zig -lc
+#zig build-exe -I . name-generator_zig.zig -lc
+Rscript name-generator.r
+bats -x test/r.bats

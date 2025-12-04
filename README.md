@@ -35,6 +35,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. perl
 1. php
 1. python
+1. R
 1. racket
 1. raku
 1. ruby

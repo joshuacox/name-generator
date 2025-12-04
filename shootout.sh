@@ -7,7 +7,7 @@
 
 countzero=0
 
-$TEST
+${TEST}
 if [[ ! $? -eq 0 ]]; then
 for i in $(cat ${MODELS_FILE}); do
   echo "$i  <=======================" 
@@ -15,10 +15,13 @@ for i in $(cat ${MODELS_FILE}); do
     --config config/shootout.conf.yml \
     -m "${MESSAGE}"\
     --model "ollama_chat/$i" \
+    --editor-model "ollama_chat/$i" \
+    --weak-model "ollama_chat/$i" \
     ${FILES}
   ((countzero++))
-  $TEST
+  ${TEST}
   if [[ $? -eq 0 ]]; then
+    echo "${TEST} $i" >> winners.list
     break
   fi
   

@@ -44,6 +44,11 @@ separator <- Sys.getenv("SEPARATOR", "-")  # Default separator
 noun_folder <- Sys.getenv("NOUN_FOLDER", "./nouns")
 adj_folder <- Sys.getenv("ADJ_FOLDER", "./adjectives")
 
+counto_default <- as.integer(Sys.getenv("counto", "24"))
+if (is.na(counto_default) || counto_default < 1) {
+  counto_default <- 24
+}
+
 noun_file <- resolve_file("NOUN_FILE", noun_folder)
 adj_file <- resolve_file("ADJ_FILE", adj_folder)
 
@@ -94,19 +99,37 @@ generate_names <- function(count = 24) {
 # Command line handling
 # ------------------------------------------------------------------------------- #
 
-if (!require(docopt)) {
-  install.packages("docopt")
-  library(docopt)
+
+# Simple command‑line argument parsing (no external packages)
+# Supported flags:
+#   --count N      Number of names to generate (default: 24)
+#   --separator S  Separator between adjective and noun (default: env SEPARATOR or "-")
+parse_args <- function() {
+  args <- commandArgs(trailingOnly = TRUE)
+  # defaults
+  count  <- counto_default
+  sep    <- separator   # value already read from env (or "-")
+  
+  i <- 1
+  while (i <= length(args)) {
+    arg <- args[i]
+    if (arg == "--count" && (i + 1) <= length(args)) {
+      count <- as.integer(args[i + 1])
+      i <- i + 1
+    } else if (arg == "--separator" && (i + 1) <= length(args)) {
+      sep <- args[i + 1]
+      i <- i + 1
+    } else {
+      stop(sprintf("Unrecognised argument: %s", arg))
+    }
+    i <- i + 1
+  }
+  list(count = count, separator = sep)
 }
-
-usage <- "Usage: name-generator.r [options]
-
-Options:
---count N      Number of names to generate [default: 24]
---separator S  Separator between adjective and noun [default: -]"
-
-opts <- docopt(usage)
-
 # Main execution
-names <- generate_names(as.integer(opts$count))
+args <- parse_args()
+# Override the separator variable with the command‑line value (if any)
+separator <- args$separator
+
+names <- generate_names(as.integer(args$count))
 cat(names, sep = "\n")

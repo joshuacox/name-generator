@@ -1,7 +1,20 @@
-read: "./name-generator.sh"
-file: "./name-generator.pony"
-#editor-edit-format: editor-whole
-editor-edit-format: editor-diff
+# read:
+#   - "./test/mat.bats"
+# file: 
+#   - "./name-generator_zig.zig"
+read:
+  - "./name-generator.sh"
+  - "./test.sh"
+  - "./test/r.bats"
+  - "./test/test"
+file: 
+  - "./name-generator.r"
+#test-cmd: 'zig build-exe -I . name-generator_zig.zig -lc'
+#test-cmd: 'Rscript name-generator.r'
+test-cmd: 'bats -x test/r.bats'
+auto-test: true
+editor-edit-format: editor-whole
+#editor-edit-format: editor-diff
 yes-always: true
 architect: true
 auto-accept-architect: true
