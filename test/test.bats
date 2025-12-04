@@ -17,6 +17,19 @@ setup() {
     export counto=1
 }
 
+# octave
+@test "test name-generator.m at 10" {
+  result="$(counto=10 ./name-generator.m|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.m at 13" {
+  result="$(counto=13 ./name-generator.m|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test octave test/test" {
+  result=$(./name-generator.m)
+  assert_equal "$result" "test_test"
+}
 # pascal
 @test "test name-generator_pascal at 10" {
   result="$(counto=10 ./name-generator_pascal|wc -l)"

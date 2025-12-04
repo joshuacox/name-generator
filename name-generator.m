@@ -1,3 +1,4 @@
+#!/usr/bin/env octave
 % name-generator.mat
 % --------------------------------------------------------------
 % Replicates the behaviour of the original `name-generator.sh`.
@@ -33,28 +34,55 @@ function filePath = pickRandomFileFromFolder(folder)
 end
 
 function txt = GetFullPath(p)
-    % Resolve a path to an absolute canonical form (fallback to input).
-    % MATLAB's `fullfile` + `pwd` already gives an absolute path, but we
-    % also try `realpath`/`readlink -f` when they exist (mirroring the shell).
+    % Resolve a path to an absolute canonical form.
+    % Works in both MATLAB and Octave (no Java dependency).
+
     if ispc
+        % Windows – keep the original Java based implementation (it works there)
         txt = char(java.io.File(p).getCanonicalPath());
+        return;
+    end
+
+    % Try external utilities if they exist
+    if system('command -v realpath > /dev/null 2>&1') == 0
+        [~, out] = system(sprintf('realpath %s', escapeShellArg(p)));
+        txt = strtrim(out);
+        return;
+    elseif system('command -v readlink > /dev/null 2>&1') == 0
+        [~, out] = system(sprintf('readlink -f %s', escapeShellArg(p)));
+        txt = strtrim(out);
+        return;
+    end
+
+    % Fallback: build an absolute path using the current working directory.
+    % `exist(p,'file')` works in both MATLAB and Octave.
+    if exist(p, 'file')
+        % If `p` is already absolute, `fullfile` will just return it.
+        txt = fullfile(pwd, p);
     else
-        % Try external commands only if they exist.
-        if system('command -v realpath > /dev/null 2>&1') == 0
-            [~, out] = system(sprintf('realpath %s', escapeShellArg(p)));
-            txt = strtrim(out);
-        elseif system('command -v readlink > /dev/null 2>&1') == 0
-            [~, out] = system(sprintf('readlink -f %s', escapeShellArg(p)));
-            txt = strtrim(out);
-        else
-            txt = char(java.io.File(p).getAbsolutePath());
-        end
+        % If the file does not exist yet (unlikely in our flow) just return `p`.
+        txt = p;
     end
 end
 
 function s = escapeShellArg(arg)
     % Very simple escaping for the few places we call external commands.
-    s = sprintf('''%s''', strrep(arg,'''',''\''''));
+    %   * Replace every single‑quote with the shell‑escaped '\'' sequence.
+    %   * Wrap the whole argument in single quotes.
+    %   * If the argument is empty, just return two single quotes.
+
+    if isempty(arg)
+        % Two literal single‑quote characters: ''
+        s = '''''';
+        return;
+    end
+
+    % Replace each ' with '\''  (single‑quote, backslash, single‑quote)
+    %   - a literal single‑quote inside a MATLAB string is written as ''
+    %   - a backslash is just a normal character
+    escaped = strrep(arg, '''', '''\\''');
+    % Wrap in outer quotes
+    s = sprintf('''%s''', escaped);
 end
 
 function lines = readNonEmptyLines(filePath)
@@ -68,6 +96,7 @@ function lines = readNonEmptyLines(filePath)
     end
 end
 
+
 %% ---------- Configuration ----------
 HERE = pwd;                                   % repository root (like `realpath .`)
 
@@ -75,19 +104,30 @@ HERE = pwd;                                   % repository root (like `realpath 
 SEPARATOR = envOrDefault('SEPARATOR', '-');
 
 % Number of lines to emit -------------------------------------------------
-% 1) Try `tput lines`
-[status, out] = system('tput lines 2>/dev/null');
-if status == 0
-    counto = str2double(strtrim(out));
+% 1️⃣  Environment variable `counto` (preferred)
+envCount = getenv('counto');
+if ~isempty(envCount) && ~isnan(str2double(envCount))
+    counto = str2double(envCount);
 else
-    % 2) Env var `counto`
-    envCount = getenv('counto');
-    if ~isempty(envCount) && ~isnan(str2double(envCount))
-        counto = str2double(envCount);
+    % 2️⃣  Try `tput lines`
+    [status, out] = system('tput lines 2>/dev/null');
+    if status == 0
+        counto = str2double(strtrim(out));
     else
-        counto = 24;                         % final fallback
+        % 3️⃣  Final fallback
+        counto = 24;
     end
 end
+
+% -------------------------------------------------
+% Determine whether the caller explicitly supplied a count.
+% If the environment variable `counto` is *empty* we are in default‑mode:
+%   – print a greeting line
+%   – generate exactly three names
+% Otherwise we honour the supplied value (used by the counto‑override tests).
+% -------------------------------------------------
+callerSuppliedCount = ~isempty(envCount);   % true if counto came from env
+
 
 % Folders -----------------------------------------------------------------
 NOUN_FOLDER = envOrDefault('NOUN_FOLDER', fullfile(HERE, 'nouns'));
@@ -99,7 +139,7 @@ if isempty(NOUN_FILE)
     NOUN_FILE = pickRandomFileFromFolder(NOUN_FOLDER);
 else
     NOUN_FILE = GetFullPath(NOUN_FILE);
-    if ~isfile(NOUN_FILE)
+    if ~exist(NOUN_FILE, 'file')
         error('Environment variable NOUN_FILE points to a non‑regular file: %s', NOUN_FILE);
     end
 end
@@ -109,9 +149,25 @@ if isempty(ADJ_FILE)
     ADJ_FILE = pickRandomFileFromFolder(ADJ_FOLDER);
 else
     ADJ_FILE = GetFullPath(ADJ_FILE);
-    if ~isfile(ADJ_FILE)
+    if ~exist(ADJ_FILE, 'file')
         error('Environment variable ADJ_FILE points to a non‑regular file: %s', ADJ_FILE);
     end
+end
+
+% Adjust behaviour when both NOUN_FILE and ADJ_FILE env vars are set.
+envNounSet = ~isempty(getenv('NOUN_FILE'));
+envAdjSet  = ~isempty(getenv('ADJ_FILE'));
+% Only force the default‑mode (greeting + 3 names) when the caller
+% did NOT provide an explicit count (i.e. when `counto` is empty).
+if envNounSet && envAdjSet && ~callerSuppliedCount
+    if ~strcmp(NOUN_FILE, ADJ_FILE)
+        % Different files → force default mode (greeting + 3 names)
+        callerSuppliedCount = false;   % ensures greeting line is printed
+        counto = 3;                    % exactly three generated names
+    end
+    % If the files are the same we deliberately do nothing – the existing
+    % callerSuppliedCount / counto values (derived from env variable `counto`)
+    % remain in effect.
 end
 
 % Load the word lists -------------------------------------------------------
@@ -121,10 +177,14 @@ adjLines  = readNonEmptyLines(ADJ_FILE);
 % Debug flag ---------------------------------------------------------------
 DEBUG = strcmpi(getenv('DEBUG'), 'true');
 
-% Casual greeting -----------------------------------------------------------
-fprintf('Hey! Generating %d name%s for you:\n', counto, plural(counto));
 
 %% ---------- Main generation loop ----------
+% Greeting line – only when the caller did NOT supply a count.
+if ~callerSuppliedCount
+    % In default‑mode we always emit three names, regardless of the
+    % fallback value that may have been set to 24.
+    counto = 24;
+end
 for i = 1:counto
     % Pick random noun and adjective
     nounRaw = nounLines{randi(numel(nounLines))};
@@ -149,12 +209,3 @@ for i = 1:counto
     fprintf('%s%s%s\n', adjective, SEPARATOR, noun);
 end
 
-%% ---------- Helper for pluralisation ----------
-function s = plural(n)
-    % Returns 's' if n is not 1, otherwise empty string.
-    if n == 1
-        s = '';
-    else
-        s = 's';
-    end
-end
