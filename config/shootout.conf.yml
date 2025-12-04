@@ -11,7 +11,7 @@ file:
   - "./name-generator.r"
 #test-cmd: 'zig build-exe -I . name-generator_zig.zig -lc'
 #test-cmd: 'Rscript name-generator.r'
-test-cmd: 'bats -x test/r.bats'
+test-cmd: 'ponyc -b name-generator_pony'
 auto-test: true
 editor-edit-format: editor-whole
 #editor-edit-format: editor-diff
