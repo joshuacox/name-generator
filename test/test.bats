@@ -16,12 +16,12 @@ setup() {
     export SEPARATOR=_
     export counto=1
 }
+@test "make all" {
+  make clean
+  make all
+}
 
 # D
-@test "make name-generator_d" {
-  rm -fv ./name-generator_d
-  make ./name-generator_d
-}
 @test "test name-generator_d at 10" {
   result="$(counto=10 ./name-generator_d|wc -l)"
   [ "$result" -eq 10 ]
