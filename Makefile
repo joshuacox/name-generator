@@ -52,9 +52,6 @@ test:
 	./test/bats/bin/bats -x test/test.bats
 
 
-name_generator.beam:
-	erl -compile name_generator
-
 BENCHMARK.md:
 	./meta-benchmark.sh | tee BENCHMARK.md
 
@@ -115,3 +112,6 @@ name-generator_zig:
 
 name-generator_pony:
 	ponyc -b name-generator_pony
+
+name_generator.beam:
+	erl -compile name_generator

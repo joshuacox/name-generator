@@ -14,25 +14,26 @@ This project differs in that I am attempting to have a much larger adjective and
 
 Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have 
 
+1. sh
 1. bash
+1. fish
+1. zsh
 1. c
 1. cpp
 1. D
+1. golang
+1. pascal
+1. rust
 1. dart
 1. elisp
 1. elixir
 1. erlang
-1. fish
-1. golang
 1. haskell
-1. java
 1. javascript async + sync
 1. julia
-1. kotlin
 1. lua
 1. ocaml
 1. octave
-1. pascal
 1. perl
 1. php
 1. python
@@ -40,11 +41,10 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. racket
 1. raku
 1. ruby
-1. rust
-1. scala
-1. sh
 1. typescript
-1. zsh
+1. java
+1. kotlin
+1. scala
 
 PRs welcome for more!
 
