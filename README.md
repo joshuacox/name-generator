@@ -48,6 +48,13 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 
 PRs welcome for more!
 
+### Similar projects in that they aim to show one thing done on many langugages
+
+1. [Arch is the best](https://wiki.archlinux.org/title/Arch_is_the_best)
+1. [todoMVC](https://todomvc.com)
+1. [turtlekitty's dice](https://github.com/TurtleKitty/Dice)
+1. [pacman rosetta stone](https://wiki.archlinux.org/title/Pacman/Rosetta)
+
 
 ## Getting Started
 
