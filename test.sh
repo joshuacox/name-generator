@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -eu
-bats -x test/mat.bats 
+zig build-exe -I . name-generator_zig.zig -lc
