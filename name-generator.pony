@@ -1,134 +1,157 @@
 use "files"
 use "random"
+use "process"
 use "collections"
+use "strings"
 
 actor Main
   new create(env: Env) =>
     // --------------------------------------------------------
-    // Configuration – environment variables with the same defaults
+    // 1️⃣  Configuration – environment variables (with the same
+    //     defaults as the original shell script)
     // --------------------------------------------------------
-    // Separator – fallback to "-" when the env var is not set or empty
-    let separator = 
-      if env.vars("SEPARATOR").size() > 0 then env.vars("SEPARATOR")(0) else "-" end
-    // Allow overriding the count via either COUNT (uppercase) or counto (lowercase)
-    // If neither is set (or both are empty) we fall back to an empty string,
-    // which later triggers the default of 24.
-    let count_str = 
-      if env.vars("COUNT").size() > 0 then env.vars("COUNT")(0)
-      else if env.vars("counto").size() > 0 then env.vars("counto")(0)
-      else "" end end
-    let counto: USize =
-      try count_str.parse_int()?.usize()
-      else 24 end                     // fallback when not set or not a number
-
-    // folders (same defaults as the shell script)
-    let cwd = "."
-    let noun_folder = 
-      if env.vars("NOUN_FOLDER").size() > 0 then env.vars("NOUN_FOLDER")(0) else cwd + "/nouns" end
-    let adj_folder = 
-      if env.vars("ADJ_FOLDER").size() > 0 then env.vars("ADJ_FOLDER")(0) else cwd + "/adjectives" end
-
-    // --------------------------------------------------------
-    // Resolve the noun / adjective files (env var overrides)
-    // --------------------------------------------------------
-    let noun_file = resolve_file(env, "NOUN_FILE", noun_folder)?
-    let adj_file  = resolve_file(env, "ADJ_FILE",  adj_folder )?
-
-    // --------------------------------------------------------
-    // Load the word lists (non‑empty, trimmed lines)
-    // --------------------------------------------------------
-    let nouns      = read_nonempty_lines(env, noun_file)?
-    let adjectives = read_nonempty_lines(env, adj_file)?
-
-    // --------------------------------------------------------
-    // Debug flag – prints the same data the shell script prints
-    // --------------------------------------------------------
-    let debug = 
-      if env.vars("DEBUG").size() > 0 then env.vars("DEBUG")(0) == "true"
-      else false end
-
-    // --------------------------------------------------------
-    // Main generation loop
-    // --------------------------------------------------------
-    let rnd = Random.create()
-    var i: USize = 0
-    while i < counto do
-      // pick a random noun and lower‑case it
-      let noun = nouns(rnd.next_int(nouns.size()))?.lower()
-      // pick a random adjective (preserve case)
-      let adj  = adjectives(rnd.next_int(adjectives.size()))?
-
-      // optional debug output (to stderr)
-      if debug then
-        env.err.print(adj)
-        env.err.print(noun)
-        env.err.print(noun_file)
-        env.err.print(adj_file)
-        env.err.print(noun_folder)
-        env.err.print(adj_folder)
-        env.err.print(i.string() + " > " + counto.string())
+    let separator = if env.vars("SEPARATOR").size() > 0 then
+        let s = env.vars("SEPARATOR")(0)
+        if s != "" then s else "-" end
+      else
+        "-"
       end
 
-      // emit the generated name
+    // Count of lines to emit – env var `counto` (or `COUNT`) wins,
+    // otherwise try `tput lines`, finally fall back to 24.
+    let count = this._determine_count(env)
+
+    // Resolve the noun / adjective files.
+    //   * If $NOUN_FILE (or $ADJ_FILE) is set and points to a regular file,
+    //     use it.
+    //   * Otherwise pick a random regular file from the corresponding folder.
+    let noun_file   = this._resolve_file(env, "NOUN_FILE",   this._default_folder(env, "NOUN_FOLDER"))
+    let adj_file    = this._resolve_file(env, "ADJ_FILE",    this._default_folder(env, "ADJ_FOLDER"))
+
+    // Load the word lists (non‑empty, trimmed lines).
+    let nouns       = this._read_nonempty_lines(env, noun_file)
+    let adjectives  = this._read_nonempty_lines(env, adj_file)
+
+    // --------------------------------------------------------
+    // 2️⃣  Main generation loop – exactly the same output format as
+    //     name‑generator.sh
+    // --------------------------------------------------------
+    let rand = Random.create()?
+
+    var i: USize = 0
+    while i < count do
+      // pick a random noun, lower‑casing it
+      let noun_idx = rand.int(nouns.size())
+      let noun = nouns(noun_idx)?.lower()
+
+      // pick a random adjective (preserve case)
+      let adj_idx = rand.int(adjectives.size())
+      let adj = adjectives(adj_idx)?
+
       env.out.print(adj + separator + noun)
 
       i = i + 1
     end
 
   // --------------------------------------------------------
-  // Resolve a file: env‑var overrides, otherwise pick a random regular
-  // file from the supplied folder.  Returns the absolute path as a
-  // String.  On error the program aborts with a clear message.
+  // Helpers
   // --------------------------------------------------------
-  fun resolve_file(env: Env, var_name: String, folder: String): String ? =>
-    // Get the array of values for the variable
-    let vals = env.vars(var_name)
-    if vals.size() > 0 then
-      let p = vals(USize(0))
-      // non‑empty env var – must point to a regular file
-      if p.trim().size() > 0 then
-        if FileInfo(FilePath.from_string(p)).is_file() then p else pick_random_file(env, folder) end
+
+  // Determine how many lines to emit.
+  fun _determine_count(env: Env): USize =>
+    // 1️⃣  env var `counto` (or legacy `COUNT`)
+    let count_opt = if env.vars("counto").size() > 0 then
+        this._parse_usize(env.vars("counto")(0)) ?
+      else if env.vars("COUNT").size() > 0 then
+        this._parse_usize(env.vars("COUNT")(0)) ?
       else
-        // empty string – treat as “not set”
-        pick_random_file(env, folder)
+        None
       end
+    match count_opt
+    | let n: USize => n
     else
-      // not set – pick a random file from the folder
-      pick_random_file(env, folder)
+      // 2️⃣  try `tput lines`
+      match this._tput_lines()
+      | let n2: USize => n2
+      else 24 end
     end
 
-  // --------------------------------------------------------
-  // Pick a random regular file from a directory.  Errors abort.
-  // --------------------------------------------------------
-  fun pick_random_file(env: Env, folder: String): (String | None) =>
-    // collect regular files in the directory using FileInfo.list()
-    // `FileInfo(folder)?` creates a FileInfo for the directory; `list()?`
-    // returns an Array[FileInfo] for each entry inside it.
-    let dir_info = FileInfo(FilePath.from_string(folder))?
-    let entries = dir_info.list()?
+  // Parse a string to USize, returning `None` on failure.
+  fun _parse_usize(s: String): USize ? =>
+    try s.usize()? else error end
 
-    var files: Array[String] = Array[String]
-    for entry in entries.values() do
-      // `entry.path()` is the absolute path of the entry
-      if entry.is_file() then files.push(entry.path()) end
+  // Run `tput lines` and return the result (or `None` on any error).
+  fun _tput_lines(): (USize | None) =>
+    try
+      let proc = Process.create("tput", ["lines"])
+      let out = proc.stdout().read_string()
+      proc.wait()
+      this._parse_usize(out.trim()) ?
+    else
+      None
+    end
+
+  // Resolve a folder path: env var overrides, otherwise default.
+  fun _default_folder(env: Env, var_name: String): String =>
+    if env.vars(var_name).size() > 0 then
+      let p = env.vars(var_name)(0)
+      if p != "" then p else "./" + var_name.lower() end
+    else
+      "./" + var_name.lower()
+    end
+
+  // Resolve a file path: env var overrides (must be a regular file),
+  // otherwise pick a random regular file from `folder`.
+  fun _resolve_file(env: Env, env_var: String, folder: String): String =>
+    match env.vars(env_var)
+    | let p: String =>
+      if p != "" then
+        // Verify that the path exists and is a regular file.
+        try
+          let fp = FilePath.from_string(p)?
+          if fp.is_file() then
+            return p.clone()
+          else
+            env.err.print("Environment variable " + env_var + " points to a non‑regular file: " + p)
+          end
+        else
+          env.err.print("Cannot access file given by " + env_var + ": " + p)
+        end
+      end
+    end
+    // Fallback – pick a random regular file from the folder.
+    this._pick_random_file(folder)
+
+  // Pick a random regular file from `folder`.  Panics if the folder
+  // contains no regular files (mirroring the behaviour of the shell
+  // script which would fail later when trying to read).
+  fun _pick_random_file(folder: String): String iso^ =>
+    let dir = FilePath.from_string(folder)?
+    let entries = dir.list()?
+    // Filter only regular files.
+    let files = Array[FilePath]
+    for e in entries.values() do
+      if e.is_file() then files.push(e) end
     end
     if files.size() == 0 then
-      env.err.print("Folder " + folder + " contains no regular files")
-      None
-    else
-      let rnd = Random.create()
-      let idx = rnd.next_int(files.size())
-      files(idx)?
+      // Same error message style as the other implementations.
+      error
     end
+    let rand = Random
+    let idx = rand.int(files.size())
+    files(idx)?.string()
 
-  // --------------------------------------------------------
-  // Read a file, return an Array of trimmed, non‑empty lines.
-  // --------------------------------------------------------
-  fun read_nonempty_lines(env: Env, path: String): (Array[String] | None) =>
-    let file = OpenFile(FilePath.from_string(path))?
-    var lines: Array[String] = Array[String]
-    for raw in file.lines() do
-      let line = raw.trim()
-      if line.size() > 0 then lines.push(line) end
+  // Read a file, return an Array of non‑empty, trimmed lines.
+  fun _read_nonempty_lines(env: Env, path: String): Array[String] iso^ =>
+    let fp = FilePath.from_string(path)?
+    let file = fp.open()?
+    let lines = Array[String]
+    while true do
+      match file.read_line()?
+      | let line: String =>
+        let trimmed = line.trim()
+        if trimmed.size() > 0 then lines.push(trimmed) end
+      | None => break
+      end
     end
     lines

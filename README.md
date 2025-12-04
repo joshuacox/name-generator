@@ -48,7 +48,7 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 
 PRs welcome for more!
 
-### Similar projects in that they aim to show one thing done on many langugages
+### Similar projects in that they aim to show one thing done in many ways.
 
 1. [Arch is the best](https://wiki.archlinux.org/title/Arch_is_the_best)
 1. [todoMVC](https://todomvc.com)
@@ -60,8 +60,8 @@ PRs welcome for more!
 
 #### web based
 
-1. simply visit the [site](https://joshuacox.github.io/name-generator/) in github.io.
-1. click generate
+1. Simply visit the [site](https://joshuacox.github.io/name-generator/) in github.io.
+1. Click generate.
 
 #### CLI based
 
@@ -71,7 +71,7 @@ follow these steps:
 1. Navigate to the cloned repository: `cd name-generator`
 1. Run the script using shell: `./name-generator.sh`
 1. Run the script using Python: `./name-generator.py`
-1. refer to the `test/test.bats` or `benchmark.sh` script for examples of running all languages that are tested
+1. Refer to the `test/test.bats` or `benchmark.sh` script for examples of running all languages that are tested
 
 ## Usage
 
@@ -88,7 +88,7 @@ NOUN_FILE=alternative-nouns/greek_gods.list ADJ_FILE=alternative-adjectives/tast
 NOUN_FILE=alternative-nouns/us_presidents.list ADJ_FILE=alternative-adjectives/positive.list ./name-generator.sh
 ```
 
-specify a count:
+Specify a count:
 
 e.g.
 

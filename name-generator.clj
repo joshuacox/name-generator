@@ -1,118 +1,124 @@
-#!/usr/bin/env -S clojure -M ./name-generator.clj
+#!/usr/bin/env clojure
+;; --------------------------------------------------------
+;; Clojure implementation of the original `name-generator.sh`
+;; --------------------------------------------------------
+;; Behaviour:
+;;   * SEPARATOR   – defaults to "-"
+;;   * NOUN_FILE   – env var overrides, otherwise a random regular file
+;;                   from $NOUN_FOLDER (default "./nouns")
+;;   * ADJ_FILE    – same logic, using $ADJ_FOLDER (default "./adjectives")
+;;   * counto      – number of lines to emit.
+;;                   1️⃣ env var `counto` (preferred)
+;;                   2️⃣ `tput lines` (if available)
+;;                   3️⃣ fallback = 24
+;;   * Each output line = <adjective><SEPARATOR><noun>
+;;       – adjective keeps its original case
+;;       – noun is lower‑cased
+;; ---------------------------------------------------------
+
 (ns name-generator.core
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [clojure.java.shell :refer [sh]])
-  (:import [java.nio.file Files Paths Path LinkOption]
-           [java.util.stream Stream]))
+            [clojure.string   :as str]
+            [clojure.java.shell :refer [sh]]))
 
-;; --------------------------------
-;; Helpers
-;; --------------------------------
+;; ---------------------------------------------------------
+;; Helper – read an environment variable, return nil when not set
+;; ---------------------------------------------------------
 (defn env
-  "Return the value of environment variable `k` or `default` if not set or blank."
-  [k default]
-  (let [v (System/getenv k)]
-    (if (and v (not (str/blank? v))) v default)))
+  [k]
+  (let [v (System/getenv (str k))]
+    (when (and v (not (str/blank? v))) v)))
 
-(defn int-or
-  "Parse `s` as an integer, returning `default` on failure."
-  [s default]
-  (try
-    (Integer/parseInt (str/trim s))
-    (catch Exception _ default)))
+;; ---------------------------------------------------------
+;; Resolve a folder path (defaults to cwd/<subdir>)
+;; ---------------------------------------------------------
+(defn resolve-folder
+  [env-var default-subdir]
+  (let [env-path (env env-var)]
+    (if env-path
+      (io/file env-path)
+      (io/file (.getAbsolutePath (io/file ".")) default-subdir))))
 
-(defn terminal-lines
-  "Try to obtain the terminal height via `tput lines`; fall back to 24."
-  []
-  (let [{:keys [out exit]} (sh "tput" "lines")]
-    (if (zero? exit)
-      (int-or out 24)
-      24)))
-
-(defn list-regular-files
-  "Return a vector of absolute paths (as strings) for regular files in `dir`."
-  [dir]
-  (with-open [stream (Files/list (Paths/get dir (into-array String [])))]
-    (->> (iterator-seq (.iterator ^Stream stream))
-         (filter #(Files/isRegularFile ^Path % (into-array LinkOption [])))
-         (map #(.toString ^Path %))
-         vec)))
-
-(defn random-file
-  "Pick a random regular file from `folder`. Throws if none are found."
+;; ---------------------------------------------------------
+;; Pick a random regular file from a folder
+;; ---------------------------------------------------------
+(defn random-file-from
   [folder]
-  (let [files (list-regular-files folder)]
-    (if (empty? files)
-      (throw (ex-info (str "Folder " folder " does not contain any regular files") {}))
-      (rand-nth files))))
+  (let [files (->> (.listFiles ^java.io.File folder)
+                   (filter #(.isFile ^java.io.File %)))]
+    (when (empty? files)
+      (throw (ex-info (str "Folder " (.getPath folder) " contains no regular files")
+                      {:folder folder})))
+    (rand-nth files)))
 
+;; ---------------------------------------------------------
+;; Resolve a file: env var overrides, otherwise random file from folder
+;; ---------------------------------------------------------
+(defn resolve-file
+  [env-var folder]
+  (if-let [p (env env-var)]
+    (let [f (io/file p)]
+      (when (or (not (.exists f)) (not (.isFile f)))
+        (throw (ex-info (str "Environment variable " env-var
+                             " points to a non‑regular file: " p)
+                        {:env-var env-var :path p})))
+      f)
+    (random-file-from folder)))
+
+;; ---------------------------------------------------------
+;; Read non‑empty, trimmed lines from a file
+;; ---------------------------------------------------------
 (defn read-nonempty-lines
-  "Read a file and return a vector of non‑empty, trimmed lines."
-  [path]
-  (->> (io/reader path)
-       line-seq
-       (map str/trim)
-       (remove str/blank?)
-       vec))
+  [file]
+  (with-open [r (io/reader file)]
+    (->> (line-seq r)
+         (map str/trim)
+         (remove str/blank?))))
 
-;; --------------------------------
-;; Configuration (mirrors name-generator.sh)
-;; --------------------------------
-(def separator (env "SEPARATOR" "-"))
+;; ---------------------------------------------------------
+;; Determine how many names to generate (COUNT_O)
+;; ---------------------------------------------------------
+(defn count-o
+  []
+  (cond
+    ;; 1️⃣ env var `counto`
+    (env "counto")
+    (try
+      (Integer/parseInt (env "counto"))
+      (catch Exception _ 24))
 
-;; Number of lines to emit – use `tput lines` when available, otherwise 24.
-(def counto
-  (or (some-> (System/getenv "counto") (int-or nil))
-      (terminal-lines)))
+    ;; 2️⃣ `tput lines`
+    :else
+    (let [{:keys [out err exit]} (sh "tput" "lines")]
+      (if (zero? exit)
+        (try
+          (Integer/parseInt (str/trim out))
+          (catch Exception _ 24))
+        24))))
 
-(def here (System/getProperty "user.dir"))
-
-(def noun-folder (env "NOUN_FOLDER" (str here "/nouns")))
-(def adj-folder  (env "ADJ_FOLDER"  (str here "/adjectives")))
-
-(def noun-file (env "NOUN_FILE" (random-file noun-folder)))
-(def adj-file  (env "ADJ_FILE"  (random-file adj-folder)))
-
-;; --------------------------------
-;; Load word lists
-;; --------------------------------
-(def noun-lines (read-nonempty-lines noun-file))
-(def adj-lines  (read-nonempty-lines adj-file))
-
-(when (empty? noun-lines)
-  (throw (ex-info (str "Noun list is empty in " noun-file) {})))
-(when (empty? adj-lines)
-  (throw (ex-info (str "Adjective list is empty in " adj-file) {})))
-
-;; --------------------------------
-;; Debug helper (mirrors the shell script's debugger)
-;; --------------------------------
-(def debug? (= (env "DEBUG" "") "true"))
-
-(defn debug-print
-  "Print debugging information to stderr when DEBUG=true."
-  [adjective noun countzero]
-  (when debug?
-    (binding [*out* *err*]
-      (println adjective)
-      (println noun)
-      (println adj-file)
-      (println adj-folder)
-      (println noun-file)
-      (println noun-folder)
-      (println (format "%s > %s" countzero counto)))))
-
-;; --------------------------------
+;; ---------------------------------------------------------
 ;; Main generation loop
-;; --------------------------------
+;; ---------------------------------------------------------
 (defn -main
-  "Generate `counto` names, printing each to stdout."
   [& _args]
-  (dotimes [i counto]
-    (let [noun      (-> (rand-nth noun-lines) str/lower-case)
-          adjective (rand-nth adj-lines)]
-      (debug-print adjective noun i)
-      (println (str adjective separator noun)))))
+  (let [separator   (or (env "SEPARATOR") "-")
+        noun-folder (resolve-folder "NOUN_FOLDER" "nouns")
+        adj-folder  (resolve-folder "ADJ_FOLDER"  "adjectives")
+        noun-file   (resolve-file "NOUN_FILE" noun-folder)
+        adj-file    (resolve-file "ADJ_FILE"  adj-folder)
+        nouns       (vec (read-nonempty-lines noun-file))
+        adjs        (vec (read-nonempty-lines adj-file))
+        total       (count-o)]
 
-;; Allow the script to be run directly with `clj -M -m name-generator.core`
+    (when (or (empty? nouns) (empty? adjs))
+      (throw (ex-info "One of the source files contains no usable lines"
+                      {:noun-file noun-file
+                       :adj-file  adj-file})))
+
+    (dotimes [_ total]
+      (let [noun (-> (rand-nth nouns) str/lower-case)
+            adj  (rand-nth adjs)]
+        (println (str adj separator noun))))))
+
+;; Allow the script to be run directly (`clojure -M -m name-generator.core`)
+;; The `:gen-class` directive is not needed because we use `-main` as an entry point.
