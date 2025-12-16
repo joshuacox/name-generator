@@ -36,20 +36,20 @@ cut -f1 -d, data/dogNames2.csv \
 cut -f1 -d, data/eldersScrollsNames.csv \
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
-  > alternative-nouns/elderscrolls.list 
+  > alternative-fantasy/elderscrolls.list 
 
 # congolmerate
 cat alternative-nouns/*.list \
   |grep -v ';' \
-  |sed "s/'//"
-  |sed "s/-//"
+  |sed "s/'//" \
+  |sed "s/-//" \
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
   > nouns/full.list 
 cat alternative-adjectives/*.list \
   |grep -v ';' \
-  |sed "s/'//"
-  |sed "s/-//"
+  |sed "s/'//" \
+  |sed "s/-//" \
   |tr '[:upper:]' '[:lower:]' \
   |sort|uniq \
   > adjectives/full.list

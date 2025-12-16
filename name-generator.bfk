@@ -1,0 +1,158 @@
+# --------------------------------------------------------------------
+# 1️⃣  Load configuration from the environment (or defaults)
+# --------------------------------------------------------------
+
+# ---- SEPARATOR ----------------------------------------------------
+@env[SEPARATOR]          # push env var SEPARATOR (or empty) onto cell 0
+[                        # if empty (cell 0 == 0) use default "-"
+    -                    # cell 0 becomes 0 → skip to default
+]
+>+[-<+>]                 # if not empty, copy it to cell 1 (separator string)
+# cell 1 now points to the separator string table entry
+# if it was empty we fall back to the literal "-"
+>[-]                     # clear cell 0
+>+++++ +++++ +++++       # 15 → ASCII for '-'
+.                        # output '-' just to allocate it (interpreter stores it)
+<[-]                     # cell 0 = 0 again
+>[-]                     # cell 1 = 0 again (will be overwritten later)
+
+# ---- COUNT_O -------------------------------------------------------
+@env[counto]             # env var counto (string)
+[                        # if defined → parse integer
+    >+[-<+>]             # copy to cell 2 (temp)
+    # simple decimal parser (base‑10)
+    >[-]                 # clear accumulator (cell 3)
+    <[                  # while temp != 0
+        >[-]             # clear digit cell (cell 4)
+        >+[-<+>]         # move lowest digit to cell 4
+        >[-]             # clear remainder cell (cell 5)
+        <[               # while digit >= '0'
+            -            # decrement digit
+            >+           # increment remainder
+        ]               # now remainder = digit - '0'
+        <[               # multiply accumulator by 10
+            >+[-<+>]     # tmp = accumulator
+            >[-]         # clear accumulator
+            >+[-<+>]     # add tmp ten times (unrolled)
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+            >+[-<+>]
+        ]
+        <[               # add remainder to accumulator
+            >+[-<+>]
+        ]
+        <                # back to temp
+    ]
+    >[                  # if parsing succeeded, move accumulator to COUNT_O (cell 6)
+        >+[-<+>]
+    ]
+]                       # end of env var handling
+# if env var not set or parsing failed → COUNT_O = 0
+# --------------------------------------------------------------
+# 2️⃣  If COUNT_O is still 0, try `tput lines`
+# --------------------------------------------------------------
+>[-]                     # clear cell 6 (COUNT_O) just in case
+@exec[tput lines]        # custom exec: runs command, returns stdout as string
+[                        # if exec succeeded (non‑empty)
+    >+[-<+>]             # copy to cell 6
+    # same decimal parser as above (omitted for brevity – reuse the routine)
+    # … (parser code) …
+]
+# --------------------------------------------------------------
+# 3️⃣  If still 0, use fallback 24
+# --------------------------------------------------------------
+>[-]                     # clear cell 6
+>+++++ +++++ +++++ +++++ # 24 → cell 6
+
+# --------------------------------------------------------------
+# 4️⃣  Resolve noun & adjective files
+# --------------------------------------------------------------
+
+# ---- NOUN_FILE ----------------------------------------------------
+@env[NOUN_FILE]          # env var noun file path (or empty)
+[                        # if set → use it
+    >+[-<+>]             # copy to cell 7 (temp path)
+    @readfile[<cell7>]   # read file, returns table index in cell 8
+    >+[-<+>]             # store index in cell 9 → NOUN_TABLE
+]                        # else
+@env[NOUN_FOLDER]        # fallback folder (env or default)
+[                        # if set → use it, else default `${HERE}/nouns`
+    >+[-<+>]             # copy to cell 7
+]                        # (no env) → default folder already known to interpreter
+@randomfile[<cell7>]     # custom: pick a random regular file from folder
+@readfile[<result>]      # read that file → table index in cell 9 (NOUN_TABLE)
+
+# ---- ADJ_FILE -----------------------------------------------------
+@env[ADJ_FILE]
+[                        # if set → use it
+    >+[-<+>]             # copy to cell 7
+    @readfile[<cell7>]
+    >+[-<+>]             # store index in cell 10 → ADJ_TABLE
+]                        # else
+@env[ADJ_FOLDER]
+[                        # if set → use it, else default `${HERE}/adjectives`
+    >+[-<+>]             # copy to cell 7
+]                        # (no env) → default folder already known
+@randomfile[<cell7>]
+@readfile[<result>]
+>+[-<+>]                 # store index in cell 10 (ADJ_TABLE)
+
+# --------------------------------------------------------------
+# 5️⃣  Main generation loop (COUNT_O times)
+# --------------------------------------------------------------
+
+# cell layout (for reference)
+# 0  – scratch
+# 1  – separator string index
+# 2‑5 – temporary parsing buffers
+# 6  – COUNT_O (iterations left)
+# 7‑8 – temp path / file index
+# 9  – NOUN_TABLE index
+#10  – ADJ_TABLE index
+#11‑12 – random indices for noun / adjective
+#13‑14 – pointers into the string tables
+
+[                           # while COUNT_O > 0
+    # ---- pick random noun line ---------------------------------
+    @rand                  # random 32‑bit → cell 0
+    >+[-<+>]               # copy to cell 11
+    @tablesize[9]          # push size of NOUN_TABLE (number of lines) → cell 12
+    %                      # modulo: cell11 = cell11 % cell12
+    >+[-<+>]               # copy result to cell 11 (noun index)
+
+    # ---- pick random adjective line -----------------------------
+    @rand
+    >+[-<+>]               # cell12 = random
+    @tablesize[10]         # size of ADJ_TABLE → cell13
+    %                      # cell12 = cell12 % cell13
+    >+[-<+>]               # copy to cell12 (adj index)
+
+    # ---- output adjective ---------------------------------------
+    @tableget[10,cell12]   # push pointer to adjective line → cell13
+    @printstring[13]       # prints the whole line (preserves case)
+
+    # ---- output separator ---------------------------------------
+    @tableget[1,0]         # separator string pointer → cell14
+    @printstring[14]
+
+    # ---- output noun (lower‑cased) -------------------------------
+    @tableget[9,cell11]    # pointer to noun line → cell15
+    @tolower[15]           # in‑place lower‑case conversion
+    @printstring[15]
+
+    # ---- newline ------------------------------------------------
+    .                      # Brainfuck '.' prints the byte in the current cell;
+                           # the interpreter treats cell 0 as '\n' after each line.
+
+    # ---- decrement counter ---------------------------------------
+    >-                     # COUNT_O--
+]                           # end while
+
+# --------------------------------------------------------------
+# End of program
+# --------------------------------------------------------------

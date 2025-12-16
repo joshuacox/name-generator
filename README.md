@@ -54,6 +54,9 @@ PRs welcome for more!
 1. [todoMVC](https://todomvc.com)
 1. [turtlekitty's dice](https://github.com/TurtleKitty/Dice)
 1. [pacman rosetta stone](https://wiki.archlinux.org/title/Pacman/Rosetta)
+1. [fantasy-names](https://www.npmjs.com/package/fantasy-names)
+1. [FantasyNamesJava](https://github.com/mp-pinheiro/fantasynamesjava)
+1. [namgen](https://github.com/joshuacox/namgen)
 
 
 ## Getting Started

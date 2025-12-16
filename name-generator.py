@@ -17,6 +17,7 @@ SEPARATOR = os.getenv("SEPARATOR", "-")
 NOUN_FOLDER = os.getenv("NOUN_FOLDER", os.path.join(HERE, "nouns"))
 ADJ_FOLDER = os.getenv("ADJ_FOLDER", os.path.join(HERE, "adjectives"))
 
+
 def get_random_file(folder: str) -> str:
     """Return a random regular file from *folder*."""
     files = [
@@ -28,19 +29,30 @@ def get_random_file(folder: str) -> str:
         raise FileNotFoundError(f"No files found in folder {folder}")
     return random.choice(files)
 
+
 def resolve_file(env_var: str, folder: str) -> str:
     """Return the file path from an environment variable or pick a random one."""
     path = os.getenv(env_var)
     if path:
         if not os.path.isfile(path):
-            raise FileNotFoundError(f"Environment variable {env_var} points to non‑existent file {path}")
+            raise FileNotFoundError(
+                f"Environment variable {env_var} points to non‑existent file {path}"
+            )
         return path
     return get_random_file(folder)
 
-def debugger(debug_mode: bool, noun: str, adjective: str,
-            noun_file: str, adj_file: str,
-            noun_folder: str, adj_folder: str,
-            countzero: int, counto: int) -> None:
+
+def debugger(
+    debug_mode: bool,
+    noun: str,
+    adjective: str,
+    noun_file: str,
+    adj_file: str,
+    noun_folder: str,
+    adj_folder: str,
+    countzero: int,
+    counto: int,
+) -> None:
     """Print debug information when DEBUG=true."""
     if not debug_mode:
         return
@@ -52,6 +64,7 @@ def debugger(debug_mode: bool, noun: str, adjective: str,
     print(f"  NOUN_FOLDER   : {noun_folder}")
     print(f"  ADJ_FOLDER    : {adj_folder}")
     print(f"  countzero > counto : {countzero} > {counto}")
+
 
 def main() -> None:
     # --------------------------------------------------------------------- #
@@ -89,13 +102,23 @@ def main() -> None:
     countzero = 0
     while countzero < max_count:
         noun = random.choice(nouns).lower()
-        adjective = random.choice(adjectives)  # keep original case, like the shell script
-        debugger(debug_mode, noun, adjective,
-                 noun_file, adj_file,
-                 NOUN_FOLDER, ADJ_FOLDER,
-                 countzero, max_count)
+        adjective = random.choice(
+            adjectives
+        )  # keep original case, like the shell script
+        debugger(
+            debug_mode,
+            noun,
+            adjective,
+            noun_file,
+            adj_file,
+            NOUN_FOLDER,
+            ADJ_FOLDER,
+            countzero,
+            max_count,
+        )
         print(f"{adjective}{SEPARATOR}{noun}")
         countzero += 1
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-aider \
+aider-ce \
+  --agent \
   --message '/test ./test.sh'
   #-m 'can you suggest improvements?'
