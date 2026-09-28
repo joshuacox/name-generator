@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T05:49:55.416Z",
+  "generatedAt": "2026-09-28T12:35:49.015Z",
   "environment": {
     "os": "Linux (Ubuntu x86_64)",
     "cpu": "Host Virtualized Multi-core",
@@ -10,193 +10,468 @@
     "compiledContenders": 10,
     "scriptingContenders": 9,
     "fastestLanguage": "Zig",
-    "fastestMeanMs": 1.14,
-    "fastestScripting": "Tcl",
-    "fastestScriptingMs": 50
+    "fastestMeanMs": 1.13,
+    "fastestScripting": "Node.js",
+    "fastestScriptingMs": 40.9,
+    "maxThroughputPerSec": 869565
   },
   "deathmatchCompiled": [
     {
       "name": "Zig",
       "command": "./name-generator_zig",
-      "mean": 1.14,
-      "min": 1.1,
-      "max": 1.21,
-      "stddev": 0.05,
+      "mean": 1.13,
+      "min": 1.06,
+      "max": 1.25,
+      "stddev": 0.08,
       "relative": 1,
-      "paradigm": "Systems"
-    },
-    {
-      "name": "Go",
-      "command": "./name-generator_go",
-      "mean": 2.05,
-      "min": 2.02,
-      "max": 2.1,
-      "stddev": 0.03,
-      "relative": 1.8,
-      "paradigm": "Systems"
-    },
-    {
-      "name": "Crystal",
-      "command": "./name-generator_crystal",
-      "mean": 2.45,
-      "min": 2.43,
-      "max": 2.47,
-      "stddev": 0.02,
-      "relative": 2.15,
-      "paradigm": "Systems"
-    },
-    {
-      "name": "Nim",
-      "command": "./name-generator_nim",
-      "mean": 4.46,
-      "min": 3.68,
-      "max": 7.4,
-      "stddev": 1.65,
-      "relative": 3.91,
       "paradigm": "Systems"
     },
     {
       "name": "C++",
       "command": "./name-generator_cpp",
-      "mean": 9.01,
-      "min": 2.51,
-      "max": 10.88,
-      "stddev": 3.63,
-      "relative": 7.9,
+      "mean": 1.98,
+      "min": 1.91,
+      "max": 2.02,
+      "stddev": 0.05,
+      "relative": 1.75,
+      "paradigm": "Systems"
+    },
+    {
+      "name": "Go",
+      "command": "./name-generator_go",
+      "mean": 2.1,
+      "min": 2,
+      "max": 2.16,
+      "stddev": 0.06,
+      "relative": 1.85,
+      "paradigm": "Systems"
+    },
+    {
+      "name": "Crystal",
+      "command": "./name-generator_crystal",
+      "mean": 2.59,
+      "min": 2.54,
+      "max": 2.65,
+      "stddev": 0.05,
+      "relative": 2.28,
+      "paradigm": "Systems"
+    },
+    {
+      "name": "Nim",
+      "command": "./name-generator_nim",
+      "mean": 3.86,
+      "min": 3.81,
+      "max": 3.99,
+      "stddev": 0.08,
+      "relative": 3.41,
       "paradigm": "Systems"
     },
     {
       "name": "Odin",
       "command": "./name-generator_odin",
-      "mean": 25.31,
-      "min": 24.95,
-      "max": 25.78,
-      "stddev": 0.33,
-      "relative": 22.21,
+      "mean": 4.62,
+      "min": 4.57,
+      "max": 4.69,
+      "stddev": 0.04,
+      "relative": 4.08,
       "paradigm": "Systems"
     },
     {
       "name": "Ada",
       "command": "./name-generator_ada",
-      "mean": 38.64,
-      "min": 38.37,
-      "max": 39.21,
-      "stddev": 0.35,
-      "relative": 33.91,
+      "mean": 7.14,
+      "min": 7.09,
+      "max": 7.18,
+      "stddev": 0.04,
+      "relative": 6.31,
       "paradigm": "Systems"
     },
     {
       "name": "Fortran",
       "command": "./name-generator_fortran",
-      "mean": 63.52,
-      "min": 63.09,
-      "max": 64,
-      "stddev": 0.38,
-      "relative": 55.75,
+      "mean": 13.47,
+      "min": 11.54,
+      "max": 18.42,
+      "stddev": 2.85,
+      "relative": 11.9,
       "paradigm": "Systems"
     },
     {
       "name": "V",
       "command": "./name-generator_v",
-      "mean": 114.64,
-      "min": 31.58,
-      "max": 154.42,
-      "stddev": 53.72,
-      "relative": 100.62,
+      "mean": 88.33,
+      "min": 38.78,
+      "max": 135.18,
+      "stddev": 42.11,
+      "relative": 78,
       "paradigm": "Systems"
     },
     {
       "name": "C",
       "command": "./name-generator",
-      "mean": 746.28,
-      "min": 666.81,
-      "max": 782.66,
-      "stddev": 46.59,
-      "relative": 655.02,
+      "mean": 747.81,
+      "min": 667.45,
+      "max": 779.01,
+      "stddev": 47.78,
+      "relative": 660.37,
       "paradigm": "Systems"
     }
   ],
   "deathmatchScripting": [
     {
-      "name": "Tcl",
-      "command": "./name-generator.tcl",
-      "mean": 50,
-      "min": 16.8,
-      "max": 66.7,
+      "name": "Node.js",
+      "command": "./name-generator.js",
+      "mean": 40.9,
+      "min": 23.8,
+      "max": 71.6,
       "relative": 1,
       "type": "Scripting"
     },
     {
-      "name": "Node.js",
-      "command": "./name-generator.js",
-      "mean": 61.3,
-      "min": 24.7,
-      "max": 107.3,
-      "relative": 1.23,
+      "name": "Tcl",
+      "command": "./name-generator.tcl",
+      "mean": 42.5,
+      "min": 18.7,
+      "max": 57.7,
+      "relative": 1.04,
       "type": "Scripting"
     },
     {
       "name": "AWK",
       "command": "./name-generator.awk",
-      "mean": 94.9,
-      "min": 65.8,
+      "mean": 69.1,
+      "min": 20.2,
       "max": 109.5,
-      "relative": 1.9,
+      "relative": 1.69,
       "type": "Scripting"
     },
     {
       "name": "Ruby",
       "command": "./name-generator.rb",
-      "mean": 152,
-      "min": 108.2,
-      "max": 178.2,
-      "relative": 3.04,
+      "mean": 146.7,
+      "min": 119.9,
+      "max": 165.1,
+      "relative": 3.59,
       "type": "Scripting"
     },
     {
       "name": "POSIX sh",
       "command": "./name-generator.sh",
-      "mean": 173.1,
-      "min": 172.8,
-      "max": 173.6,
-      "relative": 3.46,
-      "type": "Shell"
-    },
-    {
-      "name": "Nushell",
-      "command": "./name-generator.nu",
-      "mean": 364.3,
-      "min": 357.5,
-      "max": 370.3,
-      "relative": 7.29,
-      "type": "Shell"
-    },
-    {
-      "name": "Bash",
-      "command": "./name-generator.bash",
-      "mean": 567.9,
-      "min": 423.2,
-      "max": 806.3,
-      "relative": 11.36,
-      "type": "Shell"
-    },
-    {
-      "name": "Zsh",
-      "command": "./name-generator.zsh",
-      "mean": 568.9,
-      "min": 456.5,
-      "max": 657.4,
-      "relative": 11.39,
+      "mean": 172.6,
+      "min": 171.5,
+      "max": 174.1,
+      "relative": 4.22,
       "type": "Shell"
     },
     {
       "name": "KornShell (ksh)",
       "command": "./name-generator.ksh",
-      "mean": 647.5,
-      "min": 623.8,
-      "max": 662.6,
-      "relative": 12.96,
+      "mean": 180.8,
+      "min": 121,
+      "max": 212.9,
+      "relative": 4.42,
       "type": "Shell"
+    },
+    {
+      "name": "Zsh",
+      "command": "./name-generator.zsh",
+      "mean": 215.4,
+      "min": 161.6,
+      "max": 266.9,
+      "relative": 5.27,
+      "type": "Shell"
+    },
+    {
+      "name": "Bash",
+      "command": "./name-generator.bash",
+      "mean": 225.9,
+      "min": 208.4,
+      "max": 258.1,
+      "relative": 5.52,
+      "type": "Shell"
+    },
+    {
+      "name": "Nushell",
+      "command": "./name-generator.nu",
+      "mean": 391.5,
+      "min": 372,
+      "max": 427.7,
+      "relative": 9.57,
+      "type": "Shell"
+    }
+  ],
+  "scalingCurves": [
+    {
+      "language": "Zig",
+      "command": "./name-generator_zig",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 1.11
+        },
+        {
+          "count": 10,
+          "meanMs": 1.09
+        },
+        {
+          "count": 100,
+          "meanMs": 1.12
+        },
+        {
+          "count": 1000,
+          "meanMs": 1.15
+        }
+      ]
+    },
+    {
+      "language": "Go",
+      "command": "./name-generator_go",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 1.63
+        },
+        {
+          "count": 10,
+          "meanMs": 1.72
+        },
+        {
+          "count": 100,
+          "meanMs": 1.65
+        },
+        {
+          "count": 1000,
+          "meanMs": 2.17
+        }
+      ]
+    },
+    {
+      "language": "Crystal",
+      "command": "./name-generator_crystal",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 2.28
+        },
+        {
+          "count": 10,
+          "meanMs": 2.28
+        },
+        {
+          "count": 100,
+          "meanMs": 2.22
+        },
+        {
+          "count": 1000,
+          "meanMs": 2.5
+        }
+      ]
+    },
+    {
+      "language": "Nim",
+      "command": "./name-generator_nim",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 3.57
+        },
+        {
+          "count": 10,
+          "meanMs": 3.58
+        },
+        {
+          "count": 100,
+          "meanMs": 3.67
+        },
+        {
+          "count": 1000,
+          "meanMs": 3.79
+        }
+      ]
+    },
+    {
+      "language": "Odin",
+      "command": "./name-generator_odin",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 4.34
+        },
+        {
+          "count": 10,
+          "meanMs": 4.29
+        },
+        {
+          "count": 100,
+          "meanMs": 4.32
+        },
+        {
+          "count": 1000,
+          "meanMs": 4.6
+        }
+      ]
+    },
+    {
+      "language": "Ada",
+      "command": "./name-generator_ada",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 6.85
+        },
+        {
+          "count": 10,
+          "meanMs": 6.9
+        },
+        {
+          "count": 100,
+          "meanMs": 6.88
+        },
+        {
+          "count": 1000,
+          "meanMs": 7.14
+        }
+      ]
+    },
+    {
+      "language": "AWK",
+      "command": "./name-generator.awk",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 74.23
+        },
+        {
+          "count": 10,
+          "meanMs": 33.43
+        },
+        {
+          "count": 100,
+          "meanMs": 42.65
+        },
+        {
+          "count": 1000,
+          "meanMs": 42.7
+        }
+      ]
+    },
+    {
+      "language": "Node.js",
+      "command": "./name-generator.js",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 59.28
+        },
+        {
+          "count": 10,
+          "meanMs": 32.39
+        },
+        {
+          "count": 100,
+          "meanMs": 30.79
+        },
+        {
+          "count": 1000,
+          "meanMs": 59.03
+        }
+      ]
+    },
+    {
+      "language": "Bash",
+      "command": "./name-generator.bash",
+      "category": "Shell",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 5.42
+        },
+        {
+          "count": 10,
+          "meanMs": 21.96
+        },
+        {
+          "count": 100,
+          "meanMs": 270.11
+        },
+        {
+          "count": 1000,
+          "meanMs": 3138.68
+        }
+      ]
+    }
+  ],
+  "throughputLeaderboard": [
+    {
+      "name": "Zig",
+      "category": "Scripting",
+      "namesPerSecond": 869565,
+      "meanMsAt1000": 1.15,
+      "relativeToFastest": 1
+    },
+    {
+      "name": "Go",
+      "category": "Scripting",
+      "namesPerSecond": 460829,
+      "meanMsAt1000": 2.17,
+      "relativeToFastest": 1.89
+    },
+    {
+      "name": "Crystal",
+      "category": "Scripting",
+      "namesPerSecond": 400000,
+      "meanMsAt1000": 2.5,
+      "relativeToFastest": 2.17
+    },
+    {
+      "name": "Nim",
+      "category": "Scripting",
+      "namesPerSecond": 263852,
+      "meanMsAt1000": 3.79,
+      "relativeToFastest": 3.3
+    },
+    {
+      "name": "Odin",
+      "category": "Scripting",
+      "namesPerSecond": 217391,
+      "meanMsAt1000": 4.6,
+      "relativeToFastest": 4
+    },
+    {
+      "name": "Ada",
+      "category": "Scripting",
+      "namesPerSecond": 140056,
+      "meanMsAt1000": 7.14,
+      "relativeToFastest": 6.21
+    },
+    {
+      "name": "AWK",
+      "category": "Scripting",
+      "namesPerSecond": 23419,
+      "meanMsAt1000": 42.7,
+      "relativeToFastest": 37.13
+    },
+    {
+      "name": "Node.js",
+      "category": "Scripting",
+      "namesPerSecond": 16941,
+      "meanMsAt1000": 59.03,
+      "relativeToFastest": 51.33
+    },
+    {
+      "name": "Bash",
+      "category": "Shell",
+      "namesPerSecond": 319,
+      "meanMsAt1000": 3138.68,
+      "relativeToFastest": 2725.91
     }
   ],
   "languages": [

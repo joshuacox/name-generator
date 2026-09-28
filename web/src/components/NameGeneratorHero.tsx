@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useTransition } from 'react';
+import Link from 'next/link';
 import { Copy, Check, RefreshCw, Shuffle, Sliders, Database, Search, Sparkles } from 'lucide-react';
 import { DEFAULT_ADJECTIVES, DEFAULT_NOUNS } from '../data/sampleWords';
 
@@ -129,10 +130,14 @@ export const NameGeneratorHero: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 text-xs font-semibold mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            Random Memorable Identifiers
-          </div>
+          <Link
+            href="/article"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 hover:bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/25 text-xs font-semibold mb-4 transition-all hover:scale-105 group"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-orange-500" />
+            <span>Deep Dive: Inside the 48-Language Deathmatch</span>
+            <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+          </Link>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
             Give your servers{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500">

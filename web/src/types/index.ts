@@ -32,6 +32,26 @@ export interface ScriptingBenchmarkItem {
   type: string;
 }
 
+export interface ScalingPoint {
+  count: number;
+  meanMs: number;
+}
+
+export interface ScalingCurve {
+  language: string;
+  command: string;
+  category: 'Compiled' | 'Scripting' | 'Shell';
+  points: ScalingPoint[];
+}
+
+export interface ThroughputItem {
+  name: string;
+  category: string;
+  namesPerSecond: number;
+  meanMsAt1000: number;
+  relativeToFastest: number;
+}
+
 export interface BenchmarkData {
   generatedAt: string;
   environment: {
@@ -47,9 +67,12 @@ export interface BenchmarkData {
     fastestMeanMs: number;
     fastestScripting: string;
     fastestScriptingMs: number;
+    maxThroughputPerSec?: number;
   };
   deathmatchCompiled: CompiledBenchmarkItem[];
   deathmatchScripting: ScriptingBenchmarkItem[];
+  scalingCurves: ScalingCurve[];
+  throughputLeaderboard: ThroughputItem[];
   languages: LanguageMeta[];
   scanners: {
     fastest_24_summary?: Array<{

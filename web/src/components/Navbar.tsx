@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon, Zap, BarChart2, BookOpen, Code2 } from 'lucide-react';
+import Link from 'next/link';
+import { Sun, Moon, Zap, BarChart2, BookOpen, Code2, FileText } from 'lucide-react';
 import { GithubIcon } from './icons';
 
 export const Navbar: React.FC = () => {
@@ -59,6 +60,13 @@ export const Navbar: React.FC = () => {
             <BarChart2 className="w-4 h-4" />
             Benchmarks
           </a>
+          <Link
+            href="/article"
+            className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1.5 text-orange-600 dark:text-orange-400 font-semibold"
+          >
+            <FileText className="w-4 h-4" />
+            Deep Dive
+          </Link>
           <a
             href="#languages"
             className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1.5"

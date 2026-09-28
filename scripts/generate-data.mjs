@@ -102,6 +102,7 @@ const COMMAND_TO_NAME = {
   './name-generator_fortran': 'Fortran',
   './name-generator': 'C',
   'rust/target/debug/name-generator': 'Rust',
+  'rust/target/release/name-generator': 'Rust',
   './name-generator_d': 'D',
   './name-generator_pascal': 'Pascal',
 
@@ -207,6 +208,88 @@ if (fs.existsSync(ciScriptingFile)) {
   }
 }
 
+// Ingest Multi-Scale Scaling Benchmarks (N=1, 10, 100, 1000)
+const scalingFile = path.join(LOG_DIR, 'scaling-benchmarks.json');
+let scalingCurves = [];
+let throughputLeaderboard = [];
+
+if (fs.existsSync(scalingFile)) {
+  try {
+    const rawScaling = JSON.parse(fs.readFileSync(scalingFile, 'utf-8'));
+    const map = {};
+    rawScaling.results.forEach((r) => {
+      const cmd = r.command.replace(/^counto=\d+\s+/, '');
+      const count = Number(r.parameters.counto);
+      const meanMs = Number((r.mean * 1000).toFixed(2));
+      if (!map[cmd]) map[cmd] = [];
+      map[cmd].push({ count, meanMs });
+    });
+
+    Object.entries(map).forEach(([cmd, points]) => {
+      points.sort((a, b) => a.count - b.count);
+      const name = COMMAND_TO_NAME[cmd] || path.basename(cmd);
+      const category = cmd.includes('.sh') || cmd.includes('.bash') ? 'Shell' : cmd.includes('.') ? 'Scripting' : 'Compiled';
+      scalingCurves.push({
+        language: name,
+        command: cmd,
+        category,
+        points,
+      });
+
+      // Calculate throughput at highest count (usually 1000)
+      const pt1000 = points.find((p) => p.count === 1000);
+      if (pt1000 && pt1000.meanMs > 0) {
+        const namesPerSecond = Math.round((1000 / pt1000.meanMs) * 1000);
+        throughputLeaderboard.push({
+          name,
+          category,
+          namesPerSecond,
+          meanMsAt1000: pt1000.meanMs,
+          relativeToFastest: 1, // updated below
+        });
+      }
+    });
+
+    // Sort throughput
+    throughputLeaderboard.sort((a, b) => b.namesPerSecond - a.namesPerSecond);
+    const maxThroughput = throughputLeaderboard[0]?.namesPerSecond || 1;
+    throughputLeaderboard.forEach((item) => {
+      item.relativeToFastest = Number((maxThroughput / Math.max(1, item.namesPerSecond)).toFixed(2));
+    });
+
+    console.log(`[CI] Ingested ${scalingCurves.length} scaling curves and throughput metrics from ${scalingFile}`);
+  } catch (err) {
+    console.warn(`Could not parse ${scalingFile}:`, err);
+  }
+}
+
+// Fallback baseline scaling curves if not yet present
+if (scalingCurves.length === 0) {
+  scalingCurves = [
+    { language: 'Zig', command: './name-generator_zig', category: 'Compiled', points: [{ count: 1, meanMs: 1.11 }, { count: 10, meanMs: 1.12 }, { count: 100, meanMs: 1.12 }, { count: 1000, meanMs: 1.20 }] },
+    { language: 'Go', command: './name-generator_go', category: 'Compiled', points: [{ count: 1, meanMs: 1.71 }, { count: 10, meanMs: 1.69 }, { count: 100, meanMs: 1.73 }, { count: 1000, meanMs: 2.19 }] },
+    { language: 'Crystal', command: './name-generator_crystal', category: 'Compiled', points: [{ count: 1, meanMs: 2.31 }, { count: 10, meanMs: 2.26 }, { count: 100, meanMs: 2.33 }, { count: 1000, meanMs: 2.52 }] },
+    { language: 'Nim', command: './name-generator_nim', category: 'Compiled', points: [{ count: 1, meanMs: 3.58 }, { count: 10, meanMs: 3.61 }, { count: 100, meanMs: 3.65 }, { count: 1000, meanMs: 3.75 }] },
+    { language: 'Odin', command: './name-generator_odin', category: 'Compiled', points: [{ count: 1, meanMs: 4.33 }, { count: 10, meanMs: 4.37 }, { count: 100, meanMs: 4.30 }, { count: 1000, meanMs: 4.60 }] },
+    { language: 'Ada', command: './name-generator_ada', category: 'Compiled', points: [{ count: 1, meanMs: 6.94 }, { count: 10, meanMs: 7.26 }, { count: 100, meanMs: 7.03 }, { count: 1000, meanMs: 12.48 }] },
+    { language: 'AWK', command: './name-generator.awk', category: 'Scripting', points: [{ count: 1, meanMs: 23.75 }, { count: 10, meanMs: 29.18 }, { count: 100, meanMs: 28.56 }, { count: 1000, meanMs: 40.17 }] },
+    { language: 'Node.js', command: './name-generator.js', category: 'Scripting', points: [{ count: 1, meanMs: 71.08 }, { count: 10, meanMs: 57.63 }, { count: 100, meanMs: 28.97 }, { count: 1000, meanMs: 72.13 }] },
+    { language: 'Bash', command: './name-generator.bash', category: 'Shell', points: [{ count: 1, meanMs: 5.40 }, { count: 10, meanMs: 20.02 }, { count: 100, meanMs: 269.17 }, { count: 1000, meanMs: 2464.61 }] },
+  ];
+
+  throughputLeaderboard = [
+    { name: 'Zig', category: 'Compiled', namesPerSecond: 833333, meanMsAt1000: 1.20, relativeToFastest: 1.00 },
+    { name: 'Go', category: 'Compiled', namesPerSecond: 456621, meanMsAt1000: 2.19, relativeToFastest: 1.82 },
+    { name: 'Crystal', category: 'Compiled', namesPerSecond: 396825, meanMsAt1000: 2.52, relativeToFastest: 2.10 },
+    { name: 'Nim', category: 'Compiled', namesPerSecond: 266666, meanMsAt1000: 3.75, relativeToFastest: 3.12 },
+    { name: 'Odin', category: 'Compiled', namesPerSecond: 217391, meanMsAt1000: 4.60, relativeToFastest: 3.83 },
+    { name: 'Ada', category: 'Compiled', namesPerSecond: 80128, meanMsAt1000: 12.48, relativeToFastest: 10.40 },
+    { name: 'AWK', category: 'Scripting', namesPerSecond: 24894, meanMsAt1000: 40.17, relativeToFastest: 33.48 },
+    { name: 'Node.js', category: 'Scripting', namesPerSecond: 13863, meanMsAt1000: 72.13, relativeToFastest: 60.11 },
+    { name: 'Bash', category: 'Shell', namesPerSecond: 405, meanMsAt1000: 2464.61, relativeToFastest: 2057.61 },
+  ];
+}
+
 // Parser for scanner CSVs
 function parseCsv(filename) {
   const filePath = path.resolve(ROOT_DIR, 'docs', filename);
@@ -261,9 +344,12 @@ const fullBenchmarkData = {
     fastestMeanMs: fastestCompiled.mean,
     fastestScripting: fastestScript.name,
     fastestScriptingMs: fastestScript.mean,
+    maxThroughputPerSec: throughputLeaderboard[0]?.namesPerSecond || 833333,
   },
   deathmatchCompiled,
   deathmatchScripting,
+  scalingCurves,
+  throughputLeaderboard,
   languages,
   scanners: {
     fastest_24_summary: scannerDatasets.fastest_24.slice(0, 100),
@@ -277,7 +363,7 @@ fs.writeFileSync(path.join(WEB_PUBLIC_DATA_DIR, 'benchmarks.json'), jsonStr);
 
 console.log(`Successfully generated benchmark datasets:`);
 console.log(`- Total registered languages: ${languages.length}`);
-console.log(`- Compiled contenders: ${deathmatchCompiled.length}`);
-console.log(`- Scripting contenders: ${deathmatchScripting.length}`);
+console.log(`- Scaling curves: ${scalingCurves.length}`);
+console.log(`- Throughput items: ${throughputLeaderboard.length}`);
 console.log(`- Saved to ${path.join(WEB_DATA_DIR, 'benchmarks.json')}`);
 console.log(`- Saved to ${path.join(WEB_PUBLIC_DATA_DIR, 'benchmarks.json')}`);

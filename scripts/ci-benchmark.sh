@@ -153,6 +153,25 @@ if command -v hyperfine >/dev/null 2>&1; then
       --export-markdown log/ci-scripting.md \
       "${ACTIVE_SCRIPTS[@]}" || true
   fi
+
+  # Multi-scale scaling benchmarks
+  SCALING_TARGETS=()
+  for t in "./name-generator_zig" "./name-generator_go" "./name-generator_crystal" "./name-generator_nim" "./name-generator_odin" "./name-generator_ada" "./name-generator.awk" "./name-generator.js" "./name-generator.bash"; do
+    if [[ -x "$t" ]] && counto=1 "$t" >/dev/null 2>&1; then
+      SCALING_TARGETS+=("counto={counto} $t")
+    fi
+  done
+
+  if [[ ${#SCALING_TARGETS[@]} -gt 1 ]]; then
+    echo "--> Running multi-scale scaling benchmarks (N=1,10,100,1000)..."
+    hyperfine \
+      -L counto 1,10,100,1000 \
+      --runs 3 \
+      --warmup 1 \
+      --shell=bash \
+      --export-json log/scaling-benchmarks.json \
+      "${SCALING_TARGETS[@]}" || true
+  fi
 else
   echo "Hyperfine not found on system; skipping live execution and preserving stored baseline."
 fi
