@@ -80,6 +80,7 @@ jobs:
         working-directory: web
         env:
           GITHUB_ACTIONS: 'true'
+          NEXT_PUBLIC_BASE_PATH: '/name-generator'
         run: npm run build
 
       - name: Upload Pages Artifact

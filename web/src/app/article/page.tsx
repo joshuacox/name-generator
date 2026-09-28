@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import {
@@ -23,6 +24,8 @@ export const metadata = {
 };
 
 export default function ArticlePage() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors">
       <Navbar />
@@ -76,6 +79,28 @@ export default function ArticlePage() {
               <span>By Joshua Cox & Open Source Contributors</span>
             </div>
           </header>
+
+          {/* Article Editorial Hero Cover */}
+          <div className="relative rounded-2xl overflow-hidden mb-12 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-black/40 group">
+            <Image
+              src={`${basePath}/images/article-cover.webp`}
+              alt="Programming Language Data Race - 48 Polyglot Implementations"
+              width={1376}
+              height={768}
+              priority
+              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[11px] text-slate-300 font-mono">
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                FIG 1.0 &mdash; THE POLYGLOT PERFORMANCE ARENA
+              </span>
+              <span className="hidden sm:inline text-slate-400">
+                FIBER OPTIC CIRCUITS &bull; 48 RUNTIMES IN CONCURRENT EXECUTION
+              </span>
+            </div>
+          </div>
 
           {/* Table of Contents */}
           <nav className="p-6 rounded-2xl bg-white dark:bg-[#131b2e] border border-slate-200 dark:border-slate-800 shadow-sm mb-12">
@@ -233,6 +258,27 @@ export default function ArticlePage() {
                   Every high-performance contender in our leaderboard reads the wordlist into a contiguous dynamic buffer (vector / slice) <strong>exactly once</strong> during startup.
                   Subsequent name generation is a pure in-memory <code className="font-mono text-xs">O(1)</code> pseudo-random index lookup followed by buffered stdout emission.
                 </p>
+              </div>
+
+              {/* Architecture Diagram */}
+              <div className="relative rounded-2xl overflow-hidden my-8 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-black/40 group">
+                <Image
+                  src={`${basePath}/images/architecture-diagram.webp`}
+                  alt="High-Performance In-Memory Caching vs High-Overhead Disk-Churn Process Architecture"
+                  width={1376}
+                  height={768}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[11px] text-slate-300 font-mono">
+                  <span className="flex items-center gap-2">
+                    <span className="inline-block w-2 h-2 rounded-full bg-amber-400" />
+                    FIG 2.0 &mdash; MEMORY &amp; PROCESS TOPOLOGY
+                  </span>
+                  <span className="hidden sm:inline text-slate-400">
+                    ZERO-COPY RAM ACCESS VS KERNEL FORK() / EXEC() CONTEXT SWITCHES
+                  </span>
+                </div>
               </div>
             </section>
 

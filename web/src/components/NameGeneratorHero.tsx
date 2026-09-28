@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useTransition } from 'react';
 import Link from 'next/link';
-import { Copy, Check, RefreshCw, Shuffle, Sliders, Database, Search, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Copy, Check, RefreshCw, Shuffle, Sliders, Database, Search, Sparkles, Flame, BarChart3, ArrowRight } from 'lucide-react';
 import { DEFAULT_ADJECTIVES, DEFAULT_NOUNS } from '../data/sampleWords';
 
 type CasingMode = 'standard' | 'lower' | 'upper' | 'title';
@@ -307,6 +308,90 @@ export const NameGeneratorHero: React.FC = () => {
               No generated names match "{searchQuery}"
             </div>
           )}
+        </div>
+
+        {/* Polyglot Arena Feature Spotlight Banner */}
+        <div className="mt-12 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131b2e] shadow-xl shadow-slate-900/5 dark:shadow-black/40">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 text-xs font-semibold mb-4">
+                  <Flame className="w-3.5 h-3.5 text-orange-500" />
+                  <span>The 48-Language Performance Arena</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                  From Zig and C to AWK and Brainfuck.
+                </h3>
+                <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                  We engineered and strictly benchmarked the exact same CLI name generation contract across five decades of computing languages. Discover cold runtime startup costs, zero-copy memory architectures, and automated CI verification.
+                </p>
+              </div>
+
+              {/* Stat Badges Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6 pt-6 border-t border-slate-100 dark:border-slate-800/80">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Top Speed</div>
+                  <div className="text-lg font-extrabold text-emerald-500 font-mono mt-0.5">1.2 ms</div>
+                  <div className="text-[10px] text-slate-400">Zig ReleaseFast</div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Throughput</div>
+                  <div className="text-lg font-extrabold text-orange-500 font-mono mt-0.5">833K/s</div>
+                  <div className="text-[10px] text-slate-400">Names / sec</div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Languages</div>
+                  <div className="text-lg font-extrabold text-sky-500 font-mono mt-0.5">48</div>
+                  <div className="text-[10px] text-slate-400">Polyglot Roster</div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Dependencies</div>
+                  <div className="text-lg font-extrabold text-purple-500 font-mono mt-0.5">0</div>
+                  <div className="text-[10px] text-slate-400">Standard Libs</div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="#benchmarks"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Explore Leaderboard</span>
+                </a>
+                <Link
+                  href="/article"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium text-xs sm:text-sm transition-all hover:scale-[1.02]"
+                >
+                  <span>Read 12-Min Technical Deep Dive</span>
+                  <ArrowRight className="w-4 h-4 text-orange-500" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Image Showcase Column */}
+            <div className="lg:col-span-5 relative min-h-[280px] lg:min-h-full overflow-hidden bg-slate-950 group">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/hero-banner.webp`}
+                alt="48-Language Deathmatch Arena illustration"
+                width={1376}
+                height={768}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-black/60 lg:via-transparent lg:to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 text-[11px] font-mono text-slate-300 flex items-center justify-between">
+                <span className="flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/10">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  ARENA TELEMETRY LIVE
+                </span>
+                <span className="bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/10 text-orange-400">
+                  HYPERFINE VALIDATED
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
