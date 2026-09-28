@@ -14,25 +14,32 @@ This project differs in that I am attempting to have a much larger adjective and
 
 Do you need to name a server, or something else?  I know 'treat em like cattle', but I detest names like dal2dc3c38r67, I say give it some personality, inspired by the docker mechanism that does the same, I needed a quick and dirty script to name a bunch of servers and wrote a quick one in bash, then decided to benchmark sh vs bash vs zsh, then threw python in the mix.   Well now I have 
 
+1. ada
+1. awk
 1. bash
 1. c
 1. cpp
+1. crystal
 1. D
 1. dart
 1. elisp
 1. elixir
 1. erlang
 1. fish
+1. fortran
 1. golang
 1. haskell
 1. java
 1. javascript async + sync
 1. julia
 1. kotlin
+1. kornshell
 1. lua
 1. nim
+1. nushell
 1. ocaml
 1. octave
+1. odin
 1. pascal
 1. perl
 1. php
@@ -44,7 +51,10 @@ Do you need to name a server, or something else?  I know 'treat em like cattle',
 1. rust
 1. scala
 1. sh
+1. tcl
 1. typescript
+1. v
+1. zig
 1. zsh
 
 PRs welcome for more!
@@ -62,10 +72,16 @@ PRs welcome for more!
 
 ## Getting Started
 
-#### web based
+#### Web App & Live Benchmarks
 
-1. Simply visit the [site](https://joshuacox.github.io/name-generator/) in github.io.
-1. Click generate.
+1. Visit the live interactive site: [joshuacox.github.io/name-generator](https://joshuacox.github.io/name-generator/)
+2. Or run the Next.js static site locally:
+   ```bash
+   make web-dev     # Starts local development server at http://localhost:3000
+   make web         # Runs benchmarks & builds static export in web/out/
+   ```
+3. **Automated CI Benchmarks**: Every push or PR to `main` triggers GitHub Actions (`.github/workflows/deploy.yml`) to compile all available language binaries, execute fresh `hyperfine` deathmatch benchmarks, ingest the data, rebuild the Next.js static site, and deploy it to GitHub Pages automatically.
+
 
 #### CLI based
 
@@ -341,5 +357,4 @@ At a counto of 250 the synchronous javascript pulls ahead of the shells
   223.60 ± 59.11 times faster than ./name-generator.bash
   226.21 ± 59.86 times faster than ./name-generator.sh
 ```
-
 

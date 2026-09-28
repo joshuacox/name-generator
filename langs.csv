@@ -23,3 +23,13 @@ rust,rust/src/main.rs
 sh,name-generator.sh
 zsh,name-generator.zsh
 nim,name_generator.nim
+crystal,name-generator.cr
+zig,name-generator_zig.zig
+awk,name-generator.awk
+kornshell,name-generator.ksh
+tcl,name-generator.tcl
+nushell,name-generator.nu
+fortran,name-generator.f90
+ada,name_generator_ada.adb
+odin,name-generator.odin
+v,name-generator.v

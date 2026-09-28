@@ -10,6 +10,12 @@ name-generator_go
 name-generator_pascal
 name-generator_zig
 name-generator_nim
+name-generator_crystal
+name-generator_fortran
+name-generator_ada
+name-generator_odin
+name-generator_v
+*.ali
 *.class
 .cabal-sandbox/
 cabal.sandbox.config
@@ -96,3 +102,8 @@ erl_crash.dump
 .cid
 log
 *.jar
+web/.next
+web/out
+web/node_modules
+web/.vercel
+

@@ -1,6 +1,6 @@
-.PHONY: all test testx homepage github commit rust data
+.PHONY: all test testx homepage github commit rust data web web-install web-bench web-build web-dev
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim name-generator_crystal name-generator_zig name-generator_fortran name-generator_ada name-generator_odin name-generator_v
 
 clean:
 	-@rm -v name-generator 
@@ -13,6 +13,13 @@ clean:
 	-@rm -v name-generator_pascal
 	-@rm -v name-generator_d
 	-@rm -v name-generator_nim
+	-@rm -v name-generator_crystal
+	-@rm -v name-generator_zig
+	-@rm -v name-generator_fortran
+	-@rm -v name-generator_ada
+	-@rm -v name-generator_odin
+	-@rm -v name-generator_v
+	-@rm -v name_generator_ada.ali name_generator_ada.o
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -52,8 +59,20 @@ NameGenerator.class:
 test:
 	./test/bats/bin/bats -x test/test.bats
 
+web-install:
+	cd web && npm install
 
-BENCHMARK.md:
+web-bench:
+	./scripts/ci-benchmark.sh
+
+web-build: web-bench
+	cd web && npm run build
+
+web-dev:
+	cd web && npm run dev
+
+web: web-build
+
 	./meta-benchmark.sh | tee BENCHMARK.md
 
 benchmark.cast:
@@ -109,11 +128,26 @@ name-generator_d:
 name-generator_nim:
 	nim c -d:release --opt:speed --hints:off -o:name-generator_nim name_generator.nim
 
+name-generator_crystal:
+	crystal build --release --no-debug -o name-generator_crystal name-generator.cr
+
+name-generator_zig:
+	zig build-exe -O ReleaseFast -fstrip -femit-bin=name-generator_zig name-generator_zig.zig
+
+name-generator_fortran:
+	gfortran -O3 -march=native -o name-generator_fortran name-generator.f90
+
+name-generator_ada:
+	gnatmake -O3 name_generator_ada.adb -o name-generator_ada
+
+name-generator_odin:
+	odin build name-generator.odin -file -o:speed -out:name-generator_odin
+
+name-generator_v:
+	v -prod -o name-generator_v name-generator.v
+
 # WIPs
 #
-name-generator_zig:
-	zig build-exe -I . name-generator_zig.zig -lc
-
 name-generator_pony:
 	ponyc -b name-generator_pony
 

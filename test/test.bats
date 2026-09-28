@@ -21,6 +21,146 @@ setup() {
   make all
 }
 
+# Fortran
+@test "test name-generator_fortran at 10" {
+  result="$(counto=10 ./name-generator_fortran|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_fortran at 13" {
+  result="$(counto=13 ./name-generator_fortran|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Fortran test/test" {
+  result=$(./name-generator_fortran)
+  assert_equal "$result" "test_test"
+}
+
+# Ada
+@test "test name-generator_ada at 10" {
+  result="$(counto=10 ./name-generator_ada|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_ada at 13" {
+  result="$(counto=13 ./name-generator_ada|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Ada test/test" {
+  result=$(./name-generator_ada)
+  assert_equal "$result" "test_test"
+}
+
+# Odin
+@test "test name-generator_odin at 10" {
+  result="$(counto=10 ./name-generator_odin|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_odin at 13" {
+  result="$(counto=13 ./name-generator_odin|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Odin test/test" {
+  result=$(./name-generator_odin)
+  assert_equal "$result" "test_test"
+}
+
+# V
+@test "test name-generator_v at 10" {
+  result="$(counto=10 ./name-generator_v|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_v at 13" {
+  result="$(counto=13 ./name-generator_v|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test V test/test" {
+  result=$(./name-generator_v)
+  assert_equal "$result" "test_test"
+}
+
+# AWK
+@test "test name-generator.awk at 10" {
+  result="$(counto=10 ./name-generator.awk|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.awk at 13" {
+  result="$(counto=13 ./name-generator.awk|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test AWK test/test" {
+  result=$(./name-generator.awk)
+  assert_equal "$result" "test_test"
+}
+
+# KornShell
+@test "test name-generator.ksh at 10" {
+  result="$(counto=10 ./name-generator.ksh|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.ksh at 13" {
+  result="$(counto=13 ./name-generator.ksh|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test KornShell test/test" {
+  result=$(./name-generator.ksh)
+  assert_equal "$result" "test_test"
+}
+
+# Tcl
+@test "test name-generator.tcl at 10" {
+  result="$(counto=10 ./name-generator.tcl|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.tcl at 13" {
+  result="$(counto=13 ./name-generator.tcl|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Tcl test/test" {
+  result=$(./name-generator.tcl)
+  assert_equal "$result" "test_test"
+}
+
+# Nushell
+@test "test name-generator.nu at 10" {
+  result="$(counto=10 ./name-generator.nu|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator.nu at 13" {
+  result="$(counto=13 ./name-generator.nu|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Nushell test/test" {
+  result=$(./name-generator.nu)
+  assert_equal "$result" "test_test"
+}
+
+# Zig
+@test "test name-generator_zig at 10" {
+  result="$(counto=10 ./name-generator_zig|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_zig at 13" {
+  result="$(counto=13 ./name-generator_zig|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Zig test/test" {
+  result=$(./name-generator_zig)
+  assert_equal "$result" "test_test"
+}
+
+# Crystal
+@test "test name-generator_crystal at 10" {
+  result="$(counto=10 ./name-generator_crystal|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_crystal at 13" {
+  result="$(counto=13 ./name-generator_crystal|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Crystal test/test" {
+  result=$(./name-generator_crystal)
+  assert_equal "$result" "test_test"
+}
+
 # Nim
 @test "test name-generator_nim at 10" {
   result="$(counto=10 ./name-generator_nim|wc -l)"

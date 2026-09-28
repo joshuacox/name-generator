@@ -32,6 +32,10 @@ slow_bench_runnr () {
     './name-generator.fish' \
     './name-generator.bash' \
     './name-generator.zsh' \
+    './name-generator.awk' \
+    './name-generator.ksh' \
+    './name-generator.tcl' \
+    './name-generator.nu' \
     './name-generator.ts' \
     './name-generator.js' \
     './name-generator.jl' \
@@ -40,6 +44,12 @@ slow_bench_runnr () {
     './name-generator.pl' \
     './name-generator_d' \
     './name-generator_nim' \
+    './name-generator_crystal' \
+    './name-generator_zig' \
+    './name-generator_fortran' \
+    './name-generator_ada' \
+    './name-generator_odin' \
+    './name-generator_v' \
     './name-generator.m' \
     './name-generator.php' \
     './name-generator.el' \
@@ -81,11 +91,21 @@ slowest_scanner_bench_runnr () {
     'counto={num_count} ./name-generator.bash' \
     'counto={num_count} ./name-generator.fish' \
     'counto={num_count} ./name-generator.zsh' \
+    'counto={num_count} ./name-generator.awk' \
+    'counto={num_count} ./name-generator.ksh' \
+    'counto={num_count} ./name-generator.tcl' \
+    'counto={num_count} ./name-generator.nu' \
     'counto={num_count} ./name-generator.jl' \
     'counto={num_count} ./name-generator.el' \
     'counto={num_count} ./name-generator.pl' \
     'counto={num_count} ./name-generator_d' \
     'counto={num_count} ./name-generator_nim' \
+    'counto={num_count} ./name-generator_crystal' \
+    'counto={num_count} ./name-generator_zig' \
+    'counto={num_count} ./name-generator_fortran' \
+    'counto={num_count} ./name-generator_ada' \
+    'counto={num_count} ./name-generator_odin' \
+    'counto={num_count} ./name-generator_v' \
     'counto={num_count} ./name-generator.r' \
     'counto={num_count} ./name-generator.m' \
     'counto={num_count} ./name-generator.php' \
@@ -130,6 +150,10 @@ slow_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.bash' \
     'counto=$((2**{num_count})) ./name-generator.fish' \
     'counto=$((2**{num_count})) ./name-generator.zsh' \
+    'counto=$((2**{num_count})) ./name-generator.awk' \
+    'counto=$((2**{num_count})) ./name-generator.ksh' \
+    'counto=$((2**{num_count})) ./name-generator.tcl' \
+    'counto=$((2**{num_count})) ./name-generator.nu' \
     'counto=$((2**{num_count})) ./name-generator.js' \
     'counto=$((2**{num_count})) ./name-generator.ts' \
     'counto=$((2**{num_count})) ./name-generator.jl' \
@@ -138,6 +162,12 @@ slow_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
     'counto=$((2**{num_count})) ./name-generator_nim' \
+    'counto=$((2**{num_count})) ./name-generator_crystal' \
+    'counto=$((2**{num_count})) ./name-generator_zig' \
+    'counto=$((2**{num_count})) ./name-generator_fortran' \
+    'counto=$((2**{num_count})) ./name-generator_ada' \
+    'counto=$((2**{num_count})) ./name-generator_odin' \
+    'counto=$((2**{num_count})) ./name-generator_v' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.m' \
     'counto=$((2**{num_count})) ./name-generator.php' \
@@ -181,6 +211,12 @@ scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
     'counto=$((2**{num_count})) ./name-generator_nim' \
+    'counto=$((2**{num_count})) ./name-generator_crystal' \
+    'counto=$((2**{num_count})) ./name-generator_zig' \
+    'counto=$((2**{num_count})) ./name-generator_fortran' \
+    'counto=$((2**{num_count})) ./name-generator_ada' \
+    'counto=$((2**{num_count})) ./name-generator_odin' \
+    'counto=$((2**{num_count})) ./name-generator_v' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.m' \
     'counto=$((2**{num_count})) ./name-generator.php' \
@@ -215,6 +251,12 @@ fast_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
     'counto=$((2**{num_count})) ./name-generator_nim' \
+    'counto=$((2**{num_count})) ./name-generator_crystal' \
+    'counto=$((2**{num_count})) ./name-generator_zig' \
+    'counto=$((2**{num_count})) ./name-generator_fortran' \
+    'counto=$((2**{num_count})) ./name-generator_ada' \
+    'counto=$((2**{num_count})) ./name-generator_odin' \
+    'counto=$((2**{num_count})) ./name-generator_v' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.php' \
     'counto=$((2**{num_count})) ./name-generator.rb' \
@@ -245,6 +287,12 @@ faster_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
     'counto=$((2**{num_count})) ./name-generator_nim' \
+    'counto=$((2**{num_count})) ./name-generator_crystal' \
+    'counto=$((2**{num_count})) ./name-generator_zig' \
+    'counto=$((2**{num_count})) ./name-generator_fortran' \
+    'counto=$((2**{num_count})) ./name-generator_ada' \
+    'counto=$((2**{num_count})) ./name-generator_odin' \
+    'counto=$((2**{num_count})) ./name-generator_v' \
     'counto=$((2**{num_count})) ./name-generator.php' \
     'counto=$((2**{num_count})) ./name-generator.rb' \
     'counto=$((2**{num_count})) ./name-generator.lua' \
@@ -271,6 +319,12 @@ fastest_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
     'counto=$((2**{num_count})) ./name-generator_nim' \
+    'counto=$((2**{num_count})) ./name-generator_crystal' \
+    'counto=$((2**{num_count})) ./name-generator_zig' \
+    'counto=$((2**{num_count})) ./name-generator_fortran' \
+    'counto=$((2**{num_count})) ./name-generator_ada' \
+    'counto=$((2**{num_count})) ./name-generator_odin' \
+    'counto=$((2**{num_count})) ./name-generator_v' \
     'counto=$((2**{num_count})) java NameGenerator' \
     'counto=$((2**{num_count})) ./name-generator.lua'
 }
@@ -293,12 +347,22 @@ bench_runnr () {
     './name-generator_go' \
     './name-generator_pascal' \
     './name-generator.zsh' \
+    './name-generator.awk' \
+    './name-generator.ksh' \
+    './name-generator.tcl' \
+    './name-generator.nu' \
     './name-generator.ts' \
     './name-generator.js' \
     './name-generator.jl' \
     './name-generator.pl' \
     './name-generator_d' \
     './name-generator_nim' \
+    './name-generator_crystal' \
+    './name-generator_zig' \
+    './name-generator_fortran' \
+    './name-generator_ada' \
+    './name-generator_odin' \
+    './name-generator_v' \
     './name-generator.r' \
     './name-generator.m' \
     './name-generator.php' \
@@ -339,6 +403,12 @@ fast_bench_runnr () {
     './name-generator.pl' \
     './name-generator_d' \
     './name-generator_nim' \
+    './name-generator_crystal' \
+    './name-generator_zig' \
+    './name-generator_fortran' \
+    './name-generator_ada' \
+    './name-generator_odin' \
+    './name-generator_v' \
     './name-generator.r' \
     './name-generator.php' \
     'java NameGenerator' \
@@ -365,6 +435,12 @@ faster_bench_runnr () {
     './name-generator.pl' \
     './name-generator_d' \
     './name-generator_nim' \
+    './name-generator_crystal' \
+    './name-generator_zig' \
+    './name-generator_fortran' \
+    './name-generator_ada' \
+    './name-generator_odin' \
+    './name-generator_v' \
     './name-generator.php' \
     'java NameGenerator' \
     'rust/target/debug/name-generator'
@@ -396,6 +472,12 @@ fastest_bench_runnr () {
     'java NameGenerator' \
     './name-generator_d' \
     './name-generator_nim' \
+    './name-generator_crystal' \
+    './name-generator_zig' \
+    './name-generator_fortran' \
+    './name-generator_ada' \
+    './name-generator_odin' \
+    './name-generator_v' \
     './name-generator.pl'
 }
 
