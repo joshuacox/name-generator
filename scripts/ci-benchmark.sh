@@ -78,6 +78,12 @@ if command -v v >/dev/null 2>&1; then
   v -prod -o name-generator_v name-generator.v || true
 fi
 
+# Build COBOL
+if command -v cobc >/dev/null 2>&1; then
+  echo "--> Compiling COBOL (cobc -free -x -O3)..."
+  cobc -free -x -O3 -o name-generator_cobol name-generator.cbl || true
+fi
+
 echo "==> 2. Discovering available benchmark contenders..."
 
 COMPILED_CANDIDATES=(
@@ -88,6 +94,7 @@ COMPILED_CANDIDATES=(
   "./name-generator_odin"
   "./name-generator_ada"
   "./name-generator_cpp"
+  "./name-generator_cobol"
   "./name-generator_v"
   "./name-generator_fortran"
   "./name-generator"
@@ -156,7 +163,7 @@ if command -v hyperfine >/dev/null 2>&1; then
 
   # Multi-scale scaling benchmarks
   SCALING_TARGETS=()
-  for t in "./name-generator_zig" "./name-generator_go" "./name-generator_crystal" "./name-generator_nim" "./name-generator_odin" "./name-generator_ada" "./name-generator.awk" "./name-generator.js" "./name-generator.bash"; do
+  for t in "./name-generator_zig" "./name-generator_go" "./name-generator_crystal" "./name-generator_nim" "./name-generator_odin" "./name-generator_ada" "./name-generator_cobol" "./name-generator.awk" "./name-generator.js" "./name-generator.bash"; do
     if [[ -x "$t" ]] && counto=1 "$t" >/dev/null 2>&1; then
       SCALING_TARGETS+=("counto={counto} $t")
     fi

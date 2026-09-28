@@ -103,6 +103,7 @@ export const BenchmarkDashboard: React.FC = () => {
     Nim: '#f59e0b', // amber
     Odin: '#06b6d4', // cyan
     Ada: '#ec4899', // pink
+    COBOL: '#3b82f6', // blue
     AWK: '#f97316', // orange
     'Node.js': '#84cc16', // lime
     Bash: '#ef4444', // red

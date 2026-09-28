@@ -136,7 +136,7 @@ export const NameGeneratorHero: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 hover:bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/25 text-xs font-semibold mb-4 transition-all hover:scale-105 group"
           >
             <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-            <span>Deep Dive: Inside the 48-Language Deathmatch</span>
+            <span>Deep Dive: Inside the 49-Language Deathmatch</span>
             <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform">&rarr;</span>
           </Link>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
@@ -318,10 +318,10 @@ export const NameGeneratorHero: React.FC = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 text-xs font-semibold mb-4">
                   <Flame className="w-3.5 h-3.5 text-orange-500" />
-                  <span>The 48-Language Performance Arena</span>
+                  <span>The 49-Language Performance Arena</span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-                  From Zig and C to AWK and Brainfuck.
+                  From Zig and C to COBOL, AWK, and Brainfuck.
                 </h3>
                 <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                   We engineered and strictly benchmarked the exact same CLI name generation contract across five decades of computing languages. Discover cold runtime startup costs, zero-copy memory architectures, and automated CI verification.
@@ -342,7 +342,7 @@ export const NameGeneratorHero: React.FC = () => {
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
                   <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Languages</div>
-                  <div className="text-lg font-extrabold text-sky-500 font-mono mt-0.5">48</div>
+                  <div className="text-lg font-extrabold text-sky-500 font-mono mt-0.5">49</div>
                   <div className="text-[10px] text-slate-400">Polyglot Roster</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
@@ -375,7 +375,7 @@ export const NameGeneratorHero: React.FC = () => {
             <div className="lg:col-span-5 relative min-h-[280px] lg:min-h-full overflow-hidden bg-slate-950 group">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/hero-banner.webp`}
-                alt="48-Language Deathmatch Arena illustration"
+                alt="49-Language Deathmatch Arena illustration"
                 width={1376}
                 height={768}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

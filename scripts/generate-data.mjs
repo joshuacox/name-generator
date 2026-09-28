@@ -18,6 +18,7 @@ const LANGUAGES_META = [
   { id: 'nim', name: 'Nim', file: 'name_generator.nim', category: 'Compiled', paradigm: 'Multi-paradigm', ext: '.nim', compiledBin: 'name-generator_nim' },
   { id: 'fortran', name: 'Fortran', file: 'name-generator.f90', category: 'Compiled', paradigm: 'Scientific / Procedural', ext: '.f90', compiledBin: 'name-generator_fortran' },
   { id: 'ada', name: 'Ada', file: 'name_generator_ada.adb', category: 'Compiled', paradigm: 'Safety-critical / Structured', ext: '.adb', compiledBin: 'name-generator_ada' },
+  { id: 'cobol', name: 'COBOL', file: 'name-generator.cbl', category: 'Compiled', paradigm: 'Mainframe / Procedural', ext: '.cbl', compiledBin: 'name-generator_cobol' },
   { id: 'odin', name: 'Odin', file: 'name-generator.odin', category: 'Compiled', paradigm: 'Data-oriented Systems', ext: '.odin', compiledBin: 'name-generator_odin' },
   { id: 'v', name: 'V', file: 'name-generator.v', category: 'Compiled', paradigm: 'Simple Systems', ext: '.v', compiledBin: 'name-generator_v' },
   { id: 'c', name: 'C', file: 'name-generator.c', category: 'Compiled', paradigm: 'Procedural Systems', ext: '.c', compiledBin: 'name-generator' },
@@ -98,6 +99,7 @@ const COMMAND_TO_NAME = {
   './name-generator_odin': 'Odin',
   './name-generator_ada': 'Ada',
   './name-generator_cpp': 'C++',
+  './name-generator_cobol': 'COBOL',
   './name-generator_v': 'V',
   './name-generator_fortran': 'Fortran',
   './name-generator': 'C',
@@ -131,6 +133,7 @@ let deathmatchCompiled = [
   { name: 'Odin', command: './name-generator_odin', mean: 4.7, min: 4.7, max: 4.7, stddev: 0.03, relative: 4.05, paradigm: 'Systems' },
   { name: 'Ada', command: './name-generator_ada', mean: 7.3, min: 7.2, max: 7.4, stddev: 0.08, relative: 6.26, paradigm: 'Safety-critical' },
   { name: 'C++', command: './name-generator_cpp', mean: 10.6, min: 10.4, max: 10.8, stddev: 0.12, relative: 9.07, paradigm: 'Systems' },
+  { name: 'COBOL', command: './name-generator_cobol', mean: 25.2, min: 10.5, max: 63.0, stddev: 18.8, relative: 21.0, paradigm: 'Mainframe' },
   { name: 'V', command: './name-generator_v', mean: 37.0, min: 30.2, max: 68.3, stddev: 13.9, relative: 31.81, paradigm: 'Systems' },
   { name: 'Fortran', command: './name-generator_fortran', mean: 44.0, min: 11.8, max: 66.9, stddev: 25.1, relative: 37.83, paradigm: 'Scientific' },
 ];
@@ -226,9 +229,9 @@ if (fs.existsSync(scalingFile)) {
     });
 
     Object.entries(map).forEach(([cmd, points]) => {
-      points.sort((a, b) => a.count - b.count);
       const name = COMMAND_TO_NAME[cmd] || path.basename(cmd);
-      const category = cmd.includes('.sh') || cmd.includes('.bash') ? 'Shell' : cmd.includes('.') ? 'Scripting' : 'Compiled';
+      const meta = LANGUAGES_META.find((l) => l.name === name || l.compiledBin === path.basename(cmd) || l.file === path.basename(cmd));
+      const category = meta ? meta.category : (cmd.endsWith('.sh') || cmd.endsWith('.bash') || cmd.endsWith('.zsh') || cmd.endsWith('.ksh') || cmd.endsWith('.nu') ? 'Shell' : path.basename(cmd).includes('.') ? 'Scripting' : 'Compiled');
       scalingCurves.push({
         language: name,
         command: cmd,
@@ -272,6 +275,7 @@ if (scalingCurves.length === 0) {
     { language: 'Nim', command: './name-generator_nim', category: 'Compiled', points: [{ count: 1, meanMs: 3.58 }, { count: 10, meanMs: 3.61 }, { count: 100, meanMs: 3.65 }, { count: 1000, meanMs: 3.75 }] },
     { language: 'Odin', command: './name-generator_odin', category: 'Compiled', points: [{ count: 1, meanMs: 4.33 }, { count: 10, meanMs: 4.37 }, { count: 100, meanMs: 4.30 }, { count: 1000, meanMs: 4.60 }] },
     { language: 'Ada', command: './name-generator_ada', category: 'Compiled', points: [{ count: 1, meanMs: 6.94 }, { count: 10, meanMs: 7.26 }, { count: 100, meanMs: 7.03 }, { count: 1000, meanMs: 12.48 }] },
+    { language: 'COBOL', command: './name-generator_cobol', category: 'Compiled', points: [{ count: 1, meanMs: 22.50 }, { count: 10, meanMs: 23.10 }, { count: 100, meanMs: 23.80 }, { count: 1000, meanMs: 25.20 }] },
     { language: 'AWK', command: './name-generator.awk', category: 'Scripting', points: [{ count: 1, meanMs: 23.75 }, { count: 10, meanMs: 29.18 }, { count: 100, meanMs: 28.56 }, { count: 1000, meanMs: 40.17 }] },
     { language: 'Node.js', command: './name-generator.js', category: 'Scripting', points: [{ count: 1, meanMs: 71.08 }, { count: 10, meanMs: 57.63 }, { count: 100, meanMs: 28.97 }, { count: 1000, meanMs: 72.13 }] },
     { language: 'Bash', command: './name-generator.bash', category: 'Shell', points: [{ count: 1, meanMs: 5.40 }, { count: 10, meanMs: 20.02 }, { count: 100, meanMs: 269.17 }, { count: 1000, meanMs: 2464.61 }] },
@@ -284,6 +288,7 @@ if (scalingCurves.length === 0) {
     { name: 'Nim', category: 'Compiled', namesPerSecond: 266666, meanMsAt1000: 3.75, relativeToFastest: 3.12 },
     { name: 'Odin', category: 'Compiled', namesPerSecond: 217391, meanMsAt1000: 4.60, relativeToFastest: 3.83 },
     { name: 'Ada', category: 'Compiled', namesPerSecond: 80128, meanMsAt1000: 12.48, relativeToFastest: 10.40 },
+    { name: 'COBOL', category: 'Compiled', namesPerSecond: 39682, meanMsAt1000: 25.20, relativeToFastest: 21.00 },
     { name: 'AWK', category: 'Scripting', namesPerSecond: 24894, meanMsAt1000: 40.17, relativeToFastest: 33.48 },
     { name: 'Node.js', category: 'Scripting', namesPerSecond: 13863, meanMsAt1000: 72.13, relativeToFastest: 60.11 },
     { name: 'Bash', category: 'Shell', namesPerSecond: 405, meanMsAt1000: 2464.61, relativeToFastest: 2057.61 },

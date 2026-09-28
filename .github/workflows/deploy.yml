@@ -59,6 +59,7 @@ jobs:
             hyperfine \
             gfortran \
             gnat \
+            gnucobol \
             tcl \
             ksh \
             gawk \

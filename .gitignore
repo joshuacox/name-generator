@@ -15,6 +15,7 @@ name-generator_fortran
 name-generator_ada
 name-generator_odin
 name-generator_v
+name-generator_cobol
 *.ali
 *.class
 .cabal-sandbox/

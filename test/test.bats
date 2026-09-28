@@ -77,6 +77,20 @@ setup() {
   assert_equal "$result" "test_test"
 }
 
+# COBOL
+@test "test name-generator_cobol at 10" {
+  result="$(counto=10 ./name-generator_cobol|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_cobol at 13" {
+  result="$(counto=13 ./name-generator_cobol|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test COBOL test/test" {
+  result=$(./name-generator_cobol)
+  assert_equal "$result" "test_test"
+}
+
 # AWK
 @test "test name-generator.awk at 10" {
   result="$(counto=10 ./name-generator.awk|wc -l)"

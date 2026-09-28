@@ -33,3 +33,4 @@ fortran,name-generator.f90
 ada,name_generator_ada.adb
 odin,name-generator.odin
 v,name-generator.v
+cobol,name-generator.cbl

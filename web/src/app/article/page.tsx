@@ -18,9 +18,9 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Inside the Polyglot Deathmatch: Benchmarking 48 Languages | Name Generator',
+  title: 'Inside the Polyglot Deathmatch: Benchmarking 49 Languages | Name Generator',
   description:
-    'A deep dive into runtime ergonomics, memory management, process spawning vs in-memory caching, and automated CI benchmarking across 48 programming languages.',
+    'A deep dive into runtime ergonomics, memory management, process spawning vs in-memory caching, and automated CI benchmarking across 49 programming languages.',
 };
 
 export default function ArticlePage() {
@@ -53,14 +53,14 @@ export default function ArticlePage() {
               className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.2] mb-6"
               style={{ textWrap: 'balance' }}
             >
-              Inside the Polyglot Deathmatch: Benchmarking 48 Languages on a Deceptively Simple Problem
+              Inside the Polyglot Deathmatch: Benchmarking 49 Languages on a Deceptively Simple Problem
             </h1>
 
             <p
               className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-6"
               style={{ textWrap: 'pretty' }}
             >
-              What happens when you write the exact same CLI utility across 48 programming languages
+              What happens when you write the exact same CLI utility across 49 programming languages
               spanning five decades of computing history? You uncover surprising truths about runtime startup,
               memory models, and the immense cost of UNIX process spawning.
             </p>
@@ -84,7 +84,7 @@ export default function ArticlePage() {
           <div className="relative rounded-2xl overflow-hidden mb-12 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-black/40 group">
             <Image
               src={`${basePath}/images/article-cover.webp`}
-              alt="Programming Language Data Race - 48 Polyglot Implementations"
+              alt="Programming Language Data Race - 49 Polyglot Implementations"
               width={1376}
               height={768}
               priority
@@ -97,7 +97,7 @@ export default function ArticlePage() {
                 FIG 1.0 &mdash; THE POLYGLOT PERFORMANCE ARENA
               </span>
               <span className="hidden sm:inline text-slate-400">
-                FIBER OPTIC CIRCUITS &bull; 48 RUNTIMES IN CONCURRENT EXECUTION
+                FIBER OPTIC CIRCUITS &bull; 49 RUNTIMES IN CONCURRENT EXECUTION
               </span>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function ArticlePage() {
             <ol className="space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium list-decimal list-inside">
               <li>
                 <a href="#the-origin" className="hover:text-orange-500 transition-colors">
-                  The Origin: From Fleet Naming to a 48-Language Arena
+                  The Origin: From Fleet Naming to a 49-Language Arena
                 </a>
               </li>
               <li>
@@ -159,7 +159,7 @@ export default function ArticlePage() {
                 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight"
                 style={{ textWrap: 'balance' }}
               >
-                1. The Origin: From Fleet Naming to a 48-Language Arena
+                1. The Origin: From Fleet Naming to a 49-Language Arena
               </h2>
               <p className="mb-4" style={{ textWrap: 'pretty' }}>
                 Every infrastructure engineer knows the mantra: <em>"Treat your servers like cattle, not pets."</em> Yet, staring at
@@ -174,8 +174,8 @@ export default function ArticlePage() {
               </p>
               <p style={{ textWrap: 'pretty' }}>
                 What began as a localized shell benchmark snowball-rolled into a multi-year polyglot initiative. Today, this repository houses{' '}
-                <strong className="text-slate-900 dark:text-white font-semibold">48 distinct implementations</strong>—from ancient mainstays like
-                Fortran 90 and Ada 2012 to modern systems contenders like Zig, Odin, Nim, Crystal, and Rust, as well as shells, JVM languages, and esoteric
+                <strong className="text-slate-900 dark:text-white font-semibold">49 distinct implementations</strong>—from ancient mainstays like
+                COBOL (1959), Fortran 90, and Ada 2012 to modern systems contenders like Zig, Odin, Nim, Crystal, and Rust, as well as shells, JVM languages, and esoteric
                 dialects like Brainfuck.
               </p>
             </section>
@@ -190,7 +190,7 @@ export default function ArticlePage() {
               </h2>
               <p className="mb-4" style={{ textWrap: 'pretty' }}>
                 At a glance, picking a random adjective and joining it with a random noun seems like an introductory programming exercise.
-                However, to make the comparison valid across 48 languages, every implementation must adhere strictly to identical runtime contracts:
+                However, to make the comparison valid across 49 languages, every implementation must adhere strictly to identical runtime contracts:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 not-prose">
@@ -348,6 +348,13 @@ export default function ArticlePage() {
                       <td className="p-3">7.3 ms</td>
                       <td className="p-3">80,000 /s</td>
                       <td className="p-3 font-sans text-xs">GNAT -O3, strong type safety, unbounded string vectors</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#7</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">COBOL (1959)</td>
+                      <td className="p-3">25.2 ms</td>
+                      <td className="p-3">39,600 /s</td>
+                      <td className="p-3 font-sans text-xs">GnuCOBOL -O3 native binary, LINE SEQUENTIAL table indexing</td>
                     </tr>
                   </tbody>
                 </table>

@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit rust data web web-install web-bench web-build web-dev
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim name-generator_crystal name-generator_zig name-generator_fortran name-generator_ada name-generator_odin name-generator_v
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim name-generator_crystal name-generator_zig name-generator_fortran name-generator_ada name-generator_odin name-generator_v name-generator_cobol
 
 clean:
 	-@rm -v name-generator 
@@ -19,6 +19,7 @@ clean:
 	-@rm -v name-generator_ada
 	-@rm -v name-generator_odin
 	-@rm -v name-generator_v
+	-@rm -v name-generator_cobol
 	-@rm -v name_generator_ada.ali name_generator_ada.o
 
 github:
@@ -145,6 +146,9 @@ name-generator_odin:
 
 name-generator_v:
 	v -prod -o name-generator_v name-generator.v
+
+name-generator_cobol:
+	cobc -free -x -O3 -o name-generator_cobol name-generator.cbl
 
 # WIPs
 #

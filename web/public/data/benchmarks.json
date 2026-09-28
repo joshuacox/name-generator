@@ -1,202 +1,212 @@
 {
-  "generatedAt": "2026-09-28T12:35:49.015Z",
+  "generatedAt": "2026-09-28T23:27:52.691Z",
   "environment": {
     "os": "Linux (Ubuntu x86_64)",
     "cpu": "Host Virtualized Multi-core",
     "tool": "hyperfine"
   },
   "stats": {
-    "totalLanguages": 48,
-    "compiledContenders": 10,
+    "totalLanguages": 49,
+    "compiledContenders": 11,
     "scriptingContenders": 9,
     "fastestLanguage": "Zig",
-    "fastestMeanMs": 1.13,
-    "fastestScripting": "Node.js",
-    "fastestScriptingMs": 40.9,
-    "maxThroughputPerSec": 869565
+    "fastestMeanMs": 1.14,
+    "fastestScripting": "Tcl",
+    "fastestScriptingMs": 47,
+    "maxThroughputPerSec": 909091
   },
   "deathmatchCompiled": [
     {
       "name": "Zig",
       "command": "./name-generator_zig",
-      "mean": 1.13,
-      "min": 1.06,
-      "max": 1.25,
-      "stddev": 0.08,
+      "mean": 1.14,
+      "min": 1.08,
+      "max": 1.19,
+      "stddev": 0.05,
       "relative": 1,
       "paradigm": "Systems"
     },
     {
       "name": "C++",
       "command": "./name-generator_cpp",
-      "mean": 1.98,
-      "min": 1.91,
-      "max": 2.02,
+      "mean": 1.94,
+      "min": 1.89,
+      "max": 1.99,
       "stddev": 0.05,
-      "relative": 1.75,
+      "relative": 1.7,
       "paradigm": "Systems"
     },
     {
       "name": "Go",
       "command": "./name-generator_go",
       "mean": 2.1,
-      "min": 2,
-      "max": 2.16,
-      "stddev": 0.06,
+      "min": 2.05,
+      "max": 2.13,
+      "stddev": 0.03,
       "relative": 1.85,
       "paradigm": "Systems"
     },
     {
       "name": "Crystal",
       "command": "./name-generator_crystal",
-      "mean": 2.59,
-      "min": 2.54,
-      "max": 2.65,
-      "stddev": 0.05,
-      "relative": 2.28,
+      "mean": 2.54,
+      "min": 2.47,
+      "max": 2.71,
+      "stddev": 0.09,
+      "relative": 2.24,
       "paradigm": "Systems"
     },
     {
       "name": "Nim",
       "command": "./name-generator_nim",
-      "mean": 3.86,
-      "min": 3.81,
-      "max": 3.99,
-      "stddev": 0.08,
-      "relative": 3.41,
+      "mean": 3.78,
+      "min": 3.67,
+      "max": 3.91,
+      "stddev": 0.09,
+      "relative": 3.33,
       "paradigm": "Systems"
     },
     {
       "name": "Odin",
       "command": "./name-generator_odin",
-      "mean": 4.62,
-      "min": 4.57,
-      "max": 4.69,
-      "stddev": 0.04,
-      "relative": 4.08,
+      "mean": 14,
+      "min": 4.62,
+      "max": 25.16,
+      "stddev": 10.27,
+      "relative": 12.31,
       "paradigm": "Systems"
     },
     {
       "name": "Ada",
       "command": "./name-generator_ada",
-      "mean": 7.14,
-      "min": 7.09,
-      "max": 7.18,
-      "stddev": 0.04,
-      "relative": 6.31,
+      "mean": 26.71,
+      "min": 7.08,
+      "max": 39.25,
+      "stddev": 16.7,
+      "relative": 23.49,
+      "paradigm": "Systems"
+    },
+    {
+      "name": "COBOL",
+      "command": "./name-generator_cobol",
+      "mean": 34.25,
+      "min": 12.19,
+      "max": 65.92,
+      "stddev": 23.37,
+      "relative": 30.12,
       "paradigm": "Systems"
     },
     {
       "name": "Fortran",
       "command": "./name-generator_fortran",
-      "mean": 13.47,
-      "min": 11.54,
-      "max": 18.42,
-      "stddev": 2.85,
-      "relative": 11.9,
+      "mean": 37.78,
+      "min": 14.56,
+      "max": 67.09,
+      "stddev": 26.98,
+      "relative": 33.23,
       "paradigm": "Systems"
     },
     {
       "name": "V",
       "command": "./name-generator_v",
-      "mean": 88.33,
-      "min": 38.78,
-      "max": 135.18,
-      "stddev": 42.11,
-      "relative": 78,
+      "mean": 97.89,
+      "min": 51.83,
+      "max": 116.86,
+      "stddev": 26.37,
+      "relative": 86.09,
       "paradigm": "Systems"
     },
     {
       "name": "C",
       "command": "./name-generator",
-      "mean": 747.81,
-      "min": 667.45,
-      "max": 779.01,
-      "stddev": 47.78,
-      "relative": 660.37,
+      "mean": 766.38,
+      "min": 700.03,
+      "max": 787.64,
+      "stddev": 37.5,
+      "relative": 673.98,
       "paradigm": "Systems"
     }
   ],
   "deathmatchScripting": [
     {
-      "name": "Node.js",
-      "command": "./name-generator.js",
-      "mean": 40.9,
-      "min": 23.8,
-      "max": 71.6,
+      "name": "Tcl",
+      "command": "./name-generator.tcl",
+      "mean": 47,
+      "min": 12.2,
+      "max": 67.7,
       "relative": 1,
       "type": "Scripting"
     },
     {
-      "name": "Tcl",
-      "command": "./name-generator.tcl",
-      "mean": 42.5,
-      "min": 18.7,
-      "max": 57.7,
-      "relative": 1.04,
+      "name": "Node.js",
+      "command": "./name-generator.js",
+      "mean": 52.8,
+      "min": 32.9,
+      "max": 71,
+      "relative": 1.12,
       "type": "Scripting"
     },
     {
       "name": "AWK",
       "command": "./name-generator.awk",
-      "mean": 69.1,
-      "min": 20.2,
+      "mean": 68.6,
+      "min": 25.2,
       "max": 109.5,
-      "relative": 1.69,
+      "relative": 1.46,
       "type": "Scripting"
     },
     {
       "name": "Ruby",
       "command": "./name-generator.rb",
-      "mean": 146.7,
-      "min": 119.9,
-      "max": 165.1,
-      "relative": 3.59,
+      "mean": 138.2,
+      "min": 65.9,
+      "max": 182.6,
+      "relative": 2.94,
       "type": "Scripting"
-    },
-    {
-      "name": "POSIX sh",
-      "command": "./name-generator.sh",
-      "mean": 172.6,
-      "min": 171.5,
-      "max": 174.1,
-      "relative": 4.22,
-      "type": "Shell"
     },
     {
       "name": "KornShell (ksh)",
       "command": "./name-generator.ksh",
-      "mean": 180.8,
-      "min": 121,
-      "max": 212.9,
-      "relative": 4.42,
+      "mean": 157.5,
+      "min": 116.3,
+      "max": 214.3,
+      "relative": 3.35,
+      "type": "Shell"
+    },
+    {
+      "name": "POSIX sh",
+      "command": "./name-generator.sh",
+      "mean": 172.1,
+      "min": 170.4,
+      "max": 173,
+      "relative": 3.66,
       "type": "Shell"
     },
     {
       "name": "Zsh",
       "command": "./name-generator.zsh",
-      "mean": 215.4,
-      "min": 161.6,
-      "max": 266.9,
-      "relative": 5.27,
+      "mean": 183.2,
+      "min": 153.6,
+      "max": 242,
+      "relative": 3.9,
       "type": "Shell"
     },
     {
       "name": "Bash",
       "command": "./name-generator.bash",
-      "mean": 225.9,
-      "min": 208.4,
-      "max": 258.1,
-      "relative": 5.52,
+      "mean": 343,
+      "min": 248.8,
+      "max": 414.9,
+      "relative": 7.3,
       "type": "Shell"
     },
     {
       "name": "Nushell",
       "command": "./name-generator.nu",
-      "mean": 391.5,
-      "min": 372,
-      "max": 427.7,
-      "relative": 9.57,
+      "mean": 347.7,
+      "min": 315.6,
+      "max": 366.6,
+      "relative": 7.4,
       "type": "Shell"
     }
   ],
@@ -204,126 +214,126 @@
     {
       "language": "Zig",
       "command": "./name-generator_zig",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 1.11
+          "meanMs": 0.97
         },
         {
           "count": 10,
-          "meanMs": 1.09
+          "meanMs": 1.1
         },
         {
           "count": 100,
-          "meanMs": 1.12
+          "meanMs": 1.11
         },
         {
           "count": 1000,
-          "meanMs": 1.15
+          "meanMs": 1.1
         }
       ]
     },
     {
       "language": "Go",
       "command": "./name-generator_go",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 1.63
-        },
-        {
-          "count": 10,
-          "meanMs": 1.72
-        },
-        {
-          "count": 100,
           "meanMs": 1.65
         },
         {
+          "count": 10,
+          "meanMs": 1.63
+        },
+        {
+          "count": 100,
+          "meanMs": 1.63
+        },
+        {
           "count": 1000,
-          "meanMs": 2.17
+          "meanMs": 2.12
         }
       ]
     },
     {
       "language": "Crystal",
       "command": "./name-generator_crystal",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 2.28
+          "meanMs": 2.18
         },
         {
           "count": 10,
-          "meanMs": 2.28
+          "meanMs": 2.18
         },
         {
           "count": 100,
-          "meanMs": 2.22
+          "meanMs": 2.24
         },
         {
           "count": 1000,
-          "meanMs": 2.5
+          "meanMs": 2.55
         }
       ]
     },
     {
       "language": "Nim",
       "command": "./name-generator_nim",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 3.57
+          "meanMs": 4.88
         },
         {
           "count": 10,
-          "meanMs": 3.58
+          "meanMs": 4.28
         },
         {
           "count": 100,
-          "meanMs": 3.67
+          "meanMs": 3.56
         },
         {
           "count": 1000,
-          "meanMs": 3.79
+          "meanMs": 3.77
         }
       ]
     },
     {
       "language": "Odin",
       "command": "./name-generator_odin",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 4.34
+          "meanMs": 4.43
         },
         {
           "count": 10,
-          "meanMs": 4.29
+          "meanMs": 5.38
         },
         {
           "count": 100,
-          "meanMs": 4.32
+          "meanMs": 4.31
         },
         {
           "count": 1000,
-          "meanMs": 4.6
+          "meanMs": 5.3
         }
       ]
     },
     {
       "language": "Ada",
       "command": "./name-generator_ada",
-      "category": "Scripting",
+      "category": "Compiled",
       "points": [
         {
           "count": 1,
-          "meanMs": 6.85
+          "meanMs": 6.91
         },
         {
           "count": 10,
@@ -331,11 +341,34 @@
         },
         {
           "count": 100,
-          "meanMs": 6.88
+          "meanMs": 6.89
         },
         {
           "count": 1000,
-          "meanMs": 7.14
+          "meanMs": 7.13
+        }
+      ]
+    },
+    {
+      "language": "COBOL",
+      "command": "./name-generator_cobol",
+      "category": "Compiled",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 32.4
+        },
+        {
+          "count": 10,
+          "meanMs": 29.86
+        },
+        {
+          "count": 100,
+          "meanMs": 10.02
+        },
+        {
+          "count": 1000,
+          "meanMs": 53.57
         }
       ]
     },
@@ -346,19 +379,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 74.23
+          "meanMs": 19.98
         },
         {
           "count": 10,
-          "meanMs": 33.43
+          "meanMs": 34.34
         },
         {
           "count": 100,
-          "meanMs": 42.65
+          "meanMs": 33.26
         },
         {
           "count": 1000,
-          "meanMs": 42.7
+          "meanMs": 56.59
         }
       ]
     },
@@ -369,19 +402,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 59.28
+          "meanMs": 35.34
         },
         {
           "count": 10,
-          "meanMs": 32.39
+          "meanMs": 28.77
         },
         {
           "count": 100,
-          "meanMs": 30.79
+          "meanMs": 78.06
         },
         {
           "count": 1000,
-          "meanMs": 59.03
+          "meanMs": 42.3
         }
       ]
     },
@@ -392,19 +425,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 5.42
+          "meanMs": 6.65
         },
         {
           "count": 10,
-          "meanMs": 21.96
+          "meanMs": 19.65
         },
         {
           "count": 100,
-          "meanMs": 270.11
+          "meanMs": 440.87
         },
         {
           "count": 1000,
-          "meanMs": 3138.68
+          "meanMs": 3454.92
         }
       ]
     }
@@ -412,66 +445,73 @@
   "throughputLeaderboard": [
     {
       "name": "Zig",
-      "category": "Scripting",
-      "namesPerSecond": 869565,
-      "meanMsAt1000": 1.15,
+      "category": "Compiled",
+      "namesPerSecond": 909091,
+      "meanMsAt1000": 1.1,
       "relativeToFastest": 1
     },
     {
       "name": "Go",
-      "category": "Scripting",
-      "namesPerSecond": 460829,
-      "meanMsAt1000": 2.17,
-      "relativeToFastest": 1.89
+      "category": "Compiled",
+      "namesPerSecond": 471698,
+      "meanMsAt1000": 2.12,
+      "relativeToFastest": 1.93
     },
     {
       "name": "Crystal",
-      "category": "Scripting",
-      "namesPerSecond": 400000,
-      "meanMsAt1000": 2.5,
-      "relativeToFastest": 2.17
+      "category": "Compiled",
+      "namesPerSecond": 392157,
+      "meanMsAt1000": 2.55,
+      "relativeToFastest": 2.32
     },
     {
       "name": "Nim",
-      "category": "Scripting",
-      "namesPerSecond": 263852,
-      "meanMsAt1000": 3.79,
-      "relativeToFastest": 3.3
+      "category": "Compiled",
+      "namesPerSecond": 265252,
+      "meanMsAt1000": 3.77,
+      "relativeToFastest": 3.43
     },
     {
       "name": "Odin",
-      "category": "Scripting",
-      "namesPerSecond": 217391,
-      "meanMsAt1000": 4.6,
-      "relativeToFastest": 4
+      "category": "Compiled",
+      "namesPerSecond": 188679,
+      "meanMsAt1000": 5.3,
+      "relativeToFastest": 4.82
     },
     {
       "name": "Ada",
-      "category": "Scripting",
-      "namesPerSecond": 140056,
-      "meanMsAt1000": 7.14,
-      "relativeToFastest": 6.21
-    },
-    {
-      "name": "AWK",
-      "category": "Scripting",
-      "namesPerSecond": 23419,
-      "meanMsAt1000": 42.7,
-      "relativeToFastest": 37.13
+      "category": "Compiled",
+      "namesPerSecond": 140252,
+      "meanMsAt1000": 7.13,
+      "relativeToFastest": 6.48
     },
     {
       "name": "Node.js",
       "category": "Scripting",
-      "namesPerSecond": 16941,
-      "meanMsAt1000": 59.03,
-      "relativeToFastest": 51.33
+      "namesPerSecond": 23641,
+      "meanMsAt1000": 42.3,
+      "relativeToFastest": 38.45
+    },
+    {
+      "name": "COBOL",
+      "category": "Compiled",
+      "namesPerSecond": 18667,
+      "meanMsAt1000": 53.57,
+      "relativeToFastest": 48.7
+    },
+    {
+      "name": "AWK",
+      "category": "Scripting",
+      "namesPerSecond": 17671,
+      "meanMsAt1000": 56.59,
+      "relativeToFastest": 51.45
     },
     {
       "name": "Bash",
       "category": "Shell",
-      "namesPerSecond": 319,
-      "meanMsAt1000": 3138.68,
-      "relativeToFastest": 2725.91
+      "namesPerSecond": 289,
+      "meanMsAt1000": 3454.92,
+      "relativeToFastest": 3145.64
     }
   ],
   "languages": [
@@ -534,6 +574,18 @@
       "sloc": 157,
       "codeSample": "with Ada.Text_IO;\nwith Ada.Environment_Variables;\nwith Ada.Characters.Handling;\nwith Ada.Strings.Unbounded;\nwith Ada.Containers.Vectors;\nwith Ada.Numerics.Discrete_Random;\nwith Ada.Directories;\n\nprocedure Name_Generator_Ada is\n   package Env renames Ada.Environment_Variables;\n   package TIO renames Ada.Text_IO;\n   package Dirs renames Ada.Directories;\n   package SU renames Ada.Strings.Unbounded;\n   use type SU.Unbounded_String;\n   use type Dirs.File_Kind;\n\n   package String_Vectors is new Ada.Containers.Vectors\n     (Index_Type => Positive, Element_Type => SU.Unbounded_String);\n\n   package Random_Index is new Ada.Numerics.Discrete_Random (Result_Subtype => Positive);\n\n   function Get_Env_Or_Default (Key : String; Default : String) return String is\n   begin\n      if Env.Exists (Key) and then Env.Value (Key)'Length > 0 then\n         return Env.Value (Key);\n      else\n         return Default;\n      end if;\n   end Get_Env_Or_Default;\n",
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator_ada.adb"
+    },
+    {
+      "id": "cobol",
+      "name": "COBOL",
+      "file": "name-generator.cbl",
+      "category": "Compiled",
+      "paradigm": "Mainframe / Procedural",
+      "ext": ".cbl",
+      "compiledBin": "name-generator_cobol",
+      "sloc": 262,
+      "codeSample": ">>SOURCE FORMAT FREE\nIDENTIFICATION DIVISION.\nPROGRAM-ID. NAME-GENERATOR.\nAUTHOR. JOSHUAGOX-AND-CONTRIBUTORS.\nDATE-WRITTEN. 2026-09-28.\n\nENVIRONMENT DIVISION.\nINPUT-OUTPUT SECTION.\nFILE-CONTROL.\n    SELECT ADJ-IN-FILE ASSIGN TO WS-ADJ-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-ADJ-STATUS.\n\n    SELECT NOUN-IN-FILE ASSIGN TO WS-NOUN-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-NOUN-STATUS.\n\n    SELECT TMP-FILE ASSIGN TO WS-TMP-PATH\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-TMP-STATUS.\n\nDATA DIVISION.\nFILE SECTION.\nFD  ADJ-IN-FILE.\n01  ADJ-RECORD PIC X(128).\n\nFD  NOUN-IN-FILE.\n01  NOUN-RECORD PIC X(128).\n\nFD  TMP-FILE.",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.cbl"
     },
     {
       "id": "odin",
