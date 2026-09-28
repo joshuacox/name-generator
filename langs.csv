@@ -22,3 +22,4 @@ ruby,name-generator.rb
 rust,rust/src/main.rs
 sh,name-generator.sh
 zsh,name-generator.zsh
+nim,name_generator.nim

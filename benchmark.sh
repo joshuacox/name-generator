@@ -39,6 +39,7 @@ slow_bench_runnr () {
     './name-generator.kts' \
     './name-generator.pl' \
     './name-generator_d' \
+    './name-generator_nim' \
     './name-generator.m' \
     './name-generator.php' \
     './name-generator.el' \
@@ -84,6 +85,7 @@ slowest_scanner_bench_runnr () {
     'counto={num_count} ./name-generator.el' \
     'counto={num_count} ./name-generator.pl' \
     'counto={num_count} ./name-generator_d' \
+    'counto={num_count} ./name-generator_nim' \
     'counto={num_count} ./name-generator.r' \
     'counto={num_count} ./name-generator.m' \
     'counto={num_count} ./name-generator.php' \
@@ -135,6 +137,7 @@ slow_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator.el' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
+    'counto=$((2**{num_count})) ./name-generator_nim' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.m' \
     'counto=$((2**{num_count})) ./name-generator.php' \
@@ -177,6 +180,7 @@ scanner_bench_runnr () {
     'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
+    'counto=$((2**{num_count})) ./name-generator_nim' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.m' \
     'counto=$((2**{num_count})) ./name-generator.php' \
@@ -210,6 +214,7 @@ fast_scanner_bench_runnr () {
     'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
+    'counto=$((2**{num_count})) ./name-generator_nim' \
     'counto=$((2**{num_count})) ./name-generator.r' \
     'counto=$((2**{num_count})) ./name-generator.php' \
     'counto=$((2**{num_count})) ./name-generator.rb' \
@@ -239,6 +244,7 @@ faster_scanner_bench_runnr () {
     'counto=$((2**{num_count})) java -jar ./name-generator.jar' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
+    'counto=$((2**{num_count})) ./name-generator_nim' \
     'counto=$((2**{num_count})) ./name-generator.php' \
     'counto=$((2**{num_count})) ./name-generator.rb' \
     'counto=$((2**{num_count})) ./name-generator.lua' \
@@ -264,6 +270,7 @@ fastest_scanner_bench_runnr () {
     'counto=$((2**{num_count})) ./name-generator_pascal' \
     'counto=$((2**{num_count})) ./name-generator.pl' \
     'counto=$((2**{num_count})) ./name-generator_d' \
+    'counto=$((2**{num_count})) ./name-generator_nim' \
     'counto=$((2**{num_count})) java NameGenerator' \
     'counto=$((2**{num_count})) ./name-generator.lua'
 }
@@ -291,6 +298,7 @@ bench_runnr () {
     './name-generator.jl' \
     './name-generator.pl' \
     './name-generator_d' \
+    './name-generator_nim' \
     './name-generator.r' \
     './name-generator.m' \
     './name-generator.php' \
@@ -330,6 +338,7 @@ fast_bench_runnr () {
     './name-generator.js' \
     './name-generator.pl' \
     './name-generator_d' \
+    './name-generator_nim' \
     './name-generator.r' \
     './name-generator.php' \
     'java NameGenerator' \
@@ -355,6 +364,7 @@ faster_bench_runnr () {
     './name-generator.lua' \
     './name-generator.pl' \
     './name-generator_d' \
+    './name-generator_nim' \
     './name-generator.php' \
     'java NameGenerator' \
     'rust/target/debug/name-generator'
@@ -385,6 +395,7 @@ fastest_bench_runnr () {
     './name-generator.php' \
     'java NameGenerator' \
     './name-generator_d' \
+    './name-generator_nim' \
     './name-generator.pl'
 }
 

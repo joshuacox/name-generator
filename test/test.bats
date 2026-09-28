@@ -21,6 +21,20 @@ setup() {
   make all
 }
 
+# Nim
+@test "test name-generator_nim at 10" {
+  result="$(counto=10 ./name-generator_nim|wc -l)"
+  [ "$result" -eq 10 ]
+}
+@test "test name-generator_nim at 13" {
+  result="$(counto=13 ./name-generator_nim|wc -l)"
+  [ "$result" -eq 13 ]
+}
+@test "test Nim test/test" {
+  result=$(./name-generator_nim)
+  assert_equal "$result" "test_test"
+}
+
 # D
 @test "test name-generator_d at 10" {
   result="$(counto=10 ./name-generator_d|wc -l)"

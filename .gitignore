@@ -9,6 +9,7 @@ name-generator_d
 name-generator_go
 name-generator_pascal
 name-generator_zig
+name-generator_nim
 *.class
 .cabal-sandbox/
 cabal.sandbox.config
