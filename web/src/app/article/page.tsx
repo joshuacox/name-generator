@@ -302,7 +302,8 @@ export default function ArticlePage() {
                       <th className="p-3">Rank</th>
                       <th className="p-3">Language</th>
                       <th className="p-3">Mean Runtime</th>
-                      <th className="p-3">Throughput (Names/sec)</th>
+                      <th className="p-3">Peak RSS</th>
+                      <th className="p-3">Throughput (Names/s)</th>
                       <th className="p-3">Architectural Highlights</th>
                     </tr>
                   </thead>
@@ -310,49 +311,96 @@ export default function ArticlePage() {
                     <tr className="bg-emerald-500/5">
                       <td className="p-3 font-bold text-emerald-600">#1</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Zig</td>
-                      <td className="p-3 text-emerald-600 font-bold">1.2 ms</td>
+                      <td className="p-3 text-emerald-600 font-bold">1.16 ms</td>
+                      <td className="p-3 text-emerald-600 font-semibold">1.6 MB</td>
                       <td className="p-3">833,000 /s</td>
                       <td className="p-3 font-sans text-xs">ReleaseFast strip, arena allocator, zero runtime startup</td>
                     </tr>
                     <tr>
                       <td className="p-3 font-bold text-slate-400">#2</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">C++</td>
+                      <td className="p-3 font-semibold text-orange-500">2.01 ms</td>
+                      <td className="p-3">4.6 MB</td>
+                      <td className="p-3">497,000 /s</td>
+                      <td className="p-3 font-sans text-xs">g++ -O3, vector reserve, fast stdio decoupling</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#3</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Go</td>
-                      <td className="p-3 font-semibold text-orange-500">2.0 ms</td>
+                      <td className="p-3 font-semibold text-orange-500">2.33 ms</td>
+                      <td className="p-3">5.7 MB</td>
                       <td className="p-3">456,000 /s</td>
                       <td className="p-3 font-sans text-xs">Concurrent GC runtime, fast slice indexing, buffered bufio.Writer</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-slate-400">#3</td>
+                      <td className="p-3 font-bold text-slate-400">#4</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Crystal</td>
-                      <td className="p-3 font-semibold text-orange-500">2.5 ms</td>
+                      <td className="p-3 font-semibold text-orange-500">2.53 ms</td>
+                      <td className="p-3">3.9 MB</td>
                       <td className="p-3">396,000 /s</td>
                       <td className="p-3 font-sans text-xs">Ruby-like elegance compiled directly to optimized LLVM bitcode</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-slate-400">#4</td>
+                      <td className="p-3 font-bold text-slate-400">#5</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Nim</td>
-                      <td className="p-3">3.8 ms</td>
+                      <td className="p-3">3.73 ms</td>
+                      <td className="p-3">2.6 MB</td>
                       <td className="p-3">266,000 /s</td>
                       <td className="p-3 font-sans text-xs">Transpiles to C with ORC ARC memory management</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-slate-400">#5</td>
+                      <td className="p-3 font-bold text-slate-400">#6</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">D (gdc)</td>
+                      <td className="p-3">4.49 ms</td>
+                      <td className="p-3">9.2 MB</td>
+                      <td className="p-3">222,000 /s</td>
+                      <td className="p-3 font-sans text-xs">Native GC systems language with fast array slicing</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#7</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Odin</td>
-                      <td className="p-3">4.6 ms</td>
+                      <td className="p-3">4.58 ms</td>
+                      <td className="p-3">3.7 MB</td>
                       <td className="p-3">217,000 /s</td>
                       <td className="p-3 font-sans text-xs">Custom context allocator, data-oriented memory layouts</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-slate-400">#6</td>
+                      <td className="p-3 font-bold text-slate-400">#8</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">Pascal (fpc)</td>
+                      <td className="p-3">4.88 ms</td>
+                      <td className="p-3">5.3 MB</td>
+                      <td className="p-3">204,000 /s</td>
+                      <td className="p-3 font-sans text-xs">Free Pascal -O3, compiled procedural machine code</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#9</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">Dart (native)</td>
+                      <td className="p-3">7.26 ms</td>
+                      <td className="p-3">10.0 MB</td>
+                      <td className="p-3">137,000 /s</td>
+                      <td className="p-3 font-sans text-xs">AOT compiled standalone binary, fast synchronous I/O</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#10</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">Ada 2012</td>
-                      <td className="p-3">7.3 ms</td>
+                      <td className="p-3">11.61 ms</td>
+                      <td className="p-3">6.6 MB</td>
                       <td className="p-3">80,000 /s</td>
                       <td className="p-3 font-sans text-xs">GNAT -O3, strong type safety, unbounded string vectors</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-slate-400">#7</td>
+                      <td className="p-3 font-bold text-slate-400">#11</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">Fortran</td>
+                      <td className="p-3">13.13 ms</td>
+                      <td className="p-3">5.9 MB</td>
+                      <td className="p-3">76,000 /s</td>
+                      <td className="p-3 font-sans text-xs">gfortran -O3 -march=native, array indexing and allocatable strings</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-400">#12</td>
                       <td className="p-3 font-bold text-slate-900 dark:text-white">COBOL (1959)</td>
-                      <td className="p-3">25.2 ms</td>
+                      <td className="p-3">32.67 ms</td>
+                      <td className="p-3">10.2 MB</td>
                       <td className="p-3">39,600 /s</td>
                       <td className="p-3 font-sans text-xs">GnuCOBOL -O3 native binary, LINE SEQUENTIAL table indexing</td>
                     </tr>
@@ -437,20 +485,21 @@ export default function ArticlePage() {
                 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight"
                 style={{ textWrap: 'balance' }}
               >
-                7. Continuous Deathmatch: Automated Hyperfine Benchmarks in CI
+                7. Benchmarking Engine v2.0: Telemetry, Memory Profiling &amp; OLS Regression
               </h2>
               <p className="mb-4" style={{ textWrap: 'pretty' }}>
                 Historically, benchmarks go stale the moment they are committed to a README. Compilers update, kernel versions advance, and performance shifts.
+                Furthermore, simply measuring wall-clock latency at a single batch size obscures two fundamental architectural truths:
+                <strong> how much memory did the runtime consume</strong>, and <strong>how much time was spent booting versus generating</strong>?
               </p>
               <p className="mb-4" style={{ textWrap: 'pretty' }}>
-                To solve this permanently, we built an end-to-end automated benchmarking pipeline powered by GitHub Actions:
+                To solve this, our automated CI pipeline introduces a full telemetry engine:
               </p>
               <ol className="list-decimal list-inside space-y-2 text-slate-600 dark:text-slate-300">
-                <li>Whenever a PR or commit lands on <code className="font-mono text-xs">main</code>, an Ubuntu runner boots with GCC, Go, Rust, Zig, GNAT, and GFortran.</li>
-                <li>The script <code className="font-mono text-xs">scripts/ci-benchmark.sh</code> compiles every available target in release mode.</li>
-                <li><code className="font-mono text-xs">hyperfine</code> executes statistical benchmarks with cache warmups and exports JSON datasets.</li>
-                <li><code className="font-mono text-xs">scripts/generate-data.mjs</code> dynamically ingests the timings and computes real-time relative speedups.</li>
-                <li>The Next.js static site is built and deployed directly to GitHub Pages with zero manual intervention.</li>
+                <li><strong className="text-slate-900 dark:text-white">Tiered Execution Deathmatches:</strong> Separates fast native systems binaries (counto=1000, 10 runs) from VMs (Java), scripting languages, and shell processes to avoid skewing warmup caches.</li>
+                <li><strong className="text-slate-900 dark:text-white">Kernel-Level Memory Profiling:</strong> Uses <code className="font-mono text-xs">GNU time</code> to measure peak Resident Set Size (RSS) directly from OS page tables, tracking consumption from 1.5 MB in C and Zig up to 76 MB in JavaScript/JVM runtimes.</li>
+                <li><strong className="text-slate-900 dark:text-white">OLS Linear Regression Decomposition:</strong> Evaluates multi-scale runs across N &isin; [1, 10, 100, 1000] to fit <code className="font-mono text-xs">T(N) = T_startup + N &times; t_marginal</code>, cleanly isolating cold runtime boot overhead from pure sustained generation speed.</li>
+                <li><strong className="text-slate-900 dark:text-white">Automated Continuous Aggregation:</strong> Generates interactive JSON and CSV exports consumed directly by our Next.js dashboard and deployed automatically to GitHub Pages.</li>
               </ol>
             </section>
 

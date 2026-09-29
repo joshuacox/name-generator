@@ -1,6 +1,6 @@
 .PHONY: all test testx homepage github commit rust data web web-install web-bench web-build web-dev
 
-all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim name-generator_crystal name-generator_zig name-generator_fortran name-generator_ada name-generator_odin name-generator_v name-generator_cobol
+all: name-generator name-generator_cpp name-generator_go NameGenerator.class name_generator.beam name-generator.jar rust/target/debug/name-generator name-generator_O2 name-generator_cpp_O2 name-generator_O1 name-generator_cpp_O1 NameGeneratorScala.class name-generator_pascal name-generator_d name-generator_nim name-generator_crystal name-generator_zig name-generator_fortran name-generator_ada name-generator_odin name-generator_v name-generator_cobol name-generator_dart
 
 clean:
 	-@rm -v name-generator 
@@ -20,7 +20,8 @@ clean:
 	-@rm -v name-generator_odin
 	-@rm -v name-generator_v
 	-@rm -v name-generator_cobol
-	-@rm -v name_generator_ada.ali name_generator_ada.o
+	-@rm -v name-generator_dart
+	-@rm -v name_generator_ada.ali name_generator_ada.o name-generator.o
 
 github:
 	${BROWSER} https://github.com/joshuacox/name-generator/ &
@@ -121,10 +122,15 @@ docs/slowest_scanner-10.csv:
 	cp log/slowest_scanner-10.csv docs/
 
 name-generator_pascal:
-	fpc name-generator.pas -oname-generator_pascal
+	fpc -O3 name-generator.pas -oname-generator_pascal
 
 name-generator_d:
-	dmd name-generator_d.d
+	@if command -v dmd >/dev/null 2>&1; then dmd -O -release -inline name-generator_d.d -of=name-generator_d; \
+	elif command -v gdc >/dev/null 2>&1; then gdc -O3 name-generator_d.d -o name-generator_d; \
+	elif command -v ldc2 >/dev/null 2>&1; then ldc2 -O3 -release name-generator_d.d -of=name-generator_d; fi
+
+name-generator_dart:
+	dart compile exe name-generator.dart -o name-generator_dart
 
 name-generator_nim:
 	nim c -d:release --opt:speed --hints:off -o:name-generator_nim name_generator.nim

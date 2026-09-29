@@ -1,213 +1,1087 @@
 {
-  "generatedAt": "2026-09-28T23:27:52.691Z",
+  "generatedAt": "2026-09-29T03:39:35.367Z",
   "environment": {
     "os": "Linux (Ubuntu x86_64)",
     "cpu": "Host Virtualized Multi-core",
-    "tool": "hyperfine"
+    "tool": "Hyperfine + GNU time"
   },
   "stats": {
     "totalLanguages": 49,
-    "compiledContenders": 11,
-    "scriptingContenders": 9,
+    "activeBenchmarked": 29,
+    "compiledContenders": 14,
+    "vmContenders": 1,
+    "scriptingContenders": 8,
+    "shellContenders": 6,
     "fastestLanguage": "Zig",
-    "fastestMeanMs": 1.14,
+    "fastestMeanMs": 1.16,
     "fastestScripting": "Tcl",
-    "fastestScriptingMs": 47,
-    "maxThroughputPerSec": 909091
+    "fastestScriptingMs": 17.7,
+    "leanestMemoryLanguage": "C",
+    "leanestMemoryMb": 1.57,
+    "maxThroughputPerSec": 16666667
   },
   "deathmatchCompiled": [
     {
       "name": "Zig",
       "command": "./name-generator_zig",
-      "mean": 1.14,
-      "min": 1.08,
+      "category": "Compiled",
+      "paradigm": "Systems",
+      "mean": 1.16,
+      "min": 1.13,
       "max": 1.19,
-      "stddev": 0.05,
+      "stddev": 0.02,
       "relative": 1,
-      "paradigm": "Systems"
+      "peakRssMb": 1.62,
+      "peakRssKb": 1664,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 1
     },
     {
       "name": "C++",
       "command": "./name-generator_cpp",
-      "mean": 1.94,
-      "min": 1.89,
-      "max": 1.99,
-      "stddev": 0.05,
-      "relative": 1.7,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Object-Oriented Systems",
+      "mean": 2.01,
+      "min": 1.97,
+      "max": 2.1,
+      "stddev": 0.06,
+      "relative": 1.73,
+      "peakRssMb": 4.63,
+      "peakRssKb": 4744
     },
     {
       "name": "Go",
       "command": "./name-generator_go",
-      "mean": 2.1,
-      "min": 2.05,
-      "max": 2.13,
-      "stddev": 0.03,
-      "relative": 1.85,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Concurrent Systems",
+      "mean": 2.33,
+      "min": 2.18,
+      "max": 2.57,
+      "stddev": 0.14,
+      "relative": 2.01,
+      "peakRssMb": 5.75,
+      "peakRssKb": 5892,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 1
     },
     {
       "name": "Crystal",
       "command": "./name-generator_crystal",
-      "mean": 2.54,
-      "min": 2.47,
-      "max": 2.71,
-      "stddev": 0.09,
-      "relative": 2.24,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Object-Oriented",
+      "mean": 2.53,
+      "min": 2.45,
+      "max": 2.63,
+      "stddev": 0.07,
+      "relative": 2.18,
+      "peakRssMb": 3.91,
+      "peakRssKb": 4008,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0.052,
+      "sustainedNamesPerSec": 19088953,
+      "r2": 0.5765
     },
     {
       "name": "Nim",
       "command": "./name-generator_nim",
-      "mean": 3.78,
+      "category": "Compiled",
+      "paradigm": "Multi-paradigm",
+      "mean": 3.73,
       "min": 3.67,
-      "max": 3.91,
-      "stddev": 0.09,
-      "relative": 3.33,
-      "paradigm": "Systems"
+      "max": 3.77,
+      "stddev": 0.04,
+      "relative": 3.2,
+      "peakRssMb": 2.56,
+      "peakRssKb": 2624,
+      "startupMs": 1.15,
+      "marginalUsPerName": 0.122,
+      "sustainedNamesPerSec": 8190630,
+      "r2": 0.625
+    },
+    {
+      "name": "D",
+      "command": "./name-generator_d",
+      "category": "Compiled",
+      "paradigm": "Multi-paradigm Systems",
+      "mean": 4.49,
+      "min": 4.46,
+      "max": 4.53,
+      "stddev": 0.03,
+      "relative": 3.86,
+      "peakRssMb": 9.21,
+      "peakRssKb": 9436,
+      "startupMs": 4.76,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     },
     {
       "name": "Odin",
       "command": "./name-generator_odin",
-      "mean": 14,
-      "min": 4.62,
-      "max": 25.16,
-      "stddev": 10.27,
-      "relative": 12.31,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Data-oriented Systems",
+      "mean": 4.58,
+      "min": 4.53,
+      "max": 4.62,
+      "stddev": 0.03,
+      "relative": 3.94,
+      "peakRssMb": 3.73,
+      "peakRssKb": 3820,
+      "startupMs": 8.68,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Pascal",
+      "command": "./name-generator_pascal",
+      "category": "Compiled",
+      "paradigm": "Structured Systems",
+      "mean": 4.88,
+      "min": 4.76,
+      "max": 5.01,
+      "stddev": 0.09,
+      "relative": 4.2,
+      "peakRssMb": 5.33,
+      "peakRssKb": 5460,
+      "startupMs": 5.84,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Dart",
+      "command": "./name-generator_dart",
+      "category": "Compiled",
+      "paradigm": "Client & Systems OO",
+      "mean": 7.26,
+      "min": 7.16,
+      "max": 7.41,
+      "stddev": 0.12,
+      "relative": 6.24,
+      "peakRssMb": 10.04,
+      "peakRssKb": 10276,
+      "startupMs": 14.14,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     },
     {
       "name": "Ada",
       "command": "./name-generator_ada",
-      "mean": 26.71,
-      "min": 7.08,
-      "max": 39.25,
-      "stddev": 16.7,
-      "relative": 23.49,
-      "paradigm": "Systems"
-    },
-    {
-      "name": "COBOL",
-      "command": "./name-generator_cobol",
-      "mean": 34.25,
-      "min": 12.19,
-      "max": 65.92,
-      "stddev": 23.37,
-      "relative": 30.12,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Safety-critical / Structured",
+      "mean": 11.61,
+      "min": 7.05,
+      "max": 26.58,
+      "stddev": 8.43,
+      "relative": 9.98,
+      "peakRssMb": 6.65,
+      "peakRssKb": 6808,
+      "startupMs": 18.35,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     },
     {
       "name": "Fortran",
       "command": "./name-generator_fortran",
-      "mean": 37.78,
-      "min": 14.56,
-      "max": 67.09,
-      "stddev": 26.98,
-      "relative": 33.23,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Scientific / Procedural",
+      "mean": 13.13,
+      "min": 12.07,
+      "max": 13.96,
+      "stddev": 0.76,
+      "relative": 11.29,
+      "peakRssMb": 5.95,
+      "peakRssKb": 6092
+    },
+    {
+      "name": "COBOL",
+      "command": "./name-generator_cobol",
+      "category": "Compiled",
+      "paradigm": "Mainframe / Procedural",
+      "mean": 32.67,
+      "min": 12.06,
+      "max": 63.55,
+      "stddev": 21.24,
+      "relative": 28.07,
+      "peakRssMb": 10.2,
+      "peakRssKb": 10448,
+      "startupMs": 18.29,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     },
     {
       "name": "V",
       "command": "./name-generator_v",
-      "mean": 97.89,
-      "min": 51.83,
-      "max": 116.86,
-      "stddev": 26.37,
-      "relative": 86.09,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Simple Systems",
+      "mean": 109.65,
+      "min": 55.45,
+      "max": 140.62,
+      "stddev": 33.39,
+      "relative": 94.23,
+      "peakRssMb": 5.24,
+      "peakRssKb": 5364
     },
     {
       "name": "C",
       "command": "./name-generator",
-      "mean": 766.38,
-      "min": 700.03,
-      "max": 787.64,
-      "stddev": 37.5,
-      "relative": 673.98,
-      "paradigm": "Systems"
+      "category": "Compiled",
+      "paradigm": "Procedural Systems",
+      "mean": 767.13,
+      "min": 749.85,
+      "max": 787.9,
+      "stddev": 14.45,
+      "relative": 659.24,
+      "peakRssMb": 1.57,
+      "peakRssKb": 1608,
+      "startupMs": 25.09,
+      "marginalUsPerName": 753.465,
+      "sustainedNamesPerSec": 1327,
+      "r2": 0.9922
+    }
+  ],
+  "deathmatchVm": [
+    {
+      "name": "Java",
+      "command": "java NameGenerator",
+      "category": "VM",
+      "paradigm": "JVM Object-Oriented",
+      "mean": 78.78,
+      "min": 57.67,
+      "max": 112.36,
+      "stddev": 22.08,
+      "relative": 1,
+      "peakRssMb": 56.75,
+      "peakRssKb": 58116,
+      "startupMs": 68.65,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     }
   ],
   "deathmatchScripting": [
     {
       "name": "Tcl",
       "command": "./name-generator.tcl",
-      "mean": 47,
-      "min": 12.2,
-      "max": 67.7,
+      "category": "Scripting",
+      "paradigm": "Command Language / String",
+      "mean": 17.7,
+      "min": 14.5,
+      "max": 22.75,
+      "stddev": 4.43,
       "relative": 1,
-      "type": "Scripting"
+      "peakRssMb": 8.84,
+      "peakRssKb": 9048
+    },
+    {
+      "name": "PHP",
+      "command": "./name-generator.php",
+      "category": "Scripting",
+      "paradigm": "Web & CLI Scripting",
+      "mean": 28.48,
+      "min": 12.77,
+      "max": 44.44,
+      "stddev": 15.83,
+      "relative": 1.61,
+      "peakRssMb": 21.43,
+      "peakRssKb": 21944
+    },
+    {
+      "name": "Perl",
+      "command": "./name-generator.pl",
+      "category": "Scripting",
+      "paradigm": "Text Processing",
+      "mean": 33.26,
+      "min": 13.66,
+      "max": 67.73,
+      "stddev": 29.94,
+      "relative": 1.88,
+      "peakRssMb": 12.11,
+      "peakRssKb": 12396
     },
     {
       "name": "Node.js",
       "command": "./name-generator.js",
-      "mean": 52.8,
-      "min": 32.9,
-      "max": 71,
-      "relative": 1.12,
-      "type": "Scripting"
+      "category": "Scripting",
+      "paradigm": "Event-driven Async",
+      "mean": 62.25,
+      "min": 32.96,
+      "max": 84.3,
+      "stddev": 26.42,
+      "relative": 3.52,
+      "peakRssMb": 58.42,
+      "peakRssKb": 59820
+    },
+    {
+      "name": "Lua",
+      "command": "./name-generator.lua",
+      "category": "Scripting",
+      "paradigm": "Lightweight Embeddable",
+      "mean": 73.48,
+      "min": 73.12,
+      "max": 74.05,
+      "stddev": 0.51,
+      "relative": 4.15,
+      "peakRssMb": 4.31,
+      "peakRssKb": 4416
     },
     {
       "name": "AWK",
       "command": "./name-generator.awk",
-      "mean": 68.6,
-      "min": 25.2,
-      "max": 109.5,
-      "relative": 1.46,
-      "type": "Scripting"
+      "category": "Scripting",
+      "paradigm": "Pattern Scanning & Processing",
+      "mean": 95.42,
+      "min": 63.86,
+      "max": 111.58,
+      "stddev": 27.34,
+      "relative": 5.39,
+      "peakRssMb": 9.86,
+      "peakRssKb": 10100,
+      "startupMs": 72.57,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
     },
     {
       "name": "Ruby",
       "command": "./name-generator.rb",
-      "mean": 138.2,
-      "min": 65.9,
-      "max": 182.6,
-      "relative": 2.94,
-      "type": "Scripting"
+      "category": "Scripting",
+      "paradigm": "Dynamic Object-Oriented",
+      "mean": 115.73,
+      "min": 90.1,
+      "max": 161.81,
+      "stddev": 39.99,
+      "relative": 6.54,
+      "peakRssMb": 20.02,
+      "peakRssKb": 20500
     },
+    {
+      "name": "TypeScript",
+      "command": "./name-generator.ts",
+      "category": "Scripting",
+      "paradigm": "Typed JavaScript",
+      "mean": 174.37,
+      "min": 133.67,
+      "max": 210.74,
+      "stddev": 38.72,
+      "relative": 9.85,
+      "peakRssMb": 76.27,
+      "peakRssKb": 78104
+    }
+  ],
+  "deathmatchShells": [
     {
       "name": "KornShell (ksh)",
       "command": "./name-generator.ksh",
-      "mean": 157.5,
-      "min": 116.3,
-      "max": 214.3,
-      "relative": 3.35,
-      "type": "Shell"
+      "category": "Shell",
+      "paradigm": "POSIX Shell",
+      "mean": 58.89,
+      "min": 58.55,
+      "max": 59.49,
+      "stddev": 0.52,
+      "relative": 1,
+      "peakRssMb": 3.84,
+      "peakRssKb": 3936
+    },
+    {
+      "name": "Fish",
+      "command": "./name-generator.fish",
+      "category": "Shell",
+      "paradigm": "Friendly Interactive Shell",
+      "mean": 63.36,
+      "min": 63.2,
+      "max": 63.45,
+      "stddev": 0.14,
+      "relative": 1.08,
+      "peakRssMb": 7.07,
+      "peakRssKb": 7240
     },
     {
       "name": "POSIX sh",
       "command": "./name-generator.sh",
-      "mean": 172.1,
-      "min": 170.4,
-      "max": 173,
-      "relative": 3.66,
-      "type": "Shell"
+      "category": "Shell",
+      "paradigm": "Bourne Shell",
+      "mean": 88.31,
+      "min": 87.23,
+      "max": 89.48,
+      "stddev": 1.13,
+      "relative": 1.5,
+      "peakRssMb": 2.89,
+      "peakRssKb": 2960
     },
     {
       "name": "Zsh",
       "command": "./name-generator.zsh",
-      "mean": 183.2,
-      "min": 153.6,
-      "max": 242,
-      "relative": 3.9,
-      "type": "Shell"
+      "category": "Shell",
+      "paradigm": "Extended Unix Shell",
+      "mean": 92.11,
+      "min": 78.18,
+      "max": 107.29,
+      "stddev": 14.59,
+      "relative": 1.56,
+      "peakRssMb": 3.64,
+      "peakRssKb": 3732
     },
     {
       "name": "Bash",
       "command": "./name-generator.bash",
-      "mean": 343,
-      "min": 248.8,
-      "max": 414.9,
-      "relative": 7.3,
-      "type": "Shell"
+      "category": "Shell",
+      "paradigm": "Unix Shell",
+      "mean": 151.02,
+      "min": 83.09,
+      "max": 258.62,
+      "stddev": 94.25,
+      "relative": 2.56,
+      "peakRssMb": 3.23,
+      "peakRssKb": 3312,
+      "startupMs": 0.01,
+      "marginalUsPerName": 2702.227,
+      "sustainedNamesPerSec": 370,
+      "r2": 0.9992
     },
     {
       "name": "Nushell",
       "command": "./name-generator.nu",
-      "mean": 347.7,
-      "min": 315.6,
-      "max": 366.6,
-      "relative": 7.4,
-      "type": "Shell"
+      "category": "Shell",
+      "paradigm": "Structured Data Shell",
+      "mean": 361.35,
+      "min": 350.13,
+      "max": 367.08,
+      "stddev": 9.71,
+      "relative": 6.14,
+      "peakRssMb": 31.18,
+      "peakRssKb": 31932
+    }
+  ],
+  "overallLeaderboard": [
+    {
+      "name": "Zig",
+      "command": "./name-generator_zig",
+      "category": "Compiled",
+      "paradigm": "Systems",
+      "mean": 1.16,
+      "min": 1.13,
+      "max": 1.19,
+      "stddev": 0.02,
+      "relative": 1,
+      "peakRssMb": 1.62,
+      "peakRssKb": 1664,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 1
+    },
+    {
+      "name": "C++",
+      "command": "./name-generator_cpp",
+      "category": "Compiled",
+      "paradigm": "Object-Oriented Systems",
+      "mean": 2.01,
+      "min": 1.97,
+      "max": 2.1,
+      "stddev": 0.06,
+      "relative": 1.73,
+      "peakRssMb": 4.63,
+      "peakRssKb": 4744
+    },
+    {
+      "name": "Go",
+      "command": "./name-generator_go",
+      "category": "Compiled",
+      "paradigm": "Concurrent Systems",
+      "mean": 2.33,
+      "min": 2.18,
+      "max": 2.57,
+      "stddev": 0.14,
+      "relative": 2.01,
+      "peakRssMb": 5.75,
+      "peakRssKb": 5892,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 1
+    },
+    {
+      "name": "Crystal",
+      "command": "./name-generator_crystal",
+      "category": "Compiled",
+      "paradigm": "Object-Oriented",
+      "mean": 2.53,
+      "min": 2.45,
+      "max": 2.63,
+      "stddev": 0.07,
+      "relative": 2.18,
+      "peakRssMb": 3.91,
+      "peakRssKb": 4008,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0.052,
+      "sustainedNamesPerSec": 19088953,
+      "r2": 0.5765
+    },
+    {
+      "name": "Nim",
+      "command": "./name-generator_nim",
+      "category": "Compiled",
+      "paradigm": "Multi-paradigm",
+      "mean": 3.73,
+      "min": 3.67,
+      "max": 3.77,
+      "stddev": 0.04,
+      "relative": 3.2,
+      "peakRssMb": 2.56,
+      "peakRssKb": 2624,
+      "startupMs": 1.15,
+      "marginalUsPerName": 0.122,
+      "sustainedNamesPerSec": 8190630,
+      "r2": 0.625
+    },
+    {
+      "name": "D",
+      "command": "./name-generator_d",
+      "category": "Compiled",
+      "paradigm": "Multi-paradigm Systems",
+      "mean": 4.49,
+      "min": 4.46,
+      "max": 4.53,
+      "stddev": 0.03,
+      "relative": 3.86,
+      "peakRssMb": 9.21,
+      "peakRssKb": 9436,
+      "startupMs": 4.76,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Odin",
+      "command": "./name-generator_odin",
+      "category": "Compiled",
+      "paradigm": "Data-oriented Systems",
+      "mean": 4.58,
+      "min": 4.53,
+      "max": 4.62,
+      "stddev": 0.03,
+      "relative": 3.94,
+      "peakRssMb": 3.73,
+      "peakRssKb": 3820,
+      "startupMs": 8.68,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Pascal",
+      "command": "./name-generator_pascal",
+      "category": "Compiled",
+      "paradigm": "Structured Systems",
+      "mean": 4.88,
+      "min": 4.76,
+      "max": 5.01,
+      "stddev": 0.09,
+      "relative": 4.2,
+      "peakRssMb": 5.33,
+      "peakRssKb": 5460,
+      "startupMs": 5.84,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Dart",
+      "command": "./name-generator_dart",
+      "category": "Compiled",
+      "paradigm": "Client & Systems OO",
+      "mean": 7.26,
+      "min": 7.16,
+      "max": 7.41,
+      "stddev": 0.12,
+      "relative": 6.24,
+      "peakRssMb": 10.04,
+      "peakRssKb": 10276,
+      "startupMs": 14.14,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Ada",
+      "command": "./name-generator_ada",
+      "category": "Compiled",
+      "paradigm": "Safety-critical / Structured",
+      "mean": 11.61,
+      "min": 7.05,
+      "max": 26.58,
+      "stddev": 8.43,
+      "relative": 9.98,
+      "peakRssMb": 6.65,
+      "peakRssKb": 6808,
+      "startupMs": 18.35,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Fortran",
+      "command": "./name-generator_fortran",
+      "category": "Compiled",
+      "paradigm": "Scientific / Procedural",
+      "mean": 13.13,
+      "min": 12.07,
+      "max": 13.96,
+      "stddev": 0.76,
+      "relative": 11.29,
+      "peakRssMb": 5.95,
+      "peakRssKb": 6092
+    },
+    {
+      "name": "COBOL",
+      "command": "./name-generator_cobol",
+      "category": "Compiled",
+      "paradigm": "Mainframe / Procedural",
+      "mean": 32.67,
+      "min": 12.06,
+      "max": 63.55,
+      "stddev": 21.24,
+      "relative": 28.07,
+      "peakRssMb": 10.2,
+      "peakRssKb": 10448,
+      "startupMs": 18.29,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "V",
+      "command": "./name-generator_v",
+      "category": "Compiled",
+      "paradigm": "Simple Systems",
+      "mean": 109.65,
+      "min": 55.45,
+      "max": 140.62,
+      "stddev": 33.39,
+      "relative": 94.23,
+      "peakRssMb": 5.24,
+      "peakRssKb": 5364
+    },
+    {
+      "name": "C",
+      "command": "./name-generator",
+      "category": "Compiled",
+      "paradigm": "Procedural Systems",
+      "mean": 767.13,
+      "min": 749.85,
+      "max": 787.9,
+      "stddev": 14.45,
+      "relative": 659.24,
+      "peakRssMb": 1.57,
+      "peakRssKb": 1608,
+      "startupMs": 25.09,
+      "marginalUsPerName": 753.465,
+      "sustainedNamesPerSec": 1327,
+      "r2": 0.9922
+    },
+    {
+      "name": "Java",
+      "command": "java NameGenerator",
+      "category": "VM",
+      "paradigm": "JVM Object-Oriented",
+      "mean": 78.78,
+      "min": 57.67,
+      "max": 112.36,
+      "stddev": 22.08,
+      "relative": 1,
+      "peakRssMb": 56.75,
+      "peakRssKb": 58116,
+      "startupMs": 68.65,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Tcl",
+      "command": "./name-generator.tcl",
+      "category": "Scripting",
+      "paradigm": "Command Language / String",
+      "mean": 17.7,
+      "min": 14.5,
+      "max": 22.75,
+      "stddev": 4.43,
+      "relative": 1,
+      "peakRssMb": 8.84,
+      "peakRssKb": 9048
+    },
+    {
+      "name": "PHP",
+      "command": "./name-generator.php",
+      "category": "Scripting",
+      "paradigm": "Web & CLI Scripting",
+      "mean": 28.48,
+      "min": 12.77,
+      "max": 44.44,
+      "stddev": 15.83,
+      "relative": 1.61,
+      "peakRssMb": 21.43,
+      "peakRssKb": 21944
+    },
+    {
+      "name": "Perl",
+      "command": "./name-generator.pl",
+      "category": "Scripting",
+      "paradigm": "Text Processing",
+      "mean": 33.26,
+      "min": 13.66,
+      "max": 67.73,
+      "stddev": 29.94,
+      "relative": 1.88,
+      "peakRssMb": 12.11,
+      "peakRssKb": 12396
+    },
+    {
+      "name": "Node.js",
+      "command": "./name-generator.js",
+      "category": "Scripting",
+      "paradigm": "Event-driven Async",
+      "mean": 62.25,
+      "min": 32.96,
+      "max": 84.3,
+      "stddev": 26.42,
+      "relative": 3.52,
+      "peakRssMb": 58.42,
+      "peakRssKb": 59820
+    },
+    {
+      "name": "Lua",
+      "command": "./name-generator.lua",
+      "category": "Scripting",
+      "paradigm": "Lightweight Embeddable",
+      "mean": 73.48,
+      "min": 73.12,
+      "max": 74.05,
+      "stddev": 0.51,
+      "relative": 4.15,
+      "peakRssMb": 4.31,
+      "peakRssKb": 4416
+    },
+    {
+      "name": "AWK",
+      "command": "./name-generator.awk",
+      "category": "Scripting",
+      "paradigm": "Pattern Scanning & Processing",
+      "mean": 95.42,
+      "min": 63.86,
+      "max": 111.58,
+      "stddev": 27.34,
+      "relative": 5.39,
+      "peakRssMb": 9.86,
+      "peakRssKb": 10100,
+      "startupMs": 72.57,
+      "marginalUsPerName": 0,
+      "sustainedNamesPerSec": 10000000,
+      "r2": 0
+    },
+    {
+      "name": "Ruby",
+      "command": "./name-generator.rb",
+      "category": "Scripting",
+      "paradigm": "Dynamic Object-Oriented",
+      "mean": 115.73,
+      "min": 90.1,
+      "max": 161.81,
+      "stddev": 39.99,
+      "relative": 6.54,
+      "peakRssMb": 20.02,
+      "peakRssKb": 20500
+    },
+    {
+      "name": "TypeScript",
+      "command": "./name-generator.ts",
+      "category": "Scripting",
+      "paradigm": "Typed JavaScript",
+      "mean": 174.37,
+      "min": 133.67,
+      "max": 210.74,
+      "stddev": 38.72,
+      "relative": 9.85,
+      "peakRssMb": 76.27,
+      "peakRssKb": 78104
+    },
+    {
+      "name": "KornShell (ksh)",
+      "command": "./name-generator.ksh",
+      "category": "Shell",
+      "paradigm": "POSIX Shell",
+      "mean": 58.89,
+      "min": 58.55,
+      "max": 59.49,
+      "stddev": 0.52,
+      "relative": 1,
+      "peakRssMb": 3.84,
+      "peakRssKb": 3936
+    },
+    {
+      "name": "Fish",
+      "command": "./name-generator.fish",
+      "category": "Shell",
+      "paradigm": "Friendly Interactive Shell",
+      "mean": 63.36,
+      "min": 63.2,
+      "max": 63.45,
+      "stddev": 0.14,
+      "relative": 1.08,
+      "peakRssMb": 7.07,
+      "peakRssKb": 7240
+    },
+    {
+      "name": "POSIX sh",
+      "command": "./name-generator.sh",
+      "category": "Shell",
+      "paradigm": "Bourne Shell",
+      "mean": 88.31,
+      "min": 87.23,
+      "max": 89.48,
+      "stddev": 1.13,
+      "relative": 1.5,
+      "peakRssMb": 2.89,
+      "peakRssKb": 2960
+    },
+    {
+      "name": "Zsh",
+      "command": "./name-generator.zsh",
+      "category": "Shell",
+      "paradigm": "Extended Unix Shell",
+      "mean": 92.11,
+      "min": 78.18,
+      "max": 107.29,
+      "stddev": 14.59,
+      "relative": 1.56,
+      "peakRssMb": 3.64,
+      "peakRssKb": 3732
+    },
+    {
+      "name": "Bash",
+      "command": "./name-generator.bash",
+      "category": "Shell",
+      "paradigm": "Unix Shell",
+      "mean": 151.02,
+      "min": 83.09,
+      "max": 258.62,
+      "stddev": 94.25,
+      "relative": 2.56,
+      "peakRssMb": 3.23,
+      "peakRssKb": 3312,
+      "startupMs": 0.01,
+      "marginalUsPerName": 2702.227,
+      "sustainedNamesPerSec": 370,
+      "r2": 0.9992
+    },
+    {
+      "name": "Nushell",
+      "command": "./name-generator.nu",
+      "category": "Shell",
+      "paradigm": "Structured Data Shell",
+      "mean": 361.35,
+      "min": 350.13,
+      "max": 367.08,
+      "stddev": 9.71,
+      "relative": 6.14,
+      "peakRssMb": 31.18,
+      "peakRssKb": 31932
+    }
+  ],
+  "memoryLeaderboard": [
+    {
+      "name": "C",
+      "category": "Compiled",
+      "peakRssMb": 1.57,
+      "peakRssKb": 1608
+    },
+    {
+      "name": "Zig",
+      "category": "Compiled",
+      "peakRssMb": 1.62,
+      "peakRssKb": 1664
+    },
+    {
+      "name": "Nim",
+      "category": "Compiled",
+      "peakRssMb": 2.56,
+      "peakRssKb": 2624
+    },
+    {
+      "name": "POSIX sh",
+      "category": "Shell",
+      "peakRssMb": 2.89,
+      "peakRssKb": 2960
+    },
+    {
+      "name": "Bash",
+      "category": "Shell",
+      "peakRssMb": 3.23,
+      "peakRssKb": 3312
+    },
+    {
+      "name": "Zsh",
+      "category": "Shell",
+      "peakRssMb": 3.64,
+      "peakRssKb": 3732
+    },
+    {
+      "name": "Odin",
+      "category": "Compiled",
+      "peakRssMb": 3.73,
+      "peakRssKb": 3820
+    },
+    {
+      "name": "KornShell",
+      "category": "Compiled",
+      "peakRssMb": 3.84,
+      "peakRssKb": 3936
+    },
+    {
+      "name": "KornShell (ksh)",
+      "category": "Shell",
+      "peakRssMb": 3.84,
+      "peakRssKb": 3936
+    },
+    {
+      "name": "Crystal",
+      "category": "Compiled",
+      "peakRssMb": 3.91,
+      "peakRssKb": 4008
+    },
+    {
+      "name": "Lua",
+      "category": "Scripting",
+      "peakRssMb": 4.31,
+      "peakRssKb": 4416
+    },
+    {
+      "name": "C++",
+      "category": "Compiled",
+      "peakRssMb": 4.63,
+      "peakRssKb": 4744
+    },
+    {
+      "name": "V",
+      "category": "Compiled",
+      "peakRssMb": 5.24,
+      "peakRssKb": 5364
+    },
+    {
+      "name": "Pascal",
+      "category": "Compiled",
+      "peakRssMb": 5.33,
+      "peakRssKb": 5460
+    },
+    {
+      "name": "Go",
+      "category": "Compiled",
+      "peakRssMb": 5.75,
+      "peakRssKb": 5892
+    },
+    {
+      "name": "Fortran",
+      "category": "Compiled",
+      "peakRssMb": 5.95,
+      "peakRssKb": 6092
+    },
+    {
+      "name": "Ada",
+      "category": "Compiled",
+      "peakRssMb": 6.65,
+      "peakRssKb": 6808
+    },
+    {
+      "name": "Fish",
+      "category": "Shell",
+      "peakRssMb": 7.07,
+      "peakRssKb": 7240
+    },
+    {
+      "name": "Tcl",
+      "category": "Scripting",
+      "peakRssMb": 8.84,
+      "peakRssKb": 9048
+    },
+    {
+      "name": "D",
+      "category": "Compiled",
+      "peakRssMb": 9.21,
+      "peakRssKb": 9436
+    },
+    {
+      "name": "AWK",
+      "category": "Scripting",
+      "peakRssMb": 9.86,
+      "peakRssKb": 10100
+    },
+    {
+      "name": "Dart",
+      "category": "Compiled",
+      "peakRssMb": 10.04,
+      "peakRssKb": 10276
+    },
+    {
+      "name": "COBOL",
+      "category": "Compiled",
+      "peakRssMb": 10.2,
+      "peakRssKb": 10448
+    },
+    {
+      "name": "Python",
+      "category": "Scripting",
+      "peakRssMb": 10.95,
+      "peakRssKb": 11216
+    },
+    {
+      "name": "Perl",
+      "category": "Scripting",
+      "peakRssMb": 12.11,
+      "peakRssKb": 12396
+    },
+    {
+      "name": "Ruby",
+      "category": "Scripting",
+      "peakRssMb": 20.02,
+      "peakRssKb": 20500
+    },
+    {
+      "name": "PHP",
+      "category": "Scripting",
+      "peakRssMb": 21.43,
+      "peakRssKb": 21944
+    },
+    {
+      "name": "Nushell",
+      "category": "Shell",
+      "peakRssMb": 31.18,
+      "peakRssKb": 31932
+    },
+    {
+      "name": "Java",
+      "category": "VM",
+      "peakRssMb": 56.75,
+      "peakRssKb": 58116
+    },
+    {
+      "name": "Node.js",
+      "category": "Scripting",
+      "peakRssMb": 58.42,
+      "peakRssKb": 59820
+    },
+    {
+      "name": "TypeScript",
+      "category": "Scripting",
+      "peakRssMb": 76.27,
+      "peakRssKb": 78104
     }
   ],
   "scalingCurves": [
@@ -218,19 +1092,42 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 0.97
+          "meanMs": 0
         },
         {
           "count": 10,
-          "meanMs": 1.1
+          "meanMs": 0
         },
         {
           "count": 100,
-          "meanMs": 1.11
+          "meanMs": 0
         },
         {
           "count": 1000,
-          "meanMs": 1.1
+          "meanMs": 0
+        }
+      ]
+    },
+    {
+      "language": "C",
+      "command": "./name-generator",
+      "category": "Compiled",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 0
+        },
+        {
+          "count": 10,
+          "meanMs": 16.16
+        },
+        {
+          "count": 100,
+          "meanMs": 147.24
+        },
+        {
+          "count": 1000,
+          "meanMs": 774.07
         }
       ]
     },
@@ -241,19 +1138,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 1.65
+          "meanMs": 0
         },
         {
           "count": 10,
-          "meanMs": 1.63
+          "meanMs": 0
         },
         {
           "count": 100,
-          "meanMs": 1.63
+          "meanMs": 0
         },
         {
           "count": 1000,
-          "meanMs": 2.12
+          "meanMs": 0
         }
       ]
     },
@@ -264,19 +1161,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 2.18
+          "meanMs": 0
         },
         {
           "count": 10,
-          "meanMs": 2.18
+          "meanMs": 0
         },
         {
           "count": 100,
-          "meanMs": 2.24
+          "meanMs": 0.05
         },
         {
           "count": 1000,
-          "meanMs": 2.55
+          "meanMs": 0.06
         }
       ]
     },
@@ -287,19 +1184,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 4.88
+          "meanMs": 1.14
         },
         {
           "count": 10,
-          "meanMs": 4.28
+          "meanMs": 1.21
         },
         {
           "count": 100,
-          "meanMs": 3.56
+          "meanMs": 1.11
         },
         {
           "count": 1000,
-          "meanMs": 3.77
+          "meanMs": 1.28
         }
       ]
     },
@@ -310,19 +1207,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 4.43
+          "meanMs": 15.57
         },
         {
           "count": 10,
-          "meanMs": 5.38
+          "meanMs": 7.2
         },
         {
           "count": 100,
-          "meanMs": 4.31
+          "meanMs": 1.87
         },
         {
           "count": 1000,
-          "meanMs": 5.3
+          "meanMs": 2.29
         }
       ]
     },
@@ -333,19 +1230,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 6.91
+          "meanMs": 19.44
         },
         {
           "count": 10,
-          "meanMs": 6.9
+          "meanMs": 25.31
         },
         {
           "count": 100,
-          "meanMs": 6.89
+          "meanMs": 9.21
         },
         {
           "count": 1000,
-          "meanMs": 7.13
+          "meanMs": 16.62
         }
       ]
     },
@@ -356,19 +1253,111 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 32.4
+          "meanMs": 7.14
         },
         {
           "count": 10,
-          "meanMs": 29.86
+          "meanMs": 22.09
         },
         {
           "count": 100,
-          "meanMs": 10.02
+          "meanMs": 25.64
         },
         {
           "count": 1000,
-          "meanMs": 53.57
+          "meanMs": 9.86
+        }
+      ]
+    },
+    {
+      "language": "Pascal",
+      "command": "./name-generator_pascal",
+      "category": "Compiled",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 2.2
+        },
+        {
+          "count": 10,
+          "meanMs": 8.45
+        },
+        {
+          "count": 100,
+          "meanMs": 6.67
+        },
+        {
+          "count": 1000,
+          "meanMs": 2.66
+        }
+      ]
+    },
+    {
+      "language": "D",
+      "command": "./name-generator_d",
+      "category": "Compiled",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 9.93
+        },
+        {
+          "count": 10,
+          "meanMs": 1.79
+        },
+        {
+          "count": 100,
+          "meanMs": 1.97
+        },
+        {
+          "count": 1000,
+          "meanMs": 2.18
+        }
+      ]
+    },
+    {
+      "language": "Dart",
+      "command": "./name-generator_dart",
+      "category": "Compiled",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 11.88
+        },
+        {
+          "count": 10,
+          "meanMs": 25.65
+        },
+        {
+          "count": 100,
+          "meanMs": 2.85
+        },
+        {
+          "count": 1000,
+          "meanMs": 4.82
+        }
+      ]
+    },
+    {
+      "language": "Java",
+      "command": "java NameGenerator",
+      "category": "VM",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 53.64
+        },
+        {
+          "count": 10,
+          "meanMs": 70
+        },
+        {
+          "count": 100,
+          "meanMs": 82.47
+        },
+        {
+          "count": 1000,
+          "meanMs": 54.96
         }
       ]
     },
@@ -379,19 +1368,19 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 19.98
+          "meanMs": 108.96
         },
         {
           "count": 10,
-          "meanMs": 34.34
+          "meanMs": 38.67
         },
         {
           "count": 100,
-          "meanMs": 33.26
+          "meanMs": 64.48
         },
         {
           "count": 1000,
-          "meanMs": 56.59
+          "meanMs": 28.8
         }
       ]
     },
@@ -402,19 +1391,42 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 35.34
+          "meanMs": 37.43
         },
         {
           "count": 10,
-          "meanMs": 28.77
+          "meanMs": 51.17
         },
         {
           "count": 100,
-          "meanMs": 78.06
+          "meanMs": 44.43
         },
         {
           "count": 1000,
-          "meanMs": 42.3
+          "meanMs": 68.31
+        }
+      ]
+    },
+    {
+      "language": "Python",
+      "command": "python3 ./name-generator.py",
+      "category": "Scripting",
+      "points": [
+        {
+          "count": 1,
+          "meanMs": 31.41
+        },
+        {
+          "count": 10,
+          "meanMs": 28.47
+        },
+        {
+          "count": 100,
+          "meanMs": 27.01
+        },
+        {
+          "count": 1000,
+          "meanMs": 11.65
         }
       ]
     },
@@ -425,93 +1437,177 @@
       "points": [
         {
           "count": 1,
-          "meanMs": 6.65
+          "meanMs": 2.98
         },
         {
           "count": 10,
-          "meanMs": 19.65
+          "meanMs": 21.63
         },
         {
           "count": 100,
-          "meanMs": 440.87
+          "meanMs": 208.91
         },
         {
           "count": 1000,
-          "meanMs": 3454.92
+          "meanMs": 2685.24
         }
       ]
     }
   ],
   "throughputLeaderboard": [
     {
-      "name": "Zig",
-      "category": "Compiled",
-      "namesPerSecond": 909091,
-      "meanMsAt1000": 1.1,
-      "relativeToFastest": 1
-    },
-    {
-      "name": "Go",
-      "category": "Compiled",
-      "namesPerSecond": 471698,
-      "meanMsAt1000": 2.12,
-      "relativeToFastest": 1.93
-    },
-    {
       "name": "Crystal",
       "category": "Compiled",
-      "namesPerSecond": 392157,
-      "meanMsAt1000": 2.55,
-      "relativeToFastest": 2.32
+      "namesPerSecond": 16666667,
+      "meanMsAt1000": 0.06,
+      "peakRssMb": 3.91,
+      "startupMs": 0.01,
+      "marginalUsPerName": 0.052,
+      "sustainedRate": 19088953,
+      "relativeToFastest": 1
     },
     {
       "name": "Nim",
       "category": "Compiled",
-      "namesPerSecond": 265252,
-      "meanMsAt1000": 3.77,
-      "relativeToFastest": 3.43
+      "namesPerSecond": 781250,
+      "meanMsAt1000": 1.28,
+      "peakRssMb": 2.56,
+      "startupMs": 1.15,
+      "marginalUsPerName": 0.122,
+      "sustainedRate": 8190630,
+      "relativeToFastest": 21.33
+    },
+    {
+      "name": "D",
+      "category": "Compiled",
+      "namesPerSecond": 458716,
+      "meanMsAt1000": 2.18,
+      "peakRssMb": 9.21,
+      "startupMs": 4.76,
+      "marginalUsPerName": 2.18,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 36.33
     },
     {
       "name": "Odin",
       "category": "Compiled",
-      "namesPerSecond": 188679,
-      "meanMsAt1000": 5.3,
-      "relativeToFastest": 4.82
+      "namesPerSecond": 436681,
+      "meanMsAt1000": 2.29,
+      "peakRssMb": 3.73,
+      "startupMs": 8.68,
+      "marginalUsPerName": 2.29,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 38.17
     },
     {
-      "name": "Ada",
+      "name": "Pascal",
       "category": "Compiled",
-      "namesPerSecond": 140252,
-      "meanMsAt1000": 7.13,
-      "relativeToFastest": 6.48
+      "namesPerSecond": 375940,
+      "meanMsAt1000": 2.66,
+      "peakRssMb": 5.33,
+      "startupMs": 5.84,
+      "marginalUsPerName": 2.66,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 44.33
     },
     {
-      "name": "Node.js",
-      "category": "Scripting",
-      "namesPerSecond": 23641,
-      "meanMsAt1000": 42.3,
-      "relativeToFastest": 38.45
+      "name": "Dart",
+      "category": "Compiled",
+      "namesPerSecond": 207469,
+      "meanMsAt1000": 4.82,
+      "peakRssMb": 10.04,
+      "startupMs": 14.14,
+      "marginalUsPerName": 4.82,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 80.33
     },
     {
       "name": "COBOL",
       "category": "Compiled",
-      "namesPerSecond": 18667,
-      "meanMsAt1000": 53.57,
-      "relativeToFastest": 48.7
+      "namesPerSecond": 101420,
+      "meanMsAt1000": 9.86,
+      "peakRssMb": 10.2,
+      "startupMs": 18.29,
+      "marginalUsPerName": 9.86,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 164.33
+    },
+    {
+      "name": "Python",
+      "category": "Scripting",
+      "namesPerSecond": 85837,
+      "meanMsAt1000": 11.65,
+      "peakRssMb": 10.95,
+      "startupMs": 29.67,
+      "marginalUsPerName": 11.65,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 194.17
+    },
+    {
+      "name": "Ada",
+      "category": "Compiled",
+      "namesPerSecond": 60168,
+      "meanMsAt1000": 16.62,
+      "peakRssMb": 6.65,
+      "startupMs": 18.35,
+      "marginalUsPerName": 16.62,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 277
     },
     {
       "name": "AWK",
       "category": "Scripting",
-      "namesPerSecond": 17671,
-      "meanMsAt1000": 56.59,
-      "relativeToFastest": 51.45
+      "namesPerSecond": 34722,
+      "meanMsAt1000": 28.8,
+      "peakRssMb": 9.86,
+      "startupMs": 72.57,
+      "marginalUsPerName": 28.8,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 480
+    },
+    {
+      "name": "Java",
+      "category": "VM",
+      "namesPerSecond": 18195,
+      "meanMsAt1000": 54.96,
+      "peakRssMb": 56.75,
+      "startupMs": 68.65,
+      "marginalUsPerName": 54.96,
+      "sustainedRate": 10000000,
+      "relativeToFastest": 916
+    },
+    {
+      "name": "Node.js",
+      "category": "Scripting",
+      "namesPerSecond": 14639,
+      "meanMsAt1000": 68.31,
+      "peakRssMb": 58.42,
+      "startupMs": 68.31,
+      "marginalUsPerName": 68.31,
+      "sustainedRate": 14639,
+      "relativeToFastest": 1138.51
+    },
+    {
+      "name": "C",
+      "category": "Compiled",
+      "namesPerSecond": 1292,
+      "meanMsAt1000": 774.07,
+      "peakRssMb": 1.57,
+      "startupMs": 25.09,
+      "marginalUsPerName": 753.465,
+      "sustainedRate": 1327,
+      "relativeToFastest": 12899.9
     },
     {
       "name": "Bash",
       "category": "Shell",
-      "namesPerSecond": 289,
-      "meanMsAt1000": 3454.92,
-      "relativeToFastest": 3145.64
+      "namesPerSecond": 372,
+      "meanMsAt1000": 2685.24,
+      "peakRssMb": 3.23,
+      "startupMs": 0.01,
+      "marginalUsPerName": 2702.227,
+      "sustainedRate": 370,
+      "relativeToFastest": 44802.87
     }
   ],
   "languages": [
@@ -526,90 +1622,6 @@
       "sloc": 148,
       "codeSample": "//! Zig implementation of name-generator.\n//!\n//! Behaves like `name-generator.sh`:\n//!   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n//!     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n//!   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n//!     from the respective folder.\n//!   - Emits `counto` lines (default: terminal height via `tput lines`,\n//!     fallback 24).\n//!   - Noun is lower-cased, adjective keeps original case.\n//!   - Optional debug output when DEBUG=true.\n\nconst std = @import(\"std\");\n\nfn openFile(path: []const u8) !std.fs.File {\n    if (std.fs.path.isAbsolute(path)) {\n        return std.fs.openFileAbsolute(path, .{});\n    } else {\n        return std.fs.cwd().openFile(path, .{});\n    }\n}\n\nfn openDir(path: []const u8) !std.fs.Dir {\n    if (std.fs.path.isAbsolute(path)) {\n        return std.fs.openDirAbsolute(path, .{ .iterate = true });\n    } else {\n        return std.fs.cwd().openDir(path, .{ .iterate = true });\n    }\n}\n",
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator_zig.zig"
-    },
-    {
-      "id": "crystal",
-      "name": "Crystal",
-      "file": "name-generator.cr",
-      "category": "Compiled",
-      "paradigm": "Object-Oriented",
-      "ext": ".cr",
-      "compiledBin": "name-generator_crystal",
-      "sloc": 106,
-      "codeSample": "#!/usr/bin/env crystal\n# Crystal implementation of the name-generator script.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nrequire \"process\"\n\ndef cmd_output(command : String) : String?\n  Process.run(command, shell: true, output: Process::Redirect::Pipe) do |proc|\n    out = proc.output.gets_to_end.strip\n    proc.wait.success? ? out : nil\n  end\nrescue\n  nil\nend\n\ndef pick_file(folder : String, env_var : String) : String\n  if (path = ENV[env_var]?) && !path.empty?\n    return File.realpath(path) if File.file?(path)\n    STDERR.puts \"Environment variable #{env_var} points to a non-regular file: #{path}\"\n    exit 1\n  end",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.cr"
-    },
-    {
-      "id": "nim",
-      "name": "Nim",
-      "file": "name_generator.nim",
-      "category": "Compiled",
-      "paradigm": "Multi-paradigm",
-      "ext": ".nim",
-      "compiledBin": "name-generator_nim",
-      "sloc": 91,
-      "codeSample": "#!/usr/bin/env -S nim r --hints:off\n## Nim implementation of the name-generator script.\n##\n## Behaves like `name-generator.sh`:\n##   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n##     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n##   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n##     from the respective folder.\n##   - Emits `counto` lines (default: terminal height via `tput lines`,\n##     fallback 24).\n##   - Noun is lower-cased, adjective keeps original case.\n##   - Optional debug output when DEBUG=true.\nimport std/[os, osproc, strutils, random]\nproc getEnvOrDefault(key, fallback: string): string =\n  let val = getEnv(key)\n  if val.len > 0: val else: fallback\nproc parseIntOr(s: string, fallback: int): int =\n  try:\n    parseInt(s)\n  except ValueError:\n    fallback\nproc getCountO(): int =\n  let envVal = getEnv(\"counto\")\n  if envVal.len > 0:\n    return parseIntOr(envVal, 24)\n  # Fallback to `tput lines`\n  try:\n    let (output, exitCode) = execCmdEx(\"tput lines\")\n    if exitCode == 0:\n      return parseIntOr(output.strip(), 24)",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator.nim"
-    },
-    {
-      "id": "fortran",
-      "name": "Fortran",
-      "file": "name-generator.f90",
-      "category": "Compiled",
-      "paradigm": "Scientific / Procedural",
-      "ext": ".f90",
-      "compiledBin": "name-generator_fortran",
-      "sloc": 188,
-      "codeSample": "program name_generator\n  implicit none\n\n  character(len=512) :: separator, noun_folder, adj_folder\n  character(len=512) :: noun_file, adj_file, counto_str, debug_str, tmp_path\n  integer :: counto, stat, i, num_nouns, num_adjs, idx_noun, idx_adj\n  real :: r1, r2\n  logical :: is_debug\n\n  character(len=128), allocatable :: nouns(:)\n  character(len=128), allocatable :: adjectives(:)\n\n  ! Random seed\n  call init_random_seed()\n\n  ! Read environment variables\n  call get_environment_variable(\"SEPARATOR\", separator, status=stat)\n  if (stat /= 0 .or. len_trim(separator) == 0) separator = \"-\"\n\n  call get_environment_variable(\"NOUN_FOLDER\", noun_folder, status=stat)\n  if (stat /= 0 .or. len_trim(noun_folder) == 0) noun_folder = \"nouns\"\n\n  call get_environment_variable(\"ADJ_FOLDER\", adj_folder, status=stat)\n  if (stat /= 0 .or. len_trim(adj_folder) == 0) adj_folder = \"adjectives\"\n\n  call get_environment_variable(\"NOUN_FILE\", noun_file, status=stat)\n  if (stat /= 0 .or. len_trim(noun_file) == 0) then\n    noun_file = pick_random_file(noun_folder)\n  end if\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.f90"
-    },
-    {
-      "id": "ada",
-      "name": "Ada",
-      "file": "name_generator_ada.adb",
-      "category": "Compiled",
-      "paradigm": "Safety-critical / Structured",
-      "ext": ".adb",
-      "compiledBin": "name-generator_ada",
-      "sloc": 157,
-      "codeSample": "with Ada.Text_IO;\nwith Ada.Environment_Variables;\nwith Ada.Characters.Handling;\nwith Ada.Strings.Unbounded;\nwith Ada.Containers.Vectors;\nwith Ada.Numerics.Discrete_Random;\nwith Ada.Directories;\n\nprocedure Name_Generator_Ada is\n   package Env renames Ada.Environment_Variables;\n   package TIO renames Ada.Text_IO;\n   package Dirs renames Ada.Directories;\n   package SU renames Ada.Strings.Unbounded;\n   use type SU.Unbounded_String;\n   use type Dirs.File_Kind;\n\n   package String_Vectors is new Ada.Containers.Vectors\n     (Index_Type => Positive, Element_Type => SU.Unbounded_String);\n\n   package Random_Index is new Ada.Numerics.Discrete_Random (Result_Subtype => Positive);\n\n   function Get_Env_Or_Default (Key : String; Default : String) return String is\n   begin\n      if Env.Exists (Key) and then Env.Value (Key)'Length > 0 then\n         return Env.Value (Key);\n      else\n         return Default;\n      end if;\n   end Get_Env_Or_Default;\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator_ada.adb"
-    },
-    {
-      "id": "cobol",
-      "name": "COBOL",
-      "file": "name-generator.cbl",
-      "category": "Compiled",
-      "paradigm": "Mainframe / Procedural",
-      "ext": ".cbl",
-      "compiledBin": "name-generator_cobol",
-      "sloc": 262,
-      "codeSample": ">>SOURCE FORMAT FREE\nIDENTIFICATION DIVISION.\nPROGRAM-ID. NAME-GENERATOR.\nAUTHOR. JOSHUAGOX-AND-CONTRIBUTORS.\nDATE-WRITTEN. 2026-09-28.\n\nENVIRONMENT DIVISION.\nINPUT-OUTPUT SECTION.\nFILE-CONTROL.\n    SELECT ADJ-IN-FILE ASSIGN TO WS-ADJ-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-ADJ-STATUS.\n\n    SELECT NOUN-IN-FILE ASSIGN TO WS-NOUN-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-NOUN-STATUS.\n\n    SELECT TMP-FILE ASSIGN TO WS-TMP-PATH\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-TMP-STATUS.\n\nDATA DIVISION.\nFILE SECTION.\nFD  ADJ-IN-FILE.\n01  ADJ-RECORD PIC X(128).\n\nFD  NOUN-IN-FILE.\n01  NOUN-RECORD PIC X(128).\n\nFD  TMP-FILE.",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.cbl"
-    },
-    {
-      "id": "odin",
-      "name": "Odin",
-      "file": "name-generator.odin",
-      "category": "Compiled",
-      "paradigm": "Data-oriented Systems",
-      "ext": ".odin",
-      "compiledBin": "name-generator_odin",
-      "sloc": 128,
-      "codeSample": "package main\n\nimport \"core:fmt\"\nimport \"core:os\"\nimport \"core:strings\"\nimport \"core:math/rand\"\nimport \"core:strconv\"\nimport \"core:time\"\n\nget_env_or_default :: proc(key, fallback: string) -> string {\n\tval, ok := os.lookup_env(key, context.allocator)\n\tif ok && len(val) > 0 {\n\t\treturn val\n\t}\n\treturn fallback\n}\n\npick_random_file :: proc(folder: string) -> string {\n\tf, err := os.open(folder)\n\tif err != nil {\n\t\tfmt.eprintf(\"Cannot open folder '%s'\\n\", folder)\n\t\tos.exit(1)\n\t}\n\tdefer os.close(f)\n\n\tinfos, read_err := os.read_dir(f, -1, context.allocator)\n\tif read_err != nil {\n\t\tfmt.eprintf(\"Cannot read folder '%s'\\n\", folder)\n\t\tos.exit(1)\n\t}",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.odin"
-    },
-    {
-      "id": "v",
-      "name": "V",
-      "file": "name-generator.v",
-      "category": "Compiled",
-      "paradigm": "Simple Systems",
-      "ext": ".v",
-      "compiledBin": "name-generator_v",
-      "sloc": 134,
-      "codeSample": "// V implementation of name-generator\n//\n// Behaves like `name-generator.sh`:\n//   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n//     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n//   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n//     from the respective folder.\n//   - Emits `counto` lines (default: terminal height via `tput lines`,\n//     fallback 24).\n//   - Noun is lower-cased, adjective keeps original case.\n//   - Optional debug output when DEBUG=true.\n\nimport os\nimport rand\n\nfn get_env_or_default(key string, fallback string) string {\n\tval := os.getenv(key)\n\tif val.len > 0 {\n\t\treturn val\n\t}\n\treturn fallback\n}\n\nfn pick_random_file(folder string) string {\n\tif !os.is_dir(folder) {\n\t\teprintln('Folder \"${folder}\" does not exist.')\n\t\texit(1)\n\t}\n\n\tentries := os.ls(folder) or {",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.v"
     },
     {
       "id": "c",
@@ -654,10 +1666,106 @@
       "category": "Compiled",
       "paradigm": "Safe Systems",
       "ext": ".rs",
-      "compiledBin": "rust/target/debug/name-generator",
+      "compiledBin": "rust/target/release/name-generator",
       "sloc": 176,
       "codeSample": "use anyhow::{Context, Result};\nuse rand::seq::SliceRandom;\nuse rand::thread_rng;\nuse std::env;\nuse std::fs;\nuse std::path::{Path, PathBuf};\nuse walkdir::WalkDir;\n\n/// Resolve an environment variable, falling back to a default value.\nfn env_or_default(var: &str, default: impl AsRef<str>) -> String {\n    env::var(var).unwrap_or_else(|_| default.as_ref().to_owned())\n}\n\n/// Return a random regular file that lives inside `folder`.  Errors if the folder\n/// contains no files.\nfn pick_random_file(folder: &Path) -> Result<PathBuf> {\n    let mut files = Vec::new();\n    for entry in WalkDir::new(folder)\n        .follow_links(true)\n        .into_iter()\n        .filter_map(|e| e.ok())\n    {\n        let path = entry.path();\n        if path.is_file() {\n            files.push(path.to_path_buf());\n        }\n    }\n\n    let mut rng = thread_rng();\n    files",
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/rust/src/main.rs"
+    },
+    {
+      "id": "crystal",
+      "name": "Crystal",
+      "file": "name-generator.cr",
+      "category": "Compiled",
+      "paradigm": "Object-Oriented",
+      "ext": ".cr",
+      "compiledBin": "name-generator_crystal",
+      "sloc": 106,
+      "codeSample": "#!/usr/bin/env crystal\n# Crystal implementation of the name-generator script.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nrequire \"process\"\n\ndef cmd_output(command : String) : String?\n  Process.run(command, shell: true, output: Process::Redirect::Pipe) do |proc|\n    out = proc.output.gets_to_end.strip\n    proc.wait.success? ? out : nil\n  end\nrescue\n  nil\nend\n\ndef pick_file(folder : String, env_var : String) : String\n  if (path = ENV[env_var]?) && !path.empty?\n    return File.realpath(path) if File.file?(path)\n    STDERR.puts \"Environment variable #{env_var} points to a non-regular file: #{path}\"\n    exit 1\n  end",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.cr"
+    },
+    {
+      "id": "nim",
+      "name": "Nim",
+      "file": "name_generator.nim",
+      "category": "Compiled",
+      "paradigm": "Multi-paradigm",
+      "ext": ".nim",
+      "compiledBin": "name-generator_nim",
+      "sloc": 91,
+      "codeSample": "#!/usr/bin/env -S nim r --hints:off\n## Nim implementation of the name-generator script.\n##\n## Behaves like `name-generator.sh`:\n##   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n##     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n##   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n##     from the respective folder.\n##   - Emits `counto` lines (default: terminal height via `tput lines`,\n##     fallback 24).\n##   - Noun is lower-cased, adjective keeps original case.\n##   - Optional debug output when DEBUG=true.\nimport std/[os, osproc, strutils, random]\nproc getEnvOrDefault(key, fallback: string): string =\n  let val = getEnv(key)\n  if val.len > 0: val else: fallback\nproc parseIntOr(s: string, fallback: int): int =\n  try:\n    parseInt(s)\n  except ValueError:\n    fallback\nproc getCountO(): int =\n  let envVal = getEnv(\"counto\")\n  if envVal.len > 0:\n    return parseIntOr(envVal, 24)\n  # Fallback to `tput lines`\n  try:\n    let (output, exitCode) = execCmdEx(\"tput lines\")\n    if exitCode == 0:\n      return parseIntOr(output.strip(), 24)",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator.nim"
+    },
+    {
+      "id": "odin",
+      "name": "Odin",
+      "file": "name-generator.odin",
+      "category": "Compiled",
+      "paradigm": "Data-oriented Systems",
+      "ext": ".odin",
+      "compiledBin": "name-generator_odin",
+      "sloc": 128,
+      "codeSample": "package main\n\nimport \"core:fmt\"\nimport \"core:os\"\nimport \"core:strings\"\nimport \"core:math/rand\"\nimport \"core:strconv\"\nimport \"core:time\"\n\nget_env_or_default :: proc(key, fallback: string) -> string {\n\tval, ok := os.lookup_env(key, context.allocator)\n\tif ok && len(val) > 0 {\n\t\treturn val\n\t}\n\treturn fallback\n}\n\npick_random_file :: proc(folder: string) -> string {\n\tf, err := os.open(folder)\n\tif err != nil {\n\t\tfmt.eprintf(\"Cannot open folder '%s'\\n\", folder)\n\t\tos.exit(1)\n\t}\n\tdefer os.close(f)\n\n\tinfos, read_err := os.read_dir(f, -1, context.allocator)\n\tif read_err != nil {\n\t\tfmt.eprintf(\"Cannot read folder '%s'\\n\", folder)\n\t\tos.exit(1)\n\t}",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.odin"
+    },
+    {
+      "id": "ada",
+      "name": "Ada",
+      "file": "name_generator_ada.adb",
+      "category": "Compiled",
+      "paradigm": "Safety-critical / Structured",
+      "ext": ".adb",
+      "compiledBin": "name-generator_ada",
+      "sloc": 157,
+      "codeSample": "with Ada.Text_IO;\nwith Ada.Environment_Variables;\nwith Ada.Characters.Handling;\nwith Ada.Strings.Unbounded;\nwith Ada.Containers.Vectors;\nwith Ada.Numerics.Discrete_Random;\nwith Ada.Directories;\n\nprocedure Name_Generator_Ada is\n   package Env renames Ada.Environment_Variables;\n   package TIO renames Ada.Text_IO;\n   package Dirs renames Ada.Directories;\n   package SU renames Ada.Strings.Unbounded;\n   use type SU.Unbounded_String;\n   use type Dirs.File_Kind;\n\n   package String_Vectors is new Ada.Containers.Vectors\n     (Index_Type => Positive, Element_Type => SU.Unbounded_String);\n\n   package Random_Index is new Ada.Numerics.Discrete_Random (Result_Subtype => Positive);\n\n   function Get_Env_Or_Default (Key : String; Default : String) return String is\n   begin\n      if Env.Exists (Key) and then Env.Value (Key)'Length > 0 then\n         return Env.Value (Key);\n      else\n         return Default;\n      end if;\n   end Get_Env_Or_Default;\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator_ada.adb"
+    },
+    {
+      "id": "cobol",
+      "name": "COBOL",
+      "file": "name-generator.cbl",
+      "category": "Compiled",
+      "paradigm": "Mainframe / Procedural",
+      "ext": ".cbl",
+      "compiledBin": "name-generator_cobol",
+      "sloc": 262,
+      "codeSample": ">>SOURCE FORMAT FREE\nIDENTIFICATION DIVISION.\nPROGRAM-ID. NAME-GENERATOR.\nAUTHOR. JOSHUAGOX-AND-CONTRIBUTORS.\nDATE-WRITTEN. 2026-09-28.\n\nENVIRONMENT DIVISION.\nINPUT-OUTPUT SECTION.\nFILE-CONTROL.\n    SELECT ADJ-IN-FILE ASSIGN TO WS-ADJ-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-ADJ-STATUS.\n\n    SELECT NOUN-IN-FILE ASSIGN TO WS-NOUN-FILE\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-NOUN-STATUS.\n\n    SELECT TMP-FILE ASSIGN TO WS-TMP-PATH\n        ORGANIZATION IS LINE SEQUENTIAL\n        FILE STATUS IS WS-TMP-STATUS.\n\nDATA DIVISION.\nFILE SECTION.\nFD  ADJ-IN-FILE.\n01  ADJ-RECORD PIC X(128).\n\nFD  NOUN-IN-FILE.\n01  NOUN-RECORD PIC X(128).\n\nFD  TMP-FILE.",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.cbl"
+    },
+    {
+      "id": "v",
+      "name": "V",
+      "file": "name-generator.v",
+      "category": "Compiled",
+      "paradigm": "Simple Systems",
+      "ext": ".v",
+      "compiledBin": "name-generator_v",
+      "sloc": 134,
+      "codeSample": "// V implementation of name-generator\n//\n// Behaves like `name-generator.sh`:\n//   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n//     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n//   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n//     from the respective folder.\n//   - Emits `counto` lines (default: terminal height via `tput lines`,\n//     fallback 24).\n//   - Noun is lower-cased, adjective keeps original case.\n//   - Optional debug output when DEBUG=true.\n\nimport os\nimport rand\n\nfn get_env_or_default(key string, fallback string) string {\n\tval := os.getenv(key)\n\tif val.len > 0 {\n\t\treturn val\n\t}\n\treturn fallback\n}\n\nfn pick_random_file(folder string) string {\n\tif !os.is_dir(folder) {\n\t\teprintln('Folder \"${folder}\" does not exist.')\n\t\texit(1)\n\t}\n\n\tentries := os.ls(folder) or {",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.v"
+    },
+    {
+      "id": "fortran",
+      "name": "Fortran",
+      "file": "name-generator.f90",
+      "category": "Compiled",
+      "paradigm": "Scientific / Procedural",
+      "ext": ".f90",
+      "compiledBin": "name-generator_fortran",
+      "sloc": 188,
+      "codeSample": "program name_generator\n  implicit none\n\n  character(len=512) :: separator, noun_folder, adj_folder\n  character(len=512) :: noun_file, adj_file, counto_str, debug_str, tmp_path\n  integer :: counto, stat, i, num_nouns, num_adjs, idx_noun, idx_adj\n  real :: r1, r2\n  logical :: is_debug\n\n  character(len=128), allocatable :: nouns(:)\n  character(len=128), allocatable :: adjectives(:)\n\n  ! Random seed\n  call init_random_seed()\n\n  ! Read environment variables\n  call get_environment_variable(\"SEPARATOR\", separator, status=stat)\n  if (stat /= 0 .or. len_trim(separator) == 0) separator = \"-\"\n\n  call get_environment_variable(\"NOUN_FOLDER\", noun_folder, status=stat)\n  if (stat /= 0 .or. len_trim(noun_folder) == 0) noun_folder = \"nouns\"\n\n  call get_environment_variable(\"ADJ_FOLDER\", adj_folder, status=stat)\n  if (stat /= 0 .or. len_trim(adj_folder) == 0) adj_folder = \"adjectives\"\n\n  call get_environment_variable(\"NOUN_FILE\", noun_file, status=stat)\n  if (stat /= 0 .or. len_trim(noun_file) == 0) then\n    noun_file = pick_random_file(noun_folder)\n  end if\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.f90"
+    },
+    {
+      "id": "pascal",
+      "name": "Pascal",
+      "file": "name-generator.pas",
+      "category": "Compiled",
+      "paradigm": "Structured Systems",
+      "ext": ".pas",
+      "compiledBin": "name-generator_pascal",
+      "sloc": 239,
+      "codeSample": "program NameGenerator;\n{ This is the sole Pascal source file for the project }\n\n{$mode objfpc}{$H+}\nuses\n  SysUtils, Classes, Process, StrUtils, baseunix;\n\n{-----------------------------------------------\n  Helper routines\n------------------------------------------------}\n\n// Return true if a path points to a regular file\nfunction IsRegularFile(const Path: string): Boolean;\nvar\n  SR: TSearchRec;\nbegin\n  Result := FindFirst(Path, faAnyFile, SR) = 0;\n  if Result then\n    Result := (SR.Attr and faDirectory) = 0;\n  FindClose(SR);\nend;\n\n// Return a list of regular files (full paths) inside a folder\nfunction ListRegularFiles(const Folder: string): TStringList;\nvar\n  SR: TSearchRec;\n  FullPath: string;\nbegin\n  Result := TStringList.Create;\n  if FindFirst(IncludeTrailingPathDelimiter(Folder) + '*', faAnyFile, SR) = 0 then",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.pas"
     },
     {
       "id": "d",
@@ -672,16 +1780,16 @@
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator_d.d"
     },
     {
-      "id": "pascal",
-      "name": "Pascal",
-      "file": "name-generator.pas",
+      "id": "dart",
+      "name": "Dart",
+      "file": "name-generator.dart",
       "category": "Compiled",
-      "paradigm": "Structured",
-      "ext": ".pas",
-      "compiledBin": "name-generator_pascal",
-      "sloc": 239,
-      "codeSample": "program NameGenerator;\n{ This is the sole Pascal source file for the project }\n\n{$mode objfpc}{$H+}\nuses\n  SysUtils, Classes, Process, StrUtils, baseunix;\n\n{-----------------------------------------------\n  Helper routines\n------------------------------------------------}\n\n// Return true if a path points to a regular file\nfunction IsRegularFile(const Path: string): Boolean;\nvar\n  SR: TSearchRec;\nbegin\n  Result := FindFirst(Path, faAnyFile, SR) = 0;\n  if Result then\n    Result := (SR.Attr and faDirectory) = 0;\n  FindClose(SR);\nend;\n\n// Return a list of regular files (full paths) inside a folder\nfunction ListRegularFiles(const Folder: string): TStringList;\nvar\n  SR: TSearchRec;\n  FullPath: string;\nbegin\n  Result := TStringList.Create;\n  if FindFirst(IncludeTrailingPathDelimiter(Folder) + '*', faAnyFile, SR) = 0 then",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.pas"
+      "paradigm": "Client & Systems OO",
+      "ext": ".dart",
+      "compiledBin": "name-generator_dart",
+      "sloc": 161,
+      "codeSample": "#!/usr/bin/env dart\nimport 'dart:io';\nimport 'dart:math';\n\n/// Returns the value of an environment variable or [fallback] if not set.\nString envOr(String name, String fallback) =>\n    Platform.environment[name] ?? fallback;\n\n/// Returns the integer value of an environment variable or null if not set or\n/// not a valid integer.\nint? envInt(String name) {\n  final val = Platform.environment[name];\n  if (val == null) return null;\n  return int.tryParse(val);\n}\n\n/// Executes `tput lines` to obtain the terminal height. Returns null on any\n/// failure.\nint? _tputLines() {\n  try {\n    final result = Process.runSync('tput', ['lines']);\n    if (result.exitCode == 0) {\n      return int.tryParse(result.stdout.toString().trim());\n    }\n  } catch (_) {\n    // ignore – fall back to default\n  }\n  return null;\n}\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.dart"
     },
     {
       "id": "haskell",
@@ -704,248 +1812,6 @@
       "sloc": 149,
       "codeSample": "#!/usr/bin/env -S ocaml -I +unix unix.cma\n(* --------------------------------------------------------\n   OCaml implementation of the “name‑generator” behaviour described in\n   name-generator.sh.\n\n   Features\n   --------\n   * SEPARATOR   – defaults to \" \" (space) for a more casual output\n   * COUNT_O     – number of lines to emit.\n                   * env var “counto” (int) overrides,\n                   * otherwise the result of `tput lines`,\n                   * otherwise 24.\n   * NOUN_FILE   – env var overrides, otherwise a random regular file\n                   from NOUN_FOLDER (default \"./nouns\").\n   * ADJ_FILE    – same logic, using ADJ_FOLDER (default \"./adjectives\").\n   * DEBUG       – when set to \"true\" prints debugging information to\n                   stderr (mirrors the shell script).\n\n   The program prints COUNT_O lines of the form:\n        <adjective><SEPARATOR><noun>\n   where the noun is lower‑cased and the adjective keeps its original case.\n   ------------------------------------------------------ *)\n\nopen Unix\nopen Printf\n\n(* ---------- helpers --------------------------------------------------- *)\n\nlet env_opt name = try Some (Sys.getenv name) with Not_found -> None\n",
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.ml"
-    },
-    {
-      "id": "awk",
-      "name": "AWK",
-      "file": "name-generator.awk",
-      "category": "Scripting",
-      "paradigm": "Pattern Scanning & Processing",
-      "ext": ".awk",
-      "sloc": 131,
-      "codeSample": "#!/usr/bin/awk -f\n# AWK implementation of name-generator.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nfunction pick_random_file(folder,   cmd, f, count, files, idx) {\n    cmd = \"find \\\"\" folder \"\\\" -type f 2>/dev/null\"\n    count = 0\n    while ((cmd | getline f) > 0) {\n        if (length(f) > 0) {\n            files[++count] = f\n        }\n    }\n    close(cmd)\n    if (count == 0) {\n        print \"Folder `\" folder \"` contains no regular files.\" > \"/dev/stderr\"\n        exit 1\n    }\n    idx = int(rand() * count) + 1\n    return files[idx]\n}\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.awk"
-    },
-    {
-      "id": "ksh",
-      "name": "KornShell (ksh)",
-      "file": "name-generator.ksh",
-      "category": "Shell",
-      "paradigm": "POSIX Shell",
-      "ext": ".ksh",
-      "sloc": 52,
-      "codeSample": "#!/usr/bin/env ksh\n# KornShell implementation of name-generator\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nHERE=$(pwd)\n: \"${SEPARATOR:=\"-\"}\"\nif command -v tput >/dev/null 2>&1; then\n  : \"${counto:=$(tput lines 2>/dev/null)}\"\nfi\n: \"${counto:=24}\"\n\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath \"$(find \"${NOUN_FOLDER}\" -type f | shuf -n 1)\")}\"\n: \"${ADJ_FILE:=$(realpath \"$(find \"${ADJ_FOLDER}\" -type f | shuf -n 1)\")}\"\n\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    print \"${this_adjective}\"\n    print \"${this_noun}\"",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.ksh"
-    },
-    {
-      "id": "tcl",
-      "name": "Tcl",
-      "file": "name-generator.tcl",
-      "category": "Scripting",
-      "paradigm": "Command Language / String",
-      "ext": ".tcl",
-      "sloc": 127,
-      "codeSample": "#!/usr/bin/env tclsh\n# Tcl implementation of name-generator.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nproc get_env {var fallback} {\n    if {[info exists ::env($var)] && [string length $::env($var)] > 0} {\n        return $::env($var)\n    }\n    return $fallback\n}\n\nproc get_counto {} {\n    if {[info exists ::env(counto)] && [string length $::env(counto)] > 0} {\n        if {[string is integer -strict $::env(counto)]} {\n            return $::env(counto)\n        }\n    }\n    if {![catch {exec tput lines} out]} {\n        set trimmed [string trim $out]\n        if {[string is integer -strict $trimmed] && $trimmed > 0} {\n            return $trimmed",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.tcl"
-    },
-    {
-      "id": "nu",
-      "name": "Nushell",
-      "file": "name-generator.nu",
-      "category": "Shell",
-      "paradigm": "Structured Data Shell",
-      "ext": ".nu",
-      "sloc": 90,
-      "codeSample": "#!/usr/bin/env nu\n# Nushell implementation of name-generator\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\ndef pick_file [folder: string]: nothing -> string {\n    let files = (ls $folder | where type == file | get name)\n    if ($files | is-empty) {\n        let nested = (glob $\"($folder)/**/*\" | where { |f| ($f | path type) == \"file\" })\n        if ($nested | is-empty) {\n            print -e $\"Folder '($folder)' contains no regular files.\"\n            exit 1\n        }\n        return ($nested | get (random int 0..<($nested | length)))\n    }\n    return ($files | get (random int 0..<($files | length)))\n}\n\ndef main [] {\n    let separator = ($env.SEPARATOR? | default \"-\")\n\n    let counto = if ($env.counto? | is-not-empty) {",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.nu"
-    },
-    {
-      "id": "bash",
-      "name": "Bash",
-      "file": "name-generator.bash",
-      "category": "Shell",
-      "paradigm": "Unix Shell",
-      "ext": ".bash",
-      "sloc": 31,
-      "codeSample": "#!/usr/bin/env bash\n# This is largely the same as the shell script \nHERE=$(pwd)\n: ${SEPARATOR:=\"-\"}\n: \"${counto:=$(tput lines)}\"\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath $(find ${NOUN_FOLDER} -type f | shuf -n 1))}\"\n: \"${ADJ_FILE:=$(realpath $(find ${ADJ_FOLDER} -type f | shuf -n 1))}\"\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    echo ${this_adjective}\n    echo ${this_noun}\n    echo $ADJ_FILE\n    echo $ADJ_FOLDER\n    echo $NOUN_FILE\n    echo $NOUN_FOLDER\n    echo \"$countzero > $counto\"\n  fi\n}\ncountzero=0\nwhile [[ ${countzero} -lt ${counto} ]]; do\n  this_noun=$(shuf -n 1 ${NOUN_FILE}| tr '[:upper:]' '[:lower:]')\n  this_adjective=$(shuf -n 1 ${ADJ_FILE})\n  debugger\n  printf \"%s%s%s\\n\" \"${this_adjective}\" \"${SEPARATOR}\" \"${this_noun}\"\n  ((countzero++))\ndone\nexit 0",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.bash"
-    },
-    {
-      "id": "zsh",
-      "name": "Zsh",
-      "file": "name-generator.zsh",
-      "category": "Shell",
-      "paradigm": "Extended Unix Shell",
-      "ext": ".zsh",
-      "sloc": 31,
-      "codeSample": "#!/usr/bin/env zsh\n# This is largely the same as the shell script \nHERE=$(pwd)\n: ${SEPARATOR:=\"-\"}\n: \"${counto:=$(tput lines)}\"\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath $(find ${NOUN_FOLDER} -type f | shuf -n 1))}\"\n: \"${ADJ_FILE:=$(realpath $(find ${ADJ_FOLDER} -type f | shuf -n 1))}\"\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    echo ${this_adjective}\n    echo ${this_noun}\n    echo $ADJ_FILE\n    echo $ADJ_FOLDER\n    echo $NOUN_FILE\n    echo $NOUN_FOLDER\n    echo \"$countzero > $counto\"\n  fi\n}\ncountzero=0\nwhile [[ ${countzero} -lt ${counto} ]]; do\n  this_noun=$(shuf -n 1 ${NOUN_FILE}| tr '[:upper:]' '[:lower:]')\n  this_adjective=$(shuf -n 1 ${ADJ_FILE})\n  debugger\n  printf \"%s%s%s\\n\" \"${this_adjective}\" \"${SEPARATOR}\" \"${this_noun}\"\n  ((countzero++))\ndone\nexit 0",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.zsh"
-    },
-    {
-      "id": "sh",
-      "name": "POSIX sh",
-      "file": "name-generator.sh",
-      "category": "Shell",
-      "paradigm": "Bourne Shell",
-      "ext": ".sh",
-      "sloc": 102,
-      "codeSample": "#!/usr/bin/env sh\n# robust name generator – fixes “exec failed (No such file or directory; errno=2)”\n# The original script relied on commands that may not be present on all systems\n# (realpath, shuf, tput).  This version adds fall‑backs so the script can run\n# everywhere a POSIX‑compatible /bin/sh is available.\n\nHERE=$(pwd)\n\n# ----------------------------------------------------------------------\n# Helper: test whether a command exists in $PATH\n# ----------------------------------------------------------------------\ncommand_exists() {\n  command -v \"$1\" >/dev/null 2>&1\n}\n\n# ----------------------------------------------------------------------\n# Resolve a path to an absolute canonical form.\n# Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.\n# ----------------------------------------------------------------------\nrealpath_fallback() {\n  if command_exists realpath; then\n    realpath \"$1\"\n  elif command_exists readlink; then\n    readlink -f \"$1\"\n  else\n    # No canonicalisation tool – just return the argument unchanged.\n    printf '%s\\n' \"$1\"\n  fi\n}\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.sh"
-    },
-    {
-      "id": "fish",
-      "name": "Fish",
-      "file": "name-generator.fish",
-      "category": "Shell",
-      "paradigm": "Friendly Interactive Shell",
-      "ext": ".fish",
-      "sloc": 104,
-      "codeSample": "#!/usr/bin/env fish\n# name-generator.fish\n# --------------------------------------------------------------\n# Generates random “adjective‑separator‑noun” lines.\n# Behaviour matches name-generator.sh:\n#   * SEPARATOR defaults to \"-\"\n#   * COUNT (or counto) defaults to `tput lines` or 24\n#   * NOUN_FILE / ADJ_FILE may be overridden via env vars,\n#     otherwise a random regular file is chosen from the\n#     respective folder (default $PWD/nouns and $PWD/adjectives)\n#   * Nouns are lower‑cased, adjectives keep original case.\n# --------------------------------------------------------------\n\n# -------------------------------------------------\n# Helper: test whether a command exists in $PATH\n# -------------------------------------------------\nfunction command_exists\n    command -v $argv[1] > /dev/null\nend\n\n# -------------------------------------------------\n# Resolve a path to an absolute canonical form.\n# Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.\n# -------------------------------------------------\nfunction realpath_fallback\n    if command_exists realpath\n        realpath $argv[1]\n    else if command_exists readlink\n        readlink -f $argv[1]\n    else",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.fish"
-    },
-    {
-      "id": "javascript",
-      "name": "JavaScript (Node.js)",
-      "file": "name-generator.js",
-      "category": "Scripting",
-      "paradigm": "Event-driven Async",
-      "ext": ".js",
-      "sloc": 117,
-      "codeSample": "#!/usr/bin/env node\n// Updated to match the behaviour of name-generator.sh\n// - Select a single noun file and adjective file for the whole run,\n//   honouring NOUN_FILE and ADJ_FILE environment variables.\n// - Use SEPARATOR env var (default \"-\")\n// - Default count to terminal height (tput lines) if counto not set\n// - Provide DEBUG output similar to the shell script\n\nconst fs = require('fs').promises;\nconst path = require('path');\nconst { execSync } = require('child_process');\n\n// Resolve base directories\nconst HERE = process.cwd();\nconst NOUN_FOLDER = path.join(HERE, 'nouns');\nconst ADJ_FOLDER = path.join(HERE, 'adjectives');\n\n// Environment configuration (with fall‑backs)\nconst SEPARATOR = process.env.SEPARATOR || '-';\nconst DEBUG = process.env.DEBUG === 'true';\n\n// Helper: pick a random file from a directory\nasync function getRandomFile(directory) {\n  const files = await fs.readdir(directory);\n  if (files.length === 0) {\n    throw new Error(`No files found in directory ${directory}`);\n  }\n  const randomIndex = Math.floor(Math.random() * files.length);\n  return path.join(directory, files[randomIndex]);\n}",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.js"
-    },
-    {
-      "id": "typescript",
-      "name": "TypeScript",
-      "file": "name-generator.ts",
-      "category": "Scripting",
-      "paradigm": "Typed JavaScript",
-      "ext": ".ts",
-      "sloc": 136,
-      "codeSample": "#!/usr/bin/env node\nimport fs from 'fs';\nimport path from 'path';\n\n// ------------------------------------------------------------------------------- //\n// Configuration – environment overrides with sensible defaults\n// ------------------------------------------------------------------------------- //\nconst SEPARATOR: string = process.env.SEPARATOR || \"-\";\nconst NOUN_FOLDER: string = process.env.NOUN_FOLDER || path.join(process.cwd(), \"nouns\");\nconst ADJ_FOLDER: string = process.env.ADJ_FOLDER || path.join(process.cwd(), \"adjectives\");\n\n// Add new helper function for resolving files\nfunction resolveFilePath(envVar: string, defaultFolder: string): string {\n    const envVal = process.env[envVar];\n    if (envVal) {\n        // If the env var points to a directory, throw error like shell script\n        if (fs.existsSync(envVal) && fs.lstatSync(envVal).isDirectory()) {\n            throw new Error(`Environment variable ${envVar} points to a directory`);\n        }\n        return path.resolve(envVal);\n    }\n    // If no env var, return random file from default folder\n    const files = fs.readdirSync(defaultFolder)\n                    .filter(f => fs.lstatSync(path.join(defaultFolder, f)).isFile());\n    if (files.length === 0) {\n        throw new Error(`Folder ${defaultFolder} contains no regular files`);\n    }\n    return path.join(defaultFolder, files[Math.floor(Math.random() * files.length)]);\n}\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.ts"
-    },
-    {
-      "id": "python",
-      "name": "Python",
-      "file": "name-generator.py",
-      "category": "Scripting",
-      "paradigm": "High-level Multi-paradigm",
-      "ext": ".py",
-      "sloc": 125,
-      "codeSample": "#!/usr/bin/env python\n# This script mirrors the behaviour of name-generator.sh\n# It respects the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE and counto.\n# If NOUN_FILE / ADJ_FILE are not set it picks a random file from the respective\n# folders (nouns / adjectives).  The separator defaults to \"-\".\n# The number of names emitted defaults to the terminal height (like `tput lines`).\n\nimport os\nimport random\nimport sys\n\n# --------------------------------------------------------------------------- #\n# Configuration (environment overrides possible)\n# --------------------------------------------------------------------------- #\nHERE = os.getcwd()\nSEPARATOR = os.getenv(\"SEPARATOR\", \"-\")\nNOUN_FOLDER = os.getenv(\"NOUN_FOLDER\", os.path.join(HERE, \"nouns\"))\nADJ_FOLDER = os.getenv(\"ADJ_FOLDER\", os.path.join(HERE, \"adjectives\"))\n\n\ndef get_random_file(folder: str) -> str:\n    \"\"\"Return a random regular file from *folder*.\"\"\"\n    files = [\n        os.path.join(folder, f)\n        for f in os.listdir(folder)\n        if os.path.isfile(os.path.join(folder, f))\n    ]\n    if not files:\n        raise FileNotFoundError(f\"No files found in folder {folder}\")\n    return random.choice(files)",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.py"
-    },
-    {
-      "id": "ruby",
-      "name": "Ruby",
-      "file": "name-generator.rb",
-      "category": "Scripting",
-      "paradigm": "Dynamic Object-Oriented",
-      "ext": ".rb",
-      "sloc": 111,
-      "codeSample": "#!/usr/bin/env ruby\n# frozen_string_literal: true\n#\n#  Original shell script by Josh Cox\n#  Re‑implemented in Ruby – works the same way, but is a little easier to read\n#  and to extend.\n#\n#  Behaviour\n#  ---------\n#  * Pick *one* random file from  ./nouns   (or $NOUN_FOLDER)\n#  * Pick *one* random file from  ./adjectives (or $ADJ_FOLDER)\n#  * For each line of the terminal (default = `tput lines`) print\n#        <adjective><separator><noun>\n#    where the adjective is taken from the adjective file and the noun\n#    (lower‑cased) from the noun file.\n#  * If $DEBUG == 'true' a small dump of internal variables is printed.\n#\n#  Environment variables that can be overridden\n#  --------------------------------------------\n#  SEPARATOR   – string placed between adjective and noun (default \"-\")\n#  COUNTO      – how many lines to emit (default = terminal height)\n#  NOUN_FOLDER – directory that holds noun files      (default \"./nouns\")\n#  ADJ_FOLDER  – directory that holds adjective files (default \"./adjectives\")\n#  NOUN_FILE   – a specific noun file to use (overrides random pick)\n#  ADJ_FILE    – a specific adjective file to use (overrides random pick)\n#  DEBUG       – set to \"true\" to enable debug output\n#\n#  The script is deliberately defensive – if a folder is empty or a file\n#  cannot be read it aborts with a clear message instead of producing\n#  silent nonsense.",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.rb"
-    },
-    {
-      "id": "lua",
-      "name": "Lua",
-      "file": "name-generator.lua",
-      "category": "Scripting",
-      "paradigm": "Lightweight Embeddable",
-      "ext": ".lua",
-      "sloc": 190,
-      "codeSample": "#!/usr/bin/env lua\n--[[\n  Lua implementation of the original `name-generator.sh`.\n  It respects the same environment variables:\n\n    SEPARATOR   – string placed between adjective and noun (default \"-\")\n    counto      – number of lines to emit (overrides terminal height)\n    NOUN_FILE   – explicit noun list file (otherwise a random file from NOUN_FOLDER)\n    ADJ_FILE    – explicit adjective list file (otherwise a random file from ADJ_FOLDER)\n    NOUN_FOLDER – folder that contains noun list files (default \"./nouns\")\n    ADJ_FOLDER  – folder that contains adjective list files (default \"./adjectives\")\n    DEBUG       – when set to \"true\" prints debugging information to stderr\n--]]\n\n------- ------------------------------------------ -------------------\n-- Helper utilities\n------- ------------------------------------------ -------------------\nlocal function quote(str)\n    -- simple quoting for shell usage\n    return \"'\" .. (str:gsub(\"'\", \"'\\\\''\")) .. \"'\"\nend\n\nlocal function command_exists(cmd)\n    -- `command -v` is POSIX; we silence all output.\n    local ok = os.execute(string.format(\"command -v %s > /dev/null 2>&1\", cmd))\n    return ok == true or ok == 0\nend\n\nlocal function exec_capture(cmd)\n    local f = io.popen(cmd .. \" 2>/dev/null\")",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.lua"
-    },
-    {
-      "id": "perl",
-      "name": "Perl",
-      "file": "name-generator.pl",
-      "category": "Scripting",
-      "paradigm": "Text Processing",
-      "ext": ".pl",
-      "sloc": 122,
-      "codeSample": "#!/usr/bin/env perl\n#=====================================================================\n#  Random adjective‑noun generator – Perl 5 rewrite of Josh Cox's sh\n#=====================================================================\n#  Behaviour (identical to the original):\n#   • Pick one random *noun* file from $NOUN_FOLDER   (default: ./nouns)\n#   • Pick one random *adjective* file from $ADJ_FOLDER (default: ./adjectives)\n#   • Print $counto lines (default: number of rows of the terminal)\n#   • Each line is   <adjective><SEPARATOR><noun>\n#   • If the environment variable DEBUG is set to the literal string\n#     \"true\", a small debug dump is printed for every iteration.\n#=====================================================================\n\nuse strict;\nuse warnings;\nuse Cwd      qw( getcwd abs_path );\nuse File::Spec;\nuse List::Util qw( shuffle );\nuse Term::ReadKey;          # for terminal size (fallback if tput not found)\n\n#---------------------------------------------------------------------\n# Helper – run a command and return its trimmed STDOUT, or undef on error\n#---------------------------------------------------------------------\nsub run_cmd {\n    my ($cmd) = @_;\n    my $out = `$cmd`;\n    chomp $out if defined $out;\n    return $out;\n}\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.pl"
-    },
-    {
-      "id": "php",
-      "name": "PHP",
-      "file": "name-generator.php",
-      "category": "Scripting",
-      "paradigm": "Web & CLI Scripting",
-      "ext": ".php",
-      "sloc": 193,
-      "codeSample": "#!/usr/bin/env php\n<?php\n/**\n * PHP implementation of the original `name-generator.sh`.\n *\n * Behaviour:\n *   * Uses the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n *     NOUN_FOLDER, ADJ_FOLDER and counto (the number of lines to emit).\n *   * If NOUN_FILE / ADJ_FILE are not set, a random regular file is chosen\n *     from the respective folder.\n *   * If a folder variable is not set, it defaults to \"<cwd>/nouns\" and\n *     \"<cwd>/adjectives\".\n *   * The noun is lower‑cased, the adjective keeps its original case.\n *   * When DEBUG=true a small debug dump is written to STDERR.\n *   * No greeting is added – the output matches the original shell script\n *     (e.g., \"test_test\").\n */\n\ndeclare(strict_types=1);\n\n/* --------------------------------------------------- *\n * Helper utilities\n * --------------------------------------------------- */\n\n/**\n * Return true if $path points to a regular file.\n */\nfunction is_regular_file(string $path): bool\n{\n    return is_file($path) && is_readable($path);",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.php"
-    },
-    {
-      "id": "julia",
-      "name": "Julia",
-      "file": "name-generator.jl",
-      "category": "Scripting",
-      "paradigm": "High-performance Numerical",
-      "ext": ".jl",
-      "sloc": 168,
-      "codeSample": "#!/usr/bin/env julia\n# Julia implementation of the name-generator.sh script.\n# Behaves like the original shell script with respect to SEPARATOR,\n# NOUN_FILE and ADJ_FILE handling.\n\nusing Random\nusing Printf\nusing Dates\nusing Statistics\nusing Base.Filesystem: isfile, realpath\n\n# ----------------------------------------------------------------------\n# Helper functions\n# --------------------------------------------------------------\n\"\"\"\n    env_or_default(var::String, default::String) -> String\n\nReturn the value of environment variable `var` if it exists and is non‑empty,\notherwise return `default`.\n\"\"\"\nfunction env_or_default(var::String, default::String)\n    val = get(ENV, var, \"\")\n    return (isempty(val) ? default : val)\nend\n\n\"\"\"\n    get_counto() -> Int\n\nDetermine how many names to generate.\nFirst checks the `counto` environment variable; if it is set and numeric,",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.jl"
-    },
-    {
-      "id": "r",
-      "name": "R",
-      "file": "name-generator.r",
-      "category": "Scripting",
-      "paradigm": "Statistical Computing",
-      "ext": ".r",
-      "sloc": 136,
-      "codeSample": "#!/usr/bin/env Rscript\n# Name generator in R - implements similar functionality to name-generator.sh\n\n# ------------------------------------------------------------------------------- #\n# Helper functions\n# ------------------------------------------------------------------------------- #\n\nresolve_file <- function(env_var, folder) {\n  # If environment variable is set and points to a regular file, use it\n  env_val <- Sys.getenv(env_var)\n  if (!is.na(env_val) && env_val != \"\") {\n    file_path <- normalizePath(env_val)\n    if (file.exists(file_path)) {\n      return(file_path)\n    }\n  }\n  \n  # Otherwise pick a random regular file from the folder\n  files <- dir(folder, full.names = TRUE, recursive = FALSE)\n  files <- files[grepl(\"\\\\.\", files)]  # Basic filter for files (not just directories)\n  \n  if (length(files) == 0) {\n    stop(sprintf(\"Folder %s contains no regular files\", folder))\n  }\n  \n  return(sample(files, 1))\n}\n\nread_nonempty_lines <- function(file_path) {\n  content <- readLines(file_path, ok = TRUE)",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.r"
-    },
-    {
-      "id": "raku",
-      "name": "Raku",
-      "file": "name-generator.raku",
-      "category": "Scripting",
-      "paradigm": "Expressive Multi-paradigm",
-      "ext": ".raku",
-      "sloc": 66,
-      "codeSample": "#!/usr/bin/env raku\n# Raku implementation of the original name-generator.sh script.\n# It respects the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n# NOUN_FOLDER, ADJ_FOLDER, counto and DEBUG, providing the same behaviour.\n\nuse v6;\n\n# -------------------------------------------------------------------------------\n# Helper routines\n# -------------------------------------------------------------------------------\nsub pick-random-file(Str $folder --> Str) {\n    my @files = dir($folder).grep({ .f });\n    die \"No regular files found in folder '$folder'\" unless @files;\n    return @files.pick.Str;\n}\n\nsub read-lines(Str $file --> Array) {\n    return $file.IO.lines.map({ .chomp }).Array;\n}\n\n# -------------------------------------------------------------------------------\n# Configuration (environment variables with defaults)\n# -------------------------------------------------------------------------------\nmy $here        = $*CWD.Str;\nmy $separator   = %*ENV<SEPARATOR> // '-';\nmy $noun-folder = %*ENV<NOUN_FOLDER> // \"$here/nouns\";\nmy $adj-folder  = %*ENV<ADJ_FOLDER> // \"$here/adjectives\";\n\n# Resolve the noun and adjective files (environment overrides or random pick)\nmy $noun-file = %*ENV<NOUN_FILE> // pick-random-file($noun-folder);",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.raku"
-    },
-    {
-      "id": "octave",
-      "name": "GNU Octave",
-      "file": "name-generator.m",
-      "category": "Scripting",
-      "paradigm": "Matrix / Scientific",
-      "ext": ".m",
-      "sloc": 212,
-      "codeSample": "#!/usr/bin/env octave\n% name-generator.mat\n% --------------------------------------------------------------\n% Replicates the behaviour of the original `name-generator.sh`.\n%   * Uses the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n%     NOUN_FOLDER, ADJ_FOLDER and counto (terminal height).\n%   * Falls back to sensible defaults when the variables are missing.\n%   * Prints `adjective<separator>noun` (noun lower‑cased, adjective\n%     unchanged) one line per iteration.\n%   * If DEBUG=true prints the same debug information the shell script\n%     prints (to stderr).\n% --------------------------------------------------------------\n\n%% ---------- Helper functions ----------\nfunction val = envOrDefault(varName, defaultVal)\n    % Return the value of an environment variable or a default.\n    val = getenv(varName);\n    if isempty(val)\n        val = defaultVal;\n    end\nend\n\nfunction filePath = pickRandomFileFromFolder(folder)\n    % Return an absolute path to a random regular file inside `folder`.\n    entries = dir(fullfile(folder, '*'));\n    % Keep only regular files (skip directories, . and ..)\n    files = entries(~[entries.isdir]);\n    if isempty(files)\n        error('Folder %s does not contain any regular files.', folder);\n    end",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.m"
-    },
-    {
-      "id": "elisp",
-      "name": "Emacs Lisp",
-      "file": "name-generator.el",
-      "category": "Scripting",
-      "paradigm": "Lisp Dialect",
-      "ext": ".el",
-      "sloc": 105,
-      "codeSample": "#!/usr/bin/env -S emacs -Q --script\n\n;; Configuration - environment overrides with sensible defaults\n(defcustom noun-folder (expand-file-name \"nouns\" default-directory)\n  \"Directory containing noun files\"\n  :type 'string\n  :group 'name-generator)\n\n(defcustom adj-folder (expand-file-name \"adjectives\" default-directory)\n  \"Directory containing adjective files\"\n  :type 'string\n  :group 'name-generator)\n\n;; Separator: respect the SEPARATOR environment variable, default to \"-\"\n(defvar separator (or (getenv \"SEPARATOR\") \"-\")\n  \"Separator between adjective and noun, can be overridden by the SEPARATOR env var.\")\n\n;; Helper functions\n(defun command-exists-p (cmd)\n  \"Check if CMD is available in the system.\"\n  (let ((executable (executable-find cmd)))\n    (and executable (file-executable-p executable))))\n\n(defun strip-string (s)\n  \"Trim leading and trailing whitespace from string S.\"\n  (if (fboundp 'string-trim)\n      (string-trim s)\n    ;; Fallback for older Emacs versions\n    (replace-regexp-in-string\n     \"\\\\`[ \\t\\n\\r]+\\\\|[ \\t\\n\\r]+\\\\'\" \"\" s)))",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.el"
-    },
-    {
-      "id": "racket",
-      "name": "Racket",
-      "file": "name-generator.rkt",
-      "category": "Scripting",
-      "paradigm": "Scheme / Lisp Family",
-      "ext": ".rkt",
-      "sloc": 117,
-      "codeSample": "#!/usr/bin/env racket\n#lang racket\n\n;; ------------------------------------------------\n;; Name Generator – Racket implementation\n;; Behaves like the original shell script `name-generator.sh`.\n;; ------------------------------------------------\n\n(require racket/file\n         racket/list\n         racket/string\n         racket/system\n         racket/port\n         racket/format\n         racket/os)\n\n;; ---------- Helper utilities ----------\n;; Return the value of an environment variable or #f if not set.\n(define (env-var name)\n  (let ([v (getenv name)])\n    (if (and v (not (string-blank? v))) v #f)))\n\n;; Define `string-blank?` in case the Racket version does not provide it.\n;; It returns #t for strings that are empty or contain only whitespace.\n(define (string-blank? s)\n  (or (not s)\n      (string=? (string-trim s) \"\")))\n\n;; Convert a string to a number, returning #f on failure.\n(define (string->maybe-number s)",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.rkt"
-    },
-    {
-      "id": "dart",
-      "name": "Dart",
-      "file": "name-generator.dart",
-      "category": "VM",
-      "paradigm": "Client-optimized OO",
-      "ext": ".dart",
-      "sloc": 156,
-      "codeSample": "#!/usr/bin/env dart\nimport 'dart:io';\nimport 'dart:math';\n\n/// Returns the value of an environment variable or [fallback] if not set.\nString envOr(String name, String fallback) =>\n    Platform.environment[name] ?? fallback;\n\n/// Returns the integer value of an environment variable or null if not set or\n/// not a valid integer.\nint? envInt(String name) {\n  final val = Platform.environment[name];\n  if (val == null) return null;\n  return int.tryParse(val);\n}\n\n/// Executes `tput lines` to obtain the terminal height. Returns null on any\n/// failure.\nint? _tputLines() {\n  try {\n    final result = Process.runSync('tput', ['lines']);\n    if (result.exitCode == 0) {\n      return int.tryParse(result.stdout.toString().trim());\n    }\n  } catch (_) {\n    // ignore – fall back to default\n  }\n  return null;\n}\n",
-      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.dart"
     },
     {
       "id": "java",
@@ -1025,6 +1891,237 @@
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name_generator_gleam"
     },
     {
+      "id": "awk",
+      "name": "AWK",
+      "file": "name-generator.awk",
+      "category": "Scripting",
+      "paradigm": "Pattern Scanning & Processing",
+      "ext": ".awk",
+      "sloc": 131,
+      "codeSample": "#!/usr/bin/awk -f\n# AWK implementation of name-generator.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nfunction pick_random_file(folder,   cmd, f, count, files, idx) {\n    cmd = \"find \\\"\" folder \"\\\" -type f 2>/dev/null\"\n    count = 0\n    while ((cmd | getline f) > 0) {\n        if (length(f) > 0) {\n            files[++count] = f\n        }\n    }\n    close(cmd)\n    if (count == 0) {\n        print \"Folder `\" folder \"` contains no regular files.\" > \"/dev/stderr\"\n        exit 1\n    }\n    idx = int(rand() * count) + 1\n    return files[idx]\n}\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.awk"
+    },
+    {
+      "id": "javascript",
+      "name": "Node.js",
+      "file": "name-generator.js",
+      "category": "Scripting",
+      "paradigm": "Event-driven Async",
+      "ext": ".js",
+      "sloc": 117,
+      "codeSample": "#!/usr/bin/env node\n// Updated to match the behaviour of name-generator.sh\n// - Select a single noun file and adjective file for the whole run,\n//   honouring NOUN_FILE and ADJ_FILE environment variables.\n// - Use SEPARATOR env var (default \"-\")\n// - Default count to terminal height (tput lines) if counto not set\n// - Provide DEBUG output similar to the shell script\n\nconst fs = require('fs').promises;\nconst path = require('path');\nconst { execSync } = require('child_process');\n\n// Resolve base directories\nconst HERE = process.cwd();\nconst NOUN_FOLDER = path.join(HERE, 'nouns');\nconst ADJ_FOLDER = path.join(HERE, 'adjectives');\n\n// Environment configuration (with fall‑backs)\nconst SEPARATOR = process.env.SEPARATOR || '-';\nconst DEBUG = process.env.DEBUG === 'true';\n\n// Helper: pick a random file from a directory\nasync function getRandomFile(directory) {\n  const files = await fs.readdir(directory);\n  if (files.length === 0) {\n    throw new Error(`No files found in directory ${directory}`);\n  }\n  const randomIndex = Math.floor(Math.random() * files.length);\n  return path.join(directory, files[randomIndex]);\n}",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.js"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "file": "name-generator.ts",
+      "category": "Scripting",
+      "paradigm": "Typed JavaScript",
+      "ext": ".ts",
+      "sloc": 136,
+      "codeSample": "#!/usr/bin/env node\nimport fs from 'fs';\nimport path from 'path';\n\n// ------------------------------------------------------------------------------- //\n// Configuration – environment overrides with sensible defaults\n// ------------------------------------------------------------------------------- //\nconst SEPARATOR: string = process.env.SEPARATOR || \"-\";\nconst NOUN_FOLDER: string = process.env.NOUN_FOLDER || path.join(process.cwd(), \"nouns\");\nconst ADJ_FOLDER: string = process.env.ADJ_FOLDER || path.join(process.cwd(), \"adjectives\");\n\n// Add new helper function for resolving files\nfunction resolveFilePath(envVar: string, defaultFolder: string): string {\n    const envVal = process.env[envVar];\n    if (envVal) {\n        // If the env var points to a directory, throw error like shell script\n        if (fs.existsSync(envVal) && fs.lstatSync(envVal).isDirectory()) {\n            throw new Error(`Environment variable ${envVar} points to a directory`);\n        }\n        return path.resolve(envVal);\n    }\n    // If no env var, return random file from default folder\n    const files = fs.readdirSync(defaultFolder)\n                    .filter(f => fs.lstatSync(path.join(defaultFolder, f)).isFile());\n    if (files.length === 0) {\n        throw new Error(`Folder ${defaultFolder} contains no regular files`);\n    }\n    return path.join(defaultFolder, files[Math.floor(Math.random() * files.length)]);\n}\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.ts"
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "file": "name-generator.py",
+      "category": "Scripting",
+      "paradigm": "High-level Multi-paradigm",
+      "ext": ".py",
+      "sloc": 125,
+      "codeSample": "#!/usr/bin/env python\n# This script mirrors the behaviour of name-generator.sh\n# It respects the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE and counto.\n# If NOUN_FILE / ADJ_FILE are not set it picks a random file from the respective\n# folders (nouns / adjectives).  The separator defaults to \"-\".\n# The number of names emitted defaults to the terminal height (like `tput lines`).\n\nimport os\nimport random\nimport sys\n\n# --------------------------------------------------------------------------- #\n# Configuration (environment overrides possible)\n# --------------------------------------------------------------------------- #\nHERE = os.getcwd()\nSEPARATOR = os.getenv(\"SEPARATOR\", \"-\")\nNOUN_FOLDER = os.getenv(\"NOUN_FOLDER\", os.path.join(HERE, \"nouns\"))\nADJ_FOLDER = os.getenv(\"ADJ_FOLDER\", os.path.join(HERE, \"adjectives\"))\n\n\ndef get_random_file(folder: str) -> str:\n    \"\"\"Return a random regular file from *folder*.\"\"\"\n    files = [\n        os.path.join(folder, f)\n        for f in os.listdir(folder)\n        if os.path.isfile(os.path.join(folder, f))\n    ]\n    if not files:\n        raise FileNotFoundError(f\"No files found in folder {folder}\")\n    return random.choice(files)",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.py"
+    },
+    {
+      "id": "ruby",
+      "name": "Ruby",
+      "file": "name-generator.rb",
+      "category": "Scripting",
+      "paradigm": "Dynamic Object-Oriented",
+      "ext": ".rb",
+      "sloc": 111,
+      "codeSample": "#!/usr/bin/env ruby\n# frozen_string_literal: true\n#\n#  Original shell script by Josh Cox\n#  Re‑implemented in Ruby – works the same way, but is a little easier to read\n#  and to extend.\n#\n#  Behaviour\n#  ---------\n#  * Pick *one* random file from  ./nouns   (or $NOUN_FOLDER)\n#  * Pick *one* random file from  ./adjectives (or $ADJ_FOLDER)\n#  * For each line of the terminal (default = `tput lines`) print\n#        <adjective><separator><noun>\n#    where the adjective is taken from the adjective file and the noun\n#    (lower‑cased) from the noun file.\n#  * If $DEBUG == 'true' a small dump of internal variables is printed.\n#\n#  Environment variables that can be overridden\n#  --------------------------------------------\n#  SEPARATOR   – string placed between adjective and noun (default \"-\")\n#  COUNTO      – how many lines to emit (default = terminal height)\n#  NOUN_FOLDER – directory that holds noun files      (default \"./nouns\")\n#  ADJ_FOLDER  – directory that holds adjective files (default \"./adjectives\")\n#  NOUN_FILE   – a specific noun file to use (overrides random pick)\n#  ADJ_FILE    – a specific adjective file to use (overrides random pick)\n#  DEBUG       – set to \"true\" to enable debug output\n#\n#  The script is deliberately defensive – if a folder is empty or a file\n#  cannot be read it aborts with a clear message instead of producing\n#  silent nonsense.",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.rb"
+    },
+    {
+      "id": "lua",
+      "name": "Lua",
+      "file": "name-generator.lua",
+      "category": "Scripting",
+      "paradigm": "Lightweight Embeddable",
+      "ext": ".lua",
+      "sloc": 190,
+      "codeSample": "#!/usr/bin/env lua\n--[[\n  Lua implementation of the original `name-generator.sh`.\n  It respects the same environment variables:\n\n    SEPARATOR   – string placed between adjective and noun (default \"-\")\n    counto      – number of lines to emit (overrides terminal height)\n    NOUN_FILE   – explicit noun list file (otherwise a random file from NOUN_FOLDER)\n    ADJ_FILE    – explicit adjective list file (otherwise a random file from ADJ_FOLDER)\n    NOUN_FOLDER – folder that contains noun list files (default \"./nouns\")\n    ADJ_FOLDER  – folder that contains adjective list files (default \"./adjectives\")\n    DEBUG       – when set to \"true\" prints debugging information to stderr\n--]]\n\n------- ------------------------------------------ -------------------\n-- Helper utilities\n------- ------------------------------------------ -------------------\nlocal function quote(str)\n    -- simple quoting for shell usage\n    return \"'\" .. (str:gsub(\"'\", \"'\\\\''\")) .. \"'\"\nend\n\nlocal function command_exists(cmd)\n    -- `command -v` is POSIX; we silence all output.\n    local ok = os.execute(string.format(\"command -v %s > /dev/null 2>&1\", cmd))\n    return ok == true or ok == 0\nend\n\nlocal function exec_capture(cmd)\n    local f = io.popen(cmd .. \" 2>/dev/null\")",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.lua"
+    },
+    {
+      "id": "perl",
+      "name": "Perl",
+      "file": "name-generator.pl",
+      "category": "Scripting",
+      "paradigm": "Text Processing",
+      "ext": ".pl",
+      "sloc": 122,
+      "codeSample": "#!/usr/bin/env perl\n#=====================================================================\n#  Random adjective‑noun generator – Perl 5 rewrite of Josh Cox's sh\n#=====================================================================\n#  Behaviour (identical to the original):\n#   • Pick one random *noun* file from $NOUN_FOLDER   (default: ./nouns)\n#   • Pick one random *adjective* file from $ADJ_FOLDER (default: ./adjectives)\n#   • Print $counto lines (default: number of rows of the terminal)\n#   • Each line is   <adjective><SEPARATOR><noun>\n#   • If the environment variable DEBUG is set to the literal string\n#     \"true\", a small debug dump is printed for every iteration.\n#=====================================================================\n\nuse strict;\nuse warnings;\nuse Cwd      qw( getcwd abs_path );\nuse File::Spec;\nuse List::Util qw( shuffle );\nuse Term::ReadKey;          # for terminal size (fallback if tput not found)\n\n#---------------------------------------------------------------------\n# Helper – run a command and return its trimmed STDOUT, or undef on error\n#---------------------------------------------------------------------\nsub run_cmd {\n    my ($cmd) = @_;\n    my $out = `$cmd`;\n    chomp $out if defined $out;\n    return $out;\n}\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.pl"
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "file": "name-generator.php",
+      "category": "Scripting",
+      "paradigm": "Web & CLI Scripting",
+      "ext": ".php",
+      "sloc": 193,
+      "codeSample": "#!/usr/bin/env php\n<?php\n/**\n * PHP implementation of the original `name-generator.sh`.\n *\n * Behaviour:\n *   * Uses the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n *     NOUN_FOLDER, ADJ_FOLDER and counto (the number of lines to emit).\n *   * If NOUN_FILE / ADJ_FILE are not set, a random regular file is chosen\n *     from the respective folder.\n *   * If a folder variable is not set, it defaults to \"<cwd>/nouns\" and\n *     \"<cwd>/adjectives\".\n *   * The noun is lower‑cased, the adjective keeps its original case.\n *   * When DEBUG=true a small debug dump is written to STDERR.\n *   * No greeting is added – the output matches the original shell script\n *     (e.g., \"test_test\").\n */\n\ndeclare(strict_types=1);\n\n/* --------------------------------------------------- *\n * Helper utilities\n * --------------------------------------------------- */\n\n/**\n * Return true if $path points to a regular file.\n */\nfunction is_regular_file(string $path): bool\n{\n    return is_file($path) && is_readable($path);",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.php"
+    },
+    {
+      "id": "tcl",
+      "name": "Tcl",
+      "file": "name-generator.tcl",
+      "category": "Scripting",
+      "paradigm": "Command Language / String",
+      "ext": ".tcl",
+      "sloc": 127,
+      "codeSample": "#!/usr/bin/env tclsh\n# Tcl implementation of name-generator.\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nproc get_env {var fallback} {\n    if {[info exists ::env($var)] && [string length $::env($var)] > 0} {\n        return $::env($var)\n    }\n    return $fallback\n}\n\nproc get_counto {} {\n    if {[info exists ::env(counto)] && [string length $::env(counto)] > 0} {\n        if {[string is integer -strict $::env(counto)]} {\n            return $::env(counto)\n        }\n    }\n    if {![catch {exec tput lines} out]} {\n        set trimmed [string trim $out]\n        if {[string is integer -strict $trimmed] && $trimmed > 0} {\n            return $trimmed",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.tcl"
+    },
+    {
+      "id": "julia",
+      "name": "Julia",
+      "file": "name-generator.jl",
+      "category": "Scripting",
+      "paradigm": "High-performance Numerical",
+      "ext": ".jl",
+      "sloc": 168,
+      "codeSample": "#!/usr/bin/env julia\n# Julia implementation of the name-generator.sh script.\n# Behaves like the original shell script with respect to SEPARATOR,\n# NOUN_FILE and ADJ_FILE handling.\n\nusing Random\nusing Printf\nusing Dates\nusing Statistics\nusing Base.Filesystem: isfile, realpath\n\n# ----------------------------------------------------------------------\n# Helper functions\n# --------------------------------------------------------------\n\"\"\"\n    env_or_default(var::String, default::String) -> String\n\nReturn the value of environment variable `var` if it exists and is non‑empty,\notherwise return `default`.\n\"\"\"\nfunction env_or_default(var::String, default::String)\n    val = get(ENV, var, \"\")\n    return (isempty(val) ? default : val)\nend\n\n\"\"\"\n    get_counto() -> Int\n\nDetermine how many names to generate.\nFirst checks the `counto` environment variable; if it is set and numeric,",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.jl"
+    },
+    {
+      "id": "r",
+      "name": "R",
+      "file": "name-generator.r",
+      "category": "Scripting",
+      "paradigm": "Statistical Computing",
+      "ext": ".r",
+      "sloc": 136,
+      "codeSample": "#!/usr/bin/env Rscript\n# Name generator in R - implements similar functionality to name-generator.sh\n\n# ------------------------------------------------------------------------------- #\n# Helper functions\n# ------------------------------------------------------------------------------- #\n\nresolve_file <- function(env_var, folder) {\n  # If environment variable is set and points to a regular file, use it\n  env_val <- Sys.getenv(env_var)\n  if (!is.na(env_val) && env_val != \"\") {\n    file_path <- normalizePath(env_val)\n    if (file.exists(file_path)) {\n      return(file_path)\n    }\n  }\n  \n  # Otherwise pick a random regular file from the folder\n  files <- dir(folder, full.names = TRUE, recursive = FALSE)\n  files <- files[grepl(\"\\\\.\", files)]  # Basic filter for files (not just directories)\n  \n  if (length(files) == 0) {\n    stop(sprintf(\"Folder %s contains no regular files\", folder))\n  }\n  \n  return(sample(files, 1))\n}\n\nread_nonempty_lines <- function(file_path) {\n  content <- readLines(file_path, ok = TRUE)",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.r"
+    },
+    {
+      "id": "raku",
+      "name": "Raku",
+      "file": "name-generator.raku",
+      "category": "Scripting",
+      "paradigm": "Expressive Multi-paradigm",
+      "ext": ".raku",
+      "sloc": 66,
+      "codeSample": "#!/usr/bin/env raku\n# Raku implementation of the original name-generator.sh script.\n# It respects the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n# NOUN_FOLDER, ADJ_FOLDER, counto and DEBUG, providing the same behaviour.\n\nuse v6;\n\n# -------------------------------------------------------------------------------\n# Helper routines\n# -------------------------------------------------------------------------------\nsub pick-random-file(Str $folder --> Str) {\n    my @files = dir($folder).grep({ .f });\n    die \"No regular files found in folder '$folder'\" unless @files;\n    return @files.pick.Str;\n}\n\nsub read-lines(Str $file --> Array) {\n    return $file.IO.lines.map({ .chomp }).Array;\n}\n\n# -------------------------------------------------------------------------------\n# Configuration (environment variables with defaults)\n# -------------------------------------------------------------------------------\nmy $here        = $*CWD.Str;\nmy $separator   = %*ENV<SEPARATOR> // '-';\nmy $noun-folder = %*ENV<NOUN_FOLDER> // \"$here/nouns\";\nmy $adj-folder  = %*ENV<ADJ_FOLDER> // \"$here/adjectives\";\n\n# Resolve the noun and adjective files (environment overrides or random pick)\nmy $noun-file = %*ENV<NOUN_FILE> // pick-random-file($noun-folder);",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.raku"
+    },
+    {
+      "id": "octave",
+      "name": "GNU Octave",
+      "file": "name-generator.m",
+      "category": "Scripting",
+      "paradigm": "Matrix / Scientific",
+      "ext": ".m",
+      "sloc": 212,
+      "codeSample": "#!/usr/bin/env octave\n% name-generator.mat\n% --------------------------------------------------------------\n% Replicates the behaviour of the original `name-generator.sh`.\n%   * Uses the environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n%     NOUN_FOLDER, ADJ_FOLDER and counto (terminal height).\n%   * Falls back to sensible defaults when the variables are missing.\n%   * Prints `adjective<separator>noun` (noun lower‑cased, adjective\n%     unchanged) one line per iteration.\n%   * If DEBUG=true prints the same debug information the shell script\n%     prints (to stderr).\n% --------------------------------------------------------------\n\n%% ---------- Helper functions ----------\nfunction val = envOrDefault(varName, defaultVal)\n    % Return the value of an environment variable or a default.\n    val = getenv(varName);\n    if isempty(val)\n        val = defaultVal;\n    end\nend\n\nfunction filePath = pickRandomFileFromFolder(folder)\n    % Return an absolute path to a random regular file inside `folder`.\n    entries = dir(fullfile(folder, '*'));\n    % Keep only regular files (skip directories, . and ..)\n    files = entries(~[entries.isdir]);\n    if isempty(files)\n        error('Folder %s does not contain any regular files.', folder);\n    end",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.m"
+    },
+    {
+      "id": "elisp",
+      "name": "Emacs Lisp",
+      "file": "name-generator.el",
+      "category": "Scripting",
+      "paradigm": "Lisp Dialect",
+      "ext": ".el",
+      "sloc": 105,
+      "codeSample": "#!/usr/bin/env -S emacs -Q --script\n\n;; Configuration - environment overrides with sensible defaults\n(defcustom noun-folder (expand-file-name \"nouns\" default-directory)\n  \"Directory containing noun files\"\n  :type 'string\n  :group 'name-generator)\n\n(defcustom adj-folder (expand-file-name \"adjectives\" default-directory)\n  \"Directory containing adjective files\"\n  :type 'string\n  :group 'name-generator)\n\n;; Separator: respect the SEPARATOR environment variable, default to \"-\"\n(defvar separator (or (getenv \"SEPARATOR\") \"-\")\n  \"Separator between adjective and noun, can be overridden by the SEPARATOR env var.\")\n\n;; Helper functions\n(defun command-exists-p (cmd)\n  \"Check if CMD is available in the system.\"\n  (let ((executable (executable-find cmd)))\n    (and executable (file-executable-p executable))))\n\n(defun strip-string (s)\n  \"Trim leading and trailing whitespace from string S.\"\n  (if (fboundp 'string-trim)\n      (string-trim s)\n    ;; Fallback for older Emacs versions\n    (replace-regexp-in-string\n     \"\\\\`[ \\t\\n\\r]+\\\\|[ \\t\\n\\r]+\\\\'\" \"\" s)))",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.el"
+    },
+    {
+      "id": "racket",
+      "name": "Racket",
+      "file": "name-generator.rkt",
+      "category": "Scripting",
+      "paradigm": "Scheme / Lisp Family",
+      "ext": ".rkt",
+      "sloc": 117,
+      "codeSample": "#!/usr/bin/env racket\n#lang racket\n\n;; ------------------------------------------------\n;; Name Generator – Racket implementation\n;; Behaves like the original shell script `name-generator.sh`.\n;; ------------------------------------------------\n\n(require racket/file\n         racket/list\n         racket/string\n         racket/system\n         racket/port\n         racket/format\n         racket/os)\n\n;; ---------- Helper utilities ----------\n;; Return the value of an environment variable or #f if not set.\n(define (env-var name)\n  (let ([v (getenv name)])\n    (if (and v (not (string-blank? v))) v #f)))\n\n;; Define `string-blank?` in case the Racket version does not provide it.\n;; It returns #t for strings that are empty or contain only whitespace.\n(define (string-blank? s)\n  (or (not s)\n      (string=? (string-trim s) \"\")))\n\n;; Convert a string to a number, returning #f on failure.\n(define (string->maybe-number s)",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.rkt"
+    },
+    {
+      "id": "sh",
+      "name": "POSIX sh",
+      "file": "name-generator.sh",
+      "category": "Shell",
+      "paradigm": "Bourne Shell",
+      "ext": ".sh",
+      "sloc": 102,
+      "codeSample": "#!/usr/bin/env sh\n# robust name generator – fixes “exec failed (No such file or directory; errno=2)”\n# The original script relied on commands that may not be present on all systems\n# (realpath, shuf, tput).  This version adds fall‑backs so the script can run\n# everywhere a POSIX‑compatible /bin/sh is available.\n\nHERE=$(pwd)\n\n# ----------------------------------------------------------------------\n# Helper: test whether a command exists in $PATH\n# ----------------------------------------------------------------------\ncommand_exists() {\n  command -v \"$1\" >/dev/null 2>&1\n}\n\n# ----------------------------------------------------------------------\n# Resolve a path to an absolute canonical form.\n# Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.\n# ----------------------------------------------------------------------\nrealpath_fallback() {\n  if command_exists realpath; then\n    realpath \"$1\"\n  elif command_exists readlink; then\n    readlink -f \"$1\"\n  else\n    # No canonicalisation tool – just return the argument unchanged.\n    printf '%s\\n' \"$1\"\n  fi\n}\n",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.sh"
+    },
+    {
+      "id": "bash",
+      "name": "Bash",
+      "file": "name-generator.bash",
+      "category": "Shell",
+      "paradigm": "Unix Shell",
+      "ext": ".bash",
+      "sloc": 31,
+      "codeSample": "#!/usr/bin/env bash\n# This is largely the same as the shell script \nHERE=$(pwd)\n: ${SEPARATOR:=\"-\"}\n: \"${counto:=$(tput lines)}\"\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath $(find ${NOUN_FOLDER} -type f | shuf -n 1))}\"\n: \"${ADJ_FILE:=$(realpath $(find ${ADJ_FOLDER} -type f | shuf -n 1))}\"\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    echo ${this_adjective}\n    echo ${this_noun}\n    echo $ADJ_FILE\n    echo $ADJ_FOLDER\n    echo $NOUN_FILE\n    echo $NOUN_FOLDER\n    echo \"$countzero > $counto\"\n  fi\n}\ncountzero=0\nwhile [[ ${countzero} -lt ${counto} ]]; do\n  this_noun=$(shuf -n 1 ${NOUN_FILE}| tr '[:upper:]' '[:lower:]')\n  this_adjective=$(shuf -n 1 ${ADJ_FILE})\n  debugger\n  printf \"%s%s%s\\n\" \"${this_adjective}\" \"${SEPARATOR}\" \"${this_noun}\"\n  ((countzero++))\ndone\nexit 0",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.bash"
+    },
+    {
+      "id": "zsh",
+      "name": "Zsh",
+      "file": "name-generator.zsh",
+      "category": "Shell",
+      "paradigm": "Extended Unix Shell",
+      "ext": ".zsh",
+      "sloc": 31,
+      "codeSample": "#!/usr/bin/env zsh\n# This is largely the same as the shell script \nHERE=$(pwd)\n: ${SEPARATOR:=\"-\"}\n: \"${counto:=$(tput lines)}\"\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath $(find ${NOUN_FOLDER} -type f | shuf -n 1))}\"\n: \"${ADJ_FILE:=$(realpath $(find ${ADJ_FOLDER} -type f | shuf -n 1))}\"\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    echo ${this_adjective}\n    echo ${this_noun}\n    echo $ADJ_FILE\n    echo $ADJ_FOLDER\n    echo $NOUN_FILE\n    echo $NOUN_FOLDER\n    echo \"$countzero > $counto\"\n  fi\n}\ncountzero=0\nwhile [[ ${countzero} -lt ${counto} ]]; do\n  this_noun=$(shuf -n 1 ${NOUN_FILE}| tr '[:upper:]' '[:lower:]')\n  this_adjective=$(shuf -n 1 ${ADJ_FILE})\n  debugger\n  printf \"%s%s%s\\n\" \"${this_adjective}\" \"${SEPARATOR}\" \"${this_noun}\"\n  ((countzero++))\ndone\nexit 0",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.zsh"
+    },
+    {
+      "id": "fish",
+      "name": "Fish",
+      "file": "name-generator.fish",
+      "category": "Shell",
+      "paradigm": "Friendly Interactive Shell",
+      "ext": ".fish",
+      "sloc": 104,
+      "codeSample": "#!/usr/bin/env fish\n# name-generator.fish\n# --------------------------------------------------------------\n# Generates random “adjective‑separator‑noun” lines.\n# Behaviour matches name-generator.sh:\n#   * SEPARATOR defaults to \"-\"\n#   * COUNT (or counto) defaults to `tput lines` or 24\n#   * NOUN_FILE / ADJ_FILE may be overridden via env vars,\n#     otherwise a random regular file is chosen from the\n#     respective folder (default $PWD/nouns and $PWD/adjectives)\n#   * Nouns are lower‑cased, adjectives keep original case.\n# --------------------------------------------------------------\n\n# -------------------------------------------------\n# Helper: test whether a command exists in $PATH\n# -------------------------------------------------\nfunction command_exists\n    command -v $argv[1] > /dev/null\nend\n\n# -------------------------------------------------\n# Resolve a path to an absolute canonical form.\n# Prefer `realpath`; fall back to `readlink -f`; otherwise return the input.\n# -------------------------------------------------\nfunction realpath_fallback\n    if command_exists realpath\n        realpath $argv[1]\n    else if command_exists readlink\n        readlink -f $argv[1]\n    else",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.fish"
+    },
+    {
+      "id": "ksh",
+      "name": "KornShell (ksh)",
+      "file": "name-generator.ksh",
+      "category": "Shell",
+      "paradigm": "POSIX Shell",
+      "ext": ".ksh",
+      "sloc": 52,
+      "codeSample": "#!/usr/bin/env ksh\n# KornShell implementation of name-generator\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\nHERE=$(pwd)\n: \"${SEPARATOR:=\"-\"}\"\nif command -v tput >/dev/null 2>&1; then\n  : \"${counto:=$(tput lines 2>/dev/null)}\"\nfi\n: \"${counto:=24}\"\n\n: \"${NOUN_FOLDER:=${HERE}/nouns}\"\n: \"${ADJ_FOLDER:=${HERE}/adjectives}\"\n: \"${NOUN_FILE:=$(realpath \"$(find \"${NOUN_FOLDER}\" -type f | shuf -n 1)\")}\"\n: \"${ADJ_FILE:=$(realpath \"$(find \"${ADJ_FOLDER}\" -type f | shuf -n 1)\")}\"\n\ndebugger () {\n  if [[ ${DEBUG} == 'true' ]]; then\n    set -x\n    print \"${this_adjective}\"\n    print \"${this_noun}\"",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.ksh"
+    },
+    {
+      "id": "nu",
+      "name": "Nushell",
+      "file": "name-generator.nu",
+      "category": "Shell",
+      "paradigm": "Structured Data Shell",
+      "ext": ".nu",
+      "sloc": 90,
+      "codeSample": "#!/usr/bin/env nu\n# Nushell implementation of name-generator\n#\n# Behaves like `name-generator.sh`:\n#   - Uses environment variables SEPARATOR, NOUN_FILE, ADJ_FILE,\n#     NOUN_FOLDER, ADJ_FOLDER, counto, DEBUG.\n#   - If NOUN_FILE / ADJ_FILE are not set, picks a random regular file\n#     from the respective folder.\n#   - Emits `counto` lines (default: terminal height via `tput lines`,\n#     fallback 24).\n#   - Noun is lower-cased, adjective keeps original case.\n#   - Optional debug output when DEBUG=true.\n\ndef pick_file [folder: string]: nothing -> string {\n    let files = (ls $folder | where type == file | get name)\n    if ($files | is-empty) {\n        let nested = (glob $\"($folder)/**/*\" | where { |f| ($f | path type) == \"file\" })\n        if ($nested | is-empty) {\n            print -e $\"Folder '($folder)' contains no regular files.\"\n            exit 1\n        }\n        return ($nested | get (random int 0..<($nested | length)))\n    }\n    return ($files | get (random int 0..<($files | length)))\n}\n\ndef main [] {\n    let separator = ($env.SEPARATOR? | default \"-\")\n\n    let counto = if ($env.counto? | is-not-empty) {",
+      "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.nu"
+    },
+    {
       "id": "swift",
       "name": "Swift",
       "file": "name-generator.swift",
@@ -1068,1209 +2165,5 @@
       "codeSample": "# --------------------------------------------------------------------\n# 1️⃣  Load configuration from the environment (or defaults)\n# --------------------------------------------------------------\n\n# ---- SEPARATOR ----------------------------------------------------\n@env[SEPARATOR]          # push env var SEPARATOR (or empty) onto cell 0\n[                        # if empty (cell 0 == 0) use default \"-\"\n    -                    # cell 0 becomes 0 → skip to default\n]\n>+[-<+>]                 # if not empty, copy it to cell 1 (separator string)\n# cell 1 now points to the separator string table entry\n# if it was empty we fall back to the literal \"-\"\n>[-]                     # clear cell 0\n>+++++ +++++ +++++       # 15 → ASCII for '-'\n.                        # output '-' just to allocate it (interpreter stores it)\n<[-]                     # cell 0 = 0 again\n>[-]                     # cell 1 = 0 again (will be overwritten later)\n\n# ---- COUNT_O -------------------------------------------------------\n@env[counto]             # env var counto (string)\n[                        # if defined → parse integer\n    >+[-<+>]             # copy to cell 2 (temp)\n    # simple decimal parser (base‑10)\n    >[-]                 # clear accumulator (cell 3)\n    <[                  # while temp != 0\n        >[-]             # clear digit cell (cell 4)\n        >+[-<+>]         # move lowest digit to cell 4\n        >[-]             # clear remainder cell (cell 5)\n        <[               # while digit >= '0'\n            -            # decrement digit",
       "githubUrl": "https://github.com/joshuacox/name-generator/blob/main/name-generator.bfk"
     }
-  ],
-  "scanners": {
-    "fastest_24_summary": [
-      {
-        "command": "counto=$((2**1)) ./name-generator_cpp",
-        "mean": 0.0027707914400000003,
-        "stddev": 0.000020145472196004697,
-        "median": 0.0027707914400000003,
-        "user": 0.0028423399999999996,
-        "system": 0,
-        "min": 0.0027565464400000003,
-        "max": 0.0027850364400000003,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator_cpp_O2",
-        "mean": 0.0034307624400000004,
-        "stddev": 0.00042879662317933426,
-        "median": 0.0034307624400000004,
-        "user": 0.0036428399999999996,
-        "system": 0,
-        "min": 0.0031275574400000004,
-        "max": 0.0037339674400000003,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator_cpp_O1",
-        "mean": 0.0033437969399999997,
-        "stddev": 0.00009368245611906191,
-        "median": 0.0033437969399999997,
-        "user": 0.0035513399999999996,
-        "system": 0,
-        "min": 0.00327755344,
-        "max": 0.0034100404399999996,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator_go",
-        "mean": 0.00369786044,
-        "stddev": 0.0002645413747639486,
-        "median": 0.00369786044,
-        "user": 0.0007679199999999998,
-        "system": 0.0034618599999999998,
-        "min": 0.00351080144,
-        "max": 0.0038849194399999997,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator_pascal",
-        "mean": 0.006072841440000001,
-        "stddev": 0.000793154605389139,
-        "median": 0.006072841440000001,
-        "user": 0.00340392,
-        "system": 0.0031206800000000002,
-        "min": 0.00551199644,
-        "max": 0.006633686440000001,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator.pl",
-        "mean": 0.014328169440000002,
-        "stddev": 0.0006427982478647554,
-        "median": 0.014328169440000002,
-        "user": 0.007486339999999999,
-        "system": 0.00657636,
-        "min": 0.013873642440000002,
-        "max": 0.014782696440000001,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator_d",
-        "mean": 0.00532678544,
-        "stddev": 0.0020214004985237336,
-        "median": 0.00532678544,
-        "user": 0.00421884,
-        "system": 0.0011651799999999998,
-        "min": 0.00389743944,
-        "max": 0.006756131439999999,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**1)) java NameGenerator",
-        "mean": 0.041882741939999996,
-        "stddev": 0.0013164935265334592,
-        "median": 0.041882741939999996,
-        "user": 0.05848734,
-        "system": 0.01853086,
-        "min": 0.04095184044,
-        "max": 0.04281364344,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**1)) ./name-generator.lua",
-        "mean": 0.016763956939999998,
-        "stddev": 0.00035193482317113876,
-        "median": 0.016763956939999998,
-        "user": 0.01312234,
-        "system": 0.0036843600000000002,
-        "min": 0.01651510144,
-        "max": 0.01701281244,
-        "parameter_num_count": 1,
-        "cleanCmd": "counto=$((2**1)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_cpp",
-        "mean": 0.00282365494,
-        "stddev": 0.0008767890741475397,
-        "median": 0.00282365494,
-        "user": 0.0018414199999999999,
-        "system": 0.00143068,
-        "min": 0.00220367144,
-        "max": 0.0034436384399999997,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_cpp_O2",
-        "mean": 0.0026542539400000002,
-        "stddev": 0.0010466955199581684,
-        "median": 0.0026542539400000002,
-        "user": 0.00184592,
-        "system": 0.0013776799999999998,
-        "min": 0.00191412844,
-        "max": 0.0033943794400000003,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_cpp_O1",
-        "mean": 0.00364513044,
-        "stddev": 0.00004024003270376377,
-        "median": 0.00364513044,
-        "user": 0,
-        "system": 0.004396860000000001,
-        "min": 0.00361667644,
-        "max": 0.0036735844399999997,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_go",
-        "mean": 0.00340732244,
-        "stddev": 0.00118537683741838,
-        "median": 0.00340732244,
-        "user": 0.00244034,
-        "system": 0.00124468,
-        "min": 0.00256913444,
-        "max": 0.00424551044,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_pascal",
-        "mean": 0.00573146494,
-        "stddev": 0.0005573903552991383,
-        "median": 0.00573146494,
-        "user": 0.0056288399999999995,
-        "system": 0,
-        "min": 0.00533733044,
-        "max": 0.00612559944,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator.pl",
-        "mean": 0.01588361944,
-        "stddev": 0.001063900135051215,
-        "median": 0.01588361944,
-        "user": 0.00914034,
-        "system": 0.0063748599999999996,
-        "min": 0.015131328440000003,
-        "max": 0.01663591044,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator_d",
-        "mean": 0.0039125329399999995,
-        "stddev": 0.00033725811482083,
-        "median": 0.0039125329399999995,
-        "user": 0.0021569199999999997,
-        "system": 0.0022321800000000003,
-        "min": 0.00367405544,
-        "max": 0.00415101044,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**2)) java NameGenerator",
-        "mean": 0.047975094940000004,
-        "stddev": 0.0043199366506911285,
-        "median": 0.047975094940000004,
-        "user": 0.07729233999999999,
-        "system": 0.01196086,
-        "min": 0.04492043844,
-        "max": 0.05102975144,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**2)) ./name-generator.lua",
-        "mean": 0.02234991344,
-        "stddev": 0.000734145130285559,
-        "median": 0.02234991344,
-        "user": 0.017945339999999997,
-        "system": 0.00408568,
-        "min": 0.02183079444,
-        "max": 0.02286903244,
-        "parameter_num_count": 2,
-        "cleanCmd": "counto=$((2**2)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_cpp",
-        "mean": 0.0030800589400000002,
-        "stddev": 0.00042669580893242896,
-        "median": 0.0030800589400000002,
-        "user": 0,
-        "system": 0.00350236,
-        "min": 0.0027783394400000003,
-        "max": 0.00338177844,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_cpp_O2",
-        "mean": 0.0028052984400000003,
-        "stddev": 0.0010100850663622345,
-        "median": 0.0028052984400000003,
-        "user": 0.00186792,
-        "system": 0.0014381799999999998,
-        "min": 0.0020910604400000005,
-        "max": 0.00351953644,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_cpp_O1",
-        "mean": 0.00444536144,
-        "stddev": 0.0005204574610109838,
-        "median": 0.00444536144,
-        "user": 0.00247592,
-        "system": 0.00241968,
-        "min": 0.00407734244,
-        "max": 0.00481338044,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_go",
-        "mean": 0.00403868394,
-        "stddev": 0.00038677963113444805,
-        "median": 0.00403868394,
-        "user": 0.0008484199999999999,
-        "system": 0.00373886,
-        "min": 0.0037651894400000004,
-        "max": 0.00431217844,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_pascal",
-        "mean": 0.00669022494,
-        "stddev": 0.0017498326036751344,
-        "median": 0.00669022494,
-        "user": 0.00445734,
-        "system": 0.00206968,
-        "min": 0.00545290644,
-        "max": 0.00792754344,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator.pl",
-        "mean": 0.01831179794,
-        "stddev": 0.004737368653683234,
-        "median": 0.01831179794,
-        "user": 0.015104839999999998,
-        "system": 0.00267718,
-        "min": 0.01496197244,
-        "max": 0.02166162344,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator_d",
-        "mean": 0.00510145544,
-        "stddev": 0.001426846732125774,
-        "median": 0.00510145544,
-        "user": 0.0035488399999999993,
-        "system": 0.0016651799999999998,
-        "min": 0.00409252244,
-        "max": 0.00611038844,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**3)) java NameGenerator",
-        "mean": 0.04988639544,
-        "stddev": 0.005449305681292068,
-        "median": 0.04988639544,
-        "user": 0.07511683999999999,
-        "system": 0.01922036,
-        "min": 0.04603315444,
-        "max": 0.05373963644,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**3)) ./name-generator.lua",
-        "mean": 0.01866368094,
-        "stddev": 0.0024930089017700077,
-        "median": 0.01866368094,
-        "user": 0.01309634,
-        "system": 0.00547936,
-        "min": 0.01690085744,
-        "max": 0.02042650444,
-        "parameter_num_count": 3,
-        "cleanCmd": "counto=$((2**3)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_cpp",
-        "mean": 0.00303091594,
-        "stddev": 0.0007108678821556783,
-        "median": 0.00303091594,
-        "user": 0.00210284,
-        "system": 0.0010216799999999999,
-        "min": 0.0025282564400000004,
-        "max": 0.0035335754399999997,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_cpp_O2",
-        "mean": 0.0023019014400000003,
-        "stddev": 0.0002695208207170646,
-        "median": 0.0023019014400000003,
-        "user": 0.0024873399999999993,
-        "system": 0,
-        "min": 0.00211132144,
-        "max": 0.0024924814400000004,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_cpp_O1",
-        "mean": 0.00276126144,
-        "stddev": 0.000795298553149696,
-        "median": 0.00276126144,
-        "user": 0.0012139199999999998,
-        "system": 0.00204468,
-        "min": 0.00219890044,
-        "max": 0.00332362244,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_go",
-        "mean": 0.00329458344,
-        "stddev": 0.00006908291830836349,
-        "median": 0.00329458344,
-        "user": 0.0018409199999999998,
-        "system": 0.00221368,
-        "min": 0.00324573444,
-        "max": 0.0033434324400000003,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_pascal",
-        "mean": 0.006254145440000001,
-        "stddev": 0.00010596136537436637,
-        "median": 0.006254145440000001,
-        "user": 0.006250839999999999,
-        "system": 0,
-        "min": 0.0061792194400000005,
-        "max": 0.00632907144,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator.pl",
-        "mean": 0.02258429494,
-        "stddev": 0.0022552852587893403,
-        "median": 0.02258429494,
-        "user": 0.01708634,
-        "system": 0.0052261799999999995,
-        "min": 0.02098956744,
-        "max": 0.02417902244,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator_d",
-        "mean": 0.00581517244,
-        "stddev": 0.0005876043209524589,
-        "median": 0.00581517244,
-        "user": 0.0031093399999999995,
-        "system": 0.00250836,
-        "min": 0.00539967344,
-        "max": 0.00623067144,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**4)) java NameGenerator",
-        "mean": 0.052246906440000004,
-        "stddev": 0.003127926444558441,
-        "median": 0.052246906440000004,
-        "user": 0.07969683999999999,
-        "system": 0.014289860000000001,
-        "min": 0.05003512844,
-        "max": 0.05445868444,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**4)) ./name-generator.lua",
-        "mean": 0.02038844294,
-        "stddev": 0.0018765687662807614,
-        "median": 0.02038844294,
-        "user": 0.017486839999999997,
-        "system": 0.00291136,
-        "min": 0.01906150844,
-        "max": 0.02171537744,
-        "parameter_num_count": 4,
-        "cleanCmd": "counto=$((2**4)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_cpp",
-        "mean": 0.00382766694,
-        "stddev": 0.00019605171904500112,
-        "median": 0.00382766694,
-        "user": 0.0007504199999999999,
-        "system": 0.00340436,
-        "min": 0.00368903744,
-        "max": 0.00396629644,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_cpp_O2",
-        "mean": 0.00215347794,
-        "stddev": 0.00026071946261163587,
-        "median": 0.00215347794,
-        "user": 0,
-        "system": 0.0029578599999999997,
-        "min": 0.00196912144,
-        "max": 0.0023378344400000004,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_cpp_O1",
-        "mean": 0.00268979744,
-        "stddev": 0.000010381741761381058,
-        "median": 0.00268979744,
-        "user": 0.00144642,
-        "system": 0.00175268,
-        "min": 0.0026824564399999997,
-        "max": 0.00269713844,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_go",
-        "mean": 0.00461046444,
-        "stddev": 0.0006796088126797651,
-        "median": 0.00461046444,
-        "user": 0.00230592,
-        "system": 0.00336018,
-        "min": 0.00412990844,
-        "max": 0.00509102044,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_pascal",
-        "mean": 0.00613794294,
-        "stddev": 0.00005930151020421029,
-        "median": 0.00613794294,
-        "user": 0.00313292,
-        "system": 0.00347318,
-        "min": 0.00609601044,
-        "max": 0.0061798754400000004,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator.pl",
-        "mean": 0.01619720794,
-        "stddev": 0.00002443266061033854,
-        "median": 0.01619720794,
-        "user": 0.01054834,
-        "system": 0.005213860000000001,
-        "min": 0.01617993144,
-        "max": 0.01621448444,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator_d",
-        "mean": 0.0055101219399999995,
-        "stddev": 0.0003504696979205192,
-        "median": 0.0055101219399999995,
-        "user": 0.0021698399999999997,
-        "system": 0.00288886,
-        "min": 0.00526230244,
-        "max": 0.00575794144,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**5)) java NameGenerator",
-        "mean": 0.049926401440000004,
-        "stddev": 0.0024238121392698743,
-        "median": 0.049926401440000004,
-        "user": 0.06786133999999999,
-        "system": 0.01954686,
-        "min": 0.04821250744,
-        "max": 0.051640295440000004,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**5)) ./name-generator.lua",
-        "mean": 0.02169637144,
-        "stddev": 0.005658467867167048,
-        "median": 0.02169637144,
-        "user": 0.01628184,
-        "system": 0.0035638600000000003,
-        "min": 0.01769523044,
-        "max": 0.02569751244,
-        "parameter_num_count": 5,
-        "cleanCmd": "counto=$((2**5)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_cpp",
-        "mean": 0.00338671244,
-        "stddev": 0.00023504087985284558,
-        "median": 0.00338671244,
-        "user": 0.0022518399999999997,
-        "system": 0.0010036799999999999,
-        "min": 0.0032205134400000003,
-        "max": 0.0035529114399999997,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_cpp_O2",
-        "mean": 0.0038286214400000003,
-        "stddev": 0.000940951236365626,
-        "median": 0.0038286214400000003,
-        "user": 0.00146292,
-        "system": 0.00260318,
-        "min": 0.0031632684400000003,
-        "max": 0.00449397444,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_cpp_O1",
-        "mean": 0.0034362174400000005,
-        "stddev": 0.0012812011199776559,
-        "median": 0.0034362174400000005,
-        "user": 0.00074942,
-        "system": 0.00252136,
-        "min": 0.0025302714400000006,
-        "max": 0.00434216344,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_go",
-        "mean": 0.0040741864400000005,
-        "stddev": 0.0004946466492841125,
-        "median": 0.0040741864400000005,
-        "user": 0.0009234199999999999,
-        "system": 0.00356636,
-        "min": 0.00372441844,
-        "max": 0.00442395444,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_pascal",
-        "mean": 0.009462764940000002,
-        "stddev": 0.0006680370102056467,
-        "median": 0.009462764940000002,
-        "user": 0.005989339999999999,
-        "system": 0.0021961800000000003,
-        "min": 0.008990391440000002,
-        "max": 0.009935138440000001,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator.pl",
-        "mean": 0.02231003794,
-        "stddev": 0.0029251091278310474,
-        "median": 0.02231003794,
-        "user": 0.01608084,
-        "system": 0.00599786,
-        "min": 0.02024167344,
-        "max": 0.024378402440000002,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator_d",
-        "mean": 0.00562288344,
-        "stddev": 0.0004612853513477312,
-        "median": 0.00562288344,
-        "user": 0.0030719199999999997,
-        "system": 0.00299918,
-        "min": 0.0052967054400000005,
-        "max": 0.00594906144,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**6)) java NameGenerator",
-        "mean": 0.04524450944,
-        "stddev": 0.0025658331220576275,
-        "median": 0.04524450944,
-        "user": 0.07472383999999999,
-        "system": 0.01765086,
-        "min": 0.04343019144,
-        "max": 0.04705882744,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**6)) ./name-generator.lua",
-        "mean": 0.02107709644,
-        "stddev": 0.003517870378538698,
-        "median": 0.02107709644,
-        "user": 0.018386339999999998,
-        "system": 0.00264136,
-        "min": 0.01858958644,
-        "max": 0.02356460644,
-        "parameter_num_count": 6,
-        "cleanCmd": "counto=$((2**6)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_cpp",
-        "mean": 0.00313474494,
-        "stddev": 0.0005059808638797515,
-        "median": 0.00313474494,
-        "user": 0.0007239199999999999,
-        "system": 0.0026673599999999997,
-        "min": 0.00277696244,
-        "max": 0.0034925274399999996,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_cpp_O2",
-        "mean": 0.0019251704400000001,
-        "stddev": 0.000016168703658611496,
-        "median": 0.0019251704400000001,
-        "user": 0,
-        "system": 0.00276636,
-        "min": 0.0019137374400000002,
-        "max": 0.00193660344,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_cpp_O1",
-        "mean": 0.00352797294,
-        "stddev": 0.0010845526028093334,
-        "median": 0.00352797294,
-        "user": 0.00143192,
-        "system": 0.00239818,
-        "min": 0.00276107844,
-        "max": 0.00429486744,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_go",
-        "mean": 0.0025673799400000004,
-        "stddev": 0.000091119901144042,
-        "median": 0.0025673799400000004,
-        "user": 0.0014674199999999999,
-        "system": 0.00171318,
-        "min": 0.0025029484400000005,
-        "max": 0.0026318114400000004,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_pascal",
-        "mean": 0.0060093614399999995,
-        "stddev": 0.00031684606336831783,
-        "median": 0.0060093614399999995,
-        "user": 0.00422734,
-        "system": 0.00176768,
-        "min": 0.00578531744,
-        "max": 0.00623340544,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator.pl",
-        "mean": 0.015082256440000002,
-        "stddev": 0.00035650202587082043,
-        "median": 0.015082256440000002,
-        "user": 0.01174734,
-        "system": 0.00292768,
-        "min": 0.014830171440000003,
-        "max": 0.015334341440000001,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator_d",
-        "mean": 0.00670567244,
-        "stddev": 0.00024745060386266937,
-        "median": 0.00670567244,
-        "user": 0.00486584,
-        "system": 0.0018771799999999998,
-        "min": 0.0065306984400000006,
-        "max": 0.00688064644,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**7)) java NameGenerator",
-        "mean": 0.052469988940000004,
-        "stddev": 0.004535140356904571,
-        "median": 0.052469988940000004,
-        "user": 0.07914884,
-        "system": 0.02893186,
-        "min": 0.04926316044,
-        "max": 0.055676817440000005,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**7)) ./name-generator.lua",
-        "mean": 0.02630439494,
-        "stddev": 0.0006452328165123798,
-        "median": 0.02630439494,
-        "user": 0.01789184,
-        "system": 0.007115359999999999,
-        "min": 0.02584814644,
-        "max": 0.02676064344,
-        "parameter_num_count": 7,
-        "cleanCmd": "counto=$((2**7)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_cpp",
-        "mean": 0.00311026444,
-        "stddev": 0.000047343627427564206,
-        "median": 0.00311026444,
-        "user": 0,
-        "system": 0.00383036,
-        "min": 0.00307678744,
-        "max": 0.0031437414400000002,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_cpp_O2",
-        "mean": 0.00440022644,
-        "stddev": 0.0002359389054649533,
-        "median": 0.00440022644,
-        "user": 0.0018078399999999998,
-        "system": 0.00243286,
-        "min": 0.00423339244,
-        "max": 0.00456706044,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_cpp_O1",
-        "mean": 0.00284518444,
-        "stddev": 0.0006434403008220728,
-        "median": 0.00284518444,
-        "user": 0,
-        "system": 0.00339136,
-        "min": 0.0023902034400000004,
-        "max": 0.00330016544,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_go",
-        "mean": 0.00461491694,
-        "stddev": 0.00011091464837657816,
-        "median": 0.00461491694,
-        "user": 0.0021243399999999997,
-        "system": 0.0026773599999999997,
-        "min": 0.00453648844,
-        "max": 0.00469334544,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_pascal",
-        "mean": 0.00589517044,
-        "stddev": 0.00015681789929086548,
-        "median": 0.00589517044,
-        "user": 0,
-        "system": 0.00631986,
-        "min": 0.00578428344,
-        "max": 0.00600605744,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator.pl",
-        "mean": 0.01566202794,
-        "stddev": 0.00041327350801194477,
-        "median": 0.01566202794,
-        "user": 0.01397084,
-        "system": 0.00155018,
-        "min": 0.01536979944,
-        "max": 0.015954256439999998,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator_d",
-        "mean": 0.0059393339399999995,
-        "stddev": 0.002028738145592106,
-        "median": 0.0059393339399999995,
-        "user": 0.00406084,
-        "system": 0.00122368,
-        "min": 0.00450479944,
-        "max": 0.0073738684399999995,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**8)) java NameGenerator",
-        "mean": 0.06220322694,
-        "stddev": 0.002149946147382415,
-        "median": 0.06220322694,
-        "user": 0.09275533999999999,
-        "system": 0.02603336,
-        "min": 0.060682985440000003,
-        "max": 0.06372346844,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**8)) ./name-generator.lua",
-        "mean": 0.02084838194,
-        "stddev": 0.004274885463448174,
-        "median": 0.02084838194,
-        "user": 0.01621984,
-        "system": 0.00392186,
-        "min": 0.01782558144,
-        "max": 0.02387118244,
-        "parameter_num_count": 8,
-        "cleanCmd": "counto=$((2**8)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_cpp",
-        "mean": 0.00373178794,
-        "stddev": 0.0009305334321584043,
-        "median": 0.00373178794,
-        "user": 0.00388384,
-        "system": 0,
-        "min": 0.00307380144,
-        "max": 0.00438977444,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_cpp_O2",
-        "mean": 0.0022893469400000004,
-        "stddev": 0.00007082027966973881,
-        "median": 0.0022893469400000004,
-        "user": 0,
-        "system": 0.00310336,
-        "min": 0.0022392694400000003,
-        "max": 0.0023394244400000005,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_cpp_O1",
-        "mean": 0.0035886674400000002,
-        "stddev": 0.0011257323804252945,
-        "median": 0.0035886674400000002,
-        "user": 0.00130792,
-        "system": 0.00224568,
-        "min": 0.0027926544400000003,
-        "max": 0.00438468044,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_go",
-        "mean": 0.00436996394,
-        "stddev": 0.0008677211367856035,
-        "median": 0.00436996394,
-        "user": 0,
-        "system": 0.00533586,
-        "min": 0.00375639244,
-        "max": 0.00498353544,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_pascal",
-        "mean": 0.008418741940000002,
-        "stddev": 0.00041303026327921705,
-        "median": 0.008418741940000002,
-        "user": 0.00381734,
-        "system": 0.00424586,
-        "min": 0.008126685440000002,
-        "max": 0.00871079844,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator.pl",
-        "mean": 0.01762952994,
-        "stddev": 0.0001711092344454268,
-        "median": 0.01762952994,
-        "user": 0.012340340000000002,
-        "system": 0.00460836,
-        "min": 0.01750853744,
-        "max": 0.01775052244,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator_d",
-        "mean": 0.00486694994,
-        "stddev": 0.00009571043836750528,
-        "median": 0.00486694994,
-        "user": 0.0020228399999999997,
-        "system": 0.0025828599999999998,
-        "min": 0.00479927244,
-        "max": 0.0049346274400000004,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**9)) java NameGenerator",
-        "mean": 0.06543153344000001,
-        "stddev": 0.0014650729247167199,
-        "median": 0.06543153344000001,
-        "user": 0.10850233999999999,
-        "system": 0.01991836,
-        "min": 0.06439557044000001,
-        "max": 0.06646749644000001,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**9)) ./name-generator.lua",
-        "mean": 0.020437001439999998,
-        "stddev": 0.00048690383003012103,
-        "median": 0.020437001439999998,
-        "user": 0.013651339999999998,
-        "system": 0.0066713599999999994,
-        "min": 0.02009270844,
-        "max": 0.02078129444,
-        "parameter_num_count": 9,
-        "cleanCmd": "counto=$((2**9)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_cpp",
-        "mean": 0.00375260544,
-        "stddev": 0.00029853906880339826,
-        "median": 0.00375260544,
-        "user": 0.003914839999999999,
-        "system": 0,
-        "min": 0.00354150644,
-        "max": 0.00396370444,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_cpp_O2",
-        "mean": 0.00433921244,
-        "stddev": 0.0010139656683773866,
-        "median": 0.00433921244,
-        "user": 0.00109892,
-        "system": 0.00314236,
-        "min": 0.0036222304399999997,
-        "max": 0.00505619444,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_cpp_O1",
-        "mean": 0.00304127044,
-        "stddev": 0.0003353468051912829,
-        "median": 0.00304127044,
-        "user": 0,
-        "system": 0.00381036,
-        "min": 0.0028041444399999997,
-        "max": 0.0032783964400000002,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_go",
-        "mean": 0.00354803944,
-        "stddev": 0.0001893617817881948,
-        "median": 0.00354803944,
-        "user": 0,
-        "system": 0.0045448599999999995,
-        "min": 0.0034141404400000004,
-        "max": 0.00368193844,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_pascal",
-        "mean": 0.00742359294,
-        "stddev": 0.000019983544743114185,
-        "median": 0.00742359294,
-        "user": 0.0047528399999999995,
-        "system": 0.00252436,
-        "min": 0.0074094624399999994,
-        "max": 0.007437723440000001,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator.pl",
-        "mean": 0.01589277544,
-        "stddev": 0.00013651120674875047,
-        "median": 0.01589277544,
-        "user": 0.01066134,
-        "system": 0.00470986,
-        "min": 0.01579624744,
-        "max": 0.01598930344,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator_d",
-        "mean": 0.0053100399400000005,
-        "stddev": 0.000961545721367684,
-        "median": 0.0053100399400000005,
-        "user": 0.004046339999999999,
-        "system": 0.0012751799999999999,
-        "min": 0.00463012444,
-        "max": 0.00598995544,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**10)) java NameGenerator",
-        "mean": 0.06443429144,
-        "stddev": 0.006998628964773597,
-        "median": 0.06443429144,
-        "user": 0.12446534,
-        "system": 0.01203686,
-        "min": 0.059485513440000005,
-        "max": 0.06938306944,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**10)) ./name-generator.lua",
-        "mean": 0.018674579939999998,
-        "stddev": 0.0008783843070458946,
-        "median": 0.018674579939999998,
-        "user": 0.01098734,
-        "system": 0.00754236,
-        "min": 0.01805346844,
-        "max": 0.01929569144,
-        "parameter_num_count": 10,
-        "cleanCmd": "counto=$((2**10)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_cpp",
-        "mean": 0.00316879094,
-        "stddev": 0.0004856246738629532,
-        "median": 0.00316879094,
-        "user": 0.0024468399999999996,
-        "system": 0.0008406799999999999,
-        "min": 0.0028254024400000003,
-        "max": 0.00351217944,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_cpp"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_cpp_O2",
-        "mean": 0.00456505644,
-        "stddev": 0.00003919068624048267,
-        "median": 0.00456505644,
-        "user": 0.0019653399999999994,
-        "system": 0.00253136,
-        "min": 0.00453734444,
-        "max": 0.00459276844,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_cpp_O2"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_cpp_O1",
-        "mean": 0.004446618439999999,
-        "stddev": 0.000498528665512827,
-        "median": 0.004446618439999999,
-        "user": 0.00244342,
-        "system": 0.00240368,
-        "min": 0.00409410544,
-        "max": 0.00479913144,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_cpp_O1"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_go",
-        "mean": 0.00393910844,
-        "stddev": 0.00008224783236049445,
-        "median": 0.00393910844,
-        "user": 0,
-        "system": 0.004896360000000001,
-        "min": 0.00388095044,
-        "max": 0.00399726644,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_go"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_pascal",
-        "mean": 0.00792358444,
-        "stddev": 0.0012468201740628048,
-        "median": 0.00792358444,
-        "user": 0.00277234,
-        "system": 0.00478786,
-        "min": 0.00704194944,
-        "max": 0.008805219440000001,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_pascal"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator.pl",
-        "mean": 0.01729633394,
-        "stddev": 0.0014742136940771179,
-        "median": 0.01729633394,
-        "user": 0.014497839999999998,
-        "system": 0.00272168,
-        "min": 0.01625390744,
-        "max": 0.01833876044,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator.pl"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator_d",
-        "mean": 0.00689937394,
-        "stddev": 0.00145304715968908,
-        "median": 0.00689937394,
-        "user": 0.0052803400000000006,
-        "system": 0.00155468,
-        "min": 0.00587191444,
-        "max": 0.007926833440000001,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator_d"
-      },
-      {
-        "command": "counto=$((2**11)) java NameGenerator",
-        "mean": 0.06908038344,
-        "stddev": 0.006587228582625027,
-        "median": 0.06908038344,
-        "user": 0.12266033999999998,
-        "system": 0.02551286,
-        "min": 0.06442250944,
-        "max": 0.07373825744000001,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) java NameGenerator"
-      },
-      {
-        "command": "counto=$((2**11)) ./name-generator.lua",
-        "mean": 0.01772959894,
-        "stddev": 0.0012001744610282711,
-        "median": 0.01772959894,
-        "user": 0.013270839999999999,
-        "system": 0.00443136,
-        "min": 0.01688094744,
-        "max": 0.01857825044,
-        "parameter_num_count": 11,
-        "cleanCmd": "counto=$((2**11)) ./name-generator.lua"
-      },
-      {
-        "command": "counto=$((2**12)) ./name-generator_cpp",
-        "mean": 0.00363074544,
-        "stddev": 0.0003026303886393435,
-        "median": 0.00363074544,
-        "user": 0.0027433399999999995,
-        "system": 0.0009826799999999999,
-        "min": 0.0034167534399999998,
-        "max": 0.00384473744,
-        "parameter_num_count": 12,
-        "cleanCmd": "counto=$((2**12)) ./name-generator_cpp"
-      }
-    ]
-  }
+  ]
 }

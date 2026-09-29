@@ -104,6 +104,7 @@ void debugPrintInfo({
 }
 
 void main() {
+  stdout.done.catchError((_) => exit(0));
   // Configuration
   final separator = envOr('SEPARATOR', '-');
 
@@ -150,6 +151,10 @@ void main() {
       counto: counto,
     );
 
-    stdout.writeln('$adjective$separator$noun');
+    try {
+      stdout.writeln('$adjective$separator$noun');
+    } catch (_) {
+      exit(0);
+    }
   }
 }

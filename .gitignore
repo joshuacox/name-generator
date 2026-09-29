@@ -16,6 +16,7 @@ name-generator_ada
 name-generator_odin
 name-generator_v
 name-generator_cobol
+name-generator_dart
 *.ali
 *.class
 .cabal-sandbox/

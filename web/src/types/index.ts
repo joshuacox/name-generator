@@ -11,6 +11,14 @@ export interface LanguageMeta {
   githubUrl: string;
 }
 
+export interface MemoryBenchmarkItem {
+  name: string;
+  category: string;
+  peakRssMb: number;
+  peakRssKb: number;
+  namesPerMb?: number;
+}
+
 export interface CompiledBenchmarkItem {
   name: string;
   command: string;
@@ -20,6 +28,12 @@ export interface CompiledBenchmarkItem {
   stddev: number;
   relative: number;
   paradigm: string;
+  category?: string;
+  peakRssMb?: number;
+  peakRssKb?: number;
+  startupMs?: number;
+  marginalUsPerName?: number;
+  sustainedNamesPerSec?: number;
 }
 
 export interface ScriptingBenchmarkItem {
@@ -28,8 +42,16 @@ export interface ScriptingBenchmarkItem {
   mean: number;
   min: number;
   max: number;
+  stddev?: number;
   relative: number;
-  type: string;
+  type?: string;
+  category?: string;
+  paradigm?: string;
+  peakRssMb?: number;
+  peakRssKb?: number;
+  startupMs?: number;
+  marginalUsPerName?: number;
+  sustainedNamesPerSec?: number;
 }
 
 export interface ScalingPoint {
@@ -40,7 +62,7 @@ export interface ScalingPoint {
 export interface ScalingCurve {
   language: string;
   command: string;
-  category: 'Compiled' | 'Scripting' | 'Shell';
+  category: 'Compiled' | 'Scripting' | 'Shell' | 'VM';
   points: ScalingPoint[];
 }
 
@@ -50,6 +72,10 @@ export interface ThroughputItem {
   namesPerSecond: number;
   meanMsAt1000: number;
   relativeToFastest: number;
+  peakRssMb?: number;
+  startupMs?: number;
+  marginalUsPerName?: number;
+  sustainedRate?: number;
 }
 
 export interface BenchmarkData {
@@ -61,20 +87,29 @@ export interface BenchmarkData {
   };
   stats: {
     totalLanguages: number;
+    activeBenchmarked?: number;
     compiledContenders: number;
+    vmContenders?: number;
     scriptingContenders: number;
+    shellContenders?: number;
     fastestLanguage: string;
     fastestMeanMs: number;
     fastestScripting: string;
     fastestScriptingMs: number;
+    leanestMemoryLanguage?: string;
+    leanestMemoryMb?: number;
     maxThroughputPerSec?: number;
   };
   deathmatchCompiled: CompiledBenchmarkItem[];
+  deathmatchVm?: CompiledBenchmarkItem[];
   deathmatchScripting: ScriptingBenchmarkItem[];
+  deathmatchShells?: ScriptingBenchmarkItem[];
+  overallLeaderboard?: Array<CompiledBenchmarkItem | ScriptingBenchmarkItem>;
+  memoryLeaderboard?: MemoryBenchmarkItem[];
   scalingCurves: ScalingCurve[];
   throughputLeaderboard: ThroughputItem[];
   languages: LanguageMeta[];
-  scanners: {
+  scanners?: {
     fastest_24_summary?: Array<{
       command: string;
       cleanCmd: string;
@@ -85,3 +120,4 @@ export interface BenchmarkData {
     }>;
   };
 }
+

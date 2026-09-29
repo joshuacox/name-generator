@@ -2,7 +2,7 @@
 set -eo pipefail
 
 echo "============================================================"
-echo "    Name Generator CI Benchmark & Data Aggregator"
+echo "    Name Generator CI Benchmark & Data Aggregator (v2.0)"
 echo "============================================================"
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null 2>&1 && pwd)"
@@ -84,61 +84,125 @@ if command -v cobc >/dev/null 2>&1; then
   cobc -free -x -O3 -o name-generator_cobol name-generator.cbl || true
 fi
 
+# Build Pascal
+if command -v fpc >/dev/null 2>&1; then
+  echo "--> Compiling Pascal (fpc -O3)..."
+  fpc -O3 name-generator.pas -oname-generator_pascal >/dev/null 2>&1 || true
+fi
+
+# Build D
+if command -v gdc >/dev/null 2>&1; then
+  echo "--> Compiling D (gdc -O3)..."
+  gdc -O3 name-generator_d.d -o name-generator_d || true
+elif command -v dmd >/dev/null 2>&1; then
+  echo "--> Compiling D (dmd)..."
+  dmd -O -release -inline name-generator_d.d -of=name-generator_d || true
+fi
+
+# Build Dart
+if command -v dart >/dev/null 2>&1; then
+  echo "--> Compiling Dart (dart compile exe)..."
+  dart compile exe name-generator.dart -o name-generator_dart >/dev/null 2>&1 || true
+fi
+
+# Build Java
+if command -v javac >/dev/null 2>&1; then
+  echo "--> Compiling Java (javac)..."
+  javac NameGenerator.java || true
+fi
+
 echo "==> 2. Discovering available benchmark contenders..."
 
 COMPILED_CANDIDATES=(
   "./name-generator_zig"
+  "./name-generator"
+  "./name-generator_cpp"
   "./name-generator_go"
+  "rust/target/release/name-generator"
   "./name-generator_crystal"
   "./name-generator_nim"
   "./name-generator_odin"
   "./name-generator_ada"
-  "./name-generator_cpp"
   "./name-generator_cobol"
   "./name-generator_v"
   "./name-generator_fortran"
-  "./name-generator"
-  "rust/target/release/name-generator"
+  "./name-generator_pascal"
+  "./name-generator_d"
+  "./name-generator_dart"
 )
 
 ACTIVE_COMPILED=()
 for bin in "${COMPILED_CANDIDATES[@]}"; do
   if [[ -x "$bin" ]]; then
-    ACTIVE_COMPILED+=("$bin")
+    if counto=1 "$bin" >/dev/null 2>&1; then
+      ACTIVE_COMPILED+=("$bin")
+    fi
+  fi
+done
+
+VM_CANDIDATES=(
+  "java NameGenerator"
+)
+
+ACTIVE_VM=()
+for vm in "${VM_CANDIDATES[@]}"; do
+  if counto=1 $vm >/dev/null 2>&1; then
+    ACTIVE_VM+=("$vm")
   fi
 done
 
 SCRIPT_CANDIDATES=(
   "./name-generator.awk"
   "./name-generator.js"
-  "./name-generator.rb"
-  "./name-generator.tcl"
-  "./name-generator.zsh"
-  "./name-generator.sh"
-  "./name-generator.bash"
-  "./name-generator.ksh"
-  "./name-generator.nu"
+  "./name-generator.ts"
   "./name-generator.py"
+  "./name-generator.rb"
+  "./name-generator.perl"
   "./name-generator.pl"
   "./name-generator.php"
+  "./name-generator.lua"
+  "./name-generator.tcl"
 )
 
 ACTIVE_SCRIPTS=()
 for script in "${SCRIPT_CANDIDATES[@]}"; do
-  if [[ -x "$script" ]]; then
+  if [[ -f "$script" ]]; then
     # Test if script can actually execute (interpreter is installed)
     if counto=1 "$script" >/dev/null 2>&1; then
       ACTIVE_SCRIPTS+=("$script")
+    elif counto=1 perl "$script" >/dev/null 2>&1; then
+      ACTIVE_SCRIPTS+=("perl $script")
+    fi
+  fi
+done
+
+SHELL_CANDIDATES=(
+  "./name-generator.sh"
+  "./name-generator.bash"
+  "./name-generator.zsh"
+  "./name-generator.fish"
+  "./name-generator.ksh"
+  "./name-generator.nu"
+)
+
+ACTIVE_SHELLS=()
+for sh_cmd in "${SHELL_CANDIDATES[@]}"; do
+  if [[ -f "$sh_cmd" ]]; then
+    if counto=1 "$sh_cmd" >/dev/null 2>&1; then
+      ACTIVE_SHELLS+=("$sh_cmd")
     fi
   fi
 done
 
 echo "Active compiled contenders (${#ACTIVE_COMPILED[@]}): ${ACTIVE_COMPILED[*]}"
+echo "Active VM contenders (${#ACTIVE_VM[@]}): ${ACTIVE_VM[*]}"
 echo "Active scripting contenders (${#ACTIVE_SCRIPTS[@]}): ${ACTIVE_SCRIPTS[*]}"
+echo "Active shell contenders (${#ACTIVE_SHELLS[@]}): ${ACTIVE_SHELLS[*]}"
 
 if command -v hyperfine >/dev/null 2>&1; then
-  echo "==> 3. Running Hyperfine Deathmatch Benchmarks..."
+  echo "==> 3. Running Hyperfine Tiered Deathmatches..."
 
+  # 1. Compiled contenders deathmatch (counto=1000)
   if [[ ${#ACTIVE_COMPILED[@]} -gt 1 ]]; then
     echo "--> Running compiled contenders deathmatch (counto=1000)..."
     counto=1000 hyperfine \
@@ -150,6 +214,18 @@ if command -v hyperfine >/dev/null 2>&1; then
       "${ACTIVE_COMPILED[@]}" || true
   fi
 
+  # 2. VM contenders deathmatch (counto=500)
+  if [[ ${#ACTIVE_VM[@]} -gt 0 ]]; then
+    echo "--> Running VM contenders deathmatch (counto=500)..."
+    counto=500 hyperfine \
+      --warmup 2 \
+      --runs 5 \
+      --shell=bash \
+      --export-json log/ci-vm.json \
+      "${ACTIVE_VM[@]}" || true
+  fi
+
+  # 3. Scripting contenders deathmatch (counto=100)
   if [[ ${#ACTIVE_SCRIPTS[@]} -gt 1 ]]; then
     echo "--> Running scripting contenders deathmatch (counto=100)..."
     counto=100 hyperfine \
@@ -161,10 +237,22 @@ if command -v hyperfine >/dev/null 2>&1; then
       "${ACTIVE_SCRIPTS[@]}" || true
   fi
 
-  # Multi-scale scaling benchmarks
+  # 4. Shells contenders deathmatch (counto=50)
+  if [[ ${#ACTIVE_SHELLS[@]} -gt 1 ]]; then
+    echo "--> Running shells contenders deathmatch (counto=50)..."
+    counto=50 hyperfine \
+      --warmup 1 \
+      --runs 3 \
+      --shell=none \
+      --export-json log/ci-shells.json \
+      --export-markdown log/ci-shells.md \
+      "${ACTIVE_SHELLS[@]}" || true
+  fi
+
+  # 5. Multi-scale scaling benchmarks
   SCALING_TARGETS=()
-  for t in "./name-generator_zig" "./name-generator_go" "./name-generator_crystal" "./name-generator_nim" "./name-generator_odin" "./name-generator_ada" "./name-generator_cobol" "./name-generator.awk" "./name-generator.js" "./name-generator.bash"; do
-    if [[ -x "$t" ]] && counto=1 "$t" >/dev/null 2>&1; then
+  for t in "./name-generator_zig" "./name-generator" "./name-generator_go" "./name-generator_crystal" "./name-generator_nim" "./name-generator_odin" "./name-generator_ada" "./name-generator_cobol" "./name-generator_pascal" "./name-generator_d" "./name-generator_dart" "java NameGenerator" "./name-generator.awk" "./name-generator.js" "python3 ./name-generator.py" "./name-generator.bash"; do
+    if counto=1 $t >/dev/null 2>&1; then
       SCALING_TARGETS+=("counto={counto} $t")
     fi
   done
@@ -183,7 +271,10 @@ else
   echo "Hyperfine not found on system; skipping live execution and preserving stored baseline."
 fi
 
-echo "==> 4. Ingesting benchmarks into Next.js dataset..."
+echo "==> 4. Measuring Peak Memory (RSS) & Telemetry..."
+python3 scripts/measure-telemetry.py || true
+
+echo "==> 5. Ingesting benchmarks into Next.js dataset..."
 node scripts/generate-data.mjs
 
 echo "==> CI Benchmark run completed successfully!"

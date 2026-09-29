@@ -52,11 +52,21 @@ jobs:
         with:
           version: 0.14.0
 
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install System Toolchains & Interpreters
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             hyperfine \
+            time \
             gfortran \
             gnat \
             gnucobol \
@@ -66,11 +76,19 @@ jobs:
             zsh \
             ruby \
             perl \
-            php-cli
+            libterm-readkey-perl \
+            php-cli \
+            lua5.4 \
+            fish \
+            fp-compiler \
+            fp-units-fcl \
+            fp-units-base \
+            gdc \
+            python-is-python3
 
       - name: Run CI Benchmarks & Ingest Data
         run: |
-          chmod +x scripts/ci-benchmark.sh
+          chmod +x scripts/ci-benchmark.sh scripts/measure-telemetry.py
           ./scripts/ci-benchmark.sh
 
       - name: Install Web Dependencies
